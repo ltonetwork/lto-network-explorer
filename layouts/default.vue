@@ -6,7 +6,7 @@
       flat
       extended
       app
-      style="background-color: #17054B;"
+      color="#17054B"
     >
       <v-toolbar-title
         v-text="title"
