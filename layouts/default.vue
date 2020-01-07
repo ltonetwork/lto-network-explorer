@@ -23,6 +23,10 @@ export default {
     Navigation,
     Panel,
     Footer
+  },
+  data () {
+    return {
+    }
   }
 }
 </script>

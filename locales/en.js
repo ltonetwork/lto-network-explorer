@@ -19,6 +19,11 @@ export default {
     mempool: 'Unconfirmed Transactions',
     generators: 'Block Forgers'
   },
+  links: {
+    wallet: 'LTO Wallet',
+    home: 'LTO Network',
+    blog: 'Blog'
+  },
   resources: {
     api: 'API Services',
     support: 'Tech Chat',

@@ -18,9 +18,10 @@
           >
             <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
             <v-toolbar-title
-              v-text="title"
               class="mr-5"
-            />
+            >
+              <span class="font-weight-black">LTO</span> Explorer
+            </v-toolbar-title>
 
             <v-toolbar-items
               v-for="(link, i) in links"
@@ -92,10 +93,10 @@
 </template>
 
 <script>
+
 export default {
   data () {
     return {
-      title: 'LTO Explorer',
       links: [
         {
           title: this.$t('menu.overview'),
@@ -118,23 +119,6 @@ export default {
           title: this.$t('menu.wallet'),
           icon: 'mdi-arrow-top-right',
           to: 'https://wallet.lto.network'
-        }
-      ],
-      dropdown: [
-        {
-          text: this.$t('resources.api'),
-          icon: 'mdi-arrow-top-right',
-          value: 'https://api.lto.cloud'
-        },
-        {
-          text: this.$t('resources.support'),
-          icon: 'mdi-arrow-top-right',
-          value: 'https://t.me/ltotech'
-        },
-        {
-          text: this.$t('resources.github'),
-          icon: 'mdi-arrow-top-right',
-          value: 'https://github.com/ltonetwork/'
         }
       ]
     }
