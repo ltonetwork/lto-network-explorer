@@ -1,6 +1,10 @@
 <template>
   <v-footer
-    :fixed="fixed"
+    color="#17054B"
+    height="250px"
+    max-height="250px"
+    tile
+    flat
     app
   >
     <span>&copy; 2019</span>

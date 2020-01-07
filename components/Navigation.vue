@@ -1,5 +1,6 @@
 <template>
-  <v-card
+  <v-app-bar
+    app
     height="250px"
     max-height="250px"
     tile
@@ -13,7 +14,7 @@
             floating
             color="#17054B"
             flat
-            class="white--text mt-5"
+            class="white--text"
           >
             <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
             <v-toolbar-title
@@ -87,7 +88,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-card>
+  </v-app-bar>
 </template>
 
 <script>
