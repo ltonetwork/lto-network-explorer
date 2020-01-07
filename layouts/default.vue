@@ -20,16 +20,60 @@
               v-text="title"
             />
 
-            <v-toolbar-items>
-              <v-btn class="white--text" text>
-                Link 1
+            <v-toolbar-items
+              v-for="(link, i) in links"
+              :key="i"
+            >
+              <v-btn
+                :to="link.to"
+                class="white--text"
+                text
+                small
+                style="text-transform: lowercase;"
+              >
+                <v-icon class="mr-2">
+                  {{ link.icon }}
+                </v-icon>
+
+                {{ link.title }}
               </v-btn>
-              <v-btn class="white--text" text>
-                Link 2
+            </v-toolbar-items>
+
+            <v-toolbar-items
+              v-for="(ext_link, i) in ext_links"
+              :key="i"
+            >
+              <v-btn
+                :to="ext_link.to"
+                class="white--text"
+                text
+                small
+                style="text-transform: lowercase;"
+              >
+                {{ ext_link.title }}
+                <v-icon class="mr-1" x-small>
+                  {{ ext_link.icon }}
+                </v-icon>
               </v-btn>
-              <v-btn class="white--text" text>
-                Link 3
-              </v-btn>
+            </v-toolbar-items>
+
+            <v-toolbar-items
+            >
+              <v-select
+                :items="dropdown"
+                text
+                small
+                class="white--text"
+                label="Developer resources"
+                color="#fff"
+                item-color="#fff"
+                disable-lookup
+                filled
+                flat
+                hide-details
+                hide-selected
+
+              />
             </v-toolbar-items>
           </v-toolbar>
 
@@ -92,19 +136,48 @@
 export default {
   data () {
     return {
-      items: [
+      title: 'LTO Explorer',
+      links: [
         {
-          icon: 'mdi-apps',
-          title: 'Nodes Overview',
-          to: '/'
+          title: 'Nodes overview',
+          icon: 'mdi-cube-outline',
+          to: '/nodes'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Staked Info',
-          to: '/inspire'
+          title: 'Staked info',
+          icon: 'mdi-layers',
+          to: '/stake'
+        },
+        {
+          title: 'Holder list',
+          icon: 'mdi-chart-donut',
+          to: '/stake'
         }
       ],
-      title: 'LTO Explorer'
+      ext_links: [
+        {
+          title: 'Wallet',
+          icon: 'mdi-arrow-top-right',
+          to: 'https://wallet.lto.network'
+        }
+      ],
+      dropdown: [
+        {
+          text: 'API Services',
+          icon: 'mdi-arrow-top-right',
+          value: 'https://api.lto.cloud'
+        },
+        {
+          text: 'Tech Chat',
+          icon: 'mdi-arrow-top-right',
+          value: 'https://t.me/ltotech'
+        },
+        {
+          text: 'Github',
+          icon: 'mdi-arrow-top-right',
+          value: 'https://github.com/ltonetwork/'
+        }
+      ]
     }
   }
 }
