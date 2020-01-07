@@ -44,7 +44,7 @@
               :key="i"
             >
               <v-btn
-                :to="ext_link.to"
+                :href="ext_link.to"
                 class="white--text"
                 text
                 small
