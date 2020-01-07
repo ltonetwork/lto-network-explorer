@@ -1,62 +1,65 @@
 <template>
-  <v-toolbar
-    fixed
-    height="250"
+  <v-card
+    height="250px"
+    max-height="250px"
+    tile
     flat
-    app
     color="#17054B"
   >
     <v-container>
-      <v-toolbar
-        absolute
-        color="#17054B"
-        flat
-        class="white--text"
-      >
-        <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
-        <v-toolbar-title
-          v-text="title"
-          class="mr-5"
-        />
-
-        <v-toolbar-items
-          v-for="(link, i) in links"
-          :key="i"
-        >
-          <v-btn
-            :to="link.to"
-            class="white--text"
-            text
-            small
-            style="text-transform: lowercase;"
+      <v-row justify="center">
+        <v-col>
+          <v-toolbar
+            floating
+            color="#17054B"
+            flat
+            class="white--text mt-5"
           >
-            <v-icon class="mr-2">
-              {{ link.icon }}
-            </v-icon>
+            <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
+            <v-toolbar-title
+              v-text="title"
+              class="mr-5"
+            />
 
-            {{ link.title }}
-          </v-btn>
-        </v-toolbar-items>
+            <v-toolbar-items
+              v-for="(link, i) in links"
+              :key="i"
+            >
+              <v-btn
+                :to="link.to"
+                class="white--text"
+                text
+                small
+                style="text-transform: lowercase;"
+              >
+                <v-icon class="mr-2">
+                  {{ link.icon }}
+                </v-icon>
 
-        <v-toolbar-items
-          v-for="(ext_link, i) in ext_links"
-          :key="i"
-        >
-          <v-btn
-            :href="ext_link.to"
-            class="white--text"
-            text
-            small
-            style="text-transform: lowercase;"
-          >
-            {{ ext_link.title }}
-            <v-icon class="mr-1" x-small>
-              {{ ext_link.icon }}
-            </v-icon>
-          </v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
+                {{ link.title }}
+              </v-btn>
+            </v-toolbar-items>
 
+            <v-toolbar-items
+              v-for="(ext_link, i) in ext_links"
+              :key="i"
+            >
+              <v-btn
+                :href="ext_link.to"
+                class="white--text"
+                text
+                small
+                style="text-transform: lowercase;"
+              >
+                {{ ext_link.title }}
+                <v-icon class="mr-1" x-small>
+                  {{ ext_link.icon }}
+                </v-icon>
+              </v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+        </v-col>
+      </v-row>
       <v-row justify="center">
         <v-col cols="6" md="6">
           <v-text-field
@@ -84,7 +87,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-toolbar>
+  </v-card>
 </template>
 
 <script>

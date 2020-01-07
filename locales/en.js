@@ -2,7 +2,7 @@
 
 export default {
   menu: {
-    overview: 'Network Overview',
+    overview: 'Network DAshboard',
     nodes: 'Nodes Monitor',
     distribution: 'Token Distribution',
     wallet: 'Web Wallet'

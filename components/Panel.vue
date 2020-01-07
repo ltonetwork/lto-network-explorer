@@ -2,7 +2,7 @@
   <v-container>
     <v-card
       class="mx-auto"
-      max-width="960"
+      max-width="100%"
       style="margin-top: -35px;"
     >
       <v-card-title class="title" />
