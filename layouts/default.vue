@@ -2,7 +2,7 @@
   <v-app light>
     <v-app-bar
       fixed
-      height="300"
+      height="250"
       flat
       extended
       app
