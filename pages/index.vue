@@ -9,8 +9,11 @@
       sm8
       md6
     >
-      <v-card>
-        <v-card-title class="headline" />
+      <v-card
+        class="mx-auto"
+        width="960"
+      >
+        <v-card-title class="title" />
         <v-card-text />
         <v-card-actions />
       </v-card>
