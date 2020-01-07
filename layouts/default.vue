@@ -139,41 +139,41 @@ export default {
       title: 'LTO Explorer',
       links: [
         {
-          title: 'Nodes overview',
+          title: this.$t('menu.overview'),
           icon: 'mdi-cube-outline',
+          to: '/overview'
+        },
+        {
+          title: this.$t('menu.nodes'),
+          icon: 'mdi-layers',
           to: '/nodes'
         },
         {
-          title: 'Staked info',
-          icon: 'mdi-layers',
-          to: '/stake'
-        },
-        {
-          title: 'Holder list',
+          title: this.$t('menu.distribution'),
           icon: 'mdi-chart-donut',
-          to: '/stake'
+          to: '/distribution'
         }
       ],
       ext_links: [
         {
-          title: 'Wallet',
+          title: this.$t('menu.wallet'),
           icon: 'mdi-arrow-top-right',
           to: 'https://wallet.lto.network'
         }
       ],
       dropdown: [
         {
-          text: 'API Services',
+          text: this.$t('resources.api'),
           icon: 'mdi-arrow-top-right',
           value: 'https://api.lto.cloud'
         },
         {
-          text: 'Tech Chat',
+          text: this.$t('resources.support'),
           icon: 'mdi-arrow-top-right',
           value: 'https://t.me/ltotech'
         },
         {
-          text: 'Github',
+          text: this.$t('resources.github'),
           icon: 'mdi-arrow-top-right',
           value: 'https://github.com/ltonetwork/'
         }
