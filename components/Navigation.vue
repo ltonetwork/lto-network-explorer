@@ -16,6 +16,7 @@
         <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
         <v-toolbar-title
           v-text="title"
+          class="mr-5"
         />
 
         <v-toolbar-items
