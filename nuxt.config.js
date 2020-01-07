@@ -25,6 +25,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '@/assets/lto-it.scss'
   ],
   /*
   ** Plugins to load before mounting the App

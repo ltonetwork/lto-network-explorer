@@ -1,16 +1,19 @@
 <template>
   <v-app light>
-
     <v-app-bar
-      :clipped-left="clipped"
       fixed
+      height="300"
+      flat
+      extended
       app
+      style="background-color: #17054B;"
     >
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title
+        v-text="title"
+      />
       <v-spacer />
-      <v-btn
-      >
-      link
+      <v-btn>
+        link
       </v-btn>
     </v-app-bar>
     <v-content>
@@ -38,16 +41,15 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Nodes Overview',
           to: '/'
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
+          title: 'Staked Info',
           to: '/inspire'
         }
       ],
-      right: true,
       title: 'LTO Network Explorer'
     }
   }

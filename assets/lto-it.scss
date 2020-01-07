@@ -1,0 +1,31 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+
+// Globals
+$body-font-family: 'IBM Plex Sans';
+$border-radius-root: 6px;
+$font-size-root: 14px;
+
+// Variables must come before the import
+$btn-letter-spacing: 0;
+$btn-font-weight: 400;
+
+$btn-sizes: (
+  'default': 41,
+  'large': 54
+);
+
+$headings: (
+  'h1': (
+    'size': 24px,
+    'weight': 600,
+    'line-height': 31px,
+    'color': '#C4C4C4'
+  ),
+  'h2': (
+    'size': 18px,
+    'weight': 600,
+    'line-height': 23px,
+    'color': '#C4C4C4'
+  )
+);
+

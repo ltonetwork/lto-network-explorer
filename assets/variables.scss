@@ -1,4 +1,11 @@
-// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
-//
-// The variables you want to modify
-// $font-size-root: 20px;
+.lto-purple {
+    background-color: #804BC9;
+}
+
+.lto-dark-purple {
+    background-color: #17054B;
+}
+
+.lto-dark-purple:hover {
+    background-color: #2E1E5D;
+}
