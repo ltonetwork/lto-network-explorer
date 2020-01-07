@@ -50,7 +50,7 @@ export default {
           to: '/inspire'
         }
       ],
-      title: 'LTO Network Explorer'
+      title: 'LTO Explorer'
     }
   }
 }
