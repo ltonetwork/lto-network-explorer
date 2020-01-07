@@ -4,17 +4,44 @@
       fixed
       height="250"
       flat
-      extended
       app
       color="#17054B"
     >
-      <v-toolbar-title
-        v-text="title"
+      <v-toolbar
+        absolute
+        color="#17054B"
+        flat
+      >
+        <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
+        <v-toolbar-title
+          v-text="title"
+        />
+
+        <v-spacer />
+
+        <v-toolbar-items>
+          <v-btn text>
+            Link 1
+          </v-btn>
+          <v-btn text>
+            Link 2
+          </v-btn>
+          <v-btn text>
+            Link 3
+          </v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+
+      <v-text-field
+        solo-inverted
+        hide-details
+        flat
+        rounded
+        label="Search for a transaction ID, address or block."
+        prepend-inner-icon="mdi-magnify"
+        background-color="#30195d"
+        color="#6e5f8e"
       />
-      <v-spacer />
-      <v-btn>
-        link
-      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
