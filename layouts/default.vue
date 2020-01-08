@@ -1,7 +1,6 @@
 <template>
   <v-app light>
-    <Navigation />
-    <Panel />
+    <Header />
 
     <v-content>
       <v-container>
@@ -14,14 +13,12 @@
 </template>
 
 <script>
-import Navigation from '~/components/Navigation'
-import Panel from '~/components/Panel'
+import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 
 export default {
   components: {
-    Navigation,
-    Panel,
+    Header,
     Footer
   },
   data () {
