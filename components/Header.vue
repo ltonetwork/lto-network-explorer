@@ -95,7 +95,6 @@
         <v-card
           style="margin-top: -35px;"
         >
-          <v-card-title class="title" />
           <v-card-text>
             <v-row
               dense
@@ -106,9 +105,12 @@
                 md="3"
                 lg="3"
               >
-                {{ $t('panel.nodes') }}
+                <p class="caption mt-0 mb-2">
+                  {{ $t('panel.nodes') }}
+                </p>
                 <h2
                   style="color:#1a004b;"
+                  class="subtitle-2mb-0"
                 >
                   {{ panel.nodes }}
                 </h2>
@@ -119,7 +121,15 @@
                 md="3"
                 lg="3"
               >
-                {{ $t('panel.wallets') }}
+                <p class="caption mt-0 mb-2">
+                  {{ $t('panel.staked') }}
+                </p>
+                <h2
+                  style="color:#1a004b;"
+                  class="mb-0"
+                >
+                  {{ panel.staked }}
+                </h2>
               </v-col>
               <v-col
                 cols="3"
@@ -127,7 +137,15 @@
                 md="3"
                 lg="3"
               >
-                {{ $t('panel.price') }}
+                <p class="caption mt-0 mb-2">
+                  {{ $t('panel.price') }}
+                </p>
+                <h2
+                  style="color:#1a004b;"
+                  class="mb-0"
+                >
+                  {{ panel.price }}
+                </h2>
               </v-col>
               <v-col
                 cols="3"
@@ -135,11 +153,18 @@
                 md="3"
                 lg="3"
               >
-                {{ $t('panel.staked') }}
+                <p class="caption mt-0 mb-2">
+                  {{ $t('panel.market') }}
+                </p>
+                <h2
+                  style="color:#1a004b;"
+                  class="mb-0"
+                >
+                  {{ panel.market }}
+                </h2>
               </v-col>
             </v-row>
           </v-card-text>
-          <v-card-actions />
         </v-card>
       </v-container>
     </v-card>

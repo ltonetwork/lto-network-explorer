@@ -9,9 +9,10 @@ export default {
   },
   panel: {
     nodes: 'Active Nodes',
-    wallets: 'Active Wallets',
+    staked: 'LTO Staked',
     price: 'LTO Price',
-    staked: 'LTO Staked'
+    market: 'Market Valuation'
+
   },
   home: {
     blocks: 'Latest Blocks',
