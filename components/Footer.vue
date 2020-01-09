@@ -9,7 +9,11 @@
   >
     <v-container>
       <v-row>
-        <v-col>
+        <v-col
+          sm="6"
+          md="3"
+          lg="3"
+        >
           <v-toolbar
             floating
             color="#17054B"
@@ -24,7 +28,11 @@
             </v-toolbar-title>
           </v-toolbar>
         </v-col>
-        <v-col>
+        <v-col
+          sm="6"
+          md="3"
+          lg="3"
+        >
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.links') }}</span>
@@ -48,7 +56,11 @@
           </v-list>
         </v-col>
 
-        <v-col>
+        <v-col
+          sm="6"
+          md="3"
+          lg="3"
+        >
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.resources') }}</span>
@@ -72,7 +84,11 @@
           </v-list>
         </v-col>
 
-        <v-col>
+        <v-col
+          sm="6"
+          md="3"
+          lg="3"
+        >
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.social') }}</span>

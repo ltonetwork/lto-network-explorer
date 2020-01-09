@@ -1,18 +1,14 @@
 <template>
   <div>
     <v-row
-      column
-      justify-center
-      align-center
     >
       <v-col
-        xs12
-        sm8
-        md6
+        cols="1"
+        sm="12"
+        md="12"
+        lg="12"
       >
         <v-card
-          class="mx-auto"
-          width="100%"
         >
           <v-card-title class="title" />
           <v-card-text />
@@ -22,18 +18,14 @@
     </v-row>
 
     <v-row
-      column
-      justify-center
-      align-center
     >
       <v-col
-        xs12
-        sm8
-        md6
+        cols="1"
+        sm="12"
+        md="12"
+        lg="12"
       >
         <v-card
-          class="mx-auto"
-          width="100%"
         >
           <v-card-title class="title" />
           <v-card-text />
@@ -43,18 +35,14 @@
     </v-row>
 
     <v-row
-      column
-      justify-center
-      align-center
     >
       <v-col
-        xs6
-        sm6
-        md6
+        cols="2"
+        sm="6"
+        md="6"
+        lg="6"
       >
         <v-card
-          class="mx-auto"
-          width="100%"
         >
           <v-card-title class="title" />
           <v-card-text />
@@ -63,13 +51,12 @@
       </v-col>
 
       <v-col
-        xs6
-        sm6
-        md6
+        cols="2"
+        sm="6"
+        md="6"
+        lg="6"
       >
         <v-card
-          class="mx-auto"
-          width="100%"
         >
           <v-card-title class="title" />
           <v-card-text />

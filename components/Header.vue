@@ -96,7 +96,49 @@
           style="margin-top: -35px;"
         >
           <v-card-title class="title" />
-          <v-card-text />
+          <v-card-text>
+            <v-row
+              dense
+            >
+              <v-col
+                cols="3"
+                sm="6"
+                md="3"
+                lg="3"
+              >
+                {{ $t('panel.nodes') }}
+                <h2
+                  style="color:#1a004b;"
+                >
+                  {{ panel.nodes }}
+                </h2>
+              </v-col>
+              <v-col
+                cols="3"
+                sm="6"
+                md="3"
+                lg="3"
+              >
+                {{ $t('panel.wallets') }}
+              </v-col>
+              <v-col
+                cols="3"
+                sm="6"
+                md="3"
+                lg="3"
+              >
+                {{ $t('panel.price') }}
+              </v-col>
+              <v-col
+                cols="3"
+                sm="6"
+                md="3"
+                lg="3"
+              >
+                {{ $t('panel.staked') }}
+              </v-col>
+            </v-row>
+          </v-card-text>
           <v-card-actions />
         </v-card>
       </v-container>
@@ -133,7 +175,13 @@ export default {
           icon: 'mdi-arrow-top-right',
           to: 'https://wallet.lto.network'
         }
-      ]
+      ],
+      panel: {
+        nodes: 55,
+        staked: 450000,
+        price: 0.04,
+        market: 5000000
+      }
     }
   },
   computed: {
