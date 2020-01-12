@@ -27,7 +27,7 @@
                   <tr>
                     <td>{{ $t('explorer.generator') }}</td>
                     <td>
-                      <a :href="'address/' + getBlock.generator">{{ tx.generator }}</a>
+                      <a :href="'address/' + getBlock.generator">{{ getBlock.generator }}</a>
                     </td>
                   </tr>
                   <tr>
