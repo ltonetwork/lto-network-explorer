@@ -20,13 +20,11 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#17054B' },
   /*
   ** Global CSS
   */
-  css: [
-    '@/assets/lto-it.scss'
-  ],
+  css: [],
   /*
   ** Plugins to load before mounting the App
   */

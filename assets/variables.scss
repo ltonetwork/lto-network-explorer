@@ -1,11 +1,40 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+
+// Font
+
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap');
+
+// Globals
+$body-font-family: 'IBM Plex Sans';
+$heading-font-family: 'IBM Plex Sans';
+
+// Variables must come before the import
+$headings: (
+  'h1': (
+    'size': 24px,
+    'weight': 600,
+    'line-height': 31px,
+    'color': '#1a004b'
+  ),
+  'h2': (
+    'size': 18px,
+    'weight': 600,
+    'line-height': 23px,
+    'color': '#1a004b'
+  )
+);
+
+
 .lto-purple {
-    background-color: #804BC9;
+  background-color: #804BC9;
 }
 
 .lto-dark-purple {
-    background-color: #17054B;
+  background-color: #17054B;
 }
 
 .lto-dark-purple:hover {
-    background-color: #2E1E5D;
+  background-color: #2E1E5D;
 }
+
+

@@ -7,7 +7,7 @@
         lg="12"
       >
         <v-card>
-          <v-card-title class="title">
+          <v-card-title class="headline" style="color:#1a004b;">
             Transaction Statistics
           </v-card-title>
           <v-card-text>
@@ -27,7 +27,7 @@
         lg="6"
       >
         <v-card>
-          <v-card-title class="title">
+          <v-card-title class="headline" style="color:#1a004b;">
             Latest Blocks
           </v-card-title>
           <v-card-text>
@@ -70,7 +70,7 @@
         lg="6"
       >
         <v-card>
-          <v-card-title class="title">
+          <v-card-title class="headline" style="color:#1a004b;">
             Unconfirmed Transactions
           </v-card-title>
           <v-card-text>
@@ -91,12 +91,14 @@
                 </thead>
                 <tbody>
                   <tr v-for="tx in getUnconfirmedTx" :key="tx.id">
-                    <td><a :href="'transaction/' + tx.id">{{ tx.id }}</a></td>
+                    <td>
+                      <a :href="'transaction/' + tx.id">{{ tx.id }}</a>
+                    </td>
                     <td class="text-center">
-                      {{ tx.sender }}
+                      <a :href="'address/' + tx.sender">{{ tx.sender }}</a>
                     </td>
                     <td class="text-right">
-                      {{ tx.fee }}
+                      {{ tx.fee / 10000000 }}
                     </td>
                   </tr>
                 </tbody>
@@ -132,7 +134,7 @@ export default {
     const getTx = await $axios.$get(process.env.API_URL + '/stats/transaction/week')
 
     // Get latest blocks
-    const getBlocks = await $axios.$get(process.env.API_URL + '/block/last/10')
+    const getBlocks = await $axios.$get(process.env.API_URL + '/block/last/5')
 
     getBlocks.forEach((block) => {
       block.timestamp = moment(block.timestamp).format('DD-MM-YY HH:MM:SS')
@@ -140,6 +142,12 @@ export default {
 
     // Get unconfirmed tx
     const getUnconfirmedTx = await $axios.$get('https://node.lto.cloud/transactions/unconfirmed')
+
+    // Truncate
+    getUnconfirmedTx.forEach((tx) => {
+      tx.id = tx.id.substring(0, 12) + '...'
+      tx.sender = tx.sender.substring(0, 12) + '...'
+    })
 
     return {
       chartData: {
