@@ -7,8 +7,14 @@
         lg="12"
       >
         <v-card>
-          <v-card-title class="title" />
-          <v-card-text />
+          <v-card-title class="title">
+            Transaction Statistics
+          </v-card-title>
+          <v-card-text>
+            <div class="chart">
+              <lineChart :data="chartData" :options="chartOptions" />
+            </div>
+          </v-card-text>
           <v-card-actions />
         </v-card>
       </v-col>
@@ -81,19 +87,118 @@
 
 <script>
 import moment from 'moment'
+import LineChart from '~/components/LineChart'
 
 export default {
   components: {
+    LineChart
   },
   async asyncData ({ $axios }) {
+    // Get chart data
+    const getTx = await $axios.$get(process.env.API_URL + '/stats/transaction/week')
+
+    // Get latest blocks
     const getBlocks = await $axios.$get(process.env.API_URL + '/block/last/10')
-    console.log(getBlocks)
 
     getBlocks.forEach((block) => {
       block.timestamp = moment(block.timestamp).format('DD-MM-YY HH:MM:SS')
     })
 
-    return { getBlocks }
+    return {
+      chartData: {
+        labels: getTx.map(data => moment(data.period)),
+        datasets: [
+          {
+            backgroundColor: 'rgba(249, 246, 252, .6)',
+            borderColor: '#804BC9',
+            borderWidth: '3',
+            pointBorderWidth: '0',
+            pointRotation: '45',
+            spanGaps: true,
+            data: getTx.map(data => data.count)
+          }
+        ]
+      },
+      chartOptions: {
+        maintainAspectRatio: false,
+        responsive: true,
+        scales: {
+          xAxes: [{
+            id: 'x-axis',
+            type: 'time',
+            ticks: {
+              autoSkip: true,
+              maxRotation: 45
+            },
+            time: {
+              unit: 'day'
+            },
+            callback (value, chart) {
+              return value
+            },
+            distribution: 'series',
+            gridLines: {
+              display: true
+            }
+          }],
+          yAxes: [{
+            id: 'y-axis',
+            type: 'linear',
+            ticks: {
+              display: true,
+              beginAtZero: false,
+              callback (value, chart) {
+                return value.toLocaleString(undefined, {
+                  minimumFractionDigits: 0
+                })
+              }
+            },
+            gridLines: {
+              display: true,
+              drawBorder: false
+            }
+          }]
+        },
+        tooltips: {
+          bodyFontColor: '#1f1f1f',
+          bodySpacing: 5,
+          bodyFontSize: 13,
+          bodyFontStyle: 'normal',
+          titleFontColor: '#1f1f1f',
+          titleSpacing: 5,
+          titleFontSize: 17,
+          titleMarginBottom: 10,
+          titleFontStyle: 'bold',
+          xPadding: 15,
+          yPadding: 15,
+          intersect: false,
+          displayColors: false,
+          cornerRadius: 0,
+          backgroundColor: 'rgba(255,255,255,0.9)',
+          callbacks: {
+            title (value, chart) {
+              return value[0].yLabel.toLocaleString(undefined, {
+                minimumFractionDigits: 0
+              })
+            },
+            label (value, chart) {
+              return moment(value.xLabel).format('DD-MM-YYYY')
+            }
+          }
+        },
+        legend: {
+          display: false
+        },
+        animation: {
+          duration: 1000,
+          easing: 'easeOutQuint'
+        }
+      },
+      getBlocks
+    }
+  },
+
+  mounted () {
   }
 }
 </script>
