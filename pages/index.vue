@@ -22,20 +22,10 @@
 
     <v-row>
       <v-col
-        sm="12"
-        md="12"
-        lg="12"
+        sm="6"
+        md="6"
+        lg="6"
       >
-        <v-card>
-          <v-card-title class="title" />
-          <v-card-text />
-          <v-card-actions />
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col>
         <v-card>
           <v-card-title class="title">
             Latest Blocks
@@ -74,10 +64,45 @@
         </v-card>
       </v-col>
 
-      <v-col>
+      <v-col
+        sm="6"
+        md="6"
+        lg="6"
+      >
         <v-card>
-          <v-card-title class="title" />
-          <v-card-text />
+          <v-card-title class="title">
+            Unconfirmed Transactions
+          </v-card-title>
+          <v-card-text>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      ID
+                    </th>
+                    <th class="text-center">
+                      Sender
+                    </th>
+                    <th class="text-right">
+                      Fee
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="tx in getUnconfirmedTx" :key="tx.id">
+                    <td><a :href="'transaction/' + tx.id">{{ tx.id }}</a></td>
+                    <td class="text-center">
+                      {{ tx.sender }}
+                    </td>
+                    <td class="text-right">
+                      {{ tx.fee }}
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </v-card-text>
           <v-card-actions />
         </v-card>
       </v-col>
@@ -93,6 +118,15 @@ export default {
   components: {
     LineChart
   },
+  data () {
+    return {
+      chartData: [],
+      chartOptions: [],
+      getBlocks: [],
+      getUnconfirmedTx: []
+    }
+  },
+  watchQuery: true,
   async asyncData ({ $axios }) {
     // Get chart data
     const getTx = await $axios.$get(process.env.API_URL + '/stats/transaction/week')
@@ -103,6 +137,9 @@ export default {
     getBlocks.forEach((block) => {
       block.timestamp = moment(block.timestamp).format('DD-MM-YY HH:MM:SS')
     })
+
+    // Get unconfirmed tx
+    const getUnconfirmedTx = await $axios.$get('https://node.lto.cloud/transactions/unconfirmed')
 
     return {
       chartData: {
@@ -149,7 +186,8 @@ export default {
               beginAtZero: false,
               callback (value, chart) {
                 return value.toLocaleString(undefined, {
-                  minimumFractionDigits: 0
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 10
                 })
               }
             },
@@ -178,7 +216,8 @@ export default {
           callbacks: {
             title (value, chart) {
               return value[0].yLabel.toLocaleString(undefined, {
-                minimumFractionDigits: 0
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 10
               })
             },
             label (value, chart) {
@@ -194,10 +233,10 @@ export default {
           easing: 'easeOutQuint'
         }
       },
-      getBlocks
+      getBlocks,
+      getUnconfirmedTx
     }
   },
-
   mounted () {
   }
 }
