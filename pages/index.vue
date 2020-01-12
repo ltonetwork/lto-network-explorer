@@ -92,10 +92,10 @@
                 <tbody>
                   <tr v-for="tx in getUnconfirmedTx" :key="tx.id">
                     <td>
-                      <a :href="'transaction/' + tx.id">{{ tx.id }}</a>
+                      <a :href="'/transaction/' + tx.id">{{ tx.id }}</a>
                     </td>
                     <td class="text-center">
-                      <a :href="'address/' + tx.sender">{{ tx.sender }}</a>
+                      <a :href="'/address/' + tx.sender">{{ tx.sender }}</a>
                     </td>
                     <td class="text-right">
                       {{ tx.fee / 10000000 }}
