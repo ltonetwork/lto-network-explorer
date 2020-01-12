@@ -15,10 +15,30 @@ export default {
 
   },
   home: {
-    blocks: 'Latest Blocks',
-    transactions: 'Transactions Statistics',
-    mempool: 'Unconfirmed Transactions',
+    latest_blocks: 'Latest Blocks',
+    tx_stats: 'Transactions Statistics',
+    unconfirmed_tx: 'Unconfirmed Transactions',
     generators: 'Block Forgers'
+  },
+  block: {
+    block: 'Block'
+  },
+  explorer: {
+    index: 'height',
+    id: 'ID',
+    reference: 'reference',
+    generator: 'generator',
+    sender: 'sender',
+    signature: 'signature',
+    size: 'size',
+    tx: 'transaction(s)',
+    amount: 'amount',
+    fee: 'fee',
+    version: 'version',
+    timestamp: 'timestamp',
+    confirmed: 'confirmed',
+    target: 'target'
+
   },
   links: {
     wallet: 'LTO Wallet',

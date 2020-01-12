@@ -8,7 +8,7 @@
       >
         <v-card>
           <v-card-title class="headline" style="color:#1a004b;">
-            Transaction Statistics
+            {{ $t('home.tx_stats') }}
           </v-card-title>
           <v-card-text>
             <div class="chart">
@@ -28,7 +28,7 @@
       >
         <v-card>
           <v-card-title class="headline" style="color:#1a004b;">
-            Latest Blocks
+            {{ $t('home.latest_blocks') }}
           </v-card-title>
           <v-card-text>
             <v-simple-table>
@@ -36,13 +36,13 @@
                 <thead>
                   <tr>
                     <th class="text-left">
-                      Index
+                      {{ $t('explorer.index') }}
                     </th>
                     <th class="text-center">
-                      Txs
+                      {{ $t('explorer.tx') }}
                     </th>
                     <th class="text-right">
-                      Timestamp
+                      {{ $t('explorer.timestamp') }}
                     </th>
                   </tr>
                 </thead>
@@ -71,7 +71,7 @@
       >
         <v-card>
           <v-card-title class="headline" style="color:#1a004b;">
-            Unconfirmed Transactions
+            {{ $t('home.unconfirmed_tx') }}
           </v-card-title>
           <v-card-text>
             <v-simple-table>
@@ -79,13 +79,13 @@
                 <thead>
                   <tr>
                     <th class="text-left">
-                      ID
+                      {{ $t('explorer.id') }}
                     </th>
                     <th class="text-center">
-                      Sender
+                      {{ $t('explorer.sender') }}
                     </th>
                     <th class="text-right">
-                      Fee
+                      {{ $t('explorer.fee') }}
                     </th>
                   </tr>
                 </thead>
