@@ -2,7 +2,6 @@
   <div>
     <v-card flat>
       <v-toolbar
-        app
         height="250px"
         tile
         flat

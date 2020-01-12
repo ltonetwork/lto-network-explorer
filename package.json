@@ -16,8 +16,14 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "chart.js": "^2.9.3",
+    "fs": "0.0.1-security",
+    "moment": "^2.24.0",
+    "net": "^1.0.2",
     "nuxt": "^2.0.0",
     "nuxt-i18n": "^6.4.1",
+    "tls": "0.0.1",
+    "vue-chartjs": "^3.5.0",
     "vuetify-loader": "^1.4.3"
   },
   "devDependencies": {

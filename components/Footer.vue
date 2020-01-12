@@ -1,11 +1,9 @@
 <template>
   <v-footer
     color="#17054B"
-    height="250px"
-    max-height="250px"
+    min-height="250px"
     tile
     flat
-    app
   >
     <v-container>
       <v-row>
