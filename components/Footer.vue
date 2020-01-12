@@ -6,7 +6,10 @@
     flat
   >
     <v-container>
-      <v-row>
+      <v-row
+        align="center"
+        align-content="center"
+      >
         <v-col
           sm="6"
           md="3"
