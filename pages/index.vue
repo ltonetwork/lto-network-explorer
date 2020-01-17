@@ -131,10 +131,10 @@ export default {
   watchQuery: true,
   async asyncData ({ $axios }) {
     // Get chart data
-    const getTx = await $axios.$get(process.env.API_URL + '/stats/transaction/week')
+    const getTx = await $axios.$get(process.env.CACHE_URL + '/stats/transaction/week')
 
     // Get latest blocks
-    const getBlocks = await $axios.$get(process.env.API_URL + '/block/last/5')
+    const getBlocks = await $axios.$get(process.env.CACHE_URL + '/block/last/5')
 
     getBlocks.forEach((block) => {
       block.timestamp = moment(block.timestamp).format('DD-MM-YY HH:MM:SS')

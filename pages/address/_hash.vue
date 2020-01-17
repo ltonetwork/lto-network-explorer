@@ -145,10 +145,10 @@ export default {
   async asyncData ({ $axios, params }) {
     console.log(params.index)
     // Get address
-    const getAddress = await $axios.$get(process.env.API_URL + '/address/' + params.index)
+    const getAddress = await $axios.$get(process.env.CACHE_URL + '/address/' + params.index)
 
     // Get tx related to
-    const getTxs = await $axios.$get(process.env.API_URL + '/transaction/address/' + params.index)
+    const getTxs = await $axios.$get(process.env.CACHE_URL + '/transaction/address/' + params.index)
 
     if (getTxs.length >= 1) {
       getTxs.forEach((tx) => {
