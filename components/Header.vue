@@ -16,7 +16,9 @@
                 flat
                 class="white--text"
               >
-                <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
+                <a href='/'>
+                  <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
+                </a>
                 <v-toolbar-title
                   class="mr-5"
                 >
@@ -99,7 +101,6 @@
               dense
             >
               <v-col
-                cols="3"
                 sm="6"
                 md="3"
                 lg="3"
@@ -115,7 +116,6 @@
                 </h2>
               </v-col>
               <v-col
-                cols="3"
                 sm="6"
                 md="3"
                 lg="3"
@@ -131,7 +131,6 @@
                 </h2>
               </v-col>
               <v-col
-                cols="3"
                 sm="6"
                 md="3"
                 lg="3"
@@ -147,7 +146,6 @@
                 </h2>
               </v-col>
               <v-col
-                cols="3"
                 sm="6"
                 md="3"
                 lg="3"

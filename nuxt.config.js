@@ -47,14 +47,9 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    // Doc: https://nuxt-community.github.io/nuxt-i18n/basic-usage.html
     'nuxt-i18n'
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
-  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
@@ -64,31 +59,19 @@ export default {
     theme: {
       dark: false,
       themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
       }
     }
   },
   /*
-  ** Build configuration
+  ** Axios module configuration
+  ** See https://axios.nuxtjs.org/options
   */
-  build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend (config, ctx) {
-      config.node = {
-        fs: 'empty'
-      }
-    }
+  axios: {
   },
+  /*
+  ** i18n module configuration
+  ** See https://nuxt-community.github.io/nuxt-i18n/basic-usage.html
+  */
   i18n: {
     defaultLocale: 'en',
     locales: [
@@ -108,5 +91,18 @@ export default {
     langDir: 'locales/',
     seo: true,
     lazy: true
+  },
+  /*
+  ** Build configuration
+  */
+  build: {
+  /*
+  ** You can extend webpack config here
+  */
+    extend (config, ctx) {
+      config.node = {
+        fs: 'empty'
+      }
+    }
   }
 }
