@@ -16,7 +16,7 @@
                 flat
                 class="white--text"
               >
-                <a href='/'>
+                <a href="/">
                   <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
                 </a>
                 <v-toolbar-title
