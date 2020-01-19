@@ -123,12 +123,12 @@ export default {
   // watchQuery: true,
   async asyncData ({ $axios, params }) {
     // Get latest blocks
-    const getBlock = await $axios.$get(process.env.CACHE_URL + '/block/' + params.index)
+    const getBlock = await $axios.$get(process.env.CACHE_API + '/block/' + params.index)
 
     getBlock.timestamp = moment(getBlock.timestamp).format('DD-MM-YY HH:MM:SS')
 
     // Get tx related to
-    const getTxs = await $axios.$get(process.env.CACHE_URL + '/transaction/block/' + params.index)
+    const getTxs = await $axios.$get(process.env.CACHE_API + '/transaction/block/' + params.index)
 
     if (getTxs.length >= 1) {
       getTxs.forEach((tx) => {

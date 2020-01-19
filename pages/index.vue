@@ -1,19 +1,22 @@
 <template>
   <div>
     <v-row>
-      <v-col
-        sm="12"
-        md="12"
-        lg="12"
-      >
-        <v-card>
+      <v-col>
+        <v-card
+          :loading="!chartLoaded"
+          loader-height="10"
+        >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('home.tx_stats') }}
           </v-card-title>
           <v-card-text>
-            <div class="chart">
-              <lineChart :data="chartData" :options="chartOptions" />
-            </div>
+            <figure class="chart">
+              <lineChart
+                v-if="chartLoaded"
+                :chartData="chartData"
+                :chartOptions="chartOptions"
+              />
+            </figure>
           </v-card-text>
           <v-card-actions />
         </v-card>
@@ -21,88 +24,86 @@
     </v-row>
 
     <v-row>
-      <v-col
-        sm="6"
-        md="6"
-        lg="6"
-      >
-        <v-card>
+      <v-col>
+        <v-card
+          :loading="!blocksLoaded"
+          loader-height="10"
+        >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('home.latest_blocks') }}
           </v-card-title>
           <v-card-text>
-            <v-simple-table>
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-left">
-                      {{ $t('explorer.index') }}
-                    </th>
-                    <th class="text-center">
-                      {{ $t('explorer.tx') }}
-                    </th>
-                    <th class="text-right">
-                      {{ $t('explorer.timestamp') }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="block in getBlocks" :key="block.index">
-                    <td><a :href="'block/' + block.index">{{ block.index }}</a></td>
-                    <td class="text-center">
-                      {{ block.count }}
-                    </td>
-                    <td class="text-right">
-                      {{ block.timestamp }}
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
+            <v-simple-table v-if="blocksLoaded">
+              <thead>
+                <tr>
+                  <th class="text-left">
+                    {{ $t('explorer.index') }}
+                  </th>
+                  <th class="text-left">
+                    {{ $t('explorer.generator') }}
+                  </th>
+                  <th class="text-center">
+                    {{ $t('explorer.tx') }}
+                  </th>
+                  <th class="text-right">
+                    {{ $t('explorer.timestamp') }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="block in latestBlocks" :key="block.height">
+                  <td><a :href="'block/' + block.height">{{ block.height }}</a></td>
+                  <td>
+                    <a :href="'/address/' + block.generator">{{ block.generator }}</a>
+                  </td>
+                  <td class="text-center">
+                    {{ block.transactionCount }}
+                  </td>
+                  <td class="text-right">
+                    {{ block.timestamp }}
+                  </td>
+                </tr>
+              </tbody>
             </v-simple-table>
           </v-card-text>
           <v-card-actions />
         </v-card>
       </v-col>
 
-      <v-col
-        sm="6"
-        md="6"
-        lg="6"
-      >
-        <v-card>
+      <v-col>
+        <v-card
+          :loading="!txLoaded"
+          loader-height="10"
+        >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('home.unconfirmed_tx') }}
           </v-card-title>
           <v-card-text>
-            <v-simple-table>
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-left">
-                      {{ $t('explorer.id') }}
-                    </th>
-                    <th class="text-center">
-                      {{ $t('explorer.sender') }}
-                    </th>
-                    <th class="text-right">
-                      {{ $t('explorer.fee') }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="tx in getUnconfirmedTx" :key="tx.id">
-                    <td>
-                      <a :href="'/transaction/' + tx.id">{{ tx.id }}</a>
-                    </td>
-                    <td class="text-center">
-                      <a :href="'/address/' + tx.sender">{{ tx.sender }}</a>
-                    </td>
-                    <td class="text-right">
-                      {{ tx.fee / 10000000 }}
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
+            <v-simple-table v-if="txLoaded">
+              <thead>
+                <tr>
+                  <th class="text-left">
+                    {{ $t('explorer.id') }}
+                  </th>
+                  <th class="text-center">
+                    {{ $t('explorer.sender') }}
+                  </th>
+                  <th class="text-right">
+                    {{ $t('explorer.fee') }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="tx in unconfirmedTxs" :key="tx.id">
+                  <td>{{ tx.id }}</td>
+                  <td class="text-center">
+                    <a :href="'/address/' + tx.sender">{{ tx.sender }}</a>
+                  </td>
+                  <td class="text-right">
+                    {{ tx.fee / 10000000 }}
+                  </td>
+                </tr>
+              </tbody>
             </v-simple-table>
           </v-card-text>
           <v-card-actions />
@@ -122,36 +123,12 @@ export default {
   },
   data () {
     return {
-      chartData: [],
-      chartOptions: [],
-      getBlocks: [],
-      getUnconfirmedTx: []
-    }
-  },
-  watchQuery: true,
-  async asyncData ({ $axios }) {
-    // Get chart data
-    const getTx = await $axios.$get(process.env.CACHE_URL + '/stats/transaction/week')
-
-    // Get latest blocks
-    const getBlocks = await $axios.$get(process.env.CACHE_URL + '/block/last/5')
-
-    getBlocks.forEach((block) => {
-      block.timestamp = moment(block.timestamp).format('DD-MM-YY HH:MM:SS')
-    })
-
-    // Get unconfirmed tx
-    const getUnconfirmedTx = await $axios.$get('https://node.lto.cloud/transactions/unconfirmed')
-
-    // Truncate
-    getUnconfirmedTx.forEach((tx) => {
-      tx.id = tx.id.substring(0, 12) + '...'
-      tx.sender = tx.sender.substring(0, 12) + '...'
-    })
-
-    return {
+      networkHeight: 0,
+      chartLoaded: false,
+      blocksLoaded: false,
+      txLoaded: false,
       chartData: {
-        labels: getTx.map(data => moment(data.period)),
+        labels: null,
         datasets: [
           {
             backgroundColor: 'rgba(249, 246, 252, .6)',
@@ -160,7 +137,7 @@ export default {
             pointBorderWidth: '0',
             pointRotation: '45',
             spanGaps: true,
-            data: getTx.map(data => data.count)
+            data: null
           }
         ]
       },
@@ -195,7 +172,7 @@ export default {
               callback (value, chart) {
                 return value.toLocaleString(undefined, {
                   minimumFractionDigits: 0,
-                  maximumFractionDigits: 10
+                  maximumFractionDigits: 2
                 })
               }
             },
@@ -208,7 +185,7 @@ export default {
         tooltips: {
           bodyFontColor: '#1f1f1f',
           bodySpacing: 5,
-          bodyFontSize: 13,
+          bodyFontSize: 15,
           bodyFontStyle: 'normal',
           titleFontColor: '#1f1f1f',
           titleSpacing: 5,
@@ -225,7 +202,7 @@ export default {
             title (value, chart) {
               return value[0].yLabel.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
-                maximumFractionDigits: 10
+                maximumFractionDigits: 2
               })
             },
             label (value, chart) {
@@ -241,11 +218,54 @@ export default {
           easing: 'easeOutQuint'
         }
       },
-      getBlocks,
-      getUnconfirmedTx
+      latestBlocks: [],
+      unconfirmedTxs: []
+    }
+  },
+  watchQuery: true,
+  async asyncData ({ $axios }) {
+    const res = await $axios.$get(process.env.LB_API + '/blocks/height', {
+      timeout: process.env.AXIOS_TIMEOUT
+    })
+
+    const networkHeight = parseInt(res.height)
+
+    return {
+      networkHeight
     }
   },
   mounted () {
+    this.loadChart()
+    this.latestBlocksData()
+    this.unconfirmedTx()
+  },
+  methods: {
+    async loadChart () {
+      const res = await this.$axios.$get(process.env.CACHE_API + '/stats/transaction/week')
+
+      this.chartData.labels = res.map(l => moment(l.period))
+      this.chartData.datasets[0].data = res.map(d => d.count)
+      this.chartLoaded = true
+    },
+    async latestBlocksData () {
+      const start = +this.networkHeight - process.env.LATEST_BLOCKS
+      const end = +this.networkHeight
+
+      const blocks = await this.$axios.$get(process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end)
+
+      blocks.reverse().forEach((block) => {
+        block.timestamp = moment(block.timestamp).fromNow()
+      })
+
+      this.latestBlocks = blocks || []
+      this.blocksLoaded = true
+    },
+    async unconfirmedTx () {
+      const txs = await this.$axios.$get(process.env.LB_API + '/transactions/unconfirmed')
+
+      this.unconfirmedTxs = txs || []
+      this.txLoaded = true
+    }
   }
 }
 </script>

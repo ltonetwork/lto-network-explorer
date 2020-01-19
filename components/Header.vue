@@ -73,7 +73,7 @@
                 rounded
                 label="Search for a transaction ID, address or block"
                 prepend-inner-icon="mdi-magnify"
-                background-color="#30195d"
+                background-color="#44297d"
                 color="#6e5f8e"
               />
             </v-col>
@@ -83,7 +83,7 @@
                 outlined
                 rounded
                 flat
-                color="#30195d"
+                color="#44297d"
                 height="50"
               >
                 Calculator
@@ -182,8 +182,13 @@ export default {
         },
         {
           title: this.$t('menu.nodes'),
-          icon: 'mdi-layers',
+          icon: 'mdi-hexagon-slice-6',
           to: '/nodes'
+        },
+        {
+          title: this.$t('menu.staking'),
+          icon: 'mdi-layers',
+          to: '/staking'
         },
         {
           title: this.$t('menu.distribution'),

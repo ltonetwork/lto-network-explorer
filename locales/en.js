@@ -4,6 +4,7 @@ export default {
   menu: {
     overview: 'Network Dashboard',
     nodes: 'Nodes Monitor',
+    staking: 'Staking Overview',
     distribution: 'Token Distribution',
     wallet: 'Web Wallet'
   },
@@ -21,7 +22,7 @@ export default {
     generators: 'Block Forgers'
   },
   block: {
-    block: 'Block'
+    title: 'Block'
   },
   explorer: {
     index: 'height',
@@ -41,8 +42,17 @@ export default {
 
   },
   nodes: {
-    nodes: 'Nodes Overview'
+    title: 'Nodes Monitor'
   },
+  staking: {
+    title: 'Staking Overview',
+    stats: 'Share Overview'
+  },
+  distribution: {
+    title: 'Top 100 LTO Holders',
+    stats: 'Share Overview'
+  },
+
   links: {
     wallet: 'LTO Wallet',
     home: 'LTO Network',

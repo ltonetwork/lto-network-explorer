@@ -1,25 +1,25 @@
 <template>
   <div>
     <v-row>
-      <v-col
-        sm="12"
-        md="12"
-        lg="12"
-      >
-        <v-card>
+      <v-col>
+        <v-card
+          :loading="!nodesLoaded"
+        >
           <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('nodes.nodes') }}
+            {{ $t('nodes.title') }}
           </v-card-title>
           <v-card-text>
             <v-data-table
               :headers="nodesTableHeader"
-              :items="getNodes"
-              :sort-by="['height', 'asc']"
+              :items="allNodes"
+              :sort-by="['height']"
+              :sort-desc="[false]"
               :expanded.sync="expanded"
               show-expand
               single-expand
               item-key="address"
               items-per-page="100"
+              calculate-widths
             >
               <template v-slot:expanded-item="{ item }">
                 <v-simple-table
@@ -96,19 +96,19 @@
               </template>
 
               <template v-slot:item.p2p="{ item }">
-                <v-chip :color="getPortColor(item.p2p)" dark>
+                <v-chip :color="determinePortColor(item.p2p)" dark>
                   {{ item.p2p }}
                 </v-chip>
               </template>
 
               <template v-slot:item.api="{ item }">
-                <v-chip :color="getPortColor(item.api)" dark>
+                <v-chip :color="determinePortColor(item.api)" dark>
                   {{ item.api }}
                 </v-chip>
               </template>
 
               <template v-slot:item.uptime="{ item }">
-                <v-chip :color="getScoreColor(item.api, item.uptime)" dark>
+                <v-chip :color="determineScoreColor(item.api, item.uptime)" dark>
                   {{ item.uptime }}
                 </v-chip>
               </template>
@@ -123,15 +123,14 @@
 
 <script>
 import moment from 'moment'
-import axios from 'axios'
 
 export default {
   components: {
   },
   data () {
     return {
-      expanded: [],
-      getNodes: [],
+      nodesLoaded: false,
+      allNodes: [],
       nodesTableHeader: [
         {
           text: 'Name',
@@ -164,24 +163,14 @@ export default {
           value: 'uptime'
         }
       ],
+      expanded: [],
       nodeHeight: 'N/A'
     }
   },
-  async asyncData ({ $axios }) {
-    // Get nodes
-    const getNodes = await $axios.$get(process.env.NETWORK_API + '/nodes/all')
+  async mounted () {
+    await this.getNodes()
 
-    getNodes.forEach((node) => {
-      node.updated = moment(node.updated).format('DD-MM-YY HH:MM:SS')
-      node.created = moment(node.created).format('DD-MM-YY HH:MM:SS')
-    })
-
-    return {
-      getNodes
-    }
-  },
-  created () {
-    this.getNodes.forEach(async (node) => {
+    this.allNodes.forEach(async (node) => {
       if (node.api === 1) {
         node.height = await this.getNodeHeight(node.ip, +node.port + 1)
       } else {
@@ -190,21 +179,35 @@ export default {
     })
   },
   methods: {
+    async getNodes () {
+      const res = await this.$axios.$get(process.env.NETWORK_API + '/nodes/all', {
+        timeout: process.env.AXIOS_TIMEOUT
+      })
+
+      res.forEach((node) => {
+        node.updated = moment(node.updated).format('DD-MM-YY HH:MM:SS')
+        node.created = moment(node.created).format('DD-MM-YY HH:MM:SS')
+      })
+
+      this.allNodes = res
+      this.nodesLoaded = true
+    },
     async getNodeHeight (host, port) {
       try {
-        const res = await axios.get('http://' + host + ':' + port + '/node/status', {
-          timeout: process.env.AXIOS_TIMEOUT
+        const res = await this.$axios.$get('http://' + host + ':' + port + '/node/status', {
+          timeout: 3000
         })
-        return res.data.stateHeight
+
+        return res.stateHeight
       } catch {
         return 'N/A'
       }
     },
-    getPortColor (value) {
+    determinePortColor (value) {
       if (value === 0) { return 'red' }
       if (value === 1) { return 'green' }
     },
-    getScoreColor (api, value) {
+    determineScoreColor (api, value) {
       let score = 0
 
       for (let i = 0; i < value.length; i++) {
