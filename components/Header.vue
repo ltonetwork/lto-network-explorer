@@ -178,7 +178,7 @@ export default {
         {
           title: this.$t('menu.overview'),
           icon: 'mdi-cube-outline',
-          to: '/overview'
+          to: '/'
         },
         {
           title: this.$t('menu.nodes'),

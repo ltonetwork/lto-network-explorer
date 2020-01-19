@@ -2,7 +2,7 @@
 
 export default {
   menu: {
-    overview: 'Network DAshboard',
+    overview: 'Network Dashboard',
     nodes: 'Nodes Monitor',
     distribution: 'Token Distribution',
     wallet: 'Web Wallet'
@@ -39,6 +39,9 @@ export default {
     confirmed: 'confirmed',
     target: 'target'
 
+  },
+  nodes: {
+    nodes: 'Nodes Overview'
   },
   links: {
     wallet: 'LTO Wallet',
