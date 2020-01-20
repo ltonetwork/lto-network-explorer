@@ -24,8 +24,15 @@
                   {{ item.label || 'N/A' }}
                 </v-chip>
               </template>
+
               <template v-slot:item.generator="{ item }">
                 <a :href="'/address/' + item.generator">{{ item.generator }}</a>
+              </template>
+
+              <template v-slot:item.payout="{ item }">
+                <v-chip :color="determineColor(item.payout)" dark>
+                  {{ item.payout }}
+                </v-chip>
               </template>
 
               <template v-slot:item.pool="{ item }">
@@ -166,6 +173,11 @@ export default {
           value: 'generator'
         },
         {
+          text: 'Payout Support',
+          align: 'center',
+          value: 'payout'
+        },
+        {
           text: 'Pool',
           align: 'center',
           value: 'pool'
@@ -204,6 +216,10 @@ export default {
         res = []
       }
 
+      res.forEach((r) => {
+        r.payout = 1
+      })
+
       this.allGenerators = res
       this.generatorsLoaded = true
     },
@@ -219,6 +235,9 @@ export default {
       })
 
       this.chartLoaded = true
+    },
+    determineColor (value) {
+      if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
     }
   }
 }
