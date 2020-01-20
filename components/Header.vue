@@ -45,7 +45,7 @@
         </v-toolbar-items>
       </v-row>
 
-      <v-row justify="center">
+      <v-row class="mt-10 mb-5" justify="center">
         <v-col cols="6">
           <v-text-field
             solo-inverted

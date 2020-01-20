@@ -13,7 +13,7 @@
             <v-data-table
               :headers="addressesTableHeader"
               :items="topAddresses"
-              :sort-by="['effective']"
+              :sort-by="['']"
               :sort-desc="[true]"
               :items-per-page="20"
               item-key="address"
@@ -76,7 +76,7 @@
             <figure class="chart">
               <DoughnutChart
                 v-if="chartLoaded"
-                :holderChartData="holderChartData"
+                :chartData="chartData"
                 :chartOptions="chartOptions"
                 :height="300"
               />
@@ -107,7 +107,7 @@ export default {
       chartLoaded: false,
       addressesLoaded: false,
       topAddresses: [],
-      holderChartData: {
+      chartData: {
         type: 'doughnut',
         datasets: [{
           data: [],
@@ -207,13 +207,13 @@ export default {
     },
     loadChart () {
       this.topAddresses.forEach((address) => {
-        this.holderChartData.labels.push(address.address)
-        this.holderChartData.datasets[0].data.push(address.effective)
+        this.chartData.labels.push(address.address)
+        this.chartData.datasets[0].data.push(address.effective)
 
         const r = Math.random()
         const s = 180
         const color = 'rgba(126, 12,' + Math.round(r * s) + ',' + r.toFixed(1) + ')'
-        this.holderChartData.datasets[0].backgroundColor.push(color)
+        this.chartData.datasets[0].backgroundColor.push(color)
       })
 
       this.chartLoaded = true

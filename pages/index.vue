@@ -246,7 +246,9 @@ export default {
   },
   methods: {
     async loadChart () {
-      const res = await this.$axios.$get(process.env.CACHE_API + '/stats/transaction/week')
+      const res = await this.$axios.$get(process.env.CACHE_API + '/stats/transaction/week', {
+        timeout: process.env.AXIOS_TIMEOUT
+      })
 
       this.chartData.labels = res.map(l => moment(l.period))
       this.chartData.datasets[0].data = res.map(d => d.count)
@@ -256,7 +258,9 @@ export default {
       const start = +this.networkHeight - process.env.LATEST_BLOCKS
       const end = +this.networkHeight
 
-      const blocks = await this.$axios.$get(process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end)
+      const blocks = await this.$axios.$get(process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end, {
+        timeout: process.env.AXIOS_TIMEOUT
+      })
 
       blocks.reverse().forEach((block) => {
         block.timestamp = moment(block.timestamp).fromNow()
@@ -266,7 +270,9 @@ export default {
       this.blocksLoaded = true
     },
     async unconfirmedTx () {
-      const txs = await this.$axios.$get(process.env.LB_API + '/transactions/unconfirmed')
+      const txs = await this.$axios.$get(process.env.LB_API + '/transactions/unconfirmed', {
+        timeout: process.env.AXIOS_TIMEOUT
+      })
 
       this.unconfirmedTxs = txs || []
       this.txLoaded = true

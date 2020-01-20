@@ -54,12 +54,12 @@
 
         <v-spacer />
 
-        <v-icon dark x-large class="mr-5">
-          mdi-calculator
-        </v-icon>
-
         <v-icon dark x-large>
           mdi-magnify
+        </v-icon>
+
+        <v-icon dark x-large class="mr-5">
+          mdi-calculator
         </v-icon>
       </v-toolbar>
     </v-container>

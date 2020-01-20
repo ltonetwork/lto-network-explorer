@@ -19,6 +19,7 @@ export default {
     title: 'Calculator'
   },
   network: {
+    title: 'Explorer',
     latest_blocks: 'Latest Blocks',
     tx_stats: 'Transactions Statistics',
     unconfirmed_tx: 'Unconfirmed Transactions',

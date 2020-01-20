@@ -22,10 +22,11 @@
         <v-spacer />
 
         <v-icon dark x-large>
-          mdi-calculator
-        </v-icon>
-        <v-icon dark x-large>
           mdi-magnify
+        </v-icon>
+
+        <v-icon dark x-large>
+          mdi-calculator
         </v-icon>
 
         <v-menu

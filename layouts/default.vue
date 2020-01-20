@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Header from '~/components/Header'
+import Header from '~/components/Header2'
 import Panel from '~/components/Panel'
 import Footer from '~/components/Footer'
 

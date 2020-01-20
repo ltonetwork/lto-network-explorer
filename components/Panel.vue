@@ -8,6 +8,13 @@
               {{ $t('panel.nodes') }}
             </p>
 
+            <h2
+              style="color:#1a004b;"
+              class="mb-0"
+            >
+              {{ nodes }}
+            </h2>
+
             <v-spacer />
             <v-sparkline
               :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
@@ -24,6 +31,7 @@
             <p class="caption mt-0 mb-2">
               {{ $t('panel.staked') }}
             </p>
+
             <h2
               style="color:#1a004b;"
               class="mb-0"
@@ -32,6 +40,7 @@
             </h2>
 
             <v-spacer />
+
             <v-sparkline
               :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
               :line-width="4"
@@ -46,6 +55,7 @@
             <p class="caption mt-0 mb-2">
               {{ $t('panel.price') }}
             </p>
+
             <h2
               style="color:#1a004b;"
               class="mb-0"
@@ -54,6 +64,7 @@
             </h2>
 
             <v-spacer />
+
             <v-sparkline
               :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
               :line-width="4"
@@ -68,6 +79,7 @@
             <p class="caption mt-0 mb-2">
               {{ $t('panel.market') }}
             </p>
+
             <h2
               style="color:#1a004b;"
               class="mb-0"
@@ -76,6 +88,7 @@
             </h2>
 
             <v-spacer />
+
             <v-sparkline
               :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
               :line-width="4"

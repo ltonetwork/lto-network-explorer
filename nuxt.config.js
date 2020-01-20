@@ -14,7 +14,8 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap' }
     ]
   },
   /*
@@ -55,10 +56,15 @@ export default {
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ['@/assets/variables.scss'],
     theme: {
       dark: false,
       themes: {
+        light: {
+          primary: '#804BC9',
+          secondary: '#17054B',
+          gray: '#75828F'
+        }
       }
     }
   },
