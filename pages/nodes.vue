@@ -20,6 +20,7 @@
               item-key="address"
               items-per-page="100"
               calculate-widths
+              dense
             >
               <template v-slot:expanded-item="{ item }">
                 <v-simple-table
@@ -108,9 +109,12 @@
               </template>
 
               <template v-slot:item.uptime="{ item }">
-                  <v-icon v-for="(score, index) in item.uptime" v-bind:key="index"  :color="determineColor(score)" dark x-small>
-                    {{ score }}
-                  </v-icon>
+                <span
+                  v-for="(k, v) in item.uptime"
+                  v-bind:key="v[k]"
+                  :class="determineColor(v) + '--text'"
+                  class="d-table-cell display-1 font-weight-black pb-5"
+                >.</span>
               </template>
             </v-data-table>
           </v-card-text>
@@ -210,8 +214,7 @@ export default {
       }
     },
     determineColor (value) {
-      if (value === 0) { return 'red' }
-      if (value === 1) { return 'green' }
+      if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
     }
   }
 }
