@@ -4,7 +4,7 @@
       <v-col>
         <v-card
           :loading="!chartLoaded"
-          ::loader-height="10"
+          :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('network.tx_stats') }}
@@ -27,7 +27,7 @@
       <v-col>
         <v-card
           :loading="!blocksLoaded"
-          ::loader-height="10"
+          :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('network.latest_blocks') }}
@@ -73,7 +73,7 @@
       <v-col>
         <v-card
           :loading="!txLoaded"
-          ::loader-height="10"
+          :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('network.unconfirmed_tx') }}

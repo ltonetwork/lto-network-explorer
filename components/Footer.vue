@@ -16,7 +16,7 @@
           <v-divider class="pb-10" />
 
           <v-select
-            :items="this.locales"
+            :items="locales"
             dark
             label="Langauge"
             prepend-icon="mdi-earth"

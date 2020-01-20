@@ -78,7 +78,7 @@
                 v-if="chartLoaded"
                 :holderChartData="holderChartData"
                 :chartOptions="chartOptions"
-                ::height="300"
+                :height="300"
               />
             </figure>
           </v-card-text>
