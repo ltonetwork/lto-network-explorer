@@ -8,7 +8,7 @@
       >
         <v-card>
           <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('block.block') }} #{{ blockIndex }}
+            {{ $t('block.title') }} #{{ blockIndex }}
           </v-card-title>
           <v-card-text>
             <v-simple-table>
@@ -85,7 +85,13 @@
 
 <script>
 import moment from 'moment'
+
 export default {
+  head () {
+    return {
+      title: this.$t('blocks.title') + this.blockIndex
+    }
+  },
   components: {
   },
   data () {
@@ -120,7 +126,6 @@ export default {
   validate ({ params }) {
     return !isNaN(params.index)
   },
-  // watchQuery: true,
   async asyncData ({ $axios, params }) {
     // Get latest blocks
     const getBlock = await $axios.$get(process.env.CACHE_API + '/block/' + params.index)

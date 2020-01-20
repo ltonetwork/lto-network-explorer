@@ -7,7 +7,7 @@
           loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('home.tx_stats') }}
+            {{ $t('network.tx_stats') }}
           </v-card-title>
           <v-card-text>
             <figure class="chart">
@@ -30,7 +30,7 @@
           loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('home.latest_blocks') }}
+            {{ $t('network.latest_blocks') }}
           </v-card-title>
           <v-card-text>
             <v-simple-table v-if="blocksLoaded">
@@ -76,7 +76,7 @@
           loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('home.unconfirmed_tx') }}
+            {{ $t('network.unconfirmed_tx') }}
           </v-card-title>
           <v-card-text>
             <v-simple-table v-if="txLoaded">
@@ -118,6 +118,11 @@ import moment from 'moment'
 import LineChart from '~/components/LineChart'
 
 export default {
+  head () {
+    return {
+      title: this.$t('network.title')
+    }
+  },
   components: {
     LineChart
   },

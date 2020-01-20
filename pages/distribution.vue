@@ -76,7 +76,7 @@
             <figure class="chart">
               <DoughnutChart
                 v-if="chartLoaded"
-                :chartData="chartData"
+                :holderChartData="holderChartData"
                 :chartOptions="chartOptions"
                 height="300"
               />
@@ -94,6 +94,11 @@ import moment from 'moment'
 import DoughnutChart from '~/components/DoughnutChart'
 
 export default {
+  head () {
+    return {
+      title: this.$t('distribution.title')
+    }
+  },
   components: {
     DoughnutChart
   },
@@ -102,7 +107,7 @@ export default {
       chartLoaded: false,
       addressesLoaded: false,
       topAddresses: [],
-      chartData: {
+      holderChartData: {
         type: 'doughnut',
         datasets: [{
           data: [],
@@ -202,13 +207,13 @@ export default {
     },
     loadChart () {
       this.topAddresses.forEach((address) => {
-        this.chartData.labels.push(address.address)
-        this.chartData.datasets[0].data.push(address.effective)
+        this.holderChartData.labels.push(address.address)
+        this.holderChartData.datasets[0].data.push(address.effective)
 
         const r = Math.random()
         const s = 180
         const color = 'rgba(126, 12,' + Math.round(r * s) + ',' + r.toFixed(1) + ')'
-        this.chartData.datasets[0].backgroundColor.push(color)
+        this.holderChartData.datasets[0].backgroundColor.push(color)
       })
 
       this.chartLoaded = true

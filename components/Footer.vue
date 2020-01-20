@@ -6,43 +6,44 @@
     flat
   >
     <v-container>
-      <v-row
-        align="center"
-        align-content="center"
-      >
-        <v-col
-          sm="6"
-          md="3"
-          lg="3"
-        >
-          <v-toolbar
-            floating
-            color="#17054B"
-            flat
-            class="white--text"
+      <v-row align="center" align-content="center">
+        <v-col cols="4">
+          <v-toolbar-title class="mr-5 white--text" style="text-transform: uppercase;">
+            <img :src="require('@/assets/logo.png')" class="mr-3" height="30" style="margin-bottom:-7px;">
+            <span class="font-weight-black">LTO</span> Explorer
+          </v-toolbar-title>
+
+          <v-divider class="pb-10" />
+
+          <v-select
+            :items="this.locales"
+            dark
+            label="Langauge"
+            prepend-icon="mdi-earth"
           >
-            <img :src="require('@/assets/logo.png')" class="mr-3" height="40">
-            <v-toolbar-title
-              class="mr-5"
-            >
-              <span class="font-weight-black">LTO</span> Explorer
-            </v-toolbar-title>
-          </v-toolbar>
+            <template v-slot:item="{ item, attrs, on }">
+              <v-list-item
+                v-bind="attrs"
+                v-on="on"
+                :key="item.code"
+                :to="switchLocalePath(item.code)"
+                tag="nuxt-link"
+              >
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-text="item.name"
+                  />
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+          </v-select>
         </v-col>
-        <v-col
-          sm="6"
-          md="3"
-          lg="3"
-        >
+        <v-col cols="3">
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.links') }}</span>
 
-          <v-list
-            color="#17054B"
-            flat
-            dense
-          >
+          <v-list color="#17054B" flat dense>
             <v-list-item
               v-for="(link, i) in links"
               :key="i"
@@ -57,11 +58,7 @@
           </v-list>
         </v-col>
 
-        <v-col
-          sm="6"
-          md="3"
-          lg="3"
-        >
+        <v-col cols="3">
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.resources') }}</span>
@@ -85,11 +82,7 @@
           </v-list>
         </v-col>
 
-        <v-col
-          sm="6"
-          md="3"
-          lg="3"
-        >
+        <v-col cols="2">
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.social') }}</span>

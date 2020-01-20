@@ -15,7 +15,10 @@ export default {
     market: 'Market Valuation'
 
   },
-  home: {
+  calculator: {
+    title: 'Calculator'
+  },
+  network: {
     latest_blocks: 'Latest Blocks',
     tx_stats: 'Transactions Statistics',
     unconfirmed_tx: 'Unconfirmed Transactions',
@@ -49,7 +52,7 @@ export default {
     stats: 'Share Overview'
   },
   distribution: {
-    title: 'Top 100 LTO Holders',
+    title: 'Top Token Holders',
     stats: 'Share Overview'
   },
 

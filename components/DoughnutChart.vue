@@ -1,8 +1,10 @@
-import { Line, mixins } from 'vue-chartjs'
+
+<script>
+import { Doughnut, mixins } from 'vue-chartjs'
 const { reactiveProp } = mixins
 
 export default {
-  extends: Line,
+  extends: Doughnut,
   mixins: [reactiveProp],
   props: {
     chartData: {
@@ -18,3 +20,4 @@ export default {
     this.renderChart(this.chartData, this.chartOptions)
   }
 }
+</script>

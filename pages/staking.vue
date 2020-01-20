@@ -95,6 +95,11 @@
 import DoughnutChart from '~/components/DoughnutChart'
 
 export default {
+  head () {
+    return {
+      title: this.$t('staking.title')
+    }
+  },
   components: {
     DoughnutChart
   },

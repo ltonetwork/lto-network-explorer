@@ -2,11 +2,19 @@
   <v-app-bar
     color="#17054B"
     class="white--text"
-    height="300px"
+    height="250px"
   >
     <v-container>
-      <v-row>
-        <v-toolbar-title min-height="55px" class="mr-5" style="text-transform: uppercase;font-size:28px;">
+      <v-toolbar
+        color="#17054B"
+        class="white--text"
+        height="250px"
+        flat
+      >
+        <v-toolbar-title
+          class="mr-5"
+          style="text-transform: uppercase;font-size:28px;"
+        >
           <img :src="require('@/assets/logo.png')" class="mr-3" height="40" style="margin-bottom:-7px;">
           <span class="font-weight-black">LTO</span> Explorer
         </v-toolbar-title>
@@ -43,35 +51,17 @@
             </v-icon>
           </v-btn>
         </v-toolbar-items>
-      </v-row>
 
-      <v-row justify="center">
-        <v-col cols="6">
-          <v-text-field
-            solo-inverted
-            hide-details
-            flat
-            rounded
-            label="Search for a transaction ID, address or block"
-            prepend-inner-icon="mdi-magnify"
-            background-color="#44297d"
-            color="#6e5f8e"
-          />
-        </v-col>
+        <v-spacer />
 
-        <v-col cols="2">
-          <v-btn
-            :v-on="on"
-            outlined
-            rounded
-            flat
-            color="#44297d"
-            height="50"
-          >
-            Calculator
-          </v-btn>
-        </v-col>
-      </v-row>
+        <v-icon dark x-large class="mr-5">
+          mdi-calculator
+        </v-icon>
+
+        <v-icon dark x-large>
+          mdi-magnify
+        </v-icon>
+      </v-toolbar>
     </v-container>
   </v-app-bar>
 </template>
