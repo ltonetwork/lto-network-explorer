@@ -10,13 +10,21 @@
             {{ $t('network.tx_stats') }}
           </v-card-title>
           <v-card-text>
-            <figure class="chart">
-              <lineChart
-                v-if="chartLoaded"
-                :chartData="chartData"
-                :chartOptions="chartOptions"
+            <v-sheet>
+              <v-skeleton-loader
+                v-if="!chartLoaded"
+                class="mx-auto"
+                type="image"
+                loading
               />
-            </figure>
+              <figure class="chart">
+                <lineChart
+                  v-if="chartLoaded"
+                  :chartData="chartData"
+                  :chartOptions="chartOptions"
+                />
+              </figure>
+            </v-sheet>
           </v-card-text>
           <v-card-actions />
         </v-card>
@@ -32,41 +40,49 @@
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('network.latest_blocks') }}
           </v-card-title>
-          <v-card-text>
-            <v-simple-table v-if="blocksLoaded">
-              <thead>
-                <tr>
-                  <th class="text-left">
-                    {{ $t('explorer.index') }}
-                  </th>
-                  <th class="text-left">
-                    {{ $t('explorer.generator') }}
-                  </th>
-                  <th class="text-center">
-                    {{ $t('explorer.tx') }}
-                  </th>
-                  <th class="text-right">
-                    {{ $t('explorer.timestamp') }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="block in latestBlocks" :key="block.height">
-                  <td><a :href="'block/' + block.height">{{ block.height }}</a></td>
-                  <td>
-                    <a :href="'/address/' + block.generator">{{ block.generator }}</a>
-                  </td>
-                  <td class="text-center">
-                    {{ block.transactionCount }}
-                  </td>
-                  <td class="text-right">
-                    {{ block.timestamp }}
-                  </td>
-                </tr>
-              </tbody>
-            </v-simple-table>
-          </v-card-text>
-          <v-card-actions />
+          <v-sheet>
+            <v-card-text>
+              <v-simple-table v-if="blocksLoaded">
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      {{ $t('explorer.index') }}
+                    </th>
+                    <th class="text-left">
+                      {{ $t('explorer.generator') }}
+                    </th>
+                    <th class="text-center">
+                      {{ $t('explorer.tx') }}
+                    </th>
+                    <th class="text-right">
+                      {{ $t('explorer.timestamp') }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="block in latestBlocks" :key="block.height">
+                    <td><a :href="'block/' + block.height">{{ block.height }}</a></td>
+                    <td>
+                      <a :href="'/address/' + block.generator">{{ block.generator }}</a>
+                    </td>
+                    <td class="text-center">
+                      {{ block.transactionCount }}
+                    </td>
+                    <td class="text-right">
+                      {{ block.timestamp }}
+                    </td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+
+              <v-skeleton-loader
+                v-if="!blocksLoaded"
+                class="mx-auto"
+                type="table"
+                loading
+              />
+            </v-card-text>
+          </v-sheet>
         </v-card>
       </v-col>
 
@@ -78,35 +94,43 @@
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('network.unconfirmed_tx') }}
           </v-card-title>
-          <v-card-text>
-            <v-simple-table v-if="txLoaded">
-              <thead>
-                <tr>
-                  <th class="text-left">
-                    {{ $t('explorer.id') }}
-                  </th>
-                  <th class="text-center">
-                    {{ $t('explorer.sender') }}
-                  </th>
-                  <th class="text-right">
-                    {{ $t('explorer.fee') }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="tx in unconfirmedTxs" :key="tx.id">
-                  <td>{{ tx.id }}</td>
-                  <td class="text-center">
-                    <a :href="'/address/' + tx.sender">{{ tx.sender }}</a>
-                  </td>
-                  <td class="text-right">
-                    {{ tx.fee / 10000000 }}
-                  </td>
-                </tr>
-              </tbody>
-            </v-simple-table>
-          </v-card-text>
-          <v-card-actions />
+          <v-sheet>
+            <v-card-text>
+              <v-simple-table v-if="txLoaded">
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      {{ $t('explorer.id') }}
+                    </th>
+                    <th class="text-center">
+                      {{ $t('explorer.sender') }}
+                    </th>
+                    <th class="text-right">
+                      {{ $t('explorer.fee') }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="tx in unconfirmedTxs" :key="tx.id">
+                    <td>{{ tx.id }}</td>
+                    <td class="text-center">
+                      <a :href="'/address/' + tx.sender">{{ tx.sender }}</a>
+                    </td>
+                    <td class="text-right">
+                      {{ tx.fee / 10000000 }}
+                    </td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card-text>
+
+            <v-skeleton-loader
+              v-if="!txLoaded"
+              class="mx-auto"
+              type="table"
+              loading
+            />
+          </v-sheet>
         </v-card>
       </v-col>
     </v-row>

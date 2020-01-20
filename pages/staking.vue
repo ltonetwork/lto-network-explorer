@@ -9,67 +9,76 @@
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('staking.title') }}
           </v-card-title>
-          <v-card-text>
-            <v-data-table
-              :headers="generatorsTableHeader"
-              :items="allGenerators"
-              :sort-by="['share']"
-              :sort-desc="[true]"
-              :items-per-page="100"
-              item-key="generator"
-              calculate-widths
-            >
-              <template v-slot:item.label="{ item }">
-                <v-chip color="light" class="font-weight-bold">
-                  {{ item.label || 'N/A' }}
-                </v-chip>
-              </template>
+          <v-sheet>
+            <v-card-text>
+              <v-data-table
+                :headers="generatorsTableHeader"
+                :items="allGenerators"
+                :sort-by="['share']"
+                :sort-desc="[true]"
+                :items-per-page="100"
+                no-data-text=""
+                item-key="generator"
+                calculate-widths
+              >
+                <template v-slot:item.label="{ item }">
+                  <v-chip color="light" class="font-weight-bold">
+                    {{ item.label || 'N/A' }}
+                  </v-chip>
+                </template>
 
-              <template v-slot:item.generator="{ item }">
-                <a :href="'/address/' + item.generator">{{ item.generator }}</a>
-              </template>
+                <template v-slot:item.generator="{ item }">
+                  <a :href="'/address/' + item.generator">{{ item.generator }}</a>
+                </template>
 
-              <template v-slot:item.payout="{ item }">
-                <v-chip :color="determineColor(item.payout)" dark>
-                  {{ item.payout }}
-                </v-chip>
-              </template>
+                <template v-slot:item.payout="{ item }">
+                  <v-chip :color="determineColor(item.payout)" dark>
+                    {{ item.payout }}
+                  </v-chip>
+                </template>
 
-              <template v-slot:item.pool="{ item }">
-                <v-chip color="light">
-                  {{ item.pool.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }} LTO
-                </v-chip>
-              </template>
+                <template v-slot:item.pool="{ item }">
+                  <v-chip color="light">
+                    {{ item.pool.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) }} LTO
+                  </v-chip>
+                </template>
 
-              <template v-slot:item.blocks="{ item }">
-                <v-chip color="light">
-                  {{ item.blocks }}
-                </v-chip>
-              </template>
+                <template v-slot:item.blocks="{ item }">
+                  <v-chip color="light">
+                    {{ item.blocks }}
+                  </v-chip>
+                </template>
 
-              <template v-slot:item.earnings="{ item }">
-                <v-chip color="light">
-                  {{ item.earnings.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }} LTO
-                </v-chip>
-              </template>
+                <template v-slot:item.earnings="{ item }">
+                  <v-chip color="light">
+                    {{ item.earnings.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) }} LTO
+                  </v-chip>
+                </template>
 
-              <template v-slot:item.share="{ item }">
-                <v-chip color="light">
-                  {{ item.share.toLocaleString(undefined, {
-                    minimumFractionDigits: 3,
-                    maximumFractionDigits: 3
-                  }) }}%
-                </v-chip>
-              </template>
-            </v-data-table>
-          </v-card-text>
-          <v-card-actions />
+                <template v-slot:item.share="{ item }">
+                  <v-chip color="light">
+                    {{ item.share.toLocaleString(undefined, {
+                      minimumFractionDigits: 3,
+                      maximumFractionDigits: 3
+                    }) }}%
+                  </v-chip>
+                </template>
+              </v-data-table>
+            </v-card-text>
+
+            <v-skeleton-loader
+              v-if="!generatorsLoaded"
+              class="mx-auto"
+              type="table"
+              loading
+            />
+          </v-sheet>
         </v-card>
       </v-col>
 
@@ -81,17 +90,26 @@
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('staking.stats') }}
           </v-card-title>
-          <v-card-text>
-            <figure class="chart">
-              <DoughnutChart
-                v-if="chartLoaded"
-                :chartData="chartData"
-                :chartOptions="chartOptions"
-                :height="300"
-              />
-            </figure>
-          </v-card-text>
-          <v-card-actions />
+          <v-sheet>
+            <v-card-text>
+              <figure class="chart">
+                <DoughnutChart
+                  v-if="chartLoaded"
+                  :chartData="chartData"
+                  :chartOptions="chartOptions"
+                  :height="300"
+                />
+              </figure>
+            </v-card-text>
+            <v-skeleton-loader
+              v-if="!addressesLoaded"
+              class="mx-auto"
+              type="image"
+              loading
+            />
+
+            <v-sheet />
+          </v-sheet>
         </v-card>
       </v-col>
     </v-row>

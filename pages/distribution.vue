@@ -9,58 +9,67 @@
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('distribution.title') }}
           </v-card-title>
-          <v-card-text>
-            <v-data-table
-              :headers="addressesTableHeader"
-              :items="topAddresses"
-              :sort-by="['']"
-              :sort-desc="[true]"
-              :items-per-page="20"
-              item-key="address"
-              calculate-widths
-            >
-              <template v-slot:item.address="{ item }">
-                <a :href="'/address/' + item.address">{{ item.address }}</a>
-              </template>
 
-              <template v-slot:item.regular="{ item }">
-                <v-chip color="light">
-                  {{ item.regular.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }} LTO
-                </v-chip>
-              </template>
+          <v-sheet>
+            <v-card-text>
+              <v-data-table
+                :headers="addressesTableHeader"
+                :items="topAddresses"
+                :sort-by="['']"
+                :sort-desc="[true]"
+                :items-per-page="20"
+                no-data-text=""
+                item-key="address"
+                calculate-widths
+              >
+                <template v-slot:item.address="{ item }">
+                  <a :href="'/address/' + item.address">{{ item.address }}</a>
+                </template>
 
-              <template v-slot:item.generating="{ item }">
-                <v-chip color="light">
-                  {{ item.generating.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }} LTO
-                </v-chip>
-              </template>
+                <template v-slot:item.regular="{ item }">
+                  <v-chip color="light">
+                    {{ item.regular.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) }} LTO
+                  </v-chip>
+                </template>
 
-              <template v-slot:item.available="{ item }">
-                <v-chip color="light">
-                  {{ item.available.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }} LTO
-                </v-chip>
-              </template>
+                <template v-slot:item.generating="{ item }">
+                  <v-chip color="light">
+                    {{ item.generating.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) }} LTO
+                  </v-chip>
+                </template>
 
-              <template v-slot:item.effective="{ item }">
-                <v-chip color="light">
-                  {{ item.effective.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }} LTO
-                </v-chip>
-              </template>
-            </v-data-table>
-          </v-card-text>
-          <v-card-actions />
+                <template v-slot:item.available="{ item }">
+                  <v-chip color="light">
+                    {{ item.available.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) }} LTO
+                  </v-chip>
+                </template>
+
+                <template v-slot:item.effective="{ item }">
+                  <v-chip color="light">
+                    {{ item.effective.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) }} LTO
+                  </v-chip>
+                </template>
+              </v-data-table>
+            </v-card-text>
+            <v-skeleton-loader
+              v-if="!addressesLoaded"
+              class="mx-auto"
+              type="table"
+              loading
+            />
+          </v-sheet>
         </v-card>
       </v-col>
 
@@ -72,17 +81,25 @@
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('distribution.stats') }}
           </v-card-title>
-          <v-card-text>
-            <figure class="chart">
-              <DoughnutChart
-                v-if="chartLoaded"
-                :chartData="chartData"
-                :chartOptions="chartOptions"
-                :height="300"
-              />
-            </figure>
-          </v-card-text>
-          <v-card-actions />
+
+          <v-sheet>
+            <v-card-text>
+              <figure class="chart">
+                <DoughnutChart
+                  v-if="chartLoaded"
+                  :chartData="chartData"
+                  :chartOptions="chartOptions"
+                  :height="300"
+                />
+              </figure>
+            </v-card-text>
+            <v-skeleton-loader
+              v-if="!chartLoaded"
+              class="mx-auto"
+              type="image"
+              loading
+            />
+          </v-sheet>
         </v-card>
       </v-col>
     </v-row>
@@ -115,7 +132,6 @@ export default {
           label: ''
         }],
         labels: []
-
       },
       chartOptions: {
         maintainAspectRatio: true,
