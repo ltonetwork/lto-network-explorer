@@ -1,8 +1,8 @@
 <template>
   <v-app-bar
+    :height="300"
     color="#17054B"
     class="white--text"
-    height="300px"
   >
     <v-container>
       <v-row>
@@ -61,10 +61,8 @@
 
         <v-col cols="2">
           <v-btn
-            :v-on="on"
             outlined
             rounded
-            flat
             color="#44297d"
             height="50"
           >
@@ -110,13 +108,7 @@ export default {
           icon: 'mdi-wallet-outline',
           to: 'https://wallet.lto.network'
         }
-      ],
-      panel: {
-        nodes: 55,
-        staked: 450000,
-        price: 0.04,
-        market: 5000000
-      }
+      ]
     }
   }
 }

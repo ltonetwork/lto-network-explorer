@@ -21,10 +21,6 @@ export default {
     Header,
     Panel,
     Footer
-  },
-  data () {
-    return {
-    }
   }
 }
 </script>

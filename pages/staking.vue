@@ -4,7 +4,7 @@
       <v-col>
         <v-card
           :loading="!generatorsLoaded"
-          loader-height="10"
+          :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('staking.title') }}
@@ -15,8 +15,8 @@
               :items="allGenerators"
               :sort-by="['share']"
               :sort-desc="[true]"
+              :items-per-page="100"
               item-key="generator"
-              items-per-page="100"
               calculate-widths
             >
               <template v-slot:item.label="{ item }">
@@ -76,7 +76,7 @@
       <v-col>
         <v-card
           :loading="!chartLoaded"
-          loader-height="10"
+          :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('staking.stats') }}
@@ -87,7 +87,7 @@
                 v-if="chartLoaded"
                 :chartData="chartData"
                 :chartOptions="chartOptions"
-                height="300"
+                :height="300"
               />
             </figure>
           </v-card-text>

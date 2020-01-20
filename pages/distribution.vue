@@ -4,7 +4,7 @@
       <v-col>
         <v-card
           :loading="!addressesLoaded"
-          loader-height="10"
+          :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('distribution.title') }}
@@ -15,8 +15,8 @@
               :items="topAddresses"
               :sort-by="['effective']"
               :sort-desc="[true]"
+              :items-per-page="20"
               item-key="address"
-              items-per-page="20"
               calculate-widths
             >
               <template v-slot:item.address="{ item }">
@@ -67,7 +67,7 @@
       <v-col>
         <v-card
           :loading="!chartLoaded"
-          loader-height="10"
+          :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('distribution.stats') }}
@@ -78,7 +78,7 @@
                 v-if="chartLoaded"
                 :holderChartData="holderChartData"
                 :chartOptions="chartOptions"
-                height="300"
+                ::height="300"
               />
             </figure>
           </v-card-text>

@@ -11,8 +11,10 @@
               style="color:#1a004b;"
               class="subtitle-2mb-0"
             >
-              {{ panel.nodes }}
+              {{ nodes }}
             </h2>
+
+            <v-spacer />
           </v-col>
           <v-col cols="3">
             <p class="caption mt-0 mb-2">
@@ -22,7 +24,7 @@
               style="color:#1a004b;"
               class="mb-0"
             >
-              {{ panel.staked }}
+              {{ staked }}
             </h2>
           </v-col>
           <v-col cols="3">
@@ -33,7 +35,7 @@
               style="color:#1a004b;"
               class="mb-0"
             >
-              {{ panel.price }}
+              {{ price }}
             </h2>
           </v-col>
           <v-col cols="3">
@@ -44,7 +46,7 @@
               style="color:#1a004b;"
               class="mb-0"
             >
-              {{ panel.market }}
+              {{ market }}
             </h2>
           </v-col>
         </v-row>
@@ -59,12 +61,11 @@ export default {
   },
   data () {
     return {
-      panel: {
-        nodes: 55,
-        staked: 450000,
-        price: 0.04,
-        market: 5000000
-      }
+      nodes: 55,
+      staked: 450000,
+      price: 0.04,
+      market: 5000000
+
     }
   }
 }

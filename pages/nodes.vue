@@ -15,10 +15,10 @@
               :sort-by="['height']"
               :sort-desc="[false]"
               :expanded.sync="expanded"
+              :items-per-page="100"
               show-expand
               single-expand
               item-key="address"
-              items-per-page="100"
               calculate-widths
               dense
             >
