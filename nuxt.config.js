@@ -106,7 +106,7 @@ export default {
   ** Build configuration
   */
   build: {
-    publicPath: 'https://lto.services/explorer/',
+    publicPath: process.env.BASE_URL,
     /*
   ** You can extend webpack config here
   */
@@ -119,7 +119,7 @@ export default {
   router: {
     // Set the "Base" of the router.
     // https://router.vuejs.org/en/api/options.html#base
-    base: '/explorer/'
+    base: process.env.BASE_ROUTE
   },
   proxy: {
     '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: { '^/cache/': '' } },

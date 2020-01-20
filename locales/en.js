@@ -29,20 +29,20 @@ export default {
     title: 'Block'
   },
   explorer: {
-    index: 'height',
+    index: 'Height',
     id: 'ID',
-    reference: 'reference',
-    generator: 'generator',
-    sender: 'sender',
-    signature: 'signature',
-    size: 'size',
-    tx: 'transaction(s)',
-    amount: 'amount',
-    fee: 'fee',
-    version: 'version',
-    timestamp: 'timestamp',
-    confirmed: 'confirmed',
-    target: 'target'
+    reference: 'Reference',
+    generator: 'Generator',
+    sender: 'Sender',
+    signature: 'Signature',
+    size: 'Size',
+    tx: 'Transaction(s)',
+    amount: 'Amount',
+    fee: 'Fee',
+    version: 'Version',
+    timestamp: 'Timestamp',
+    confirmed: 'Confirmed',
+    target: 'Target'
 
   },
   nodes: {

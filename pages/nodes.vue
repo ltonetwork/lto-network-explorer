@@ -113,7 +113,7 @@
                   v-for="(k, v) in item.uptime"
                   v-bind:key="v[k]"
                   :class="determineColor(v) + '--text'"
-                  class="d-table-cell display-1 font-weight-black pb-5"
+                  class="d-table-cell text-center display-1 font-weight-black pb-5"
                 >.</span>
               </template>
             </v-data-table>
@@ -126,8 +126,8 @@
 </template>
 
 <script>
-import moment from 'moment'
 import https from 'https'
+import moment from 'moment'
 
 export default {
   head () {
