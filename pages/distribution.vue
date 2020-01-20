@@ -136,13 +136,7 @@ export default {
           displayColors: false,
           cornerRadius: 0,
           backgroundColor: 'rgba(255,255,255,0.9)',
-          mode: 'label',
-          callbacks: {
-            label (item, data) {
-              data.labels[item.index] = data.labels[item.index]
-              return (data.labels[item.index]) + ': ' + data.datasets[0].data[item.index]
-            }
-          }
+          mode: 'label'
         },
         legend: {
           display: false,

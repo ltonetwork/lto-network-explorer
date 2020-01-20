@@ -204,7 +204,7 @@ export default {
     },
     async getNodeHeight (host, port) {
       try {
-        const res = await this.$axios.$get('http://' + host + ':' + port + '/node/status', {
+        const res = await this.$axios.$get('https://' + host + ':' + port + '/node/status', {
           timeout: 5000
         })
 

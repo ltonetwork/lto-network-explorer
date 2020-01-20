@@ -49,7 +49,10 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     // Doc: https://nuxt-community.github.io/nuxt-i18n/basic-usage.html
-    'nuxt-i18n'
+    'nuxt-i18n',
+    // Doc: https://axios.nuxtjs.org/options
+    // Doc: https://www.npmjs.com/package/@nuxtjs/proxy
+    '@nuxtjs/proxy'
   ],
   /*
   ** vuetify module configuration
@@ -73,6 +76,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+     proxy: true
   },
   /*
   ** i18n module configuration
@@ -102,6 +106,7 @@ export default {
   ** Build configuration
   */
   build: {
+    publicPath: 'https://lto.services/explorer/',
   /*
   ** You can extend webpack config here
   */
@@ -110,5 +115,15 @@ export default {
         fs: 'empty'
       }
     }
+  },
+  router: {
+    // Set the "Base" of the router.
+    // https://router.vuejs.org/en/api/options.html#base
+    base: '/explorer/'
+},
+proxy: {
+    '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: {'^/cache/': ''} },
+    '/network/': { target: 'https://network.lto.cloud/v1', pathRewrite: {'^/network/': ''} },
+    '/node/': { target: 'https://node.lto.cloud/', pathRewrite: {'^/node/': ''} }
   }
 }
