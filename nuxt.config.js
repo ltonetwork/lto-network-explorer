@@ -76,7 +76,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-     proxy: true
+    proxy: true
   },
   /*
   ** i18n module configuration
@@ -107,7 +107,7 @@ export default {
   */
   build: {
     publicPath: 'https://lto.services/explorer/',
-  /*
+    /*
   ** You can extend webpack config here
   */
     extend (config, ctx) {
@@ -120,10 +120,10 @@ export default {
     // Set the "Base" of the router.
     // https://router.vuejs.org/en/api/options.html#base
     base: '/explorer/'
-},
-proxy: {
-    '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: {'^/cache/': ''} },
-    '/network/': { target: 'https://network.lto.cloud/v1', pathRewrite: {'^/network/': ''} },
-    '/node/': { target: 'https://node.lto.cloud/', pathRewrite: {'^/node/': ''} }
+  },
+  proxy: {
+    '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: { '^/cache/': '' } },
+    '/network/': { target: 'https://network.lto.cloud/v1', pathRewrite: { '^/network/': '' } },
+    '/node/': { target: 'https://node.lto.cloud/', pathRewrite: { '^/node/': '' } }
   }
 }

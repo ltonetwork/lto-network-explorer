@@ -145,7 +145,6 @@ export default {
           cornerRadius: 0,
           backgroundColor: 'rgba(255,255,255,0.9)',
           mode: 'label'
-          }
         },
         legend: {
           display: false,

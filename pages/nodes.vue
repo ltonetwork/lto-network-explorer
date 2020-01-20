@@ -127,6 +127,7 @@
 
 <script>
 import moment from 'moment'
+import https from 'https'
 
 export default {
   head () {
@@ -179,6 +180,7 @@ export default {
   async mounted () {
     await this.getNodes()
 
+    // use veu store to save block heights
     this.allNodes.forEach(async (node) => {
       if (node.api === 1) {
         node.height = await this.getNodeHeight(node.ip, +node.port + 1)
@@ -204,8 +206,11 @@ export default {
     },
     async getNodeHeight (host, port) {
       try {
-        const res = await this.$axios.$get('https://' + host + ':' + port + '/node/status', {
-          timeout: 5000
+        const res = await this.$axios.$get('http://' + host + ':' + port + '/node/status', {
+          timeout: 3000,
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false
+          })
         })
 
         return res.stateHeight
