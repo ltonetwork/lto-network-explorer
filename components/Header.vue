@@ -1,8 +1,9 @@
 <template>
   <v-app-bar
-    :height="300"
     color="#17054B"
-    class="white--text"
+    class="white--text pt-10"
+    prominent
+    flat
   >
     <v-container>
       <v-row>
@@ -11,64 +12,56 @@
           <span class="font-weight-black">LTO</span> Explorer
         </v-toolbar-title>
 
-        <v-toolbar-items v-for="(link, i) in links" :key="i">
-          <v-btn
-            :to="link.to"
-            class="white--text"
-            text
-            style="text-transform: lowercase;"
-            min-height="55px"
-          >
-            <v-icon class="mr-2">
-              {{ link.icon }}
-            </v-icon>
-            {{ link.title }}
-          </v-btn>
-        </v-toolbar-items>
+        <v-spacer />
 
-        <v-toolbar-items v-for="(ext_link, i) in ext_links" :key="i">
+        <v-toolbar-items v-for="(item, i) in menu" :key="i" class="hidden-sm-and-down">
           <v-btn
-            :href="ext_link.to"
+            :to="item.to"
             class="white--text"
             text
             style="text-transform: lowercase;"
             min-height="55px"
           >
             <v-icon class="mr-2">
-              {{ ext_link.icon }}
+              {{ item.icon }}
             </v-icon>
-            {{ ext_link.title }}
-            <v-icon class="mr-1" x-small>
+            {{ item.title }}
+            <v-icon v-if="item.external" xs-small class="mr-2">
               mdi-arrow-top-right
             </v-icon>
           </v-btn>
         </v-toolbar-items>
-      </v-row>
 
-      <v-row class="mt-10 mb-5" justify="center">
-        <v-col cols="6">
-          <v-text-field
-            solo-inverted
-            hide-details
-            flat
-            rounded
-            label="Search for a transaction ID, address or block"
-            prepend-inner-icon="mdi-magnify"
-            background-color="#44297d"
-            color="#6e5f8e"
-          />
-        </v-col>
+        <v-menu
+          class="hidden-md-and-up"
+          left
+          bottom
+        >
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-on="on"
+              icon
+              class="white--text hidden-md-and-up"
+            >
+              <v-icon dark x-large>
+                mdi-dots-vertical
+              </v-icon>
+            </v-btn>
+          </template>
 
-        <v-col cols="2">
-          <v-btn
-            outlined
-            rounded
-            color="#44297d"
-            height="50"
-          >
-            Calculator
-          </v-btn>
-        </v-col>
+          <v-list>
+            <v-list-item
+              v-for="(item, i) in menu"
+              :key="i"
+              :to="item.to"
+            >
+              <v-icon class="mr-2">
+                {{ item.icon }}
+              </v-icon>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-row>
     </v-container>
   </v-app-bar>
@@ -80,16 +73,18 @@ export default {
   },
   data () {
     return {
-      links: [
+      menu: [
         {
           title: this.$t('menu.overview'),
           icon: 'mdi-cube-outline',
-          to: '/'
+          to: '/',
+          external: false
         },
         {
           title: this.$t('menu.nodes'),
           icon: 'mdi-hexagon-slice-6',
-          to: '/nodes'
+          to: '/nodes',
+          external: false
         },
         {
           title: this.$t('menu.staking'),
@@ -99,14 +94,14 @@ export default {
         {
           title: this.$t('menu.distribution'),
           icon: 'mdi-chart-donut',
-          to: '/distribution'
-        }
-      ],
-      ext_links: [
+          to: '/distribution',
+          external: false
+        },
         {
           title: this.$t('menu.wallet'),
-          icon: 'mdi-wallet-outline',
-          to: 'https://wallet.lto.network'
+          icon: 'mdi-coins',
+          to: 'https://wallet.lto.network',
+          external: true
         }
       ]
     }

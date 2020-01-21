@@ -1,6 +1,7 @@
 <template>
   <v-app light>
     <Header />
+    <Search />
     <Panel />
     <v-content>
       <v-container>
@@ -12,13 +13,15 @@
 </template>
 
 <script>
-import Header from '~/components/Header2'
+import Header from '~/components/Header'
+import Search from '~/components/Search'
 import Panel from '~/components/Panel'
 import Footer from '~/components/Footer'
 
 export default {
   components: {
     Header,
+    Search,
     Panel,
     Footer
   }

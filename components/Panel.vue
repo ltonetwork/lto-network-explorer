@@ -1,5 +1,5 @@
 <template>
-  <v-container align="center" align-content="center" style="margin-top: -45px;">
+  <v-container align="center" align-content="center" class="mt-n12">
     <v-card>
       <v-card-text>
         <v-row dense>

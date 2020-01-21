@@ -2,10 +2,10 @@
 
 export default {
   menu: {
-    overview: 'Network Dashboard',
-    nodes: 'Nodes Monitor',
-    staking: 'Staking Overview',
-    distribution: 'Token Distribution',
+    overview: 'Dashboard',
+    nodes: 'Nodes',
+    staking: 'Staking',
+    distribution: 'Distribution',
     wallet: 'Web Wallet'
   },
   panel: {

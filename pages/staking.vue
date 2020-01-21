@@ -13,13 +13,11 @@
             <v-card-text>
               <v-data-table
                 :headers="generatorsTableHeader"
-                :items="allGenerators"
+                :items="getGenerators"
                 :sort-by="['share']"
                 :sort-desc="[true]"
-                :items-per-page="100"
-                no-data-text=""
+                :items-per-page="20"
                 item-key="generator"
-                calculate-widths
               >
                 <template v-slot:item.label="{ item }">
                   <v-chip color="light" class="font-weight-bold">
@@ -102,7 +100,7 @@
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              v-if="!addressesLoaded"
+              :v-if="!addressesLoaded"
               class="mx-auto"
               type="image"
               loading
@@ -132,7 +130,7 @@ export default {
     return {
       chartLoaded: false,
       generatorsLoaded: false,
-      allGenerators: [],
+      getGenerators: [],
       chartData: {
         type: 'doughnut',
         datasets: [{
@@ -212,31 +210,28 @@ export default {
       ]
     }
   },
-  async mounted () {
-    await this.getGenerators()
-    await this.loadChart()
+  async asyncData ({ $axios }) {
+    const getGenerators = await $axios.$get(process.env.CACHE_API + '/generator/all/week', {
+      timeout: process.env.AXIOS_TIMEOUT
+    })
+
+    getGenerators.forEach((generator) => {
+      generator.payout = 1
+    })
+
+    const generatorsLoaded = true
+
+    return {
+      getGenerators,
+      generatorsLoaded
+    }
+  },
+  mounted () {
+    // this.loadChart(this.getGenerators)
   },
   methods: {
-    async getGenerators () {
-      let res
-      try {
-        res = await this.$axios.$get(process.env.CACHE_API + '/generator/all/week', {
-          timeout: process.env.AXIOS_TIMEOUT
-        })
-      } catch (err) {
-        console.error(err)
-        res = []
-      }
-
-      res.forEach((r) => {
-        r.payout = 1
-      })
-
-      this.allGenerators = res
-      this.generatorsLoaded = true
-    },
-    loadChart () {
-      this.allGenerators.forEach((generator) => {
+    loadChart (data) {
+      data.forEach((generator) => {
         this.chartData.labels.push(generator.generator)
         this.chartData.datasets[0].data.push(generator.share)
 
