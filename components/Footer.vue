@@ -6,8 +6,12 @@
     flat
   >
     <v-container>
-      <v-row align="center" align-content="center">
-        <v-col cols="4">
+      <v-row>
+        <v-col
+          sm="6"
+          md="4"
+          lg="4"
+        >
           <v-toolbar-title class="mr-5 white--text" style="text-transform: uppercase;">
             <img :src="require('@/assets/logo.png')" class="mr-3" height="30" style="margin-bottom:-7px;">
             <span class="font-weight-black">LTO</span> Explorer
@@ -38,7 +42,11 @@
             </template>
           </v-select>
         </v-col>
-        <v-col cols="3">
+        <v-col
+          sm="6"
+          md="3"
+          lg="3"
+        >
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.links') }}</span>
@@ -58,7 +66,12 @@
           </v-list>
         </v-col>
 
-        <v-col cols="3">
+        <v-col
+          s
+          sm="6"
+          md="3"
+          lg="3"
+        >
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.resources') }}</span>
@@ -82,7 +95,11 @@
           </v-list>
         </v-col>
 
-        <v-col cols="2">
+        <v-col
+          sm="6"
+          md="2"
+          lg="2"
+        >
           <span
             class="font-weight-medium white--text ml-4"
           >{{ $t('footer.social') }}</span>

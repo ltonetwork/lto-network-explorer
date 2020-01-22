@@ -117,7 +117,7 @@
                       <a :href="'/address/' + tx.sender">{{ tx.sender }}</a>
                     </td>
                     <td class="text-right">
-                      {{ tx.fee / 10000000 }}
+                      {{ tx.fee }}
                     </td>
                   </tr>
                 </tbody>
@@ -296,6 +296,12 @@ export default {
     async unconfirmedTx () {
       const txs = await this.$axios.$get(process.env.LB_API + '/transactions/unconfirmed', {
         timeout: process.env.AXIOS_TIMEOUT
+      })
+      txs.forEach((tx) => {
+        tx.fee = (+tx.fee / process.env.ATOMIC).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
       })
 
       this.unconfirmedTxs = txs || []

@@ -1,6 +1,8 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
+  env: {
+    BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
+    BASE_ROUTE: process.env.BASE_ROUTE || ''
+  },
   mode: 'spa',
   /*
   ** Headers of the page
