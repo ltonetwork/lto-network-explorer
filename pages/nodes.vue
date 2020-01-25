@@ -11,12 +11,12 @@
           <v-sheet>
             <v-card-text>
               <v-data-table
-                :headers="nodesTableHeader"
+                :headers="nodesTable"
                 :items="nodes"
                 :sort-by="['height']"
                 :sort-desc="[true]"
                 :expanded.sync="expanded"
-                :items-per-page="25"
+                :items-per-page="20"
                 show-expand
                 single-expand
                 item-key="address"
@@ -150,7 +150,7 @@ export default {
   data () {
     return {
       loaded: false,
-      nodesTableHeader: [
+      nodesTable: [
         {
           text: 'Name',
           align: 'left',

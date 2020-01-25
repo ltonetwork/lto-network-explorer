@@ -18,9 +18,7 @@
                 :sort-by="['']"
                 :sort-desc="[true]"
                 :items-per-page="20"
-                no-data-text=""
                 item-key="address"
-                calculate-widths
               >
                 <template v-slot:item.address="{ item }">
                   <a :href="'/address/' + item.address">{{ item.address }}</a>

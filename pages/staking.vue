@@ -12,7 +12,7 @@
           <v-sheet>
             <v-card-text>
               <v-data-table
-                :headers="generatorsTableHeader"
+                :headers="generatorsTable"
                 :items="generators"
                 :sort-by="['share']"
                 :sort-desc="[true]"
@@ -171,7 +171,7 @@ export default {
           easing: 'easeOutQuint'
         }
       },
-      generatorsTableHeader: [
+      generatorsTable: [
         {
           text: 'Label',
           align: 'left',
