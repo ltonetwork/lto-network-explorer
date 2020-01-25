@@ -138,6 +138,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import moment from 'moment'
 import LineChart from '~/components/LineChart'
 
@@ -251,36 +252,42 @@ export default {
       unconfirmedTxs: []
     }
   },
-  watchQuery: true,
-  async asyncData ({ $axios }) {
-    const res = await $axios.$get(process.env.LB_API + '/blocks/height', {
+  computed: mapGetters({
+    height: 'dashboard/height',
+    chart: 'dashboard/chart'
+  }),
+  async fetch ({ $axios, store, params }) {
+    // Get height
+    const network = await $axios.$get(process.env.LB_API + '/node/status', {
       timeout: process.env.AXIOS_TIMEOUT
     })
 
-    const networkHeight = parseInt(res.height)
+    store.commit('dashboard/height', parseInt(network.blockchainHeight))
 
-    return {
-      networkHeight
-    }
+    // Get Tx Data
+    const dataset = await $axios.$get(process.env.CACHE_API + '/stats/transaction/week', {
+      timeout: process.env.AXIOS_TIMEOUT
+    })
+
+    dataset.forEach((data) => {
+      store.commit('dashboard/chart', data)
+    })
   },
+
   mounted () {
     this.loadChart()
     this.latestBlocksData()
     this.unconfirmedTx()
   },
   methods: {
-    async loadChart () {
-      const res = await this.$axios.$get(process.env.CACHE_API + '/stats/transaction/week', {
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      this.chartData.labels = res.map(l => moment(l.period))
-      this.chartData.datasets[0].data = res.map(d => d.count)
+    loadChart () {
+      this.chartData.labels = this.chart.map(l => moment(l.period))
+      this.chartData.datasets[0].data = this.chart.map(d => d.count)
       this.chartLoaded = true
     },
     async latestBlocksData () {
-      const start = +this.networkHeight - process.env.LATEST_BLOCKS
-      const end = +this.networkHeight
+      const start = this.height - process.env.LATEST_BLOCKS
+      const end = this.height
 
       const blocks = await this.$axios.$get(process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end, {
         timeout: process.env.AXIOS_TIMEOUT
