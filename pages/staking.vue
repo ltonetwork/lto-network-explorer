@@ -32,7 +32,7 @@
                 </template>
 
                 <template v-slot:item.payout="{ item }">
-                  <v-chip :color="determineColor(item.payout)" dark>
+                  <v-chip :color="color(item.payout)" dark>
                     {{ item.payout }}
                   </v-chip>
                 </template>
@@ -224,11 +224,11 @@ export default {
     })
   },
   mounted () {
-    this.loadChart(this.generators)
+    this.loadChart()
   },
   methods: {
-    loadChart (data) {
-      data.forEach((generator) => {
+    loadChart () {
+      this.generators.forEach((generator) => {
         this.chartData.labels.push(generator.generator)
         this.chartData.datasets[0].data.push(generator.share)
 
@@ -240,7 +240,7 @@ export default {
 
       this.loaded = true
     },
-    determineColor (value) {
+    color (value) {
       if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
     }
   }

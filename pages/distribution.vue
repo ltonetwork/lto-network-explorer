@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="!addressesLoaded"
+          :loading="!loaded"
           :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
@@ -13,8 +13,8 @@
           <v-sheet>
             <v-card-text>
               <v-data-table
-                :headers="addressesTableHeader"
-                :items="topAddresses"
+                :headers="holdersTable"
+                :items="holders"
                 :sort-by="['']"
                 :sort-desc="[true]"
                 :items-per-page="20"
@@ -64,7 +64,7 @@
               </v-data-table>
             </v-card-text>
             <v-skeleton-loader
-              v-if="!addressesLoaded"
+              v-if="!loaded"
               class="mx-auto"
               type="table"
               loading
@@ -75,7 +75,7 @@
 
       <v-col>
         <v-card
-          :loading="!chartLoaded"
+          :loading="!loaded"
           :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
@@ -86,7 +86,7 @@
             <v-card-text>
               <figure class="chart">
                 <DoughnutChart
-                  v-if="chartLoaded"
+                  v-if="loaded"
                   :chartData="chartData"
                   :chartOptions="chartOptions"
                   :height="300"
@@ -94,7 +94,7 @@
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              v-if="!chartLoaded"
+              v-if="!loaded"
               class="mx-auto"
               type="image"
               loading
@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import { mapGetters } from 'vuex'
 import DoughnutChart from '~/components/DoughnutChart'
 
 export default {
@@ -121,9 +121,7 @@ export default {
   },
   data () {
     return {
-      chartLoaded: false,
-      addressesLoaded: false,
-      topAddresses: [],
+      loaded: false,
       chartData: {
         type: 'doughnut',
         datasets: [{
@@ -163,7 +161,7 @@ export default {
           easing: 'easeOutQuint'
         }
       },
-      addressesTableHeader: [
+      holdersTable: [
         {
           text: 'Address',
           align: 'left',
@@ -192,31 +190,24 @@ export default {
       ]
     }
   },
-  async mounted () {
-    await this.getTopAddresses()
-    await this.loadChart()
+  computed: mapGetters({
+    holders: 'holders/get'
+  }),
+  async fetch ({ $axios, store, params }) {
+    const holders = await $axios.$get(process.env.CACHE_API + '/address/top/100', {
+      timeout: process.env.AXIOS_TIMEOUT
+    })
+
+    holders.forEach((holder) => {
+      store.commit('holders/add', holder)
+    })
+  },
+  mounted () {
+    this.loadChart()
   },
   methods: {
-    async getTopAddresses () {
-      let res
-      try {
-        res = await this.$axios.$get(process.env.CACHE_API + '/address/top/100', {
-          timeout: process.env.AXIOS_TIMEOUT
-        })
-
-        res.forEach((address) => {
-          address.updated = moment(address.updated).fromNow()
-        })
-      } catch (err) {
-        console.error(err)
-        res = []
-      }
-
-      this.topAddresses = res
-      this.addressesLoaded = true
-    },
     loadChart () {
-      this.topAddresses.forEach((address) => {
+      this.holders.forEach((address) => {
         this.chartData.labels.push(address.address)
         this.chartData.datasets[0].data.push(address.effective)
 
@@ -226,7 +217,7 @@ export default {
         this.chartData.datasets[0].backgroundColor.push(color)
       })
 
-      this.chartLoaded = true
+      this.loaded = true
     }
   }
 }
