@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="!nodesLoaded"
+          :loading="!loaded"
         >
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('nodes.title') }}
@@ -12,17 +12,14 @@
             <v-card-text>
               <v-data-table
                 :headers="nodesTableHeader"
-                :items="allNodes"
+                :items="nodes"
                 :sort-by="['height']"
-                :sort-desc="[false]"
+                :sort-desc="[true]"
                 :expanded.sync="expanded"
                 :items-per-page="25"
                 show-expand
                 single-expand
                 item-key="address"
-                no-data-text=""
-                calculate-widths
-                dense
               >
                 <template v-slot:expanded-item="{ item }">
                   <v-simple-table
@@ -80,32 +77,37 @@
                     </tbody>
                   </v-simple-table>
                 </template>
-
                 <template v-slot:item.name="{ item }">
-                  <v-chip color="light" class="font-weight-bold">
+                  <v-chip color="primary" outlined class="font-weight-bold">
                     {{ item.name }}
                   </v-chip>
                 </template>
                 <template v-slot:item.address="{ item }">
-                  <v-chip color="light">
+                  <v-chip color="light" outlined>
                     {{ item.address }}
                   </v-chip>
                 </template>
 
                 <template v-slot:item.height="{ item }">
-                  <v-chip color="light">
+                  <v-chip color="light" outlined>
                     {{ item.height }}
                   </v-chip>
                 </template>
 
+                <template v-slot:item.version="{ item }">
+                  <v-chip color="" outlined>
+                    {{ item.version }}
+                  </v-chip>
+                </template>
+
                 <template v-slot:item.p2p="{ item }">
-                  <v-chip :color="determineColor(item.p2p)" dark>
+                  <v-chip :color="color(item.p2p)" outlined dark>
                     {{ item.p2p }}
                   </v-chip>
                 </template>
 
                 <template v-slot:item.api="{ item }">
-                  <v-chip :color="determineColor(item.api)" dark>
+                  <v-chip :color="color(item.api)" outlined dark>
                     {{ item.api }}
                   </v-chip>
                 </template>
@@ -114,14 +116,14 @@
                   <span
                     v-for="(k, v) in item.uptime"
                     v-bind:key="v[k]"
-                    :class="determineColor(v) + '--text'"
+                    :class="color(v) + '--text'"
                     class="d-table-cell text-center display-1 font-weight-black pb-5"
                   >.</span>
                 </template>
               </v-data-table>
 
               <v-skeleton-loader
-                v-if="!nodesLoaded"
+                v-if="!loaded"
                 class="mx-auto"
                 type="table"
                 loading
@@ -135,8 +137,7 @@
 </template>
 
 <script>
-import https from 'https'
-import moment from 'moment'
+import { mapGetters } from 'vuex'
 
 export default {
   head () {
@@ -148,8 +149,7 @@ export default {
   },
   data () {
     return {
-      nodesLoaded: false,
-      allNodes: [],
+      loaded: false,
       nodesTableHeader: [
         {
           text: 'Name',
@@ -162,9 +162,14 @@ export default {
           value: 'address'
         },
         {
-          text: 'Node Height',
+          text: 'Height',
           align: 'center',
           value: 'height'
+        },
+        {
+          text: 'Version',
+          align: 'center',
+          value: 'version'
         },
         {
           text: 'Public P2P',
@@ -182,52 +187,26 @@ export default {
           value: 'uptime'
         }
       ],
-      expanded: [],
-      nodeHeight: 'N/A'
+      expanded: []
     }
   },
-  async mounted () {
-    await this.getNodes()
+  computed: mapGetters({
+    nodes: 'nodes/get'
+  }),
+  async fetch ({ $axios, store, params }) {
+    const nodes = await $axios.$get(process.env.NETWORK_API + '/nodes/all', {
+      timeout: process.env.AXIOS_TIMEOUT
+    })
 
-    // use veu store to save block heights
-    this.allNodes.forEach(async (node) => {
-      if (node.api === 1) {
-        node.height = await this.getNodeHeight(node.ip, +node.port + 1)
-      } else {
-        node.height = 'N/A'
-      }
+    nodes.forEach((node) => {
+      store.commit('nodes/add', node)
     })
   },
+  mounted () {
+    this.loaded = true
+  },
   methods: {
-    async getNodes () {
-      const res = await this.$axios.$get(process.env.NETWORK_API + '/nodes/all', {
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      res.forEach((node) => {
-        node.updated = moment(node.updated).format('DD-MM-YY HH:MM:SS')
-        node.created = moment(node.created).format('DD-MM-YY HH:MM:SS')
-        node.uptime = node.uptime.toString().split('')
-      })
-
-      this.allNodes = res
-      this.nodesLoaded = true
-    },
-    async getNodeHeight (host, port) {
-      try {
-        const res = await this.$axios.$get('http://' + host + ':' + port + '/node/status', {
-          timeout: 3000,
-          httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-          })
-        })
-
-        return res.stateHeight
-      } catch {
-        return 'N/A'
-      }
-    },
-    determineColor (value) {
+    color (value) {
       if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
     }
   }
