@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="!generatorsLoaded"
+          :loading="!loaded"
           :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
@@ -13,20 +13,22 @@
             <v-card-text>
               <v-data-table
                 :headers="generatorsTableHeader"
-                :items="getGenerators"
+                :items="generators"
                 :sort-by="['share']"
                 :sort-desc="[true]"
                 :items-per-page="20"
                 item-key="generator"
               >
                 <template v-slot:item.label="{ item }">
-                  <v-chip color="light" class="font-weight-bold">
+                  <v-chip color="light" outlined class="font-weight-bold">
                     {{ item.label || 'N/A' }}
                   </v-chip>
                 </template>
 
                 <template v-slot:item.generator="{ item }">
-                  <a :href="'/address/' + item.generator">{{ item.generator }}</a>
+                  <v-chip color="primary" outlined>
+                    <a :href="'/address/' + item.generator">{{ item.generator }}</a>
+                  </v-chip>
                 </template>
 
                 <template v-slot:item.payout="{ item }">
@@ -36,7 +38,7 @@
                 </template>
 
                 <template v-slot:item.pool="{ item }">
-                  <v-chip color="light">
+                  <v-chip color="light" outlined>
                     {{ item.pool.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2
@@ -45,13 +47,13 @@
                 </template>
 
                 <template v-slot:item.blocks="{ item }">
-                  <v-chip color="light">
+                  <v-chip color="light" outlined>
                     {{ item.blocks }}
                   </v-chip>
                 </template>
 
                 <template v-slot:item.earnings="{ item }">
-                  <v-chip color="light">
+                  <v-chip color="light" outlined>
                     {{ item.earnings.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2
@@ -60,7 +62,7 @@
                 </template>
 
                 <template v-slot:item.share="{ item }">
-                  <v-chip color="light">
+                  <v-chip color="light" outlined>
                     {{ item.share.toLocaleString(undefined, {
                       minimumFractionDigits: 3,
                       maximumFractionDigits: 3
@@ -71,7 +73,7 @@
             </v-card-text>
 
             <v-skeleton-loader
-              v-if="!generatorsLoaded"
+              v-if="!loaded"
               class="mx-auto"
               type="table"
               loading
@@ -82,7 +84,7 @@
 
       <v-col>
         <v-card
-          :loading="!chartLoaded"
+          :loading="!loaded"
           :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
@@ -92,7 +94,7 @@
             <v-card-text>
               <figure class="chart">
                 <DoughnutChart
-                  v-if="chartLoaded"
+                  v-if="loaded"
                   :chartData="chartData"
                   :chartOptions="chartOptions"
                   :height="300"
@@ -100,7 +102,7 @@
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              :v-if="!chartLoaded"
+              :v-if="!loaded"
               class="mx-auto"
               type="image"
               loading
@@ -115,6 +117,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import DoughnutChart from '~/components/DoughnutChart'
 
 export default {
@@ -128,9 +131,7 @@ export default {
   },
   data () {
     return {
-      chartLoaded: false,
-      generatorsLoaded: false,
-      getGenerators: [],
+      loaded: false,
       chartData: {
         type: 'doughnut',
         datasets: [{
@@ -210,24 +211,20 @@ export default {
       ]
     }
   },
-  async asyncData ({ $axios }) {
-    const getGenerators = await $axios.$get(process.env.CACHE_API + '/generator/all/week', {
+  computed: mapGetters({
+    generators: 'generators/get'
+  }),
+  async fetch ({ $axios, store, params }) {
+    const generators = await $axios.$get(process.env.CACHE_API + '/generator/all/week', {
       timeout: process.env.AXIOS_TIMEOUT
     })
 
-    getGenerators.forEach((generator) => {
-      generator.payout = 1
+    generators.forEach((generator) => {
+      store.commit('generators/add', generator)
     })
-
-    const generatorsLoaded = true
-
-    return {
-      getGenerators,
-      generatorsLoaded
-    }
   },
   mounted () {
-    this.loadChart(this.getGenerators)
+    this.loadChart(this.generators)
   },
   methods: {
     loadChart (data) {
@@ -241,7 +238,7 @@ export default {
         this.chartData.datasets[0].backgroundColor.push(color)
       })
 
-      this.chartLoaded = true
+      this.loaded = true
     },
     determineColor (value) {
       if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
