@@ -16,7 +16,7 @@
                 :sort-by="['height']"
                 :sort-desc="[false]"
                 :expanded.sync="expanded"
-                :items-per-page="100"
+                :items-per-page="25"
                 show-expand
                 single-expand
                 item-key="address"

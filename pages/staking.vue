@@ -100,7 +100,7 @@
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              :v-if="!addressesLoaded"
+              :v-if="!chartLoaded"
               class="mx-auto"
               type="image"
               loading
@@ -227,7 +227,7 @@ export default {
     }
   },
   mounted () {
-    // this.loadChart(this.getGenerators)
+    this.loadChart(this.getGenerators)
   },
   methods: {
     loadChart (data) {

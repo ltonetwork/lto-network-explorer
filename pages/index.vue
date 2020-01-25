@@ -235,7 +235,7 @@ export default {
               })
             },
             label (value, chart) {
-              return moment(value.xLabel).format('DD-MM-YYYY')
+              return moment(value.xLabel).format('YYYY-MM-DD')
             }
           }
         },
