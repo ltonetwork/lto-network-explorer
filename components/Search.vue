@@ -40,7 +40,6 @@ export default {
   }),
   watch: {
     query () {
-      console.log(this.query)
       this.validateQuery()
     }
   },
@@ -48,6 +47,7 @@ export default {
     validateQuery () {
       // Reset
       this.valid = false
+
       // Block
       if (Number.isInteger(+this.query) && this.query.length <= 6) {
         this.valid = true
@@ -63,10 +63,8 @@ export default {
       }
     },
     executeQuery () {
-      console.log(this.valid)
       if (this.valid) {
         this.$router.push(this.url)
-        console.log(this.url)
       }
     }
   }

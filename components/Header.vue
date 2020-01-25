@@ -77,7 +77,7 @@ export default {
         {
           title: this.$t('menu.overview'),
           icon: 'mdi-cube-outline',
-          to: '/',
+          to: '/dashboard',
           external: false
         },
         {
