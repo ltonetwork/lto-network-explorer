@@ -28,6 +28,12 @@ export default {
   block: {
     title: 'Block'
   },
+  address: {
+    title: 'Address'
+  },
+  transaction: {
+    title: 'Transaction'
+  },
   explorer: {
     index: 'Height',
     id: 'ID',

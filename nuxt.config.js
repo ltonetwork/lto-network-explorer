@@ -9,7 +9,7 @@ export default {
   */
   head: {
     titleTemplate: '%s - LTO Network',
-    title: 'Network Explorer',
+    title: 'Explorer',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

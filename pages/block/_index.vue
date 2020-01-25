@@ -89,7 +89,7 @@ import moment from 'moment'
 export default {
   head () {
     return {
-      title: this.$t('blocks.title') + ' #' + this.blockIndex
+      title: this.$t('block.title') + ' #' + this.blockIndex
     }
   },
   components: {
