@@ -90,6 +90,7 @@
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('staking.stats') }}
           </v-card-title>
+
           <v-sheet>
             <v-card-text>
               <figure class="chart">
@@ -102,13 +103,11 @@
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              :v-if="!loaded"
+              v-if="!loaded"
               class="mx-auto"
               type="image"
               loading
             />
-
-            <v-sheet />
           </v-sheet>
         </v-card>
       </v-col>
