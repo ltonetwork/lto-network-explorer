@@ -9,7 +9,7 @@ export const state = () => ({
 
 export const mutations = {
   empty (state) {
-    state.generators.list = []
+    state.nodes.list = []
   },
   add (state, node) {
     state.nodes.list.push({
