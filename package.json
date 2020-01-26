@@ -26,8 +26,7 @@
     "nuxt-i18n": "^6.4.1",
     "tls": "0.0.1",
     "vue-chartjs": "^3.5.0",
-    "vuetify-loader": "^1.4.3",
-    "vuex-persist": "^2.2.0"
+    "vuetify-loader": "^1.4.3"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",

@@ -26,9 +26,7 @@
                 </template>
 
                 <template v-slot:item.generator="{ item }">
-                  <v-chip color="primary" outlined>
-                    <a :href="'/address/' + item.generator">{{ item.generator }}</a>
-                  </v-chip>
+                  <a :href="'/address/' + item.generator">{{ item.generator }}</a>
                 </template>
 
                 <template v-slot:item.payout="{ item }">
