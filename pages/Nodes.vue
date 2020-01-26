@@ -138,6 +138,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   head () {
@@ -193,14 +194,22 @@ export default {
   computed: mapGetters({
     nodes: 'nodes/get'
   }),
-  async fetch ({ $axios, store, params }) {
-    const nodes = await $axios.$get(process.env.NETWORK_API + '/nodes/all', {
-      timeout: process.env.AXIOS_TIMEOUT
-    })
+  async fetch ({ $axios, store }) {
+    const updated = store.state.nodes.nodes.updated
+    const diff = moment().diff(moment(updated))
 
-    nodes.forEach((node) => {
-      store.commit('nodes/add', node)
-    })
+    // If cache expired
+    if (!updated || diff > process.env.DATA_CACHE) {
+      store.commit('nodes/empty')
+
+      const nodes = await $axios.$get(process.env.NETWORK_API + '/nodes/all', {
+        timeout: process.env.AXIOS_TIMEOUT
+      })
+
+      nodes.forEach((node) => {
+        store.commit('nodes/add', node)
+      })
+    }
   },
   mounted () {
     this.loaded = true

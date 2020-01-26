@@ -256,22 +256,30 @@ export default {
     height: 'dashboard/height',
     chart: 'dashboard/chart'
   }),
-  async fetch ({ $axios, store, params }) {
-    // Get height
-    const network = await $axios.$get(process.env.LB_API + '/node/status', {
-      timeout: process.env.AXIOS_TIMEOUT
-    })
+  async fetch ({ $axios, store }) {
+    const updated = store.state.dashboard.dashboard.updated
+    const diff = moment().diff(moment(updated))
 
-    store.commit('dashboard/height', parseInt(network.blockchainHeight))
+    // If cache expired
+    if (!updated || diff > process.env.DATA_CACHE) {
+      store.commit('dashboard/empty')
 
-    // Get Tx Data
-    const dataset = await $axios.$get(process.env.CACHE_API + '/stats/transaction/week', {
-      timeout: process.env.AXIOS_TIMEOUT
-    })
+      // Get height
+      const network = await $axios.$get(process.env.LB_API + '/node/status', {
+        timeout: process.env.AXIOS_TIMEOUT
+      })
 
-    dataset.forEach((data) => {
-      store.commit('dashboard/chart', data)
-    })
+      store.commit('dashboard/height', parseInt(network.blockchainHeight))
+
+      // Get Tx Data
+      const dataset = await $axios.$get(process.env.CACHE_API + '/stats/transaction/week', {
+        timeout: process.env.AXIOS_TIMEOUT
+      })
+
+      dataset.forEach((data) => {
+        store.commit('dashboard/chart', data)
+      })
+    }
   },
 
   mounted () {

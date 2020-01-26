@@ -8,6 +8,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  empty (state) {
+    state.holders.list = []
+  },
   add (state, holder) {
     state.holders.list.push({
       address: holder.address,

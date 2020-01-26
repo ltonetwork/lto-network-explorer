@@ -9,6 +9,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  empty (state) {
+    state.dashboard.chart = []
+  },
   height (state, height) {
     state.dashboard.height = +height
     state.dashboard.updated = moment()

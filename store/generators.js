@@ -8,6 +8,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  empty (state) {
+    state.generators.list = []
+  },
   add (state, generator) {
     state.generators.list.push({
       generator: generator.generator,

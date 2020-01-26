@@ -7,60 +7,71 @@
           :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('distribution.title') }}
+            {{ $t('staking.title') }}
           </v-card-title>
-
           <v-sheet>
             <v-card-text>
               <v-data-table
-                :headers="holdersTable"
-                :items="holders"
-                :sort-by="['']"
+                :headers="generatorsTable"
+                :items="generators"
+                :sort-by="['share']"
                 :sort-desc="[true]"
                 :items-per-page="20"
-                item-key="address"
+                item-key="generator"
               >
-                <template v-slot:item.address="{ item }">
-                  <a :href="'/address/' + item.address">{{ item.address }}</a>
+                <template v-slot:item.label="{ item }">
+                  <v-chip color="light" outlined class="font-weight-bold">
+                    {{ item.label || 'N/A' }}
+                  </v-chip>
                 </template>
 
-                <template v-slot:item.regular="{ item }">
-                  <v-chip color="light">
-                    {{ item.regular.toLocaleString(undefined, {
+                <template v-slot:item.generator="{ item }">
+                  <v-chip color="primary" outlined>
+                    <a :href="'/address/' + item.generator">{{ item.generator }}</a>
+                  </v-chip>
+                </template>
+
+                <template v-slot:item.payout="{ item }">
+                  <v-chip :color="color(item.payout)" dark>
+                    {{ item.payout }}
+                  </v-chip>
+                </template>
+
+                <template v-slot:item.pool="{ item }">
+                  <v-chip color="light" outlined>
+                    {{ item.pool.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2
                     }) }} LTO
                   </v-chip>
                 </template>
 
-                <template v-slot:item.generating="{ item }">
-                  <v-chip color="light">
-                    {{ item.generating.toLocaleString(undefined, {
+                <template v-slot:item.blocks="{ item }">
+                  <v-chip color="light" outlined>
+                    {{ item.blocks }}
+                  </v-chip>
+                </template>
+
+                <template v-slot:item.earnings="{ item }">
+                  <v-chip color="light" outlined>
+                    {{ item.earnings.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2
                     }) }} LTO
                   </v-chip>
                 </template>
 
-                <template v-slot:item.available="{ item }">
-                  <v-chip color="light">
-                    {{ item.available.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    }) }} LTO
-                  </v-chip>
-                </template>
-
-                <template v-slot:item.effective="{ item }">
-                  <v-chip color="light">
-                    {{ item.effective.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    }) }} LTO
+                <template v-slot:item.share="{ item }">
+                  <v-chip color="light" outlined>
+                    {{ item.share.toLocaleString(undefined, {
+                      minimumFractionDigits: 3,
+                      maximumFractionDigits: 3
+                    }) }}%
                   </v-chip>
                 </template>
               </v-data-table>
             </v-card-text>
+
             <v-skeleton-loader
               v-if="!loaded"
               class="mx-auto"
@@ -77,7 +88,7 @@
           :loader-height="10"
         >
           <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('distribution.stats') }}
+            {{ $t('staking.stats') }}
           </v-card-title>
 
           <v-sheet>
@@ -106,12 +117,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 import DoughnutChart from '~/components/DoughnutChart'
 
 export default {
   head () {
     return {
-      title: this.$t('distribution.title')
+      title: this.$t('staking.title')
     }
   },
   components: {
@@ -128,6 +140,7 @@ export default {
           label: ''
         }],
         labels: []
+
       },
       chartOptions: {
         maintainAspectRatio: true,
@@ -159,55 +172,73 @@ export default {
           easing: 'easeOutQuint'
         }
       },
-      holdersTable: [
+      generatorsTable: [
         {
-          text: 'Address',
+          text: 'Label',
           align: 'left',
-          value: 'address'
+          value: 'label'
         },
         {
-          text: 'Regular',
-          align: 'center',
-          value: 'regular'
+          text: 'Generator',
+          align: 'left',
+          value: 'generator'
         },
         {
-          text: 'Generating',
+          text: 'Payout Support',
           align: 'center',
-          value: 'generating'
+          value: 'payout'
         },
         {
-          text: 'Available',
+          text: 'Pool',
           align: 'center',
-          value: 'available'
+          value: 'pool'
         },
         {
-          text: 'Effective',
+          text: 'Forged Blocks',
           align: 'center',
-          value: 'effective'
+          value: 'blocks'
+        },
+        {
+          text: 'Earnings',
+          align: 'center',
+          value: 'earnings'
+        },
+        {
+          text: 'Share',
+          align: 'center',
+          value: 'share'
         }
       ]
     }
   },
   computed: mapGetters({
-    holders: 'holders/get'
+    generators: 'generators/get'
   }),
-  async fetch ({ $axios, store, params }) {
-    const holders = await $axios.$get(process.env.CACHE_API + '/address/top/100', {
-      timeout: process.env.AXIOS_TIMEOUT
-    })
+  async fetch ({ $axios, store }) {
+    const updated = store.state.generators.generators.updated
+    const diff = moment().diff(moment(updated))
 
-    holders.forEach((holder) => {
-      store.commit('holders/add', holder)
-    })
+    // If cache expired
+    if (!updated || diff > process.env.DATA_CACHE) {
+      store.commit('generators/empty')
+
+      const generators = await $axios.$get(process.env.CACHE_API + '/generator/all/week', {
+        timeout: process.env.AXIOS_TIMEOUT
+      })
+
+      generators.forEach((generator) => {
+        store.commit('generators/add', generator)
+      })
+    }
   },
   mounted () {
     this.loadChart()
   },
   methods: {
     loadChart () {
-      this.holders.forEach((address) => {
-        this.chartData.labels.push(address.address)
-        this.chartData.datasets[0].data.push(address.effective)
+      this.generators.forEach((generator) => {
+        this.chartData.labels.push(generator.generator)
+        this.chartData.datasets[0].data.push(generator.share)
 
         const r = Math.random()
         const s = 180
@@ -216,6 +247,9 @@ export default {
       })
 
       this.loaded = true
+    },
+    color (value) {
+      if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
     }
   }
 }
