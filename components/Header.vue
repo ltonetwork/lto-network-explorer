@@ -26,7 +26,22 @@
               {{ item.icon }}
             </v-icon>
             {{ item.title }}
-            <v-icon v-if="item.external" xs-small class="mr-2">
+          </v-btn>
+        </v-toolbar-items>
+
+        <v-toolbar-items class="hidden-sm-and-down">
+          <v-btn
+            :href="wallet.href"
+            class="white--text"
+            text
+            style="text-transform: lowercase;"
+            min-height="55px"
+          >
+            <v-icon class="mr-2">
+              {{ wallet.icon }}
+            </v-icon>
+            {{ wallet.title }}
+            <v-icon xs-small class="mr-2">
               mdi-arrow-top-right
             </v-icon>
           </v-btn>
@@ -60,6 +75,16 @@
               </v-icon>
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item>
+
+            <v-list-item
+              :href="wallet.href"
+            >
+              <v-icon class="mr-2">
+                {{ wallet.icon }}
+              </v-icon>
+              <v-list-item-title>{{ wallet.title }}</v-list-item-title>
+            </v-list-item>
+
           </v-list>
         </v-menu>
       </v-row>
@@ -77,14 +102,12 @@ export default {
         {
           title: this.$t('menu.overview'),
           icon: 'mdi-cube-outline',
-          to: '/dashboard',
-          external: false
+          to: '/dashboard'
         },
         {
           title: this.$t('menu.nodes'),
           icon: 'mdi-hexagon-slice-6',
-          to: '/nodes',
-          external: false
+          to: '/nodes'
         },
         {
           title: this.$t('menu.staking'),
@@ -94,16 +117,14 @@ export default {
         {
           title: this.$t('menu.distribution'),
           icon: 'mdi-chart-donut',
-          to: '/distribution',
-          external: false
-        },
-        {
-          title: this.$t('menu.wallet'),
-          icon: 'mdi-coins',
-          to: 'https://wallet.lto.network',
-          external: true
+          to: '/distribution'
         }
-      ]
+      ],
+      wallet: {
+        title: this.$t('menu.wallet'),
+        icon: 'mdi-coins',
+        href: 'https://wallet.lto.network/'
+      }
     }
   }
 }
