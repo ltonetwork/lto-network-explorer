@@ -21,7 +21,9 @@
                   <tr>
                     <td>{{ $t('explorer.generator') }}</td>
                     <td>
-                      <router-link :to="{ path: '/address/' + block.generator  }" append>{{ block.generator }}</router-link>
+                      <nuxt-link :to="{ path: '/address/' + block.generator }">
+                        {{ block.generator }}
+                      </nuxt-link>
                     </td>
                   </tr>
                   <tr>
@@ -87,11 +89,15 @@
               </template>
 
               <template v-slot:item.id="{ item }">
-                <router-link :to="{ path: '/transaction/' + item.id  }" append>{{ item.id }}</router-link>
+                <nuxt-link :to="{ path: '/transaction/' + item.id }">
+                  {{ item.id }}
+                </nuxt-link>
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <router-link :to="{ path: '/address/' + item.sender  }" append>{{ item.sender }}</router-link>
+                <nuxt-link :to="{ path: '/address/' + item.sender }">
+                  {{ item.sender }}
+                </nuxt-link>
               </template>
 
               <template v-slot:item.fee="{ item }">

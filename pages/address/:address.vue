@@ -210,7 +210,9 @@
               </template>
 
               <template v-slot:item.id="{ item }">
-                <router-link :to="{ path: '/transaction/' + item.id  }" append>{{ item.id }}</router-link>
+                <nuxt-link :to="{ path: '/transaction/' + item.id }">
+                  {{ item.id }}
+                </nuxt-link>
               </template>
 
               <template v-slot:item.label="{ item }">
@@ -220,11 +222,15 @@
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <router-link :to="{ path: '/address/' + item.sender  }" append>{{ item.sender }}</router-link>
+                <nuxt-link :to="{ path: '/address/' + item.sender }">
+                  {{ item.sender }}
+                </nuxt-link>
               </template>
 
               <template v-slot:item.recipient="{ item }">
-                <router-link :to="{ path: '/address/' + item.recipient  }" append>{{ item.recipient }}</router-link>
+                <nuxt-link :to="{ path: '/address/' + item.recipient }">
+                  {{ item.recipient }}
+                </nuxt-link>
               </template>
 
               <template v-slot:item.fee="{ item }">

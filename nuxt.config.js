@@ -1,6 +1,5 @@
 export default {
   env: {
-    BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
     BASE_ROUTE: process.env.BASE_ROUTE || ''
   },
   mode: 'spa',
@@ -112,7 +111,6 @@ export default {
   ** Build configuration
   */
   build: {
-    publicPath: process.env.BASE_URL,
     /*
   ** You can extend webpack config here
   */
@@ -125,8 +123,7 @@ export default {
   router: {
     // Set the "Base" of the router.
     // https://router.vuejs.org/en/api/options.html#base
-    base: process.env.BASE_ROUTE,
-    routeNameSplitter: '/'
+    base: '/explorer/'
   },
   proxy: {
     '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: { '^/cache/': '' } },

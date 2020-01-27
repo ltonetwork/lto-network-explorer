@@ -1,7 +1,7 @@
 {
   "name": "lto-network-explorer",
-  "version": "1.0.0",
-  "description": "Network Explorer for the LTO Network backed by LTO Services Cached Chain services.",
+  "version": "1.0.1",
+  "description": "Network Explorer for the LTO Network powered by LTO Services proxy and caching services.",
   "author": "BB. Jansen",
   "private": true,
   "scripts": {

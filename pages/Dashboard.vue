@@ -63,10 +63,14 @@
                 <tbody>
                   <tr v-for="block in latestBlocks" :key="block.height">
                     <td>
-                      <router-link :to="{ path: '/block/' + block.height  }" append>{{ block.height }}</router-link>
+                      <nuxt-link :to="{ path: '/block/' + block.height }">
+                        {{ block.height }}
+                      </nuxt-link>
                     </td>
                     <td>
-                      <router-link :to="{ path: '/address/' + block.generator  }" append>{{ block.generator }}</router-link>
+                      <nuxt-link :to="{ path: '/address/' + block.generator }">
+                        {{ block.generator }}
+                      </nuxt-link>
                     </td>
                     <td class="text-center">
                       {{ block.transactionCount }}
@@ -117,7 +121,9 @@
                   <tr v-for="tx in unconfirmedTxs" :key="tx.id">
                     <td>{{ tx.id }}</td>
                     <td class="text-center">
-                      <router-link :to="{ path: '/address/' + tx.sender  }" append>{{ tx.sender }}</router-link>
+                      <nuxt-link :to="{ path: '/address/' + tx.sender }">
+                        {{ tx.sender }}
+                      </nuxt-link>
                     </td>
                     <td class="text-right">
                       {{ tx.fee }}

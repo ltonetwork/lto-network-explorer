@@ -22,7 +22,9 @@
                 item-key="address"
               >
                 <template v-slot:item.address="{ item }">
-                  <router-link :to="{ path: '/address/' + item.address  }" append>{{ item.address }}</router-link>
+                  <nuxt-link :to="{ path: '/address/' + item.address }">
+                    {{ item.address }}
+                  </nuxt-link>
                 </template>
 
                 <template v-slot:item.regular="{ item }">
