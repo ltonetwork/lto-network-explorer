@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Panel />
     <v-row>
       <v-col>
         <v-card
@@ -101,13 +102,13 @@
                 </template>
 
                 <template v-slot:item.p2p="{ item }">
-                  <v-chip :color="color(item.p2p)" outlined dark>
+                  <v-chip :color="color(item.p2p)" label outlined dark>
                     {{ item.p2p }}
                   </v-chip>
                 </template>
 
                 <template v-slot:item.api="{ item }">
-                  <v-chip :color="color(item.api)" outlined dark>
+                  <v-chip :color="color(item.api)" label outlined dark>
                     {{ item.api }}
                   </v-chip>
                 </template>
@@ -139,6 +140,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import Panel from '~/components/Panel'
 
 export default {
   head () {
@@ -147,6 +149,7 @@ export default {
     }
   },
   components: {
+    Panel
   },
   data () {
     return {

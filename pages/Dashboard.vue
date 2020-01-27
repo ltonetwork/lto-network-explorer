@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Panel />
     <v-row>
       <v-col>
         <v-card
@@ -138,8 +139,10 @@
 </template>
 
 <script>
+
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import Panel from '~/components/Panel'
 import LineChart from '~/components/LineChart'
 
 export default {
@@ -149,6 +152,7 @@ export default {
     }
   },
   components: {
+    Panel,
     LineChart
   },
   data () {

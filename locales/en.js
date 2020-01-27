@@ -29,17 +29,29 @@ export default {
     title: 'Block'
   },
   address: {
-    title: 'Address'
+    title: 'Address',
+    copied: 'Address copied to clipboard.',
+    wallet: 'Wallet',
+    transactions: 'Transactions',
+    balance: {
+      title: 'Balance',
+      regular: 'Regular',
+      generating: 'Generating',
+      available: 'Available',
+      effective: 'Effective'
+    }
   },
   transaction: {
     title: 'Transaction'
   },
   explorer: {
     index: 'Height',
+    block: 'Block',
     id: 'ID',
     reference: 'Reference',
     generator: 'Generator',
     sender: 'Sender',
+    recipient: 'Recipient',
     signature: 'Signature',
     size: 'Size',
     tx: 'Transaction(s)',
@@ -48,8 +60,8 @@ export default {
     version: 'Version',
     timestamp: 'Timestamp',
     confirmed: 'Confirmed',
-    target: 'Target'
-
+    target: 'Target',
+    type: 'Type'
   },
   nodes: {
     title: 'Nodes Monitor'

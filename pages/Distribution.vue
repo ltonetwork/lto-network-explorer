@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Panel />
     <v-row>
       <v-col>
         <v-card
@@ -107,6 +108,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import Panel from '~/components/Panel'
 import DoughnutChart from '~/components/DoughnutChart'
 
 export default {
@@ -116,6 +118,7 @@ export default {
     }
   },
   components: {
+    Panel,
     DoughnutChart
   },
   data () {

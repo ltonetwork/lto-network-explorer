@@ -6,19 +6,13 @@
         md="12"
         lg="12"
       >
-        <v-card>
+        <v-card class="mt-n12">
           <v-card-title class="headline" style="color:#1a004b;">
             {{ $t('block.title') }} #{{ blockIndex }}
           </v-card-title>
           <v-card-text>
             <v-simple-table>
               <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th />
-                    <th />
-                  </tr>
-                </thead>
                 <tbody>
                   <tr>
                     <td>{{ $t('explorer.timestamp') }}</td>
@@ -77,11 +71,12 @@
               :sort-by="['timestamp']"
               :sort-desc="[false]"
               :items-per-page="10"
+              no-data-text="this block does not contain any transactions"
             >
               <template v-slot:item.type="{ item }">
                 <v-tooltip right>
                   <template v-slot:activator="{ on }">
-                    <v-chip :color="color(item.type)" v-on="on" outlined dark>
+                    <v-chip :color="color(item.type)" v-on="on" label outlined dark>
                       <v-icon>{{ icon(item.type) }}</v-icon>
                     </v-chip>
                   </template>

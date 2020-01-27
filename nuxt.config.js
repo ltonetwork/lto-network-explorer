@@ -57,7 +57,8 @@ export default {
     'nuxt-i18n',
     // Doc: https://axios.nuxtjs.org/options
     // Doc: https://www.npmjs.com/package/@nuxtjs/proxy
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    'nuxt-clipboard2'
   ],
   /*
   ** vuetify module configuration
@@ -124,7 +125,8 @@ export default {
   router: {
     // Set the "Base" of the router.
     // https://router.vuejs.org/en/api/options.html#base
-    base: process.env.BASE_ROUTE
+    base: process.env.BASE_ROUTE,
+    routeNameSplitter: '/'
   },
   proxy: {
     '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: { '^/cache/': '' } },
