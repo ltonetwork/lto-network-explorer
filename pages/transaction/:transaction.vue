@@ -113,7 +113,7 @@
                   <tr v-for="(tx, i) in transaction.transfers" v-bind:key="i">
                     <td>
                       <nuxt-link :to="{ path: '/address/' + tx.recipient }">
-                        {{ t.recipient }}
+                        {{ tx.recipient }}
                       </nuxt-link>
                     </td>
                     <td class="text-right">
