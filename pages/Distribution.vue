@@ -26,39 +26,31 @@
                 </template>
 
                 <template v-slot:item.regular="{ item }">
-                  <v-chip color="light">
-                    {{ item.regular.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    }) }} LTO
-                  </v-chip>
+                  {{ item.regular.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }) }}
                 </template>
 
                 <template v-slot:item.generating="{ item }">
-                  <v-chip color="light">
-                    {{ item.generating.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    }) }} LTO
-                  </v-chip>
+                  {{ item.generating.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }) }}
                 </template>
 
                 <template v-slot:item.available="{ item }">
-                  <v-chip color="light">
-                    {{ item.available.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    }) }} LTO
-                  </v-chip>
+                  {{ item.available.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }) }}
                 </template>
 
                 <template v-slot:item.effective="{ item }">
-                  <v-chip color="light">
-                    {{ item.effective.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    }) }} LTO
-                  </v-chip>
+                  {{ item.effective.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }) }}
                 </template>
               </v-data-table>
             </v-card-text>

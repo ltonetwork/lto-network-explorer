@@ -77,7 +77,9 @@
                 <v-tooltip right>
                   <template v-slot:activator="{ on }">
                     <v-chip :color="color(item.type)" v-on="on" label outlined dark>
-                      <v-icon>{{ icon(item.type) }}</v-icon>
+                      <v-icon small>
+                        {{ icon(item.type) }}
+                      </v-icon>
                     </v-chip>
                   </template>
                   <span>{{ name(item.type) }}</span>
@@ -96,7 +98,7 @@
                 {{ item.fee.toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
-                }) }} LTO
+                }) }}
               </template>
 
               <template v-slot:item.timestamp="{ item }">

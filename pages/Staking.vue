@@ -20,53 +20,50 @@
                 :items-per-page="20"
                 item-key="generator"
               >
+                <template v-slot:item.payout="{ item }">
+                  <v-tooltip right>
+                    <template v-slot:activator="{ on }">
+                      <v-chip :color="color(item.payout)" v-on="on" outlined label dark>
+                        <v-icon small>
+                          mdi-check
+                        </v-icon>
+                      </v-chip>
+                    </template>
+                    <span>payout: 3%</span>
+                  </v-tooltip>
+                </template>
+
                 <template v-slot:item.label="{ item }">
-                  <v-chip color="light" outlined class="font-weight-bold">
-                    {{ item.label || 'N/A' }}
-                  </v-chip>
+                  {{ item.label || 'N/A' }}
                 </template>
 
                 <template v-slot:item.generator="{ item }">
                   <a :href="'/address/' + item.generator">{{ item.generator }}</a>
                 </template>
 
-                <template v-slot:item.payout="{ item }">
-                  <v-chip :color="color(item.payout)" dark>
-                    {{ item.payout }}
-                  </v-chip>
-                </template>
-
                 <template v-slot:item.pool="{ item }">
-                  <v-chip color="light" outlined>
-                    {{ item.pool.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    }) }} LTO
-                  </v-chip>
+                  {{ item.pool.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }) }}
                 </template>
 
                 <template v-slot:item.blocks="{ item }">
-                  <v-chip color="light" outlined>
-                    {{ item.blocks }}
-                  </v-chip>
+                  {{ item.blocks }}
                 </template>
 
                 <template v-slot:item.earnings="{ item }">
-                  <v-chip color="light" outlined>
-                    {{ item.earnings.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    }) }} LTO
-                  </v-chip>
+                  {{ item.earnings.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }) }}
                 </template>
 
                 <template v-slot:item.share="{ item }">
-                  <v-chip color="light" outlined>
-                    {{ item.share.toLocaleString(undefined, {
-                      minimumFractionDigits: 3,
-                      maximumFractionDigits: 3
-                    }) }}%
-                  </v-chip>
+                  {{ item.share.toLocaleString(undefined, {
+                    minimumFractionDigits: 3,
+                    maximumFractionDigits: 3
+                  }) }}%
                 </template>
               </v-data-table>
             </v-card-text>
@@ -175,6 +172,11 @@ export default {
       },
       generatorsTable: [
         {
+          text: 'Payout Support',
+          align: 'center',
+          value: 'payout'
+        },
+        {
           text: 'Label',
           align: 'left',
           value: 'label'
@@ -184,11 +186,7 @@ export default {
           align: 'left',
           value: 'generator'
         },
-        {
-          text: 'Payout Support',
-          align: 'center',
-          value: 'payout'
-        },
+
         {
           text: 'Pool',
           align: 'center',

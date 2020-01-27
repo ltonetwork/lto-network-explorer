@@ -64,9 +64,18 @@
                 md="3"
                 lg="3"
               >
-                <p class="caption mt-0 mb-2">
-                  {{ $t('address.balance.regular') }}
-                </p>
+                <v-tooltip right>
+                  <template v-slot:activator="{ on }">
+                    <span>{{ $t('address.balance.regular') }}</span>
+                    <v-icon v-on="on" small class="ml-1">
+                      mdi-help-circle
+                    </v-icon>
+                  </template>
+                  <span class="caption mt-0 mb-2">
+                    {{ $t('address.balance.regular.tooltip') }}
+                  </span>
+                </v-tooltip>
+
                 <h2
                   style="color:#1a004b;"
                   class="subtitle-2mb-0"
@@ -82,9 +91,17 @@
                 md="3"
                 lg="3"
               >
-                <p class="caption mt-0 mb-2">
-                  {{ $t('address.balance.generating') }}
-                </p>
+                <v-tooltip right>
+                  <template v-slot:activator="{ on }">
+                    <span>{{ $t('address.balance.generating') }}</span>
+                    <v-icon v-on="on" small class="ml-1">
+                      mdi-help-circle
+                    </v-icon>
+                  </template>
+                  <span class="caption mt-0 mb-2">
+                    {{ $t('address.balance.generating.tooltip') }}
+                  </span>
+                </v-tooltip>
                 <h2
                   style="color:#1a004b;"
                   class="mb-0"
@@ -100,9 +117,17 @@
                 md="3"
                 lg="3"
               >
-                <p class="caption mt-0 mb-2">
-                  {{ $t('address.balance.available') }}
-                </p>
+                <v-tooltip right>
+                  <template v-slot:activator="{ on }">
+                    <span>{{ $t('address.balance.available') }}</span>
+                    <v-icon v-on="on" small class="ml-1">
+                      mdi-help-circle
+                    </v-icon>
+                  </template>
+                  <span class="caption mt-0 mb-2">
+                    {{ $t('address.balance.available.tooltip') }}
+                  </span>
+                </v-tooltip>
                 <h2
                   style="color:#1a004b;"
                   class="mb-0"
@@ -118,9 +143,17 @@
                 md="3"
                 lg="3"
               >
-                <p class="caption mt-0 mb-2">
-                  {{ $t('address.balance.effective') }}
-                </p>
+                <v-tooltip right>
+                  <template v-slot:activator="{ on }">
+                    <span>{{ $t('address.balance.effective') }}</span>
+                    <v-icon v-on="on" small class="ml-1">
+                      mdi-help-circle
+                    </v-icon>
+                  </template>
+                  <span class="caption mt-0 mb-2">
+                    {{ $t('address.balance.effective.tooltip') }}
+                  </span>
+                </v-tooltip>
                 <h2
                   style="color:#1a004b;"
                   class="mb-0"
@@ -167,7 +200,9 @@
                 <v-tooltip right>
                   <template v-slot:activator="{ on }">
                     <v-chip :color="color(item.type)" v-on="on" label outlined dark>
-                      <v-icon>{{ icon(item.type) }}</v-icon>
+                      <v-icon small>
+                        {{ icon(item.type) }}
+                      </v-icon>
                     </v-chip>
                   </template>
                   <span>{{ name(item.type) }}</span>
@@ -196,7 +231,7 @@
                 {{ item.fee.toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
-                }) }} LTO
+                }) }}
               </template>
 
               <template v-slot:item.timestamp="{ item }">

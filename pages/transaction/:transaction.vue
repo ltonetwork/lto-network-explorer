@@ -56,7 +56,7 @@
                       {{ transaction.amount.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
-                      }) }} LTO
+                      }) }}
                     </td>
                   </tr>
                   <tr /><tr>
@@ -65,7 +65,7 @@
                       {{ transaction.fee.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
-                      }) }} LTO
+                      }) }}
                     </td>
                   </tr>
                   <tr v-show="!mass">
@@ -112,7 +112,7 @@
                       {{ transaction.amount.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
-                      }) }} LTO
+                      }) }}
                     </td>
                   </tr>
                 </tbody>
@@ -159,6 +159,8 @@ export default {
       transaction.transfers.forEach((tx) => {
         tx.amount = (tx.amount / process.env.ATOMIC)
       })
+    } else if (transaction.type === 8 || transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
+      transaction.amount = 0
     }
 
     return {

@@ -79,37 +79,41 @@
                   </v-simple-table>
                 </template>
                 <template v-slot:item.name="{ item }">
-                  <v-chip color="primary" outlined class="font-weight-bold">
+                  <v-chip color="primary" outlined label dark>
                     {{ item.name }}
                   </v-chip>
                 </template>
                 <template v-slot:item.address="{ item }">
-                  <v-chip color="light" outlined>
-                    {{ item.address }}
-                  </v-chip>
+                  {{ item.address }}
                 </template>
 
                 <template v-slot:item.height="{ item }">
-                  <v-chip color="light" outlined>
-                    {{ item.height }}
-                  </v-chip>
+                  {{ item.height }}
                 </template>
 
                 <template v-slot:item.version="{ item }">
-                  <v-chip color="" outlined>
-                    {{ item.version }}
-                  </v-chip>
+                  {{ item.version }}
                 </template>
 
                 <template v-slot:item.p2p="{ item }">
                   <v-chip :color="color(item.p2p)" label outlined dark>
-                    {{ item.p2p }}
+                    <v-icon v-if="item.p2p" small>
+                      mdi-check
+                    </v-icon>
+                    <v-icon v-if="!item.p2p" small>
+                      mdi-close
+                    </v-icon>
                   </v-chip>
                 </template>
 
                 <template v-slot:item.api="{ item }">
                   <v-chip :color="color(item.api)" label outlined dark>
-                    {{ item.api }}
+                    <v-icon v-if="item.api" small>
+                      mdi-check
+                    </v-icon>
+                    <v-icon v-if="!item.api" small>
+                      mdi-close
+                    </v-icon>
                   </v-chip>
                 </template>
 
