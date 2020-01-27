@@ -38,7 +38,7 @@
                 </template>
 
                 <template v-slot:item.generator="{ item }">
-                  <a :href="'/address/' + item.generator">{{ item.generator }}</a>
+                  <router-link :to="{ path: '/address/' + item.generator  }" append>{{ item.generator }}</router-link>
                 </template>
 
                 <template v-slot:item.pool="{ item }">

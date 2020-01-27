@@ -39,6 +39,12 @@ export default {
       generating: 'Generating',
       available: 'Available',
       effective: 'Effective'
+    },
+    tooltips: {
+      regular: 'The total amount of owned LTO.',
+      generating: 'Minimum amount of effective LTO for the past 1000 blocks.',
+      available: 'The total amount spendable that can be spend. ',
+      effective: 'The total amount of owned LTO plus the amount leased towards it.'
     }
   },
   transaction: {

@@ -114,7 +114,7 @@ export default {
       nodes: 55,
       staked: 450000,
       price: 0.04,
-      market: 5000000
+      market: 500000
     }
   }
 }

@@ -22,7 +22,7 @@
                 item-key="address"
               >
                 <template v-slot:item.address="{ item }">
-                  <a :href="'/address/' + item.address">{{ item.address }}</a>
+                  <router-link :to="{ path: '/address/' + item.address  }" append>{{ item.address }}</router-link>
                 </template>
 
                 <template v-slot:item.regular="{ item }">

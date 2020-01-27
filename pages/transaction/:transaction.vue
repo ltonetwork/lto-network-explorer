@@ -32,21 +32,21 @@
                   <tr>
                     <td>{{ $t('explorer.block') }}</td>
                     <td>
-                      <a :href="'/block/' + transaction.height">{{ transaction.height }}</a>
+                      <router-link :to="{ path: '/block/' + transaction.height  }" append>{{ transaction.height }}</router-link>
                     </td>
                   </tr>
 
                   <tr>
                     <td>{{ $t('explorer.sender') }}</td>
                     <td>
-                      <a :href="'/address/' + transaction.sender">{{ transaction.sender }}</a>
+                      <router-link :to="{ path: '/address/' + transaction.sender  }" append>{{ transaction.sender }}</router-link>
                     </td>
                   </tr>
 
                   <tr v-show="!mass">
                     <td>{{ $t('explorer.recipient') }}</td>
                     <td>
-                      <a :href="'/address/' + transaction.recipient">{{ transaction.recipient }}</a>
+                      <router-link :to="{ path: '/address/' + transaction.recipient  }" append>{{ transaction.recipient }}</router-link>
                     </td>
                   </tr>
 
@@ -106,7 +106,7 @@
                 <tbody>
                   <tr v-for="(transaction, i) in transaction.transfers" v-bind:key="i">
                     <td>
-                      <a :href="'/address/' + transaction.recipient">{{ transaction.recipient }}</a>
+                      <router-link :to="{ path: '/address/' + transaction.recipient  }" append>{{ transaction.recipient }}</router-link>
                     </td>
                     <td class="text-right">
                       {{ transaction.amount.toLocaleString(undefined, {

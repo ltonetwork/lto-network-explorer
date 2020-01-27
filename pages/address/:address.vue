@@ -64,7 +64,7 @@
                 md="3"
                 lg="3"
               >
-                <v-tooltip right>
+                <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span>{{ $t('address.balance.regular') }}</span>
                     <v-icon v-on="on" small class="ml-1">
@@ -72,7 +72,7 @@
                     </v-icon>
                   </template>
                   <span class="caption mt-0 mb-2">
-                    {{ $t('address.balance.regular.tooltip') }}
+                    {{ $t('address.tooltips.regular') }}
                   </span>
                 </v-tooltip>
 
@@ -99,7 +99,7 @@
                     </v-icon>
                   </template>
                   <span class="caption mt-0 mb-2">
-                    {{ $t('address.balance.generating.tooltip') }}
+                    {{ $t('address.tooltips.generating') }}
                   </span>
                 </v-tooltip>
                 <h2
@@ -117,7 +117,7 @@
                 md="3"
                 lg="3"
               >
-                <v-tooltip right>
+                <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span>{{ $t('address.balance.available') }}</span>
                     <v-icon v-on="on" small class="ml-1">
@@ -125,7 +125,7 @@
                     </v-icon>
                   </template>
                   <span class="caption mt-0 mb-2">
-                    {{ $t('address.balance.available.tooltip') }}
+                    {{ $t('address.tooltips.available') }}
                   </span>
                 </v-tooltip>
                 <h2
@@ -143,7 +143,7 @@
                 md="3"
                 lg="3"
               >
-                <v-tooltip right>
+                <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span>{{ $t('address.balance.effective') }}</span>
                     <v-icon v-on="on" small class="ml-1">
@@ -151,7 +151,7 @@
                     </v-icon>
                   </template>
                   <span class="caption mt-0 mb-2">
-                    {{ $t('address.balance.effective.tooltip') }}
+                    {{ $t('address.tooltips.effective') }}
                   </span>
                 </v-tooltip>
                 <h2
@@ -197,7 +197,7 @@
               </template>
 
               <template v-slot:item.type="{ item }">
-                <v-tooltip right>
+                <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <v-chip :color="color(item.type)" v-on="on" label outlined dark>
                       <v-icon small>
@@ -210,7 +210,7 @@
               </template>
 
               <template v-slot:item.id="{ item }">
-                <a :href="'/transaction/' + item.id">{{ item.id }}</a>
+                <router-link :to="{ path: '/transaction/' + item.id  }" append>{{ item.id }}</router-link>
               </template>
 
               <template v-slot:item.label="{ item }">
@@ -220,11 +220,11 @@
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <a :href="'/address/' + item.sender">{{ item.sender }}</a>
+                <router-link :to="{ path: '/address/' + item.sender  }" append>{{ item.sender }}</router-link>
               </template>
 
               <template v-slot:item.recipient="{ item }">
-                <a :href="'/address/' + item.recipient">{{ item.recipient }}</a>
+                <router-link :to="{ path: '/address/' + item.recipient  }" append>{{ item.recipient }}</router-link>
               </template>
 
               <template v-slot:item.fee="{ item }">
@@ -342,9 +342,6 @@ export default {
       balance,
       transactions
     }
-  },
-  mounted () {
-    console.log(this.transactions)
   },
   methods: {
     name (value) {
