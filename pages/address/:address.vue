@@ -54,7 +54,7 @@
         lg="12"
       >
         <v-card>
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
             {{ $t('address.balance.title') }}
           </v-card-title>
           <v-card-text>
@@ -178,7 +178,8 @@
         lg="12"
       >
         <v-card>
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-transactions"></span>
             {{ $t('address.transactions') }}
           </v-card-title>
           <v-card-text>

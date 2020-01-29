@@ -7,7 +7,8 @@
           :loading="!loaded"
           :loader-height="10"
         >
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-block"></span>
             {{ $t('staking.title') }}
           </v-card-title>
           <v-sheet>
@@ -85,10 +86,6 @@
           :loading="!loaded"
           :loader-height="10"
         >
-          <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('staking.stats') }}
-          </v-card-title>
-
           <v-sheet>
             <v-card-text>
               <figure class="chart">

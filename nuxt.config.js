@@ -1,3 +1,5 @@
+import colors from 'vuetify/lib/util/colors'
+
 export default {
   env: {
     BASE_ROUTE: process.env.BASE_ROUTE || ''
@@ -15,9 +17,23 @@ export default {
       { hid: 'description', name: 'description', content: 'LTO Network Explorer' || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap' }
+      { rel: 'icon', type: 'image/x-icon', href: '/explorer/favicon.ico' }
     ]
+  },
+  /*
+  ** Customize fonts
+  */
+  webfontloader: {
+    custom: {
+      families: [
+          'Open Sans:n3,n4',
+          'IBM Plex Sans:n3,n7'
+      ],
+      urls: [
+          'https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap',
+          'https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap'
+      ]
+  }
   },
   /*
   ** Customize the progress-bar color
@@ -29,7 +45,9 @@ export default {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+    '~/assets/lto-icons.css'
+  ],
   /*
   ** Plugins to load before mounting the App
   */
@@ -50,13 +68,19 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-    // Doc: https://nuxt-community.github.io/nuxt-i18n/basic-usage.html
-    'nuxt-i18n',
-    // Doc: https://axios.nuxtjs.org/options
     // Doc: https://www.npmjs.com/package/@nuxtjs/proxy
     '@nuxtjs/proxy',
+    // Doc: https://nuxtjs.org/faq/cached-components/
+    ['@nuxtjs/component-cache', {
+      max: 10000,
+      maxAge: 1000 * 60 * 60
+    }],
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
+    // Doc: https://github.com/Developmint/nuxt-webfontloader
+    'nuxt-webfontloader',
+    // Doc: https://nuxt-community.github.io/nuxt-i18n/basic-usage.html
+    'nuxt-i18n',
     'nuxt-clipboard2'
   ],
   /*
@@ -65,16 +89,39 @@ export default {
   */
   vuetify: {
     customVariables: ['@/assets/variables.scss'],
+    breakpoint: {
+      thresholds: {
+        xs: 340,
+        sm: 540,
+        md: 800,
+        lg: 1280,
+      },
+      scrollBarWidth: 24,
+    },
     theme: {
-      dark: false,
+      light: true,
+      options: {
+        customProperties: true,
+        minifyTheme: function (css) {
+          return process.env.NODE_ENV === 'production'
+            ? css.replace(/[\r\n|\r|\n]/g, '')
+            : css
+        },
+      },
       themes: {
         light: {
           primary: '#804BC9',
           secondary: '#17054B',
-          gray: '#75828F'
+          anchor: '#804BC9',
+          accent: '#82B1FF',
+          error: colors.red,
+          info: colors.lightBlue,
+          success: colors.lightGreen,
+          warning: colors.orange,
         }
       }
-    }
+    },
+    treeShake: true
   },
   /*
   ** Axios module configuration

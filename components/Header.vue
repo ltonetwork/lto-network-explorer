@@ -84,7 +84,6 @@
               </v-icon>
               <v-list-item-title>{{ wallet.title }}</v-list-item-title>
             </v-list-item>
-
           </v-list>
         </v-menu>
       </v-row>

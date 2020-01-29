@@ -1,23 +1,60 @@
 // Ref: https://github.com/nuxt-community/vuetify-module#customvariables
-@import '../node_modules/vuetify/src/styles/styles.sass';
+// Variables: https://github.com/vuetifyjs/vuetify/tree/master/packages/vuetify/src/styles
 
-// Font
+
+// Variables must come before the import
+
+
+// Global
 
 $body-font-family: 'IBM Plex Sans', sans-serif;
 $heading-font-family: 'IBM Plex Sans', sans-serif;
 
-// Variables must come before the import
+$black: var(--v-secondary-base);
+$dark: var(--v-secondary-base);
+
+$border-radius-root: 6px;
+
+
 $headings: (
   'h1': (
-    'size': 24px,
-    'weight': 600,
-    'line-height': 31px,
-    'color': '#1a004b'
+    'line-height': 31px
   ),
   'h2': (
-    'size': 18px,
-    'weight': 600,
-    'line-height': 23px,
-    'color': '#1a004b'
+    'line-height': 31px
   )
 );
+
+
+// Card 
+
+$card-border-radius: 6px;
+
+$card-title-font-color: var(--v-secondary-base);
+$card-title-font-size: 24px;
+$card-title-font-weight: 600 !default;
+
+$card-subtitle-padding: 25px;
+
+// Tooltip
+$tooltip-text-color: white;
+$tooltip-background-color: var(--v-secondary-base);
+
+// Snackbar
+$snackbar-text-color: white;
+$snackbar-background-color:  var(--v-secondary-base);
+
+// Data Tables
+$data-table-header-mobile-select-chip-height: 16px !default;
+$data-table-expanded-content-box-shadow: 0;
+
+$material-light: (
+    'bg-color': #E5E5E5,
+    'fg-color' :#E5E5E5,
+    'text-color': var(--v-secondary-base)
+);
+
+
+
+
+@import '~vuetify/src/styles/styles.sass';

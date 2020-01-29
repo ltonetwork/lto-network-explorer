@@ -7,7 +7,8 @@
           :loading="!loaded"
           :loader-height="10"
         >
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-distribution"></span>
             {{ $t('distribution.title') }}
           </v-card-title>
 
@@ -71,9 +72,6 @@
           :loading="!loaded"
           :loader-height="10"
         >
-          <v-card-title class="headline" style="color:#1a004b;">
-            {{ $t('distribution.stats') }}
-          </v-card-title>
 
           <v-sheet>
             <v-card-text>

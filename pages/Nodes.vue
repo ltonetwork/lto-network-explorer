@@ -6,7 +6,8 @@
         <v-card
           :loading="!loaded"
         >
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-node"></span>
             {{ $t('nodes.title') }}
           </v-card-title>
           <v-sheet>

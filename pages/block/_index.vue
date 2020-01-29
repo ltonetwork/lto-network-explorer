@@ -7,7 +7,8 @@
         lg="12"
       >
         <v-card class="mt-n12">
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-block"></span>
             {{ $t('block.title') }} #{{ blockIndex }}
           </v-card-title>
           <v-card-text>
@@ -63,8 +64,9 @@
         lg="12"
       >
         <v-card>
-          <v-card-title class="headline" style="color:#1a004b;">
-            Transactions
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-transactions"></span>
+            {{ $t('transaction.title') }}
           </v-card-title>
           <v-card-text>
             <v-data-table

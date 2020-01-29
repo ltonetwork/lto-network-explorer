@@ -7,7 +7,7 @@
         lg="12"
       >
         <v-card class="mt-n12">
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
             {{ $t('transaction.title') }}
           </v-card-title>
           <v-card-text>
@@ -93,7 +93,7 @@
         lg="12"
       >
         <v-card>
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
             {{ $t('transaction.title') }}s
           </v-card-title>
           <v-card-text>

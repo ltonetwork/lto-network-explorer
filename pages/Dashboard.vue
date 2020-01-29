@@ -7,7 +7,8 @@
           :loading="!chartLoaded"
           :loader-height="10"
         >
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-statistics"></span>
             {{ $t('network.tx_stats') }}
           </v-card-title>
           <v-card-text>
@@ -38,7 +39,8 @@
           :loading="!blocksLoaded"
           :loader-height="10"
         >
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-block"></span>
             {{ $t('network.latest_blocks') }}
           </v-card-title>
           <v-sheet>
@@ -98,7 +100,8 @@
           :loading="!txLoaded"
           :loader-height="10"
         >
-          <v-card-title class="headline" style="color:#1a004b;">
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-transactions"></span>
             {{ $t('network.unconfirmed_tx') }}
           </v-card-title>
           <v-sheet>

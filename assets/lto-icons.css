@@ -1,0 +1,116 @@
+@font-face {
+  font-family: 'ltoicons';
+  src:  url('fonts/ltoicons.eot?npfrpc');
+  src:  url('fonts/ltoicons.eot?npfrpc#iefix') format('embedded-opentype'),
+    url('fonts/ltoicons.ttf?npfrpc') format('truetype'),
+    url('fonts/ltoicons.woff?npfrpc') format('woff'),
+    url('fonts/ltoicons.svg?npfrpc#ltoicons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="lto-"], [class*=" lto-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'ltoicons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lto-statistics:before {
+  content: "\e900";
+  color: #17054b;
+}
+.lto-profile:before {
+  content: "\e903";
+  color: #17054b;
+}
+.lto-settings:before {
+  content: "\e904";
+  color: #17054b;
+}
+.lto-checkmark:before {
+  content: "\e906";
+  color: #804bc9;
+}
+.lto-arrow:before {
+  content: "\e907";
+  color: #17054b;
+}
+.lto-hide:before {
+  content: "\e908";
+  color: #c3cdd6;
+}
+.lto-show:before {
+  content: "\e909";
+  color: #c3cdd6;
+}
+.lto-copy:before {
+  content: "\e90a";
+  color: #c3cdd6;
+}
+.lto-distribution:before {
+  content: "\e90b";
+  color: #17054b;
+}
+.lto-developers:before {
+  content: "\e90c";
+  color: #17054b;
+}
+.lto-wallet:before {
+  content: "\e90d";
+  color: #17054b;
+}
+.lto-search:before {
+  content: "\e90e";
+  color: #17054b;
+}
+.lto-calculator:before {
+  content: "\e90f";
+  color: #17054b;
+}
+.lto-block:before {
+  content: "\e910";
+  color: #17054b;
+}
+.lto-transfer:before {
+  content: "\e911";
+  color: #17054b;
+}
+.lto-anchor:before {
+  content: "\e912";
+  color: #17054b;
+}
+.lto-bridge:before {
+  content: "\e913";
+  color: #17054b;
+}
+.lto-transactions:before {
+  content: "\e914";
+  color: #17054b;
+}
+.lto-node:before {
+  content: "\e915";
+  color: #17054b;
+}
+.lto-help .path1:before {
+  content: "\e916";
+  color: rgb(195, 205, 214);
+}
+.lto-help .path2:before {
+  content: "\e917";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.lto-arrow_down:before {
+  content: "\e918";
+  color: #75828f;
+}
