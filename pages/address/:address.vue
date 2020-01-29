@@ -190,6 +190,7 @@
               :sort-desc="[false]"
               :items-per-page="10"
               no-data-text="this block does not contain any transactions"
+              class="secondary--text"
             >
               <template v-slot:item.label="{ item }">
                 <v-chip :color="color(item.label)" label outlined dark>
@@ -211,7 +212,7 @@
               </template>
 
               <template v-slot:item.id="{ item }">
-                <nuxt-link :to="{ path: '/transaction/' + item.id }">
+                <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                   {{ item.id }}
                 </nuxt-link>
               </template>
@@ -223,13 +224,13 @@
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <nuxt-link :to="{ path: '/address/' + item.sender }">
+                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                   {{ item.sender }}
                 </nuxt-link>
               </template>
 
               <template v-slot:item.recipient="{ item }">
-                <nuxt-link :to="{ path: '/address/' + item.recipient }">
+                <nuxt-link :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                   {{ item.recipient }}
                 </nuxt-link>
               </template>

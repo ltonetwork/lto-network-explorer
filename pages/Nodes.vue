@@ -22,6 +22,7 @@
                 show-expand
                 single-expand
                 item-key="address"
+                class="secondary--text"
               >
                 <template v-slot:expanded-item="{ item }">
                   <v-simple-table

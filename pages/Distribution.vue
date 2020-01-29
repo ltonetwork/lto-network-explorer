@@ -21,9 +21,10 @@
                 :sort-desc="[true]"
                 :items-per-page="20"
                 item-key="address"
+                class="secondary--text"
               >
                 <template v-slot:item.address="{ item }">
-                  <nuxt-link :to="{ path: '/address/' + item.address }">
+                  <nuxt-link :to="{ path: '/address/' + item.address }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                     {{ item.address }}
                   </nuxt-link>
                 </template>

@@ -20,6 +20,7 @@
                 :sort-desc="[true]"
                 :items-per-page="20"
                 item-key="generator"
+                class="secondary--text"
               >
                 <template v-slot:item.payout="{ item }">
                   <v-tooltip right>
@@ -39,7 +40,7 @@
                 </template>
 
                 <template v-slot:item.generator="{ item }">
-                  <nuxt-link :to="{ path: '/address/' + item.generator }">
+                  <nuxt-link :to="{ path: '/address/' + item.generator }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                     {{ item.generator }}
                   </nuxt-link>
                 </template>

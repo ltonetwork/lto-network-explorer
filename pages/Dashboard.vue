@@ -45,7 +45,7 @@
           </v-card-title>
           <v-sheet>
             <v-card-text>
-              <v-simple-table v-if="blocksLoaded">
+              <v-simple-table v-if="blocksLoaded" class="secondary--text">
                 <thead>
                   <tr>
                     <th class="text-left">
@@ -69,7 +69,7 @@
                         {{ block.height }}
                       </nuxt-link>
                     </td>
-                    <td>
+                    <td class="primary--text text-truncate" style="max-width: 10vw;">
                       <nuxt-link :to="{ path: '/address/' + block.generator }">
                         {{ block.generator }}
                       </nuxt-link>
@@ -106,7 +106,7 @@
           </v-card-title>
           <v-sheet>
             <v-card-text>
-              <v-simple-table v-if="txLoaded">
+              <v-simple-table v-if="txLoaded" class="secondary--text">
                 <thead>
                   <tr>
                     <th class="text-left">
@@ -122,8 +122,8 @@
                 </thead>
                 <tbody>
                   <tr v-for="tx in unconfirmedTxs" :key="tx.id">
-                    <td>{{ tx.id }}</td>
-                    <td class="text-center">
+                    <td class="text-truncate" style="max-width: 10vw;">{{ tx.id }}</td>
+                    <td class="primary--text text-truncate" style="max-width: 10vw;">
                       <nuxt-link :to="{ path: '/address/' + tx.sender }">
                         {{ tx.sender }}
                       </nuxt-link>
