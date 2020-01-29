@@ -24,61 +24,62 @@
                 item-key="address"
                 class="secondary--text"
               >
-                <template v-slot:expanded-item="{ item }">
-                  <v-simple-table
-                    style="width: 100%;margin: 5px;"
-                  >
-                    <tbody>
-                      <tr>
-                        <th class="text-left">
-                          Country
-                        </th>
-                        <td>{{ item.country }}</td>
-                      </tr>
-                      <tr>
-                        <th class="text-left">
-                          Region
-                        </th>
-                        <td>{{ item.region }}</td>
-                      </tr>
-                      <tr>
-                        <th class="text-left">
-                          City
-                        </th>
-                        <td>{{ item.city }}</td>
-                      </tr>
-                      <tr>
-                        <th class="text-left">
-                          Coordinates
-                        </th>
-                        <td>{{ item.coordinates }}</td>
-                      </tr>
-                      <tr>
-                        <th class="text-left">
-                          Version
-                        </th>
-                        <td>{{ item.version }}</td>
-                      </tr>
-                      <tr>
-                        <th class="text-left">
-                          App
-                        </th>
-                        <td>{{ item.app }}</td>
-                      </tr>
-                      <tr>
-                        <th class="text-left">
-                          First Seen
-                        </th>
-                        <td>{{ item.created }}</td>
-                      </tr>
-                      <tr>
-                        <th class="text-left">
-                          Last Seen
-                        </th>
-                        <td>{{ item.updated }}</td>
-                      </tr>
-                    </tbody>
-                  </v-simple-table>
+                <template v-slot:expanded-item="{ headers, item }">
+                  <td :colspan="headers.length">
+                    <v-simple-table>
+                      <tbody>
+                        <tr>
+                          <th class="text-left grey--text" width="100px">
+                            Country
+                          </th>
+                          <td class="secondary--text">{{ item.country }}</td>
+                        </tr>
+                        <tr>
+                          <th class="text-left grey--text" width="100px">
+                            Region
+                          </th>
+                          <td class="secondary--text">{{ item.region }}</td>
+                        </tr>
+                        <tr>
+                          <th class="text-left grey--text" width="100px">
+                            City
+                          </th>
+                          <td class="secondary--text">{{ item.city }}</td>
+                        </tr>
+                        <tr>
+                          <th class="text-left grey--text" width="100px">
+                            Coordinates
+                          </th>
+                          <td class="secondary--text">{{ item.coordinates }}</td>
+                        </tr>
+                        <tr>
+                          <th class="text-left grey--text" width="100px">
+                            Version
+                          </th>
+                          <td class="secondary--text">{{ item.version }}</td>
+                        </tr>
+                        <tr>
+                          <th class="text-left grey--text" width="100px">
+                            App
+                          </th>
+                          <td class="secondary--text">{{ item.app }}</td>
+                        </tr>
+                        <tr>
+                          <th class="text-left grey--text" width="100px">
+                            First Seen
+                          </th>
+                          <td class="secondary--text">{{ item.created }}</td>
+                        </tr>
+                        <tr>
+                          <th class="text-left grey--text" width="100px">
+                            Last Seen
+                          </th>
+                          <td class="secondary--text">{{ item.updated }}</td>
+                        </tr>
+                      </tbody>
+                    </v-simple-table>
+
+                  </td>
                 </template>
                 <template v-slot:item.name="{ item }">
                   <v-chip color="primary" outlined label dark>
