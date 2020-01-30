@@ -19,11 +19,12 @@
             hide-details
             single-line
             flat
+            rounded
             label="Enter either a transaction ID, address or block number."
             prepend-inner-icon="mdi-magnify"
-            background-color="#44297d"
-            color="#6e5f8e"
-            class="text-center white--text"
+            background-color="rgba(255,255,255, 0.1)"
+            color=""
+            clearablec
           />
         </v-col>
       </v-row>
