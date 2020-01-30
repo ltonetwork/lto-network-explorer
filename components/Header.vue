@@ -19,10 +19,10 @@
 
         <v-toolbar-items v-for="(item, i) in menu" :key="i" class="hidden-sm-and-down">
           <v-btn
+            active-class="white--text"
             :to="item.to"
-            class="white--text"
             text
-            style="text-transform: lowercase;"
+            style="text-transform: lowercase; color:rgba(255, 255, 255, 0.4);"
             min-height="55px"
           >
             <v-icon class="mr-2">
@@ -34,10 +34,10 @@
 
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn
+            active-class="white--text"
             :href="wallet.href"
-            class="white--text"
             text
-            style="text-transform: lowercase;"
+            style="text-transform: lowercase; color:rgba(255, 255, 255, 0.4);"
             min-height="55px"
           >
             <v-icon class="mr-2">
