@@ -8,6 +8,7 @@
     <v-container>
       <v-row justify="center">
         <v-col
+          :cols="12"
           :sm="12"
           :md="8"
           :lg="6"
@@ -29,6 +30,7 @@
         </v-col>
 
         <v-col
+          :cols="0"
           :sm="0"
           :md="2"
           :lg="2"
