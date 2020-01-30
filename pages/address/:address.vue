@@ -274,7 +274,7 @@ export default {
       txTable: [
         {
           text: 'Type',
-          align: 'center',
+          align: 'left',
           value: 'type'
         },
         {
@@ -284,22 +284,22 @@ export default {
         },
         {
           text: 'Sender',
-          align: 'center',
+          align: 'left',
           value: 'sender'
         },
         {
           text: 'Recipient',
-          align: 'center',
+          align: 'left',
           value: 'recipient'
         },
         {
           text: 'Fee',
-          align: 'center',
+          align: 'right',
           value: 'fee'
         },
         {
           text: 'Timestamp',
-          align: 'right',
+          align: 'center',
           value: 'timestamp'
         },
         {

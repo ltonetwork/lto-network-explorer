@@ -14,19 +14,35 @@
           :lg="6"
         >
           <v-text-field
+            id="search"
             v-model="query"
             @keydown.enter="executeQuery"
+            @focus="focus"
             solo-inverted
             hide-details
             single-line
             flat
             rounded
-            label="transaction ID, address or block height"
             prepend-inner-icon="mdi-magnify"
             background-color="rgba(255,255,255, 0.1)"
-            color=""
-            clearablec
-          />
+            color="white"
+            class="search"
+            clearable
+          >
+            <template v-slot:default="t">
+              <span style="color:rgba(255,255,255, 0.4)">{{ t }}</span>
+            </template>
+
+            <template v-slot:prepend-inner>
+              <v-icon style="color:rgba(255,255,255, 0.4)">
+                mdi-magnify
+              </v-icon>
+            </template>
+
+            <template v-slot:label>
+              <span style="color:rgba(255,255,255, 0.4)">{{ $t('search.label') }}</span>
+            </template>
+          </v-text-field>
         </v-col>
 
         <v-col
@@ -36,13 +52,12 @@
           :lg="2"
         >
           <v-btn
-            v-model="showCalculator"
+            @click="showCalculator"
             class="hidden-sm-and-down"
             color="rgba(255,255,255,0.1)"
             rounded
             outlined
             large
-            @click="showCalculator()"
           >
             {{ $t('calculator.title') }}
           </v-btn>
@@ -65,6 +80,9 @@ export default {
     }
   },
   methods: {
+    focus (e) {
+      console.log(e)
+    },
     validateQuery () {
       // Reset
       this.valid = false

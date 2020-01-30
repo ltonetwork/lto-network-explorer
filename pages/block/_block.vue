@@ -77,6 +77,26 @@
               :items-per-page="10"
               no-data-text="this block does not contain any transactions"
             >
+              <template v-slot:header.type="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.id="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.sender="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.fee="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.timestamp="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
               <template v-slot:item.type="{ item }">
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
@@ -146,12 +166,12 @@ export default {
         },
         {
           text: 'Sender',
-          align: 'center',
+          align: 'left',
           value: 'sender'
         },
         {
           text: 'Fee',
-          align: 'center',
+          align: 'right',
           value: 'fee'
         },
         {

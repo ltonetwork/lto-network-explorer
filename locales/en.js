@@ -8,6 +8,9 @@ export default {
     distribution: 'Distribution',
     wallet: 'Web Wallet'
   },
+  search: {
+    label: 'transaction ID, address or block height'
+  },
   panel: {
     nodes: 'Active Nodes',
     staked: 'LTO Staked',

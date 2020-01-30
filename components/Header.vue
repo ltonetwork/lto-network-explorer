@@ -12,15 +12,14 @@
             <img :src="require('@/assets/logo.png')" class="mr-3" height="40" style="margin-bottom:-7px;">
             <span class="font-weight-black">LTO</span> Explorer
           </nuxt-link>
-
         </v-toolbar-title>
 
         <v-spacer />
 
         <v-toolbar-items v-for="(item, i) in menu" :key="i" class="hidden-sm-and-down">
           <v-btn
-            active-class="white--text"
             :to="item.to"
+            active-class="white--text"
             text
             style="text-transform: lowercase; color:rgba(255, 255, 255, 0.4);"
             min-height="55px"
@@ -34,8 +33,8 @@
 
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn
-            active-class="white--text"
             :href="wallet.href"
+            active-class="white--text"
             text
             style="text-transform: lowercase; color:rgba(255, 255, 255, 0.4);"
             min-height="55px"
