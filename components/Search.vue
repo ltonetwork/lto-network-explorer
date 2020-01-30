@@ -8,8 +8,8 @@
     <v-container>
       <v-row justify="center">
         <v-col
-          :sm="6"
-          :md="6"
+          :sm="12"
+          :md="8"
           :lg="6"
         >
           <v-text-field
@@ -20,7 +20,7 @@
             single-line
             flat
             rounded
-            label="Enter either a transaction ID, address or block number."
+            label="transaction ID, address or block height"
             prepend-inner-icon="mdi-magnify"
             background-color="rgba(255,255,255, 0.1)"
             color=""
@@ -29,18 +29,19 @@
         </v-col>
 
         <v-col
-          :sm="2"
+          :sm="0"
           :md="2"
           :lg="2"
         >
           <v-btn
             v-model="calculater"
+            class="hidden-sm-and-down"
             color="rgba(255,255,255,0.1)"
             rounded
             outlined
             large
           >
-            Calculator
+            {{ $t('calculator.title') }}
           </v-btn>
         </v-col>
       </v-row>

@@ -84,6 +84,14 @@
               </v-icon>
               <v-list-item-title>{{ wallet.title }}</v-list-item-title>
             </v-list-item>
+
+            <v-list-item @click="calculator()">
+              <v-icon class="mr-2">
+                mdi-calculator
+              </v-icon>
+              <v-list-item-title>{{ $t('calculator.title') }}</v-list-item-title>
+            </v-list-item>
+
           </v-list>
         </v-menu>
       </v-row>
