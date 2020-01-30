@@ -91,7 +91,6 @@
               </v-icon>
               <v-list-item-title>{{ $t('calculator.title') }}</v-list-item-title>
             </v-list-item>
-
           </v-list>
         </v-menu>
       </v-row>

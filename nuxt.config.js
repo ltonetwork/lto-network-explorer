@@ -91,8 +91,8 @@ export default {
     customVariables: ['@/assets/variables.scss'],
     breakpoint: {
       thresholds: {
-        xs: 340,
-        sm: 540,
+        xs: 400,
+        sm: 600,
         md: 800,
         lg: 1280
       },

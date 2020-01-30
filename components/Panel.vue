@@ -1,8 +1,13 @@
 <template>
-  <v-card align="center" align-content="center" class="mt-n12">
+  <v-card class="mt-n12">
     <v-card-text>
-      <v-row dense>
-        <v-col cols="3">
+      <v-row>
+        <v-col
+          :cols="6"
+          :sm="6"
+          :md="3"
+          :lg="3"
+        >
           <p class="caption mt-0 mb-2">
             {{ $t('panel.nodes') }}
           </p>
@@ -26,7 +31,12 @@
             auto-draw
           />
         </v-col>
-        <v-col cols="3">
+        <v-col
+          :cols="6"
+          :sm="6"
+          :md="3"
+          :lg="3"
+        >
           <p class="caption mt-0 mb-2">
             {{ $t('panel.staked') }}
           </p>
@@ -50,7 +60,12 @@
             auto-draw
           />
         </v-col>
-        <v-col cols="3">
+        <v-col
+          :cols="6"
+          :sm="6"
+          :md="3"
+          :lg="3"
+        >
           <p class="caption mt-0 mb-2">
             {{ $t('panel.price') }}
           </p>
@@ -74,7 +89,12 @@
             auto-draw
           />
         </v-col>
-        <v-col cols="3">
+        <v-col
+          :cols="6"
+          :sm="6"
+          :md="3"
+          :lg="3"
+        >
           <p class="caption mt-0 mb-2">
             {{ $t('panel.market') }}
           </p>
