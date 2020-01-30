@@ -11,7 +11,7 @@
             {{ $t('nodes.title') }}
           </v-card-title>
           <v-sheet>
-            <v-card-text>
+            <v-card-text class="pt-0">
               <v-data-table
                 :headers="nodesTable"
                 :items="nodes"
@@ -98,6 +98,34 @@
                   </td>
                 </template>
 
+                <template v-slot:header.name="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.address="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.height="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.version="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.p2p="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.api="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.uptime="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
                 <template v-slot:item.name="{ item }">
                   <span class="font-weight-bold d-inline-block text-truncate" style="max-width: 10vw;">
                     {{ item.name }}
@@ -109,10 +137,16 @@
                 </template>
 
                 <template v-slot:item.height="{ item }">
-                  {{ item.height.toLocaleString(undefined, {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                  }) }}
+                  <span v-if="item.height">
+                    {{ item.height.toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0
+                    }) }}
+                  </span>
+
+                  <span v-if="!item.height">
+                    N/A
+                  </span>
                 </template>
 
                 <template v-slot:item.version="{ item }">

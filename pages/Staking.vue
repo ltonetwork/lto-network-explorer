@@ -12,7 +12,7 @@
             {{ $t('staking.title') }}
           </v-card-title>
           <v-sheet>
-            <v-card-text>
+            <v-card-text class="pt-0">
               <v-data-table
                 :headers="generatorsTable"
                 :items="generators"
@@ -22,14 +22,40 @@
                 item-key="generator"
                 class="secondary--text"
               >
+                <template v-slot:header.payout="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.label="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.generator="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.pool="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.blocks="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.earnings="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.share="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
                 <template v-slot:item.payout="{ item }">
                   <v-tooltip right>
                     <template v-slot:activator="{ on }">
-                      <v-chip :color="color(item.payout)" v-on="on" outlined label dark>
-                        <v-icon small>
-                          mdi-check
-                        </v-icon>
-                      </v-chip>
+                      <v-icon :color="color(item.payout)" v-on="on">
+                        mdi-check
+                      </v-icon>
                     </template>
                     <span>payout: 3%</span>
                   </v-tooltip>
@@ -172,7 +198,7 @@ export default {
       },
       generatorsTable: [
         {
-          text: 'Payout Support',
+          text: 'Payout',
           align: 'center',
           value: 'payout'
         },

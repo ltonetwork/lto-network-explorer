@@ -13,7 +13,7 @@
           </v-card-title>
 
           <v-sheet>
-            <v-card-text>
+            <v-card-text class="pt-0">
               <v-data-table
                 :headers="holdersTable"
                 :items="holders"
@@ -23,6 +23,26 @@
                 item-key="address"
                 class="secondary--text"
               >
+                <template v-slot:header.address="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.regular="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.generating="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.available="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.effective="{ header }">
+                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                </template>
+
                 <template v-slot:item.address="{ item }">
                   <nuxt-link :to="{ path: '/address/' + item.address }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                     {{ item.address }}

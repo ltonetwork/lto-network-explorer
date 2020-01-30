@@ -44,20 +44,20 @@
             {{ $t('network.latest_blocks') }}
           </v-card-title>
           <v-sheet>
-            <v-card-text>
+            <v-card-text class="pt-0">
               <v-simple-table v-if="blocksLoaded" class="secondary--text">
                 <thead>
                   <tr>
-                    <th class="text-left">
+                    <th class="font-weight-regular text-left grey--text">
                       {{ $t('explorer.index') }}
                     </th>
-                    <th class="text-left">
+                    <th class="font-weight-regular text-left grey--text">
                       {{ $t('explorer.generator') }}
                     </th>
-                    <th class="text-center">
+                    <th class="font-weight-regular text-center grey--text">
                       {{ $t('explorer.tx') }}
                     </th>
-                    <th class="text-right">
+                    <th class="font-weight-regular text-right grey--text">
                       {{ $t('explorer.timestamp') }}
                     </th>
                   </tr>
@@ -105,17 +105,17 @@
             {{ $t('network.unconfirmed_tx') }}
           </v-card-title>
           <v-sheet>
-            <v-card-text>
+            <v-card-text class="pt-0">
               <v-simple-table v-if="txLoaded" class="secondary--text">
                 <thead>
                   <tr>
-                    <th class="text-left">
+                    <th class="font-weight-regular text-left grey--text">
                       {{ $t('explorer.id') }}
                     </th>
-                    <th class="text-center">
+                    <th class="font-weight-regular text-center grey--text">
                       {{ $t('explorer.sender') }}
                     </th>
-                    <th class="text-right">
+                    <th class="font-weight-regular text-right grey--text">
                       {{ $t('explorer.fee') }}
                     </th>
                   </tr>
