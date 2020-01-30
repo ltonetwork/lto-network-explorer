@@ -63,7 +63,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="block in latestBlocks" :key="block.height">
+                  <tr v-for="block in blocks" :key="block.height">
                     <td>
                       <nuxt-link :to="{ path: '/block/' + block.height }">
                         {{ block.height.toLocaleString(undefined, {
@@ -124,7 +124,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="tx in unconfirmedTxs" :key="tx.id">
+                  <tr v-for="tx in txns" v-bind:key="tx.id">
                     <td class="text-truncate" style="max-width: 10vw;">
                       {{ tx.id }}
                     </td>
@@ -162,6 +162,7 @@ import Panel from '~/components/Panel'
 import LineChart from '~/components/LineChart'
 
 export default {
+  // name: 'Dashboard',
   head () {
     return {
       title: this.$t('network.title')
@@ -269,12 +270,11 @@ export default {
           easing: 'easeOutQuint'
         }
       },
-      latestBlocks: [],
-      unconfirmedTxs: []
+      blocks: [],
+      txns: []
     }
   },
   computed: mapGetters({
-    height: 'dashboard/height',
     chart: 'dashboard/chart'
   }),
   async fetch ({ $axios, store }) {
@@ -284,13 +284,6 @@ export default {
     // If cache expired
     if (!updated || diff > process.env.DATA_CACHE) {
       store.commit('dashboard/empty')
-
-      // Get height
-      const network = await $axios.$get(process.env.LB_API + '/node/status', {
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      store.commit('dashboard/height', parseInt(network.blockchainHeight))
 
       // Get Tx Data
       const dataset = await $axios.$get(process.env.CACHE_API + '/stats/transaction/week', {
@@ -302,11 +295,20 @@ export default {
       })
     }
   },
-
   mounted () {
     this.loadChart()
-    this.latestBlocksData()
+    this.lastBlocks()
     this.unconfirmedTx()
+
+    // const self = this
+
+    // setInterval(function () {
+    //   self.lastBlock()
+    // }, 10000)
+
+    // setInterval(function () {
+    //  self.unconfirmedTx()
+    // }, 5000)
   },
   methods: {
     loadChart () {
@@ -314,33 +316,63 @@ export default {
       this.chartData.datasets[0].data = this.chart.map(d => d.count)
       this.chartLoaded = true
     },
-    async latestBlocksData () {
-      const start = this.height - process.env.LATEST_BLOCKS
-      const end = this.height
-
-      const blocks = await this.$axios.$get(process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end, {
+    async lastBlocks () {
+      // Get network height
+      const network = await this.$axios.$get(process.env.LB_API + '/node/status', {
         timeout: process.env.AXIOS_TIMEOUT
       })
 
-      blocks.reverse().forEach((block) => {
+      const start = network.blockchainHeight - process.env.LATEST_BLOCKS + 1
+      const end = network.blockchainHeight
+
+      // Get blocks
+      const blocks = await this.$axios.$get(process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end, {
+        progress: false,
+        timeout: process.env.AXIOS_TIMEOUT
+      })
+
+      blocks.forEach((block) => {
         block.timestamp = moment(block.timestamp).fromNow()
       })
 
-      this.latestBlocks = blocks || []
+      this.blocks = blocks.reverse() || []
       this.blocksLoaded = true
     },
-    async unconfirmedTx () {
-      const txs = await this.$axios.$get(process.env.LB_API + '/transactions/unconfirmed', {
+    async lastBlock () {
+      // Get Last Block
+      const lastBlock = await this.$axios.$get(process.env.LB_API + '/blocks/headers/last', {
         timeout: process.env.AXIOS_TIMEOUT
       })
-      txs.forEach((tx) => {
+
+      lastBlock.timestamp = moment(lastBlock.timestamp).fromNow()
+
+      if (lastBlock.height > this.blocks.reverse()[0].height) {
+        console.log(this.blocks.reverse()[0].height)
+        // console.log(lastBlock.height)
+        // this.blocks.pop()
+        this.blocks.unshift(lastBlock)
+      } else {
+        console.log('test')
+      }
+    },
+
+    async unconfirmedTx () {
+      this.txns = []
+
+      const txns = await this.$axios.$get(process.env.LB_API + '/transactions/unconfirmed', {
+        progress: false,
+        timeout: process.env.AXIOS_TIMEOUT
+      })
+
+      txns.forEach((tx) => {
         tx.fee = (+tx.fee / process.env.ATOMIC).toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
         })
+
+        this.txns.push(tx)
       })
 
-      this.unconfirmedTxs = txs || []
       this.txLoaded = true
     }
   }

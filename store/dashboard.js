@@ -12,10 +12,6 @@ export const mutations = {
   empty (state) {
     state.dashboard.chart = []
   },
-  height (state, height) {
-    state.dashboard.height = +height
-    state.dashboard.updated = moment()
-  },
   chart (state, data) {
     state.dashboard.chart.push({
       period: moment(data.period),
@@ -27,9 +23,6 @@ export const mutations = {
 }
 
 export const getters = {
-  height: (state) => {
-    return state.dashboard.height
-  },
   chart: (state) => {
     return state.dashboard.chart
   }
