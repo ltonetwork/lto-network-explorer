@@ -36,12 +36,13 @@
           :lg="2"
         >
           <v-btn
-            v-model="calculater"
+            v-model="showCalculator"
             class="hidden-sm-and-down"
             color="rgba(255,255,255,0.1)"
             rounded
             outlined
             large
+            @click="showCalculator()"
           >
             {{ $t('calculator.title') }}
           </v-btn>
@@ -86,6 +87,9 @@ export default {
       if (this.valid) {
         this.$router.push(this.url)
       }
+    },
+    showCalculator () {
+      alert('not implemented yet')
     }
   }
 }

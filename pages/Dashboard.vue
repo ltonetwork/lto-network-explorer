@@ -10,7 +10,26 @@
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-statistics" />
             {{ $t('network.tx_stats') }}
+
+            <v-spacer />
+
+            <v-chip-group
+              mandatory
+              active-class="primary"
+            >
+              <v-chip
+                v-for="filter in chartFilters"
+                :key="filter"
+                :value="filter"
+                @click="filterChart()"
+                label
+                class="white--text transparent font-weight-thin"
+              >
+                {{ filter }}
+              </v-chip>
+            </v-chip-group>
           </v-card-title>
+
           <v-card-text>
             <v-sheet>
               <v-skeleton-loader
@@ -270,6 +289,9 @@ export default {
           easing: 'easeOutQuint'
         }
       },
+      chartFilters: [
+        'day', 'week', 'month', 'year'
+      ],
       blocks: [],
       txns: []
     }
@@ -316,6 +338,9 @@ export default {
       this.chartData.datasets[0].data = this.chart.map(d => d.count)
       this.chartLoaded = true
     },
+    filterChart () {
+      alert('not implemented yet')
+    },
     async lastBlocks () {
       // Get network height
       const network = await this.$axios.$get(process.env.LB_API + '/node/status', {
@@ -352,7 +377,6 @@ export default {
         // this.blocks.pop()
         this.blocks.unshift(lastBlock)
       } else {
-        console.log('test')
       }
     },
 

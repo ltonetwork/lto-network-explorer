@@ -85,7 +85,7 @@
               <v-list-item-title>{{ wallet.title }}</v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="calculator()">
+            <v-list-item @click="showCalculator()">
               <v-icon class="mr-2">
                 mdi-calculator
               </v-icon>
@@ -131,6 +131,11 @@ export default {
         icon: 'mdi-coins',
         href: 'https://wallet.lto.network/'
       }
+    }
+  },
+  methods: {
+    showCalculator () {
+      alert('not implemented yet')
     }
   }
 }
