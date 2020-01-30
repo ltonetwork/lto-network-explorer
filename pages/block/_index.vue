@@ -8,7 +8,7 @@
       >
         <v-card class="mt-n12">
           <v-card-title class="secondary--text">
-            <span class="mr-2 lto-block"></span>
+            <span class="mr-2 lto-block" />
             {{ $t('block.title') }} #{{ blockIndex }}
           </v-card-title>
           <v-card-text>
@@ -65,7 +65,7 @@
       >
         <v-card>
           <v-card-title class="secondary--text">
-            <span class="mr-2 lto-transactions"></span>
+            <span class="mr-2 lto-transactions" />
             {{ $t('transaction.title') }}
           </v-card-title>
           <v-card-text>

@@ -8,7 +8,7 @@
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
-            <span class="mr-2 lto-statistics"></span>
+            <span class="mr-2 lto-statistics" />
             {{ $t('network.tx_stats') }}
           </v-card-title>
           <v-card-text>
@@ -40,7 +40,7 @@
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
-            <span class="mr-2 lto-block"></span>
+            <span class="mr-2 lto-block" />
             {{ $t('network.latest_blocks') }}
           </v-card-title>
           <v-sheet>
@@ -101,7 +101,7 @@
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
-            <span class="mr-2 lto-transactions"></span>
+            <span class="mr-2 lto-transactions" />
             {{ $t('network.unconfirmed_tx') }}
           </v-card-title>
           <v-sheet>
@@ -122,7 +122,9 @@
                 </thead>
                 <tbody>
                   <tr v-for="tx in unconfirmedTxs" :key="tx.id">
-                    <td class="text-truncate" style="max-width: 10vw;">{{ tx.id }}</td>
+                    <td class="text-truncate" style="max-width: 10vw;">
+                      {{ tx.id }}
+                    </td>
                     <td class="primary--text text-truncate" style="max-width: 10vw;">
                       <nuxt-link :to="{ path: '/address/' + tx.sender }">
                         {{ tx.sender }}

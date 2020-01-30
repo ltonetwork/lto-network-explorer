@@ -7,7 +7,7 @@
           :loading="!loaded"
         >
           <v-card-title class="secondary--text">
-            <span class="mr-2 lto-node"></span>
+            <span class="mr-2 lto-node" />
             {{ $t('nodes.title') }}
           </v-card-title>
           <v-sheet>
@@ -19,79 +19,100 @@
                 :sort-desc="[true]"
                 :expanded.sync="expanded"
                 :items-per-page="20"
-                show-expand
                 single-expand
+                show-expand
                 item-key="address"
                 class="secondary--text"
               >
+                >
                 <template v-slot:expanded-item="{ headers, item }">
-                  <td :colspan="headers.length">
-                    <v-simple-table>
+                  <td :colspan="headers.length" style="background-color:#F4F7FB;">
+                    <v-simple-table style="background-color:#F4F7FB;">
                       <tbody>
                         <tr>
                           <th class="text-left grey--text" width="100px">
                             Country
                           </th>
-                          <td class="secondary--text">{{ item.country }}</td>
+                          <td class="secondary--text" style="border: 0px;">
+                            {{ item.country }}
+                          </td>
                         </tr>
                         <tr>
                           <th class="text-left grey--text" width="100px">
                             Region
                           </th>
-                          <td class="secondary--text">{{ item.region }}</td>
+                          <td class="secondary--text" style="border: 0px;">
+                            {{ item.region }}
+                          </td>
                         </tr>
                         <tr>
                           <th class="text-left grey--text" width="100px">
                             City
                           </th>
-                          <td class="secondary--text">{{ item.city }}</td>
+                          <td class="secondary--text" style="border: 0px;">
+                            {{ item.city }}
+                          </td>
                         </tr>
                         <tr>
                           <th class="text-left grey--text" width="100px">
                             Coordinates
                           </th>
-                          <td class="secondary--text">{{ item.coordinates }}</td>
+                          <td class="secondary--text" style="border: 0px;">
+                            {{ item.coordinates }}
+                          </td>
                         </tr>
                         <tr>
                           <th class="text-left grey--text" width="100px">
                             Version
                           </th>
-                          <td class="secondary--text">{{ item.version }}</td>
+                          <td class="secondary--text" style="border: 0px;">
+                            {{ item.version }}
+                          </td>
                         </tr>
                         <tr>
                           <th class="text-left grey--text" width="100px">
                             App
                           </th>
-                          <td class="secondary--text">{{ item.app }}</td>
+                          <td class="secondary--text" style="border: 0px;">
+                            {{ item.app }}
+                          </td>
                         </tr>
                         <tr>
                           <th class="text-left grey--text" width="100px">
                             First Seen
                           </th>
-                          <td class="secondary--text">{{ item.created }}</td>
+                          <td class="secondary--text" style="border: 0px;">
+                            {{ item.created }}
+                          </td>
                         </tr>
                         <tr>
                           <th class="text-left grey--text" width="100px">
                             Last Seen
                           </th>
-                          <td class="secondary--text">{{ item.updated }}</td>
+                          <td class="secondary--text" style="border: 0px;">
+                            {{ item.updated }}
+                          </td>
                         </tr>
                       </tbody>
                     </v-simple-table>
-
                   </td>
                 </template>
+
                 <template v-slot:item.name="{ item }">
-                  <v-chip color="primary" outlined label dark>
+                  <span class="font-weight-bold d-inline-block text-truncate" style="max-width: 10vw;">
                     {{ item.name }}
-                  </v-chip>
+                  </span>
                 </template>
+
                 <template v-slot:item.address="{ item }">
                   {{ item.address }}
                 </template>
 
                 <template v-slot:item.height="{ item }">
-                  {{ item.height }}
+                  {{ item.height.toLocaleString(undefined, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                  }) }}
                 </template>
 
                 <template v-slot:item.version="{ item }">
@@ -99,34 +120,32 @@
                 </template>
 
                 <template v-slot:item.p2p="{ item }">
-                  <v-chip :color="color(item.p2p)" label outlined dark>
-                    <v-icon v-if="item.p2p" small>
-                      mdi-check
-                    </v-icon>
-                    <v-icon v-if="!item.p2p" small>
-                      mdi-close
-                    </v-icon>
-                  </v-chip>
+                  <v-icon v-if="item.p2p" :color="color(item.p2p)">
+                    mdi-check
+                  </v-icon>
+                  <v-icon v-if="!item.p2p" :color="color(item.p2p)">
+                    mdi-close
+                  </v-icon>
                 </template>
 
                 <template v-slot:item.api="{ item }">
-                  <v-chip :color="color(item.api)" label outlined dark>
-                    <v-icon v-if="item.api" small>
-                      mdi-check
-                    </v-icon>
-                    <v-icon v-if="!item.api" small>
-                      mdi-close
-                    </v-icon>
-                  </v-chip>
+                  <v-icon v-if="item.api" :color="color(item.api)">
+                    mdi-check
+                  </v-icon>
+                  <v-icon v-if="!item.api" :color="color(item.api)">
+                    mdi-close
+                  </v-icon>
                 </template>
 
                 <template v-slot:item.uptime="{ item }">
-                  <span
-                    v-for="(k, v) in item.uptime"
-                    v-bind:key="v[k]"
-                    :class="color(v) + '--text'"
-                    class="d-table-cell text-center display-1 font-weight-black pb-5"
-                  >.</span>
+                  <div class="pb-5">
+                    <span
+                      v-for="(k, v) in item.uptime"
+                      v-bind:key="v[k]"
+                      :class="color(v) + '--text'"
+                      class="display-1 font-weight-black"
+                    >.</span>
+                  </div>
                 </template>
               </v-data-table>
 
@@ -193,7 +212,7 @@ export default {
           value: 'api'
         },
         {
-          text: 'API Availbility Score',
+          text: 'API Uptime',
           align: 'center',
           value: 'uptime'
         }

@@ -26,14 +26,14 @@ export default {
   webfontloader: {
     custom: {
       families: [
-          'Open Sans:n3,n4',
-          'IBM Plex Sans:n3,n7'
+        'Open Sans:n3,n4',
+        'IBM Plex Sans:n3,n7'
       ],
       urls: [
-          'https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap',
-          'https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap'
+        'https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap',
+        'https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap'
       ]
-  }
+    }
   },
   /*
   ** Customize the progress-bar color
@@ -94,19 +94,19 @@ export default {
         xs: 340,
         sm: 540,
         md: 800,
-        lg: 1280,
+        lg: 1280
       },
-      scrollBarWidth: 24,
+      scrollBarWidth: 24
     },
     theme: {
       light: true,
       options: {
         customProperties: true,
-        minifyTheme: function (css) {
+        minifyTheme (css) {
           return process.env.NODE_ENV === 'production'
             ? css.replace(/[\r\n|\r|\n]/g, '')
             : css
-        },
+        }
       },
       themes: {
         light: {
@@ -117,7 +117,7 @@ export default {
           error: colors.red,
           info: colors.lightBlue,
           success: colors.lightGreen,
-          warning: colors.orange,
+          warning: colors.orange
         }
       }
     },

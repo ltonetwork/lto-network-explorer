@@ -8,7 +8,7 @@
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
-            <span class="mr-2 lto-distribution"></span>
+            <span class="mr-2 lto-distribution" />
             {{ $t('distribution.title') }}
           </v-card-title>
 
@@ -73,7 +73,6 @@
           :loading="!loaded"
           :loader-height="10"
         >
-
           <v-sheet>
             <v-card-text>
               <figure class="chart">

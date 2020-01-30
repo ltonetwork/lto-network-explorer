@@ -110,7 +110,7 @@
   margin-left: -1em;
   color: rgb(255, 255, 255);
 }
-.lto-arrow_down:before {
+.lto-arrow-down:before {
   content: "\e918";
   color: #75828f;
 }

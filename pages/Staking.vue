@@ -8,7 +8,7 @@
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
-            <span class="mr-2 lto-block"></span>
+            <span class="mr-2 lto-block" />
             {{ $t('staking.title') }}
           </v-card-title>
           <v-sheet>
