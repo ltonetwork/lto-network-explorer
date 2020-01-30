@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="copied">
+    <v-snackbar v-model="copied" top>
       {{ $t('address.copied') }}
       <v-btn
         @click="copied = false"
@@ -161,7 +161,7 @@
             <span class="mr-2 lto-transactions" />
             {{ $t('address.transactions') }}
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pt-0">
             <v-data-table
               :headers="txTable"
               :items="transactions"
@@ -171,17 +171,32 @@
               no-data-text="this block does not contain any transactions"
               class="secondary--text"
             >
-              <template v-slot:item.label="{ item }">
-                <v-btn
-                  :color="color(item.label)"
-                  outlined
-                  dark
-                  small
-                  style="width:30px;"
-                  class="text-center"
-                >
-                  {{ item.label }}
-                </v-btn>
+              <template v-slot:header.type="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.id="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.sender="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.recipient="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.fee="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.timestamp="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+              </template>
+
+              <template v-slot:header.label="{ header }">
+                <span class="font-weight-regular grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:item.type="{ item }">
@@ -208,9 +223,10 @@
               </template>
 
               <template v-slot:item.recipient="{ item }">
-                <nuxt-link :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
+                <nuxt-link v-if="item.recipient" :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                   {{ item.recipient }}
                 </nuxt-link>
+                <span v-if="!item.recipient">N/A</span>
               </template>
 
               <template v-slot:item.fee="{ item }">
@@ -222,6 +238,19 @@
 
               <template v-slot:item.timestamp="{ item }">
                 {{ item.timestamp }}
+              </template>
+
+              <template v-slot:item.label="{ item }">
+                <v-btn
+                  :color="color(item.label)"
+                  outlined
+                  dark
+                  small
+                  style="width:30px;"
+                  class="text-center"
+                >
+                  {{ item.label }}
+                </v-btn>
               </template>
             </v-data-table>
           </v-card-text>
@@ -244,19 +273,14 @@ export default {
       balance: null,
       txTable: [
         {
-          text: 'I/O',
+          text: 'Type',
           align: 'center',
-          value: 'label'
+          value: 'type'
         },
         {
           text: 'ID',
           align: 'left',
           value: 'id'
-        },
-        {
-          text: 'Type',
-          align: 'center',
-          value: 'type'
         },
         {
           text: 'Sender',
@@ -277,6 +301,11 @@ export default {
           text: 'Timestamp',
           align: 'right',
           value: 'timestamp'
+        },
+        {
+          text: 'I / O',
+          align: 'center',
+          value: 'label'
         }
       ]
     }

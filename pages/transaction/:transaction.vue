@@ -8,9 +8,10 @@
       >
         <v-card class="mt-n12">
           <v-card-title class="secondary--text">
+            <span class="mr-2 lto-transfer" />
             {{ $t('transaction.title') }}
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pt-0">
             <v-simple-table>
               <template v-slot:default>
                 <tbody>
@@ -33,7 +34,10 @@
                     <td>{{ $t('explorer.block') }}</td>
                     <td>
                       <nuxt-link :to="{ path: '/block/' + transaction.height }">
-                        {{ transaction.height }}
+                        {{ transaction.height.toLocaleString(undefined, {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0
+                        }) }}
                       </nuxt-link>
                     </td>
                   </tr>
@@ -94,17 +98,18 @@
       >
         <v-card>
           <v-card-title class="secondary--text">
-            {{ $t('transaction.title') }}s
+            <span class="mr-2 lto-transactions" />
+            {{ $t('transaction.title') }}(s)
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pt-0">
             <v-simple-table>
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">
+                    <th class="font-weight-regular grey--text text-left">
                       Recipient
                     </th>
-                    <th class="text-right">
+                    <th class="font-weight-regular grey--text text-right">
                       Amount
                     </th>
                   </tr>
@@ -112,7 +117,7 @@
                 <tbody>
                   <tr v-for="(tx, i) in transaction.transfers" v-bind:key="i">
                     <td>
-                      <nuxt-link :to="{ path: '/address/' + tx.recipient }">
+                      <nuxt-link :to="{ path: '/address/' + tx.recipient }" class="d-inline-block primary--text text-truncate" style="max-width: 95%;">
                         {{ tx.recipient }}
                       </nuxt-link>
                     </td>
@@ -162,7 +167,7 @@ export default {
 
     if (transaction.type === 11) {
       mass = true
-      transaction.amount = transaction.totalAmount
+      transaction.amount = transaction.totalAmount / process.env.ATOMIC
 
       transaction.transfers.forEach((tx) => {
         tx.amount = (tx.amount / process.env.ATOMIC)

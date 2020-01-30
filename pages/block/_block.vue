@@ -78,26 +78,24 @@
               no-data-text="this block does not contain any transactions"
             >
               <template v-slot:item.type="{ item }">
-                <v-tooltip right>
+                <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <v-chip :color="color(item.type)" v-on="on" label outlined dark>
-                      <v-icon small>
-                        {{ icon(item.type) }}
-                      </v-icon>
-                    </v-chip>
+                    <v-icon v-on="on" color="secondary">
+                      {{ icon(item.type) }}
+                    </v-icon>
                   </template>
-                  <span>{{ name(item.type) }}</span>
+                  {{ name(item.type) }}
                 </v-tooltip>
               </template>
 
               <template v-slot:item.id="{ item }">
-                <nuxt-link :to="{ path: '/transaction/' + item.id }">
+                <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                   {{ item.id }}
                 </nuxt-link>
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <nuxt-link :to="{ path: '/address/' + item.sender }">
+                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                   {{ item.sender }}
                 </nuxt-link>
               </template>
@@ -134,7 +132,7 @@ export default {
   },
   data () {
     return {
-      blockIndex: this.$route.params.index,
+      blockIndex: this.$route.params.block,
       txTable: [
         {
           text: 'Type',
@@ -165,10 +163,10 @@ export default {
     }
   },
   validate ({ params }) {
-    return !isNaN(params.index)
+    return !isNaN(params.block)
   },
   async asyncData ({ $axios, params }) {
-    const block = await $axios.$get(process.env.LB_API + '/blocks/at/' + params.index, {
+    const block = await $axios.$get(process.env.LB_API + '/blocks/at/' + params.block, {
       timeout: process.env.AXIOS_TIMEOUT
     })
 
@@ -207,30 +205,6 @@ export default {
       } else if (value === 15) {
         // Anchor
         return 'Anchor'
-      } else { return 'light' }
-    },
-    color (value) {
-      // Genesis Transfer
-      if (value === 1) {
-        return 'primary'
-      } else if (value === 4) {
-      // Transfer
-        return '#9fd0da'
-      } else if (value === 8) {
-      // Lease
-        return '#877abc'
-      } else if (value === 9) {
-        // Cancel Lease
-        return '#e17abd'
-      } else if (value === 11) {
-        // Mass Transfer
-        return '#4f7279'
-      } else if (value === 13) {
-        // Set Script
-        return '#b18383'
-      } else if (value === 15) {
-        // Anchor
-        return '#c098d1'
       } else { return 'light' }
     },
     icon (value) {
