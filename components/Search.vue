@@ -8,9 +8,9 @@
     <v-container>
       <v-row justify="center">
         <v-col
-          :sm="12"
-          :md="10"
-          :lg="8"
+          :sm="6"
+          :md="6"
+          :lg="6"
         >
           <v-text-field
             v-model="query"
@@ -26,6 +26,22 @@
             color=""
             clearablec
           />
+        </v-col>
+
+        <v-col
+          :sm="2"
+          :md="2"
+          :lg="2"
+        >
+          <v-btn
+            v-model="calculater"
+            color="rgba(255,255,255,0.1)"
+            rounded
+            outlined
+            large
+          >
+            Calculator
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
