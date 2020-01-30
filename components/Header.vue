@@ -8,8 +8,11 @@
     <v-container>
       <v-row>
         <v-toolbar-title min-height="55px" class="mr-5" style="text-transform: uppercase;font-size:28px;">
-          <img :src="require('@/assets/logo.png')" class="mr-3" height="40" style="margin-bottom:-7px;">
-          <span class="font-weight-black">LTO</span> Explorer
+          <nuxt-link :to="{ path: '/' }" class="white--text">
+            <img :src="require('@/assets/logo.png')" class="mr-3" height="40" style="margin-bottom:-7px;">
+            <span class="font-weight-black">LTO</span> Explorer
+          </nuxt-link>
+
         </v-toolbar-title>
 
         <v-spacer />
