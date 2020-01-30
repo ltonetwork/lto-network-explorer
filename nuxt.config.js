@@ -117,7 +117,9 @@ export default {
           error: colors.red,
           info: colors.lightBlue,
           success: colors.lightGreen,
-          warning: colors.orange
+          warning: colors.orange,
+          grey: '#75828F'
+
         }
       }
     },

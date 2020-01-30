@@ -1,18 +1,16 @@
 <template>
   <div>
-    <v-snackbar
-      v-model="copied"
-    >
+    <v-snackbar v-model="copied">
       {{ $t('address.copied') }}
-
       <v-btn
-        @click="snackbar = false"
-        color="red"
+        @click="copied = false"
+        color="primary"
         text
       >
         Close
       </v-btn>
     </v-snackbar>
+
     <v-row>
       <v-col
         sm="12"
@@ -20,29 +18,27 @@
         lg="12"
       >
         <v-card>
-          <v-card-title class="headline mt-n12" style="color:#1a004b;">
+          <v-card-title class="secondary--text mt-n12">
             {{ $t('address.wallet') }}
           </v-card-title>
           <v-card-text>
-            <span class="">
-              {{ $t('address.title') }}
-            </span>
+            <v-divider class="mb-3" />
+            {{ $t('address.title') }}
 
             <br>
 
-            <span class="subtitle-2" style="color:#1a004b;">{{ address }}</span>
+            <span class="subtitle-1" style="color:#1a004b;">{{ address }}</span>
 
             <v-btn
               v-clipboard:copy="address"
               v-clipboard:success="copy"
               text
               icon
-              color="mdi-clipboard"
+              style="font-size:22px;"
             >
-              <v-icon>mdi-clipboard</v-icon>
+              <span class="lto-copy" />
             </v-btn>
           </v-card-text>
-          <v-card-actions />
         </v-card>
       </v-col>
     </v-row>
@@ -58,8 +54,11 @@
             {{ $t('address.balance.title') }}
           </v-card-title>
           <v-card-text>
-            <v-row dense>
+            <v-divider class="mb-1" />
+
+            <v-row>
               <v-col
+                xs="12"
                 sm="6"
                 md="3"
                 lg="3"
@@ -67,50 +66,40 @@
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span>{{ $t('address.balance.regular') }}</span>
-                    <v-icon v-on="on" small class="ml-1">
+                    <v-icon v-on="on" small class="ml-1 grey--text">
                       mdi-help-circle
                     </v-icon>
                   </template>
-                  <span class="caption mt-0 mb-2">
-                    {{ $t('address.tooltips.regular') }}
-                  </span>
+                  {{ $t('address.tooltips.regular') }}
                 </v-tooltip>
 
-                <h2
-                  style="color:#1a004b;"
-                  class="subtitle-2mb-0"
-                >
+                <p class="title font-weight-bold secondary--text mt-2">
                   {{ balance.regular.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   }) }}
-                </h2>
+                </p>
               </v-col>
               <v-col
                 sm="6"
                 md="3"
                 lg="3"
               >
-                <v-tooltip right>
+                <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span>{{ $t('address.balance.generating') }}</span>
-                    <v-icon v-on="on" small class="ml-1">
+                    <v-icon v-on="on" small class="ml-1 grey--text">
                       mdi-help-circle
                     </v-icon>
                   </template>
-                  <span class="caption mt-0 mb-2">
-                    {{ $t('address.tooltips.generating') }}
-                  </span>
+                  {{ $t('address.tooltips.generating') }}
                 </v-tooltip>
-                <h2
-                  style="color:#1a004b;"
-                  class="mb-0"
-                >
+                <p class="title font-weight-bold secondary--text mt-2">
                   {{ balance.generating.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   }) }}
-                </h2>
+                </p>
               </v-col>
               <v-col
                 sm="6"
@@ -120,23 +109,18 @@
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span>{{ $t('address.balance.available') }}</span>
-                    <v-icon v-on="on" small class="ml-1">
+                    <v-icon v-on="on" small class="ml-1 grey--text">
                       mdi-help-circle
                     </v-icon>
                   </template>
-                  <span class="caption mt-0 mb-2">
-                    {{ $t('address.tooltips.available') }}
-                  </span>
+                  {{ $t('address.tooltips.available') }}
                 </v-tooltip>
-                <h2
-                  style="color:#1a004b;"
-                  class="mb-0"
-                >
+                <p class="title font-weight-bold secondary--text mt-2">
                   {{ balance.available.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   }) }}
-                </h2>
+                </p>
               </v-col>
               <v-col
                 sm="6"
@@ -146,23 +130,18 @@
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span>{{ $t('address.balance.effective') }}</span>
-                    <v-icon v-on="on" small class="ml-1">
+                    <v-icon v-on="on" small class="ml-1 grey--text">
                       mdi-help-circle
                     </v-icon>
                   </template>
-                  <span class="caption mt-0 mb-2">
-                    {{ $t('address.tooltips.effective') }}
-                  </span>
+                  {{ $t('address.tooltips.effective') }}
                 </v-tooltip>
-                <h2
-                  style="color:#1a004b;"
-                  class="mb-0"
-                >
+                <p class="title font-weight-bold secondary--text mt-2">
                   {{ balance.effective.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   }) }}
-                </h2>
+                </p>
               </v-col>
             </v-row>
           </v-card-text>
@@ -193,21 +172,26 @@
               class="secondary--text"
             >
               <template v-slot:item.label="{ item }">
-                <v-chip :color="color(item.label)" label outlined dark>
+                <v-btn
+                  :color="color(item.label)"
+                  outlined
+                  dark
+                  small
+                  style="width:30px;"
+                  class="text-center"
+                >
                   {{ item.label }}
-                </v-chip>
+                </v-btn>
               </template>
 
               <template v-slot:item.type="{ item }">
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <v-chip :color="color(item.type)" v-on="on" label outlined dark>
-                      <v-icon small>
-                        {{ icon(item.type) }}
-                      </v-icon>
-                    </v-chip>
+                    <v-icon v-on="on" color="secondary">
+                      {{ icon(item.type) }}
+                    </v-icon>
                   </template>
-                  <span>{{ name(item.type) }}</span>
+                  {{ name(item.type) }}
                 </v-tooltip>
               </template>
 
@@ -215,12 +199,6 @@
                 <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text text-truncate" style="max-width: 10vw;">
                   {{ item.id }}
                 </nuxt-link>
-              </template>
-
-              <template v-slot:item.label="{ item }">
-                <v-chip color="primary" label outlined dark>
-                  {{ item.label }}
-                </v-chip>
               </template>
 
               <template v-slot:item.sender="{ item }">
@@ -377,34 +355,11 @@ export default {
       } else { return 'light' }
     },
     color (value) {
-      // Genesis Transfer
-      if (value === 1) {
-        return 'primary'
-      } else if (value === 4) {
-      // Transfer
-        return '#9fd0da'
-      } else if (value === 8) {
-      // Lease
-        return '#877abc'
-      } else if (value === 9) {
-        // Cancel Lease
-        return '#e17abd'
-      } else if (value === 11) {
-        // Mass Transfer
-        return '#4f7279'
-      } else if (value === 13) {
-        // Set Script
-        return '#b18383'
-      } else if (value === 15) {
-        // Anchor
-        return '#c098d1'
-      } else if (value === 'out') {
-        // Anchor
+      if (value === 'out') {
         return 'orange'
       } else if (value === 'in') {
-        // Anchor
         return 'green'
-      } else { return 'light' }
+      }
     },
     icon (value) {
       // Genesis Transfer
