@@ -66,7 +66,10 @@
                   <tr v-for="block in latestBlocks" :key="block.height">
                     <td>
                       <nuxt-link :to="{ path: '/block/' + block.height }">
-                        {{ block.height }}
+                        {{ block.height.toLocaleString(undefined, {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0
+                        }) }}
                       </nuxt-link>
                     </td>
                     <td class="primary--text text-truncate" style="max-width: 10vw;">
