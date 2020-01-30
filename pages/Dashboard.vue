@@ -238,22 +238,20 @@ export default {
           }]
         },
         tooltips: {
-          bodySpacing: 0,
-          bodyFontStyle: 'normal',
           titleFontColor: '#fff',
           titleSpacing: 0,
-          titleFontSize: 16,
-          titleMarginBottom: 10,
-          titleFontStyle: 'bold',
+          titleFontSize: 12,
+          titleFontStyle: 'normal',
+          titleMarginBottom: 0,
           xPadding: 15,
-          yPadding: 15,
+          yPadding: 10,
           intersect: false,
           displayColors: false,
-          cornerRadius: 6,
-          backgroundColor: 'rgba(23,5,75,0.9)',
+          cornerRadius: 4,
+          backgroundColor: 'rgba(23, 5, 75, 0.9)',
           callbacks: {
             title (value, chart) {
-              return value[0].yLabel.toLocaleString(undefined, {
+              return 'Transactions: ' + value[0].yLabel.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2
               })
