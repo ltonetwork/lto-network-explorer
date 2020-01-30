@@ -211,6 +211,11 @@ export default {
             distribution: 'series',
             gridLines: {
               display: true
+            },
+            scaleLabel: {
+              fontFamily: 'IBM Plex Sans',
+              fontColor: '#75828F',
+              fontSize: 10
             }
           }],
           yAxes: [{
@@ -233,21 +238,19 @@ export default {
           }]
         },
         tooltips: {
-          bodyFontColor: '#1f1f1f',
-          bodySpacing: 5,
-          bodyFontSize: 15,
+          bodySpacing: 0,
           bodyFontStyle: 'normal',
-          titleFontColor: '#1f1f1f',
-          titleSpacing: 5,
-          titleFontSize: 17,
+          titleFontColor: '#fff',
+          titleSpacing: 0,
+          titleFontSize: 16,
           titleMarginBottom: 10,
           titleFontStyle: 'bold',
           xPadding: 15,
           yPadding: 15,
           intersect: false,
           displayColors: false,
-          cornerRadius: 0,
-          backgroundColor: 'rgba(255,255,255,0.9)',
+          cornerRadius: 6,
+          backgroundColor: 'rgba(23,5,75,0.9)',
           callbacks: {
             title (value, chart) {
               return value[0].yLabel.toLocaleString(undefined, {
@@ -256,7 +259,7 @@ export default {
               })
             },
             label (value, chart) {
-              return moment(value.xLabel).format('YYYY-MM-DD')
+
             }
           }
         },
