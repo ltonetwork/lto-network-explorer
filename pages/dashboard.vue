@@ -351,7 +351,7 @@ export default {
       // Refresh every 10 seconds
       this.unconfirmed = setInterval(() => {
         this.$store.dispatch('dashboard/fetchUnconfirmed')
-      }, 10000)
+      }, 5000)
     },
     filterChart () {
       alert('not implemented yet')
