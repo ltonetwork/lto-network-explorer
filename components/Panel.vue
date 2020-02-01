@@ -278,10 +278,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      market: 'dashboard/getMarket',
-      nodes: 'dashboard/getNodes',
-      staking: 'dashboard/getStaking',
-      network: 'dashboard/getNetwork'
+      market: 'panel/getMarket',
+      nodes: 'panel/getNodes',
+      staking: 'panel/getStaking',
+      network: 'panel/getNetwork'
     })
   },
   created () {
@@ -302,38 +302,38 @@ export default {
   methods: {
     pollMarket () {
       // Fetch on render
-      this.$store.dispatch('dashboard/fetchMarket')
+      this.$store.dispatch('panel/fetchMarket')
 
       // Refresh every minute
       this.market = setInterval(() => {
-        this.$store.dispatch('dashboard/fetchMarket')
+        this.$store.dispatch('panel/fetchMarket')
       }, 60000)
     },
     pollNodes () {
       // Fetch on render
-      this.$store.dispatch('dashboard/fetchNodes')
+      this.$store.dispatch('panel/fetchNodes')
 
       // Refresh every minute
       this.nodes = setInterval(() => {
-        this.$store.dispatch('dashboard/fetchNodes')
+        this.$store.dispatch('panel/fetchNodes')
       }, 60000)
     },
     pollStaking () {
       // Fetch on render
-      this.$store.dispatch('dashboard/fetchStaking')
+      this.$store.dispatch('panel/fetchStaking')
 
       // Refresh every minute
       this.nodes = setInterval(() => {
-        this.$store.dispatch('dashboard/fetchStaking')
+        this.$store.dispatch('panel/fetchStaking')
       }, 60000)
     },
     pollNetwork () {
       // Fetch on render
-      this.$store.dispatch('dashboard/fetchNetwork')
+      this.$store.dispatch('panel/fetchNetwork')
 
       // Refresh every minute
       this.nodes = setInterval(() => {
-        this.$store.dispatch('dashboard/fetchNetwork')
+        this.$store.dispatch('panel/fetchNetwork')
       }, 60000)
     }
   }

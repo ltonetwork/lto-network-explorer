@@ -1,208 +1,91 @@
 import moment from 'moment'
-import math from 'lodash/math'
 
 export const state = () => ({
   dashboard: {
-    market: {
-      price: {
-        change: {
-          relative: 0,
-          absolute: 0,
-          currency: {
-            btc: 0,
-            eth: 0,
-            usd: 0,
-            eur: 0,
-            gbp: 0,
-            cad: 0,
-            cny: 0
-          }
-        },
-        currency: {
-          btc: 0,
-          eth: 0,
-          usd: 0,
-          eur: 0,
-          gbp: 0,
-          cad: 0,
-          cny: 0
-        }
-      },
-      capital: {
-        change: {
-          relative: 0,
-          absolute: 0,
-          currency: {
-            btc: 0,
-            eth: 0,
-            usd: 0,
-            eur: 0,
-            gbp: 0,
-            cad: 0,
-            cny: 0
-          }
-        },
-        currency: {
-          btc: 0,
-          eth: 0,
-          usd: 0,
-          eur: 0,
-          gbp: 0,
-          cad: 0,
-          cny: 0
-        }
-      },
-      sparkline: [],
+    chart: {
+      dataset: [],
       updated: moment().fromNow()
     },
-    nodes: {
-      active: 0,
+    blocks: {
+      last: [],
       updated: moment().fromNow()
     },
-    staking: {
-      total: 0,
+    unconfirmed: {
+      pool: [],
       updated: moment().fromNow()
-    },
-    network: {
-      height: 0,
-      updated: moment().fromNow()
-    },
-    chart: [],
-    updated: moment().fromNow()
+    }
   }
 })
 
 export const actions = {
-  async fetchMarket ({ commit }) {
-    // Doc: https://www.coingecko.com/api/documentations/v3
-
-    const url = 'https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true'
-    const payload = await this.$axios.$get(url)
-
-    commit('updateMarket', payload)
-  },
-  async fetchNodes ({ commit }) {
-    // Doc: https://github.com/bbjansen/lto-network-monitor
-
-    const url = 'https://network.lto.cloud/v1/nodes/all'
-    const payload = await this.$axios.$get(url)
-
-    commit('updateNodes', payload)
-  },
-  async fetchStaking ({ commit }) {
+  async fetchChart ({ commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
-    const url = process.env.CACHE_API + '/generator/all/week'
+    const url = process.env.CACHE_API + '/stats/transaction/week'
     const payload = await this.$axios.$get(url)
 
-    commit('updateStaking', payload)
+    commit('updateChart', payload)
   },
-  async fetchNetwork ({ commit }) {
+  async fetchBlocks ({ rootState, commit }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
-    const url = process.env.LB_API + '/node/status'
+    const res = await this.$axios.$get(process.env.LB_API + '/node/status')
+    const end = +res.blockchainHeight
+    const start = end - process.env.LATEST_BLOCKS + 1
+
+    const url = process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end
     const payload = await this.$axios.$get(url)
 
-    commit('updateNetwork', payload)
+    commit('updateBlocks', payload)
+  },
+  async fetchUnconfirmed ({ commit }) {
+    // Doc: https://docs.ltonetwork.com/public-node
+
+    const url = process.env.LB_API + '/transactions/unconfirmed'
+    const payload = await this.$axios.$get(url)
+
+    commit('updateUnconfirmed', payload)
   }
 }
 
 export const mutations = {
-  updateMarket (state, payload) {
-    const data = {
-      price: {
-        change: {
-          relative: payload.market_data.price_change_percentage_24h,
-          absolute: payload.market_data.price_change_24h,
-          currency: {
-            btc: payload.market_data.price_change_24h_in_currency.btc,
-            eth: payload.market_data.price_change_24h_in_currency.eth,
-            usd: payload.market_data.price_change_24h_in_currency.usd,
-            eur: payload.market_data.price_change_24h_in_currency.eur,
-            gbp: payload.market_data.price_change_24h_in_currency.gbp,
-            cad: payload.market_data.price_change_24h_in_currency.cad,
-            cny: payload.market_data.price_change_24h_in_currency.cny
-          }
-        },
-        currency: {
-          btc: payload.market_data.current_price.btc,
-          eth: payload.market_data.current_price.eth,
-          usd: payload.market_data.current_price.usd,
-          eur: payload.market_data.current_price.eur,
-          gbp: payload.market_data.current_price.gbp,
-          cad: payload.market_data.current_price.cad,
-          cny: payload.market_data.current_price.cny
-        }
-      },
-      capital: {
-        change: {
-          relative: payload.market_cap_change_percentage_24h,
-          absolute: payload.market_cap_change_24h,
-          currency: {
-            btc: payload.market_data.market_cap_change_24h_in_currency.btc,
-            eth: payload.market_data.market_cap_change_24h_in_currency.eth,
-            usd: payload.market_data.market_cap_change_24h_in_currency.usd,
-            eur: payload.market_data.market_cap_change_24h_in_currency.eur,
-            gbp: payload.market_data.market_cap_change_24h_in_currency.gbp,
-            cad: payload.market_data.market_cap_change_24h_in_currency.cad,
-            cny: payload.market_data.market_cap_change_24h_in_currency.cny
-          }
-        },
-        currency: {
-          btc: payload.market_data.market_cap.btc,
-          eth: payload.market_data.market_cap.eth,
-          usd: payload.market_data.market_cap.usd,
-          eur: payload.market_data.market_cap.eur,
-          gbp: payload.market_data.market_cap.gbp,
-          cad: payload.market_data.market_cap.cad,
-          cny: payload.market_data.market_cap.cny
-        }
-      },
-      sparkline: payload.market_data.sparkline_7d.price,
-      updated: moment().fromNow()
-    }
-
-    state.dashboard.market = data
-  },
-  updateNodes (state, payload) {
-    state.dashboard.nodes.active = payload.length
-    state.dashboard.nodes.updated = moment().fromNow()
-  },
-  updateStaking (state, payload) {
-    state.dashboard.staking.total = math.sumBy(payload, function (o) { return o.pool })
-    state.dashboard.staking.updated = moment().fromNow()
-  },
-  updateNetwork (state, payload) {
-    state.dashboard.network.height = payload.blockchainHeight
-    state.dashboard.network.updated = moment().fromNow()
-  },
-  empty (state) {
-    state.dashboard.chart = []
-  },
-  chart (state, data) {
-    state.dashboard.chart.push({
-      period: moment(data.period),
-      count: +data.count
+  updateChart (state, payload) {
+    payload.forEach((d) => {
+      d.period = moment(d.period)
     })
 
-    state.dashboard.updated = moment()
+    state.dashboard.chart.dataset = payload
+    state.dashboard.chart.updated = moment()
+  },
+  updateBlocks (state, payload) {
+    payload.forEach((b) => {
+      b.timestamp = moment(b.timestamp).fromNow()
+    })
+
+    state.dashboard.blocks.last = payload.reverse()
+    state.dashboard.blocks.updated = moment().fromNow()
+  },
+  updateUnconfirmed (state, payload) {
+    payload.forEach((tx) => {
+      tx.fee = (+tx.fee / process.env.ATOMIC).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    })
+
+    state.dashboard.unconfirmed.pool = payload
+    state.dashboard.unconfirmed.updated = moment().fromNow()
   }
 }
 
 export const getters = {
-  getMarket: (state) => {
-    return state.dashboard.market
-  },
-  getNodes: (state) => {
-    return state.dashboard.nodes
-  },
-  getStaking: (state) => {
-    return state.dashboard.staking
-  },
-  getNetwork: (state) => {
-    return state.dashboard.network
-  },
-  chart: (state) => {
+  getChart: (state) => {
     return state.dashboard.chart
+  },
+  getBlocks: (state) => {
+    return state.dashboard.blocks
+  },
+  getUnconfirmed: (state) => {
+    return state.dashboard.unconfirmed
   }
 }

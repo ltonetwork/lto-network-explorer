@@ -15,8 +15,20 @@ export default {
       default: null
     }
   },
+  watch: {
+    data () {
+      this._chart.destroy()
+      // this.renderChart(this.data, this.options);
+      this.renderLineChart()
+    }
+  },
   mounted () {
-    this.renderChart(this.chartData, this.chartOptions)
+    this.renderLineChart()
+  },
+  methods: {
+    renderLineChart () {
+      this.renderChart(this.chartData, this.chartOptions)
+    }
   }
 }
 </script>

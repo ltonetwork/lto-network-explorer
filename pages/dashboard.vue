@@ -4,7 +4,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="!chartLoaded"
+          :loading="loading"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -33,15 +33,14 @@
           <v-card-text>
             <v-sheet>
               <v-skeleton-loader
-                v-if="!chartLoaded"
+                v-if="loading"
                 class="mx-auto"
                 type="image"
                 loading
               />
               <figure class="chart">
                 <lineChart
-                  v-if="chartLoaded"
-                  :chartData="chartData"
+                  :chartData="chartDataSet"
                   :chartOptions="chartOptions"
                 />
               </figure>
@@ -55,7 +54,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="!blocksLoaded"
+          :loading="loading"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -64,7 +63,7 @@
           </v-card-title>
           <v-sheet>
             <v-card-text class="pt-0">
-              <v-simple-table v-if="blocksLoaded" class="secondary--text">
+              <v-simple-table class="secondary--text">
                 <thead>
                   <tr>
                     <th class="font-weight-regular text-left grey--text">
@@ -82,7 +81,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="block in blocks" :key="block.height">
+                  <tr v-for="block in blocks.last" :key="block.height">
                     <td>
                       <nuxt-link :to="{ path: '/block/' + block.height }">
                         {{ block.height.toLocaleString(undefined, {
@@ -107,7 +106,7 @@
               </v-simple-table>
 
               <v-skeleton-loader
-                v-if="!blocksLoaded"
+                v-if="loading"
                 class="mx-auto"
                 type="table"
                 loading
@@ -119,7 +118,7 @@
 
       <v-col>
         <v-card
-          :loading="!txLoaded"
+          :loading="loading"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -128,7 +127,7 @@
           </v-card-title>
           <v-sheet>
             <v-card-text class="pt-0">
-              <v-simple-table v-if="txLoaded" class="secondary--text">
+              <v-simple-table class="secondary--text">
                 <thead>
                   <tr>
                     <th class="font-weight-regular text-left grey--text">
@@ -143,7 +142,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="tx in txns" v-bind:key="tx.id">
+                  <tr v-for="tx in unconfirmed.pool" v-bind:key="tx.id">
                     <td class="text-truncate" style="max-width: 10vw;">
                       {{ tx.id }}
                     </td>
@@ -161,7 +160,7 @@
             </v-card-text>
 
             <v-skeleton-loader
-              v-if="!txLoaded"
+              v-if="loading"
               class="mx-auto"
               type="table"
               loading
@@ -176,7 +175,6 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import Panel from '~/components/Panel'
 import LineChart from '~/components/LineChart'
 
@@ -193,10 +191,7 @@ export default {
   },
   data () {
     return {
-      networkHeight: 0,
-      chartLoaded: false,
-      blocksLoaded: false,
-      txLoaded: false,
+      loading: true,
       chartData: {
         labels: null,
         datasets: [
@@ -291,113 +286,75 @@ export default {
       },
       chartFilters: [
         'day', 'week', 'month', 'year'
-      ],
-      blocks: [],
-      txns: []
+      ]
     }
   },
-  computed: mapGetters({
-    chart: 'dashboard/chart'
-  }),
-  async fetch ({ $axios, store }) {
-    const updated = store.state.dashboard.dashboard.updated
-    const diff = moment().diff(moment(updated))
-
-    // If cache expired
-    if (!updated || diff > process.env.DATA_CACHE) {
-      store.commit('dashboard/empty')
-
-      // Get Tx Data
-      const dataset = await $axios.$get(process.env.CACHE_API + '/stats/transaction/week', {
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      dataset.forEach((data) => {
-        store.commit('dashboard/chart', data)
-      })
-    }
+  computed: {
+    chartDataSet () {
+      return {
+        labels: this.chart.dataset.map(d => d.period),
+        datasets: [
+          {
+            backgroundColor: 'rgba(249, 246, 252, .6)',
+            borderColor: '#804BC9',
+            borderWidth: '3',
+            pointBorderWidth: '0',
+            pointRotation: '45',
+            spanGaps: true,
+            data: this.chart.dataset.map(d => d.count)
+          }
+        ]
+      }
+    },
+    ...mapGetters({
+      chart: 'dashboard/getChart',
+      blocks: 'dashboard/getBlocks',
+      unconfirmed: 'dashboard/getUnconfirmed'
+    })
+  },
+  created () {
+    this.pollChart()
+    this.pollBlocks()
+    this.pollUnconfirmed()
   },
   mounted () {
-    this.loadChart()
-    this.lastBlocks()
-    this.unconfirmedTx()
-
-    // const self = this
-
-    // setInterval(function () {
-    //   self.lastBlock()
-    // }, 10000)
-
-    // setInterval(function () {
-    //  self.unconfirmedTx()
-    // }, 5000)
+    this.loading = false
+  },
+  beforeDestroy () {
+    clearInterval(this.chart)
+    clearInterval(this.blocks)
+    clearInterval(this.unconfirmed)
   },
   methods: {
-    loadChart () {
-      this.chartData.labels = this.chart.map(l => moment(l.period))
-      this.chartData.datasets[0].data = this.chart.map(d => d.count)
-      this.chartLoaded = true
+    pollChart () {
+      // Fetch on render
+      this.$store.dispatch('dashboard/fetchChart')
+
+      // Refresh every minute
+      this.chart = setInterval(() => {
+        this.$store.dispatch('dashboard/fetchChart')
+      }, 60000)
+    },
+    pollBlocks () {
+      // Fetch on render
+      this.$store.dispatch('dashboard/fetchBlocks')
+
+      // Refresh every minute
+      this.blocks = setInterval(() => {
+        this.$store.dispatch('dashboard/fetchBlocks')
+      }, 60000)
+    },
+    pollUnconfirmed () {
+      // Fetch on render
+      this.$store.dispatch('dashboard/fetchUnconfirmed')
+
+      // Refresh every 10 seconds
+      this.unconfirmed = setInterval(() => {
+        this.$store.dispatch('dashboard/fetchUnconfirmed')
+      }, 10000)
     },
     filterChart () {
       alert('not implemented yet')
-    },
-    async lastBlocks () {
-      // Get network height
-      const network = await this.$axios.$get(process.env.LB_API + '/node/status', {
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      const start = network.blockchainHeight - process.env.LATEST_BLOCKS + 1
-      const end = network.blockchainHeight
-
-      // Get blocks
-      const blocks = await this.$axios.$get(process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end, {
-        progress: false,
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      blocks.forEach((block) => {
-        block.timestamp = moment(block.timestamp).fromNow()
-      })
-
-      this.blocks = blocks.reverse() || []
-      this.blocksLoaded = true
-    },
-    async lastBlock () {
-      // Get Last Block
-      const lastBlock = await this.$axios.$get(process.env.LB_API + '/blocks/headers/last', {
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      lastBlock.timestamp = moment(lastBlock.timestamp).fromNow()
-
-      if (lastBlock.height > this.blocks.reverse()[0].height) {
-        console.log(this.blocks.reverse()[0].height)
-        // console.log(lastBlock.height)
-        // this.blocks.pop()
-        this.blocks.unshift(lastBlock)
-      } else {
-      }
-    },
-
-    async unconfirmedTx () {
-      this.txns = []
-
-      const txns = await this.$axios.$get(process.env.LB_API + '/transactions/unconfirmed', {
-        progress: false,
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      txns.forEach((tx) => {
-        tx.fee = (+tx.fee / process.env.ATOMIC).toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        })
-
-        this.txns.push(tx)
-      })
-
-      this.txLoaded = true
     }
   }
 }
