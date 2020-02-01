@@ -1,5 +1,5 @@
 import moment from 'moment'
-// import axios from 'axios'
+import math from 'lodash/math'
 
 export const state = () => ({
   dashboard: {
@@ -53,11 +53,22 @@ export const state = () => ({
         }
       },
       sparkline: [],
-      updated: 0
+      updated: moment().fromNow()
     },
-    updated: moment(),
-    height: 0,
-    chart: []
+    nodes: {
+      active: 0,
+      updated: moment().fromNow()
+    },
+    staking: {
+      total: 0,
+      updated: moment().fromNow()
+    },
+    network: {
+      height: 0,
+      updated: moment().fromNow()
+    },
+    chart: [],
+    updated: moment().fromNow()
   }
 })
 
@@ -69,6 +80,30 @@ export const actions = {
     const payload = await this.$axios.$get(url)
 
     commit('updateMarket', payload)
+  },
+  async fetchNodes ({ commit }) {
+    // Doc: https://github.com/bbjansen/lto-network-monitor
+
+    const url = 'https://network.lto.cloud/v1/nodes/all'
+    const payload = await this.$axios.$get(url)
+
+    commit('updateNodes', payload)
+  },
+  async fetchStaking ({ commit }) {
+    // Doc: https://github.com/bbjansen/lto-cache-api
+
+    const url = process.env.CACHE_API + '/generator/all/week'
+    const payload = await this.$axios.$get(url)
+
+    commit('updateStaking', payload)
+  },
+  async fetchNetwork ({ commit }) {
+    // Doc: https://docs.ltonetwork.com/public-node
+
+    const url = process.env.LB_API + '/node/status'
+    const payload = await this.$axios.$get(url)
+
+    commit('updateNetwork', payload)
   }
 }
 
@@ -124,10 +159,22 @@ export const mutations = {
         }
       },
       sparkline: payload.market_data.sparkline_7d.price,
-      updated: moment()
+      updated: moment().fromNow()
     }
 
     state.dashboard.market = data
+  },
+  updateNodes (state, payload) {
+    state.dashboard.nodes.active = payload.length
+    state.dashboard.nodes.updated = moment().fromNow()
+  },
+  updateStaking (state, payload) {
+    state.dashboard.staking.total = math.sumBy(payload, function (o) { return o.pool })
+    state.dashboard.staking.updated = moment().fromNow()
+  },
+  updateNetwork (state, payload) {
+    state.dashboard.network.height = payload.blockchainHeight
+    state.dashboard.network.updated = moment().fromNow()
   },
   empty (state) {
     state.dashboard.chart = []
@@ -145,6 +192,15 @@ export const mutations = {
 export const getters = {
   getMarket: (state) => {
     return state.dashboard.market
+  },
+  getNodes: (state) => {
+    return state.dashboard.nodes
+  },
+  getStaking: (state) => {
+    return state.dashboard.staking
+  },
+  getNetwork: (state) => {
+    return state.dashboard.network
   },
   chart: (state) => {
     return state.dashboard.chart
