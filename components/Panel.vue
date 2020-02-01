@@ -1,138 +1,119 @@
 <template>
-  <v-card class="mt-n12 mb-4">
-    <v-card-text class="pb-0">
-      <v-row>
-        <v-col
-          :cols="6"
-          :sm="6"
-          :md="3"
-          :lg="3"
-        >
-          <p class="caption mt-0 mb-2">
-            {{ $t('panel.nodes') }}
-          </p>
+  <v-row class="mt-n12 mb-4">
+    <v-col
+      :cols="12"
+      :sm="6"
+      :md="3"
+      :lg="3"
+    >
+      <v-card>
+        <v-card-text class="pt-4 pb-2 pl-7 pr-7">
+          <v-row>
+            <v-col
+              :cols="6"
+              :sm="6"
+              :md="6"
+              :lg="6"
+              class="pt-0 pb-1 pl-0 pr-0"
+            >
+              <v-card-subtitle v-text="$t('panel.price')" class="pa-0" />
+            </v-col>
+            <v-col
+              :cols="6"
+              :sm="6"
+              :md="6"
+              :lg="6"
+              class="pt-0 pb-2 pl-0 pr-0 text-right"
+            >
+              <span v-if="market.price.change.relative > 0" class="caption green--text ma-0">
+                <v-icon x-small color="green">mdi-arrow-up</v-icon>
+                {{ market.price.change.relative.toLocaleString(undefined, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2
+                }) }}
+              </span>
 
-          <h2
-            style="color:#1a004b;"
-            class="mb-0"
-          >
-            {{ nodes }}
-          </h2>
+              <span v-if="market.price.change.relative < 0" class="caption red--text ma-0">
+                <v-icon x-small color="red">mdi-arrow-down</v-icon>
+                {{ market.price.change.relative.toLocaleString(undefined, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2
+                }) }}
+              </span>
 
-          <v-spacer />
-          <v-sparkline
-            :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
-            :line-width="4"
-            :padding="0"
-            :smooth="15"
-            :value="[0, 2, 5, 9, 5, 2, 3, 5, 0, 0, 1, 6, 2, 1, 1]"
-            fill
-            auto-line-width
-            auto-draw
-          />
-        </v-col>
-        <v-col
-          :cols="6"
-          :sm="6"
-          :md="3"
-          :lg="3"
-        >
-          <p class="caption mt-0 mb-2">
-            {{ $t('panel.staked') }}
-          </p>
+              <span class="caption grey--text ma-0">(24h)</span>
+            </v-col>
+          </v-row>
 
-          <h2
-            style="color:#1a004b;"
-            class="mb-0"
-          >
-            {{ staked }}
-          </h2>
+          <v-row>
+            <v-col
+              :cols="6"
+              :sm="6"
+              :md="6"
+              :lg="6"
+              class="pt-1 pb-0 pl-0 pr-0"
+            >
+              <span class="title font-weight-bold secondary--text">
+                €{{ market.price.currency.eur.toLocaleString(undefined, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2
+                }) }}
+              </span>
 
-          <v-spacer />
-
-          <v-sparkline
-            :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
-            :line-width="4"
-            :padding="5"
-            :smooth="15"
-            :value="[1, 10, 3, 5, 0, 2, 5, 2, 5, 0, 1, 8, 2, 9, 0]"
-            fill
-            auto-draw
-          />
-        </v-col>
-        <v-col
-          :cols="6"
-          :sm="6"
-          :md="3"
-          :lg="3"
-        >
-          <p class="caption mt-0 mb-2">
-            {{ $t('panel.price') }}
-          </p>
-
-          <h2
-            style="color:#1a004b;"
-            class="mb-0"
-          >
-            {{ price }}
-          </h2>
-
-          <v-spacer />
-
-          <v-sparkline
-            :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
-            :line-width="4"
-            :padding="5"
-            :smooth="15"
-            :value="[0, 0, 1, 0, 2, 5, 2, 3, 5, 8, 2, 9, 0, 5, 9,]"
-            fill
-            auto-draw
-          />
-        </v-col>
-        <v-col
-          :cols="6"
-          :sm="6"
-          :md="3"
-          :lg="3"
-        >
-          <p class="caption mt-0 mb-2">
-            {{ $t('panel.market') }}
-          </p>
-
-          <h2
-            style="color:#1a004b;"
-            class="mb-0"
-          >
-            {{ market }}
-          </h2>
-
-          <v-spacer />
-
-          <v-sparkline
-            :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
-            :line-width="4"
-            :padding="5"
-            :smooth="15"
-            :value="[2, 3, 5, 0, 0, 1, 8, 2, 9, 0, 0, 2, 5, 9, 5, ]"
-            fill
-            auto-draw
-          />
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+              <p class="overline grey--text ma-0">
+                (CoinGecko)
+              </p>
+            </v-col>
+            <v-col
+              :cols="6"
+              :sm="6"
+              :md="6"
+              :lg="6"
+              class="pa-0"
+            >
+              <v-sparkline
+                :height="110"
+                :gradient="['#804BC9', 'rgba(249, 246, 252, .6)']"
+                :padding="0"
+                :smooth="15"
+                :value="market.sparkline"
+                fill
+              />
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
   },
   data () {
     return {
-      nodes: 55,
-      staked: 450000,
-      price: 0.04,
-      market: 500000
+
+    }
+  },
+  computed: {
+    ...mapGetters({
+      market: 'dashboard/getMarket'
+    })
+  },
+  created () {
+    this.pollMarket()
+  },
+  beforeDestroy () {
+    clearInterval(this.market)
+  },
+  methods: {
+    pollMarket () {
+      this.$store.dispatch('dashboard/fetchMarket')
+      this.market = setInterval(() => {
+        this.$store.dispatch('dashboard/fetchMarket')
+      }, 60000)
     }
   }
 }

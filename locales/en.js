@@ -12,10 +12,10 @@ export default {
     label: 'transaction ID, address or block height'
   },
   panel: {
-    nodes: 'Active Nodes',
+    price: 'Price',
+    height: 'Height',
     staked: 'LTO Staked',
-    price: 'LTO Price',
-    market: 'Market Valuation'
+    nodes: 'Active Nodes'
 
   },
   calculator: {
