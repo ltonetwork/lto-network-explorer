@@ -6,7 +6,7 @@
       :md="3"
       :lg="3"
     >
-      <v-card>
+      <v-card :loading="loading">
         <v-card-text class="pt-4 pb-2 pl-7 pr-7">
           <v-row>
             <v-col
@@ -30,7 +30,7 @@
                 {{ market.price.change.relative.toLocaleString(undefined, {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 2
-                }) }} %
+                }) }}
               </span>
 
               <span v-if="market.price.change.relative < 0" class="caption red--text ma-0">
@@ -38,7 +38,7 @@
                 {{ market.price.change.relative.toLocaleString(undefined, {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 2
-                }) }} %
+                }) }}
               </span>
 
               <span class="caption grey--text ma-0">(24h)</span>
@@ -90,7 +90,7 @@
       :md="3"
       :lg="3"
     >
-      <v-card>
+      <v-card :loading="loading">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -150,7 +150,7 @@
       :md="3"
       :lg="3"
     >
-      <v-card>
+      <v-card :loading="loading">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -210,7 +210,7 @@
       :md="3"
       :lg="3"
     >
-      <v-card>
+      <v-card :loading="loading">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -247,7 +247,7 @@
               </span>
 
               <p class="overline grey--text ma-0">
-                (LTO Network)
+                (LTO Services)
               </p>
             </v-col>
             <v-col
@@ -273,7 +273,7 @@ export default {
   },
   data () {
     return {
-
+      loading: true
     }
   },
   computed: {
@@ -289,6 +289,9 @@ export default {
     this.pollNodes()
     this.pollStaking()
     this.pollNetwork()
+  },
+  mounted () {
+    this.loading = false
   },
   beforeDestroy () {
     clearInterval(this.market)
