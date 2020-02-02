@@ -49,7 +49,7 @@
                     <td class="font-weight-bold secondary--text">
                       {{ $t('explorer.tx') }}
                     </td>
-                    <td>{{ block.transactionCount | localeString}}</td>
+                    <td>{{ block.transactionCount | localeString }}</td>
                   </tr>
                   <tr>
                     <td class="font-weight-bold secondary--text">

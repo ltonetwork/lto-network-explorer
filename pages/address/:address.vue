@@ -271,6 +271,20 @@ import moment from 'moment'
 export default {
   components: {
   },
+  filters: {
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    }
+  },
   data () {
     return {
       address: this.$route.params.address,
@@ -313,20 +327,6 @@ export default {
           value: 'label'
         }
       ]
-    }
-  },
-  filters: {
-    localeString (string) {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string) {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
     }
   },
   validate ({ params }) {
