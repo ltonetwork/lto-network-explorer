@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-snackbar v-model="copied" top>
+    <v-snackbar v-model="copied">
       {{ $t('address.copied') }}
       <v-btn
         @click="copied = false"
-        color="primary"
+        color="red"
         text
       >
         Close
