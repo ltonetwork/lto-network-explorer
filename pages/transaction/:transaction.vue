@@ -2,48 +2,56 @@
   <div>
     <v-row>
       <v-col
-        sm="12"
-        md="12"
-        lg="12"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
       >
         <v-card class="mt-n12">
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-transfer" />
             {{ $t('transaction.title') }}
           </v-card-title>
-          <v-card-text class="pt-0">
+          <v-card-text class="pa-0">
             <v-simple-table>
               <template v-slot:default>
                 <tbody>
                   <tr>
-                    <td>{{ $t('explorer.id') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.id') }}
+                    </td>
                     <td>{{ transaction.id }}</td>
                   </tr>
 
                   <tr>
-                    <td>{{ $t('explorer.type') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.type') }}
+                    </td>
                     <td>{{ name(transaction.type) }} (Type {{ transaction.type }})</td>
                   </tr>
 
                   <tr>
-                    <td>{{ $t('explorer.timestamp') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.timestamp') }}
+                    </td>
                     <td>{{ transaction.timestamp }}</td>
                   </tr>
 
                   <tr>
-                    <td>{{ $t('explorer.block') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.block') }}
+                    </td>
                     <td>
                       <nuxt-link :to="{ path: '/block/' + transaction.height }">
-                        {{ transaction.height.toLocaleString(undefined, {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0
-                        }) }}
+                        {{ transaction.height | localeString }}
                       </nuxt-link>
                     </td>
                   </tr>
 
                   <tr>
-                    <td>{{ $t('explorer.sender') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.sender') }}
+                    </td>
                     <td>
                       <nuxt-link :to="{ path: '/address/' + transaction.sender }">
                         {{ transaction.sender }}
@@ -52,35 +60,42 @@
                   </tr>
 
                   <tr v-show="!mass">
-                    <td>{{ $t('explorer.recipient') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.recipient') }}
+                    </td>
                     <td>
-                      <nuxt-link :to="{ path: '/address/' + transaction.recipient }">
+                      <nuxt-link v-if="transaction.recipient" :to="{ path: '/address/' + transaction.recipient }">
                         {{ transaction.recipient }}
                       </nuxt-link>
+
+                      <span v-if="!transaction.recipient">N/A</span>
                     </td>
                   </tr>
 
                   <tr>
-                    <td>{{ $t('explorer.amount') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.amount') }}
+                    </td>
                     <td>
-                      {{ transaction.amount.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      }) }}
+                      {{ transaction.amount | localeCurrency }}
                     </td>
                   </tr>
                   <tr /><tr>
-                    <td>{{ $t('explorer.fee') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.fee') }}
+                    </td>
                     <td>
-                      {{ transaction.fee.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      }) }}
+                      {{ transaction.fee | localeCurrency }}
                     </td>
                   </tr>
                   <tr v-show="!mass">
-                    <td>{{ $t('explorer.signature') }}</td>
-                    <td>{{ transaction.signature }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.signature') }}
+                    </td>
+                    <td>
+                      <span v-if="transaction.signature">{{ transaction.signature }}</span>
+                      <span v-if="!transaction.signature">N/A</span>
+                    </td>
                   </tr>
                 </tbody>
               </template>
@@ -88,28 +103,28 @@
           </v-card-text>
         </v-card>
       </v-col>
-    </v-row>
 
-    <v-row v-show="mass">
       <v-col
-        sm="12"
-        md="12"
-        lg="12"
+        v-show="mass"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
       >
         <v-card>
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-transactions" />
             {{ $t('transaction.title') }}(s)
           </v-card-title>
-          <v-card-text class="pt-0">
+          <v-card-text class="pa-0">
             <v-simple-table>
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="font-weight-regular grey--text text-left">
+                    <th class="overline grey--text text-left">
                       Recipient
                     </th>
-                    <th class="font-weight-regular grey--text text-right">
+                    <th class="overline grey--text text-right">
                       Amount
                     </th>
                   </tr>
@@ -143,6 +158,20 @@ import moment from 'moment'
 
 export default {
   components: {
+  },
+  filters: {
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    }
   },
   data () {
     return {

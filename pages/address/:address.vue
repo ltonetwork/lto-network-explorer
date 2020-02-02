@@ -13,21 +13,21 @@
 
     <v-row>
       <v-col
-        sm="12"
-        md="12"
-        lg="12"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
       >
         <v-card>
           <v-card-title class="secondary--text mt-n12">
             {{ $t('address.wallet') }}
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pl-0 pr-0">
             <v-divider class="mb-3" />
-            {{ $t('address.title') }}
 
+            <span class="overline pl-6">{{ $t('address.title') }}</span>
             <br>
-
-            <span class="subtitle-1" style="color:#1a004b;">{{ address }}</span>
+            <span class="subtitle-1 pl-6 secondary--text">{{ address }}</span>
 
             <v-btn
               v-clipboard:copy="address"
@@ -45,123 +45,129 @@
 
     <v-row>
       <v-col
-        sm="12"
-        md="12"
-        lg="12"
+        :cols="12"
+        :sm="6"
+        :md="3"
+        :lg="3"
       >
         <v-card>
-          <v-card-title class="secondary--text">
-            {{ $t('address.balance.title') }}
-          </v-card-title>
           <v-card-text>
-            <v-divider class="mb-1" />
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <span v-text="$t('address.balance.regular')" class="pa-0 overline" />
+                <v-icon v-on="on" small class="ml-1 grey--text">
+                  mdi-help-circle
+                </v-icon>
+              </template>
+              {{ $t('address.tooltips.regular') }}
+            </v-tooltip>
 
-            <v-row>
-              <v-col
-                xs="12"
-                sm="6"
-                md="3"
-                lg="3"
-              >
-                <v-tooltip top>
-                  <template v-slot:activator="{ on }">
-                    <span>{{ $t('address.balance.regular') }}</span>
-                    <v-icon v-on="on" small class="ml-1 grey--text">
-                      mdi-help-circle
-                    </v-icon>
-                  </template>
-                  {{ $t('address.tooltips.regular') }}
-                </v-tooltip>
-
-                <p class="title font-weight-bold secondary--text mt-2">
-                  {{ balance.regular.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }}
-                </p>
-              </v-col>
-              <v-col
-                sm="6"
-                md="3"
-                lg="3"
-              >
-                <v-tooltip top>
-                  <template v-slot:activator="{ on }">
-                    <span>{{ $t('address.balance.generating') }}</span>
-                    <v-icon v-on="on" small class="ml-1 grey--text">
-                      mdi-help-circle
-                    </v-icon>
-                  </template>
-                  {{ $t('address.tooltips.generating') }}
-                </v-tooltip>
-                <p class="title font-weight-bold secondary--text mt-2">
-                  {{ balance.generating.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }}
-                </p>
-              </v-col>
-              <v-col
-                sm="6"
-                md="3"
-                lg="3"
-              >
-                <v-tooltip top>
-                  <template v-slot:activator="{ on }">
-                    <span>{{ $t('address.balance.available') }}</span>
-                    <v-icon v-on="on" small class="ml-1 grey--text">
-                      mdi-help-circle
-                    </v-icon>
-                  </template>
-                  {{ $t('address.tooltips.available') }}
-                </v-tooltip>
-                <p class="title font-weight-bold secondary--text mt-2">
-                  {{ balance.available.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }}
-                </p>
-              </v-col>
-              <v-col
-                sm="6"
-                md="3"
-                lg="3"
-              >
-                <v-tooltip top>
-                  <template v-slot:activator="{ on }">
-                    <span>{{ $t('address.balance.effective') }}</span>
-                    <v-icon v-on="on" small class="ml-1 grey--text">
-                      mdi-help-circle
-                    </v-icon>
-                  </template>
-                  {{ $t('address.tooltips.effective') }}
-                </v-tooltip>
-                <p class="title font-weight-bold secondary--text mt-2">
-                  {{ balance.effective.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }}
-                </p>
-              </v-col>
-            </v-row>
+            <p class="title font-weight-bold secondary--text mt-2 mb-0">
+              {{ balance.regular.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }) }}
+            </p>
           </v-card-text>
-          <v-card-actions />
+        </v-card>
+      </v-col>
+
+      <v-col
+        :cols="12"
+        :sm="6"
+        :md="3"
+        :lg="3"
+      >
+        <v-card>
+          <v-card-text>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <span v-text="$t('address.balance.generating')" class="pa-0 overline" />
+                <v-icon v-on="on" small class="ml-1 grey--text">
+                  mdi-help-circle
+                </v-icon>
+              </template>
+              {{ $t('address.tooltips.generating') }}
+            </v-tooltip>
+
+            <p class="title font-weight-bold secondary--text mt-2 mb-0">
+              {{ balance.generating.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }) }}
+            </p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col
+        :cols="12"
+        :sm="6"
+        :md="3"
+        :lg="3"
+      >
+        <v-card>
+          <v-card-text>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <span v-text="$t('address.balance.available')" class="pa-0 overline" />
+                <v-icon v-on="on" small class="ml-1 grey--text">
+                  mdi-help-circle
+                </v-icon>
+              </template>
+              {{ $t('address.tooltips.available') }}
+            </v-tooltip>
+
+            <p class="title font-weight-bold secondary--text mt-2 mb-0">
+              {{ balance.available.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }) }}
+            </p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col
+        :cols="12"
+        :sm="6"
+        :md="3"
+        :lg="3"
+      >
+        <v-card>
+          <v-card-text>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <span v-text="$t('address.balance.effective')" class="pa-0 overline" />
+                <v-icon v-on="on" small class="ml-1 grey--text">
+                  mdi-help-circle
+                </v-icon>
+              </template>
+              {{ $t('address.tooltips.effective') }}
+            </v-tooltip>
+
+            <p class="title font-weight-bold secondary--text mt-2 mb-0">
+              {{ balance.effective.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }) }}
+            </p>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
 
     <v-row>
       <v-col
-        sm="12"
-        md="12"
-        lg="12"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
       >
         <v-card>
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-transactions" />
             {{ $t('address.transactions') }}
           </v-card-title>
-          <v-card-text class="pt-0">
+          <v-card-text class="pa-0">
             <v-data-table
               :headers="txTable"
               :items="transactions"
@@ -172,31 +178,31 @@
               class="secondary--text"
             >
               <template v-slot:header.type="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.id="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.sender="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.recipient="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.fee="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.timestamp="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.label="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:item.type="{ item }">
@@ -254,7 +260,6 @@
               </template>
             </v-data-table>
           </v-card-text>
-          <v-card-actions />
         </v-card>
       </v-col>
     </v-row>
@@ -308,6 +313,20 @@ export default {
           value: 'label'
         }
       ]
+    }
+  },
+  filters: {
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
     }
   },
   validate ({ params }) {

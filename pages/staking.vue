@@ -2,17 +2,22 @@
   <div>
     <Panel />
     <v-row>
-      <v-col>
+      <v-col
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="8"
+      >
         <v-card
           :loading="!staking.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-block" />
             {{ $t('staking.title') }}
           </v-card-title>
           <v-sheet>
-            <v-card-text class="pt-0">
+            <v-card-text class="pa-0">
               <v-data-table
                 v-if="staking.updated"
                 :headers="generatorsTable"
@@ -24,31 +29,31 @@
                 class="secondary--text"
               >
                 <template v-slot:header.payout="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.label="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.generator="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.pool="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.blocks="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.earnings="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.share="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:item.payout="{ item }">
@@ -100,7 +105,12 @@
         </v-card>
       </v-col>
 
-      <v-col>
+      <v-col
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="4"
+      >
         <v-card
           :loading="!staking.updated"
           :loader-height="10"

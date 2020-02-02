@@ -7,7 +7,7 @@
           :loading="!chart.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-statistics" />
             {{ $t('network.tx_stats') }}
 
@@ -23,14 +23,14 @@
                 :value="filter"
                 @click="filterChart()"
                 label
-                class="white--text transparent font-weight-thin"
+                class="white--text transparent font-weight-thin overline"
               >
                 {{ filter }}
               </v-chip>
             </v-chip-group>
           </v-card-title>
 
-          <v-card-text>
+          <v-card-text class="pa-5">
             <v-sheet>
               <v-skeleton-loader
                 v-if="!chart.updated"
@@ -47,7 +47,6 @@
               </figure>
             </v-sheet>
           </v-card-text>
-          <v-card-actions />
         </v-card>
       </v-col>
     </v-row>
@@ -58,7 +57,7 @@
           :loading="!blocks.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-block" />
             {{ $t('network.latest_blocks') }}
           </v-card-title>
@@ -67,16 +66,16 @@
               <v-simple-table class="secondary--text">
                 <thead>
                   <tr>
-                    <th class="font-weight-regular text-left grey--text">
+                    <th class="overline text-left grey--text">
                       {{ $t('explorer.index') }}
                     </th>
-                    <th class="font-weight-regular text-left grey--text">
+                    <th class="overline text-left grey--text">
                       {{ $t('explorer.generator') }}
                     </th>
-                    <th class="font-weight-regular text-center grey--text">
+                    <th class="overline text-center grey--text">
                       {{ $t('explorer.tx') }}
                     </th>
-                    <th class="font-weight-regular text-right grey--text">
+                    <th class="overline text-right grey--text">
                       {{ $t('explorer.timestamp') }}
                     </th>
                   </tr>
@@ -119,7 +118,7 @@
           :loading="!unconfirmed.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-transactions" />
             {{ $t('network.unconfirmed_tx') }}
           </v-card-title>
@@ -128,13 +127,13 @@
               <v-simple-table class="secondary--text">
                 <thead>
                   <tr>
-                    <th class="font-weight-regular text-left grey--text">
+                    <th class="overline text-left grey--text">
                       {{ $t('explorer.id') }}
                     </th>
-                    <th class="font-weight-regular text-center grey--text">
+                    <th class="overline text-center grey--text">
                       {{ $t('explorer.sender') }}
                     </th>
-                    <th class="font-weight-regular text-right grey--text">
+                    <th class="overline text-right grey--text">
                       {{ $t('explorer.fee') }}
                     </th>
                   </tr>

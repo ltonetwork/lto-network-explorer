@@ -2,25 +2,30 @@
   <div>
     <v-row>
       <v-col
-        sm="12"
-        md="12"
-        lg="12"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
       >
         <v-card class="mt-n12">
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-block" />
-            {{ $t('block.title') }} #{{ blockIndex }}
+            {{ $t('block.title') }} #{{ height | localeString }}
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pa-0">
             <v-simple-table>
               <template v-slot:default>
                 <tbody>
                   <tr>
-                    <td>{{ $t('explorer.timestamp') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.timestamp') }}
+                    </td>
                     <td>{{ block.timestamp }}</td>
                   </tr>
                   <tr>
-                    <td>{{ $t('explorer.generator') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.generator') }}
+                    </td>
                     <td>
                       <nuxt-link :to="{ path: '/address/' + block.generator }">
                         {{ block.generator }}
@@ -28,24 +33,34 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>{{ $t('explorer.signature') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.signature') }}
+                    </td>
                     <td>{{ block.signature }}</td>
                   </tr>
                   <tr>
-                    <td>{{ $t('explorer.reference') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.reference') }}
+                    </td>
                     <td>{{ block.reference }}</td>
                   </tr>
 
                   <tr>
-                    <td>{{ $t('explorer.tx') }}</td>
-                    <td>{{ block.transactionCount }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.tx') }}
+                    </td>
+                    <td>{{ block.transactionCount | localeString}}</td>
                   </tr>
                   <tr>
-                    <td>{{ $t('explorer.size') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.size') }}
+                    </td>
                     <td>{{ block.blocksize }}</td>
                   </tr>
                   <tr>
-                    <td>{{ $t('explorer.version') }}</td>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.version') }}
+                    </td>
                     <td>{{ block.version }}</td>
                   </tr>
                 </tbody>
@@ -59,16 +74,17 @@
 
     <v-row>
       <v-col
-        sm="12"
-        md="12"
-        lg="12"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
       >
         <v-card>
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-transactions" />
             {{ $t('transaction.title') }}
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pa-0">
             <v-data-table
               :headers="txTable"
               :items="block.transactions"
@@ -78,23 +94,23 @@
               no-data-text="this block does not contain any transactions"
             >
               <template v-slot:header.type="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.id="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.sender="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.fee="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:header.timestamp="{ header }">
-                <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
               <template v-slot:item.type="{ item }">
@@ -121,10 +137,7 @@
               </template>
 
               <template v-slot:item.fee="{ item }">
-                {{ item.fee.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                }) }}
+                {{ item.fee | localeCurrency }}
               </template>
 
               <template v-slot:item.timestamp="{ item }">
@@ -132,7 +145,6 @@
               </template>
             </v-data-table>
           </v-card-text>
-          <v-card-actions />
         </v-card>
       </v-col>
     </v-row>
@@ -145,14 +157,29 @@ import moment from 'moment'
 export default {
   head () {
     return {
-      title: this.$t('block.title') + ' #' + this.blockIndex
+      title: this.$t('block.title') + ' #' + this.height.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
     }
   },
-  components: {
+  filters: {
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    }
   },
   data () {
     return {
-      blockIndex: this.$route.params.block,
+      height: this.$route.params.block,
       txTable: [
         {
           text: 'Type',

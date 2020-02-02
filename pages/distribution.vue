@@ -2,18 +2,23 @@
   <div>
     <Panel />
     <v-row>
-      <v-col>
+      <v-col
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="8"
+      >
         <v-card
           :loading="!distribution.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text">
+          <v-card-title class="secondary--text pa-5">
             <span class="mr-2 lto-distribution" />
             {{ $t('distribution.title') }}
           </v-card-title>
 
           <v-sheet>
-            <v-card-text class="pt-0">
+            <v-card-text class="pa-0">
               <v-data-table
                 v-if="distribution.updated"
                 :headers="holdersTable"
@@ -25,23 +30,23 @@
                 class="secondary--text"
               >
                 <template v-slot:header.address="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.regular="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.generating="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.available="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:header.effective="{ header }">
-                  <span class="font-weight-regular grey--text">{{ header.text }}</span>
+                  <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
                 <template v-slot:item.address="{ item }">
@@ -77,7 +82,12 @@
         </v-card>
       </v-col>
 
-      <v-col>
+      <v-col
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="4"
+      >
         <v-card
           :loading="!distribution.updated"
           :loader-height="10"
