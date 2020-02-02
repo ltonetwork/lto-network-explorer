@@ -85,8 +85,8 @@ export default {
   },
 
   links: {
-    wallet: 'LTO Wallet',
-    home: 'LTO Network',
+    wallet: 'Web Wallet',
+    home: 'Homepage',
     blog: 'Blog'
   },
   resources: {
@@ -96,7 +96,7 @@ export default {
   },
   footer: {
     links: 'Links',
-    resources: 'Developer resources',
-    social: 'Stay connected'
+    resources: 'Developers',
+    social: 'Connect'
   }
 }
