@@ -8,7 +8,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchGenerators ({ commit }) {
+  async fetchGenerators ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     state.staking.updated = null

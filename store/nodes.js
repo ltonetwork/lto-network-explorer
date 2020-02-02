@@ -8,7 +8,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchNodes ({ commit }) {
+  async fetchNodes ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
     state.nodes.updated = null

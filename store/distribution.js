@@ -8,7 +8,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchHolders ({ commit }) {
+  async fetchHolders ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     state.distribution.updated = null

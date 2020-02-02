@@ -71,40 +71,40 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchMarket ({ commit }) {
+  async fetchMarket ({ state, commit }) {
     // Doc: https://www.coingecko.com/api/documentations/v3
 
-    state.market.updated = null
+    state.panel.market.updated = null
 
     const url = 'https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true'
     const payload = await this.$axios.$get(url)
 
     commit('updateMarket', payload)
   },
-  async fetchNodes ({ commit }) {
+  async fetchNodes ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
-    state.nodes.updated = null
+    state.panel.nodes.updated = null
 
     const url = 'https://network.lto.cloud/v1/nodes/all'
     const payload = await this.$axios.$get(url)
 
     commit('updateNodes', payload)
   },
-  async fetchStaking ({ commit }) {
+  async fetchStaking ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
-    state.staking.updated = null
+    state.panel.staking.updated = null
 
     const url = process.env.CACHE_API + '/generator/all/week'
     const payload = await this.$axios.$get(url)
 
     commit('updateStaking', payload)
   },
-  async fetchNetwork ({ commit }) {
+  async fetchNetwork ({ state, commit }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
-    state.network.updated = null
+    state.panel.network.updated = null
 
     const url = process.env.LB_API + '/node/status'
     const payload = await this.$axios.$get(url)
