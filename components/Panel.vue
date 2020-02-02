@@ -229,7 +229,7 @@
               </span>
 
               <p class="overline grey--text ma-0">
-                (LTO Services)
+                (LTO Network)
               </p>
             </v-col>
             <v-col
