@@ -130,7 +130,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    proxy: true
+    proxy: true,
+    progress: false
   },
   /*
   ** i18n module configuration
