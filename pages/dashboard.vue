@@ -7,7 +7,7 @@
           :loading="!chart.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text pa-5">
+          <v-card-title class="secondary--text">
             <span class="mr-2 lto-statistics" />
             {{ $t('network.tx_stats') }}
 
@@ -57,7 +57,7 @@
           :loading="!blocks.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text pa-5">
+          <v-card-title class="secondary--text">
             <span class="mr-2 lto-block" />
             {{ $t('network.latest_blocks') }}
           </v-card-title>
@@ -118,7 +118,7 @@
           :loading="!unconfirmed.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text pa-5">
+          <v-card-title class="secondary--text">
             <span class="mr-2 lto-transactions" />
             {{ $t('network.unconfirmed_tx') }}
           </v-card-title>

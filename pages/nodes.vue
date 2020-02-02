@@ -7,7 +7,7 @@
           :loading="!nodes.updated"
           :loader-height="10"
         >
-          <v-card-title class="secondary--text pa-5">
+          <v-card-title class="secondary--text">
             <span class="mr-2 lto-node" />
             {{ $t('nodes.title') }}
           </v-card-title>

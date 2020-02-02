@@ -163,7 +163,7 @@
         :lg="12"
       >
         <v-card>
-          <v-card-title class="secondary--text pa-5">
+          <v-card-title class="secondary--text">
             <span class="mr-2 lto-transactions" />
             {{ $t('address.transactions') }}
           </v-card-title>

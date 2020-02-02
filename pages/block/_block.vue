@@ -8,7 +8,7 @@
         :lg="12"
       >
         <v-card class="mt-n12">
-          <v-card-title class="secondary--text pa-5">
+          <v-card-title class="secondary--text">
             <span class="mr-2 lto-block" />
             {{ $t('block.title') }} #{{ height | localeString }}
           </v-card-title>
@@ -80,7 +80,7 @@
         :lg="12"
       >
         <v-card>
-          <v-card-title class="secondary--text pa-5">
+          <v-card-title class="secondary--text">
             <span class="mr-2 lto-transactions" />
             {{ $t('transaction.title') }}
           </v-card-title>
