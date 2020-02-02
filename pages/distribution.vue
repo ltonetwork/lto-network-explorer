@@ -15,6 +15,7 @@
           <v-sheet>
             <v-card-text class="pt-0">
               <v-data-table
+                v-if="distribution.updated"
                 :headers="holdersTable"
                 :items="distribution.holders"
                 :sort-by="['']"

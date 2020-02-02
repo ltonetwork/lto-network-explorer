@@ -13,6 +13,7 @@
           <v-sheet>
             <v-card-text class="pt-0">
               <v-data-table
+                v-if="nodes.updated"
                 :headers="nodesTable"
                 :items="nodes.active"
                 :sort-by="['height']"

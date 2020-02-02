@@ -14,6 +14,7 @@
           <v-sheet>
             <v-card-text class="pt-0">
               <v-data-table
+                v-if="staking.updated"
                 :headers="generatorsTable"
                 :items="staking.generators"
                 :sort-by="['share']"
