@@ -74,7 +74,7 @@ export const actions = {
   async fetchMarket ({ state, commit }) {
     // Doc: https://www.coingecko.com/api/documentations/v3
 
-    state.panel.market.updated = null
+    // state.state.panel.market.updated = null
 
     const url = 'https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true'
     const payload = await this.$axios.$get(url)
@@ -84,7 +84,7 @@ export const actions = {
   async fetchNodes ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
-    state.panel.nodes.updated = null
+    // state.state.panel.nodes.updated = null
 
     const url = 'https://network.lto.cloud/v1/nodes/all'
     const payload = await this.$axios.$get(url)
@@ -94,7 +94,7 @@ export const actions = {
   async fetchStaking ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
-    state.panel.staking.updated = null
+    // state.state.panel.staking.updated = null
 
     const url = process.env.CACHE_API + '/generator/all/week'
     const payload = await this.$axios.$get(url)
@@ -104,7 +104,7 @@ export const actions = {
   async fetchNetwork ({ state, commit }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
-    state.panel.network.updated = null
+    // state.state.panel.network.updated = null
 
     const url = process.env.LB_API + '/node/status'
     const payload = await this.$axios.$get(url)

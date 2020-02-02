@@ -11,7 +11,7 @@ export const actions = {
   async fetchNodes ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
-    state.nodes.updated = null
+    // state.state.nodes.updated = null
 
     const url = 'https://network.lto.cloud/v1/nodes/all'
     const payload = await this.$axios.$get(url)

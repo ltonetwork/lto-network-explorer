@@ -350,7 +350,7 @@ export default {
       // Refresh every minute
       this.blocks = setInterval(() => {
         this.$store.dispatch('dashboard/fetchBlocks')
-      }, 60000)
+      }, 10000)
     },
     pollUnconfirmed () {
       // Fetch on render
