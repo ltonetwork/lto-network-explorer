@@ -63,7 +63,7 @@
             {{ $t('network.latest_blocks') }}
           </v-card-title>
           <v-sheet>
-            <v-card-text class="pt-0">
+            <v-card-text class="pa-0">
               <v-simple-table class="secondary--text">
                 <thead>
                   <tr>
@@ -124,7 +124,7 @@
             {{ $t('network.unconfirmed_tx') }}
           </v-card-title>
           <v-sheet>
-            <v-card-text class="pt-0">
+            <v-card-text class="pa-0">
               <v-simple-table class="secondary--text">
                 <thead>
                   <tr>
