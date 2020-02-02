@@ -142,6 +142,26 @@ export default {
     Panel,
     DoughnutChart
   },
+  filters: {
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    },
+    localePecentage (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    }
+  },
   data () {
     return {
       loading: false,
@@ -244,26 +264,6 @@ export default {
   },
   beforeDestroy () {
     clearInterval(this.staking)
-  },
-  filters: {
-    localeString (string) {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string) {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    },
-    localePecentage (string) {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    }
   },
   methods: {
     pollStaking () {

@@ -259,6 +259,23 @@ export default {
       loading: true
     }
   },
+  filters: {
+    fromNow (timestamp) {
+      return moment(timestamp).fromNow()
+    },
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 3
+      })
+    }
+  },
   computed: {
     ...mapGetters({
       market: 'panel/getMarket',
@@ -281,23 +298,6 @@ export default {
     clearInterval(this.nodesCount)
     clearInterval(this.staking)
     clearInterval(this.network)
-  },
-  filters: {
-    fromNow (timestamp) {
-      return moment(timestamp).fromNow()
-    },
-    localeString (string) {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string) {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 3
-      })
-    }
   },
   methods: {
     pollMarket () {

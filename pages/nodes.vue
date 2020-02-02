@@ -208,6 +208,17 @@ export default {
   components: {
     Panel
   },
+  filters: {
+    fromNow (timestamp) {
+      return moment(timestamp).fromNow()
+    },
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    }
+  },
   data () {
     return {
       loaded: false,
@@ -263,17 +274,6 @@ export default {
   },
   beforeDestroy () {
     clearInterval(this.nodes)
-  },
-  filters: {
-    fromNow (timestamp) {
-      return moment(timestamp).fromNow()
-    },
-    localeString (string) {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    }
   },
   methods: {
     pollNodes () {
