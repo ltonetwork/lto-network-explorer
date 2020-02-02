@@ -88,7 +88,7 @@
                         {{ block.height | localeString }}
                       </nuxt-link>
                     </td>
-                    <td class="primary--text text-truncate" style="max-width: 10vw;">
+                    <td class="primary--text text-truncate" style="max-width: 26vh;">
                       <nuxt-link :to="{ path: '/address/' + block.generator }">
                         {{ block.generator }}
                       </nuxt-link>
@@ -141,10 +141,10 @@
                 </thead>
                 <tbody>
                   <tr v-for="tx in unconfirmed.pool" v-bind:key="tx.id">
-                    <td class="text-truncate" style="max-width: 10vw;">
+                    <td class="text-truncate" style="max-width: 26vh;">
                       {{ tx.id }}
                     </td>
-                    <td class="primary--text text-truncate" style="max-width: 10vw;">
+                    <td class="primary--text text-truncate" style="max-width: 26vh;">
                       <nuxt-link :to="{ path: '/address/' + tx.sender }">
                         {{ tx.sender }}
                       </nuxt-link>

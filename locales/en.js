@@ -34,7 +34,7 @@ export default {
   address: {
     title: 'Address',
     copied: 'Address copied to clipboard.',
-    wallet: 'Wallet',
+    wallet: 'Wallet Overview',
     transactions: 'Transactions',
     balance: {
       title: 'Balance',
