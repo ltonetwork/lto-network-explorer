@@ -13,7 +13,7 @@
           :md="4"
           :lg="4"
         >
-          <v-toolbar-title class="mr-5 white--text" style="text-transform: uppercase;">
+          <v-toolbar-title class="mr-5 white--text" style="text-transform: uppercase; font-size:1.6rem;">
             <img :src="require('@/assets/logo.png')" class="mr-3" height="30" style="margin-bottom:-7px;">
             <span class="font-weight-black">LTO</span> Explorer
           </v-toolbar-title>

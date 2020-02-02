@@ -7,7 +7,7 @@
   >
     <v-container>
       <v-row>
-        <v-toolbar-title min-height="55px" class="mr-5" style="text-transform: uppercase;font-size:28px;">
+        <v-toolbar-title min-height="55px" style="text-transform:uppercase; font-size:1.6rem;">
           <nuxt-link :to="{ path: '/' }" class="white--text">
             <img :src="require('@/assets/logo.png')" class="mr-3" height="40" style="margin-bottom:-7px;">
             <span class="font-weight-black">LTO</span> Explorer
@@ -53,6 +53,7 @@
           class="hidden-md-and-up"
           left
           bottom
+          min-width="30vw"
         >
           <template v-slot:activator="{ on }">
             <v-btn
@@ -60,7 +61,7 @@
               icon
               class="white--text hidden-md-and-up"
             >
-              <v-icon dark x-large>
+              <v-icon dark large>
                 mdi-dots-vertical
               </v-icon>
             </v-btn>
