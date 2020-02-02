@@ -4,7 +4,8 @@
       :cols="12"
       :sm="6"
       :md="6"
-      :lg="3"
+      :lg="6"
+      :xl="3"
     >
       <v-card :loading="!market.updated">
         <v-card-text class="pt-4 pb-2 pl-7 pr-7">
@@ -79,7 +80,8 @@
       :cols="12"
       :sm="6"
       :md="6"
-      :lg="3"
+      :lg="6"
+      :xl="3"
     >
       <v-card :loading="!nodesCount.updated">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
@@ -136,7 +138,8 @@
       :cols="12"
       :sm="6"
       :md="6"
-      :lg="3"
+      :lg="6"
+      :xl="3"
     >
       <v-card :loading="!staking.updated">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
@@ -193,7 +196,8 @@
       :cols="12"
       :sm="6"
       :md="6"
-      :lg="3"
+      :lg="6"
+      :xl="3"
     >
       <v-card :loading="!network.updated">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
