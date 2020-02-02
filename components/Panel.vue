@@ -27,18 +27,12 @@
             >
               <span v-if="market.price.change.relative > 0" class="caption green--text ma-0">
                 <v-icon x-small color="green">mdi-arrow-up</v-icon>
-                {{ market.price.change.relative.toLocaleString(undefined, {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 2
-                }) }}
+                {{ market.price.change.relative | localeCurrency }}%
               </span>
 
               <span v-if="market.price.change.relative < 0" class="caption red--text ma-0">
                 <v-icon x-small color="red">mdi-arrow-down</v-icon>
-                {{ market.price.change.relative.toLocaleString(undefined, {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 2
-                }) }}
+                {{ market.price.change.relative | localeCurrency }}%
               </span>
 
               <span class="caption grey--text ma-0">(24h)</span>
@@ -54,10 +48,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                €{{ market.price.currency.eur.toLocaleString(undefined, {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 2
-                }) }}
+                €{{ market.price.currency.eur | localeCurrency }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -120,10 +111,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                {{ nodes.active.toLocaleString(undefined, {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0
-                }) }}
+                {{ nodesCount.active | localeString }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -137,7 +125,7 @@
               :lg="6"
               class="pa-0 d-flex align-end justify-end"
             >
-              <span class="caption grey--text ma-0">{{ nodes.updated }}</span>
+              <span class="caption grey--text ma-0">{{ nodesCount.updated | fromNow }}</span>
             </v-col>
           </v-row>
         </v-card-text>
@@ -180,10 +168,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                {{ staking.total.toLocaleString(undefined, {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0
-                }) }} LTO
+                {{ staking.total | localeCurrency }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -197,7 +182,7 @@
               :lg="6"
               class="pa-0 d-flex align-end justify-end"
             >
-              <span class="caption grey--text ma-0">{{ staking.updated }}</span>
+              <span class="caption grey--text ma-0">{{ staking.updated | fromNow }}</span>
             </v-col>
           </v-row>
         </v-card-text>
@@ -240,10 +225,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                {{ network.height.toLocaleString(undefined, {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0
-                }) }}
+                {{ network.height | localeString }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -257,7 +239,7 @@
               :lg="6"
               class="pa-0 d-flex align-end justify-end"
             >
-              <span class="caption grey--text ma-0">{{ network.updated }}</span>
+              <span class="caption grey--text ma-0">{{ network.updated | fromNow }}</span>
             </v-col>
           </v-row>
         </v-card-text>
@@ -267,6 +249,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   components: {
@@ -279,7 +262,7 @@ export default {
   computed: {
     ...mapGetters({
       market: 'panel/getMarket',
-      nodes: 'panel/getNodes',
+      nodesCount: 'panel/getNodes',
       staking: 'panel/getStaking',
       network: 'panel/getNetwork'
     })
@@ -295,9 +278,26 @@ export default {
   },
   beforeDestroy () {
     clearInterval(this.market)
-    clearInterval(this.nodes)
+    clearInterval(this.nodesCount)
     clearInterval(this.staking)
     clearInterval(this.network)
+  },
+  filters: {
+    fromNow (timestamp) {
+      return moment(timestamp).fromNow()
+    },
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 3
+      })
+    }
   },
   methods: {
     pollMarket () {
@@ -314,7 +314,7 @@ export default {
       this.$store.dispatch('panel/fetchNodes')
 
       // Refresh every minute
-      this.nodes = setInterval(() => {
+      this.nodesCount = setInterval(() => {
         this.$store.dispatch('panel/fetchNodes')
       }, 60000)
     },
@@ -323,7 +323,7 @@ export default {
       this.$store.dispatch('panel/fetchStaking')
 
       // Refresh every minute
-      this.nodes = setInterval(() => {
+      this.staking = setInterval(() => {
         this.$store.dispatch('panel/fetchStaking')
       }, 60000)
     },
@@ -332,7 +332,7 @@ export default {
       this.$store.dispatch('panel/fetchNetwork')
 
       // Refresh every minute
-      this.nodes = setInterval(() => {
+      this.network = setInterval(() => {
         this.$store.dispatch('panel/fetchNetwork')
       }, 60000)
     }

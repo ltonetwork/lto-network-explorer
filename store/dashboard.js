@@ -4,15 +4,15 @@ export const state = () => ({
   dashboard: {
     chart: {
       dataset: [],
-      updated: moment().fromNow()
+      updated: moment()
     },
     blocks: {
       last: [],
-      updated: moment().fromNow()
+      updated: moment()
     },
     unconfirmed: {
       pool: [],
-      updated: moment().fromNow()
+      updated: moment()
     }
   }
 })
@@ -63,7 +63,7 @@ export const mutations = {
     })
 
     state.dashboard.blocks.last = payload.reverse()
-    state.dashboard.blocks.updated = moment().fromNow()
+    state.dashboard.blocks.updated = moment()
   },
   updateUnconfirmed (state, payload) {
     payload.forEach((tx) => {
@@ -74,7 +74,7 @@ export const mutations = {
     })
 
     state.dashboard.unconfirmed.pool = payload
-    state.dashboard.unconfirmed.updated = moment().fromNow()
+    state.dashboard.unconfirmed.updated = moment()
   }
 }
 

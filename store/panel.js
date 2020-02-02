@@ -57,15 +57,15 @@ export const state = () => ({
     },
     nodes: {
       active: 0,
-      updated: moment().fromNow()
+      updated: moment()
     },
     staking: {
       total: 0,
-      updated: moment().fromNow()
+      updated: moment()
     },
     network: {
       height: 0,
-      updated: moment().fromNow()
+      updated: moment()
     }
   }
 })
@@ -164,15 +164,15 @@ export const mutations = {
   },
   updateNodes (state, payload) {
     state.panel.nodes.active = payload.length
-    state.panel.nodes.updated = moment().fromNow()
+    state.panel.nodes.updated = moment()
   },
   updateStaking (state, payload) {
     state.panel.staking.total = math.sumBy(payload, function (o) { return o.pool })
-    state.panel.staking.updated = moment().fromNow()
+    state.panel.staking.updated = moment()
   },
   updateNetwork (state, payload) {
     state.panel.network.height = payload.blockchainHeight
-    state.panel.network.updated = moment().fromNow()
+    state.panel.network.updated = moment()
   }
 }
 

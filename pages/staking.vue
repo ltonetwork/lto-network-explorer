@@ -4,7 +4,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="!loaded"
+          :loading="loading"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -15,7 +15,7 @@
             <v-card-text class="pt-0">
               <v-data-table
                 :headers="generatorsTable"
-                :items="generators"
+                :items="staking.generators"
                 :sort-by="['share']"
                 :sort-desc="[true]"
                 :items-per-page="20"
@@ -53,7 +53,7 @@
                 <template v-slot:item.payout="{ item }">
                   <v-tooltip right>
                     <template v-slot:activator="{ on }">
-                      <v-icon :color="color(item.payout)" v-on="on">
+                      <v-icon :color="setColor(item.payout)" v-on="on">
                         mdi-check
                       </v-icon>
                     </template>
@@ -72,10 +72,7 @@
                 </template>
 
                 <template v-slot:item.pool="{ item }">
-                  {{ item.pool.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }}
+                  {{ item.pool | localeCurrency }}
                 </template>
 
                 <template v-slot:item.blocks="{ item }">
@@ -83,23 +80,17 @@
                 </template>
 
                 <template v-slot:item.earnings="{ item }">
-                  {{ item.earnings.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) }}
+                  {{ item.earnings | localeCurrency }}
                 </template>
 
                 <template v-slot:item.share="{ item }">
-                  {{ item.share.toLocaleString(undefined, {
-                    minimumFractionDigits: 3,
-                    maximumFractionDigits: 3
-                  }) }}%
+                  {{ item.share | localePecentage }}%
                 </template>
               </v-data-table>
             </v-card-text>
 
             <v-skeleton-loader
-              v-if="!loaded"
+              v-if="loading"
               class="mx-auto"
               type="table"
               loading
@@ -110,22 +101,21 @@
 
       <v-col>
         <v-card
-          :loading="!loaded"
+          :loading="loading"
           :loader-height="10"
         >
           <v-sheet>
             <v-card-text>
               <figure class="chart">
                 <DoughnutChart
-                  v-if="loaded"
-                  :chartData="chartData"
+                  :chartData="chartDataSet"
                   :chartOptions="chartOptions"
                   :height="300"
                 />
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              v-if="!loaded"
+              v-if="loading"
               class="mx-auto"
               type="image"
               loading
@@ -139,7 +129,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import DoughnutChart from '~/components/DoughnutChart'
 import Panel from '~/components/Panel'
 
@@ -155,36 +144,31 @@ export default {
   },
   data () {
     return {
-      loaded: false,
+      loading: false,
       chartData: {
         type: 'doughnut',
         datasets: [{
-          data: [],
-          backgroundColor: [],
-          label: ''
+          data: null,
+          backgroundColor: null,
+          label: null
         }],
-        labels: []
-
+        labels: null
       },
       chartOptions: {
         maintainAspectRatio: true,
         responsive: true,
         tooltips: {
-          bodyFontColor: '#1f1f1f',
-          bodySpacing: 5,
-          bodyFontSize: 15,
-          bodyFontStyle: 'normal',
-          titleFontColor: '#1f1f1f',
-          titleSpacing: 5,
-          titleFontSize: 17,
-          titleMarginBottom: 10,
-          titleFontStyle: 'bold',
+          titleFontColor: '#fff',
+          titleSpacing: 0,
+          titleFontSize: 12,
+          titleFontStyle: 'normal',
+          titleMarginBottom: 0,
           xPadding: 15,
-          yPadding: 15,
+          yPadding: 10,
           intersect: false,
           displayColors: false,
-          cornerRadius: 0,
-          backgroundColor: 'rgba(255,255,255,0.9)',
+          cornerRadius: 6,
+          backgroundColor: 'rgba(23, 5, 75, 0.8)',
           mode: 'label'
         },
         legend: {
@@ -236,44 +220,62 @@ export default {
       ]
     }
   },
-  computed: mapGetters({
-    generators: 'generators/get'
-  }),
-  async fetch ({ $axios, store }) {
-    const updated = store.state.generators.generators.updated
-    const diff = moment().diff(moment(updated))
-
-    // If cache expired
-    if (!updated || diff > process.env.DATA_CACHE) {
-      store.commit('generators/empty')
-
-      const generators = await $axios.$get(process.env.CACHE_API + '/generator/all/week', {
-        timeout: process.env.AXIOS_TIMEOUT
+  computed: {
+    chartDataSet () {
+      return {
+        type: 'doughnut',
+        labels: this.staking.generators.map(g => g.generator),
+        datasets: [{
+          backgroundColor: 'rgba(128, 75, 201, 0.6)',
+          label: '',
+          data: this.staking.generators.map(g => g.share)
+        }]
+      }
+    },
+    ...mapGetters({
+      staking: 'staking/getGenerators'
+    })
+  },
+  created () {
+    this.pollStaking()
+  },
+  mounted () {
+    this.loading = false
+  },
+  beforeDestroy () {
+    clearInterval(this.staking)
+  },
+  filters: {
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
       })
-
-      generators.forEach((generator) => {
-        store.commit('generators/add', generator)
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    },
+    localePecentage (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
       })
     }
   },
-  mounted () {
-    this.loadChart()
-  },
   methods: {
-    loadChart () {
-      this.generators.forEach((generator) => {
-        this.chartData.labels.push(generator.generator)
-        this.chartData.datasets[0].data.push(generator.share)
+    pollStaking () {
+      // Fetch on render
+      this.$store.dispatch('staking/fetchGenerators')
 
-        const r = Math.random()
-        const s = 180
-        const color = 'rgba(126, 12,' + Math.round(r * s) + ',' + r.toFixed(1) + ')'
-        this.chartData.datasets[0].backgroundColor.push(color)
-      })
-
-      this.loaded = true
+      // Refresh every minute
+      this.staking = setInterval(() => {
+        this.$store.dispatch('staking/fetchGenerators')
+      }, 60000)
     },
-    color (value) {
+    setColor (value) {
       if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
     }
   }

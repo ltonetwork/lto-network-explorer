@@ -4,7 +4,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="!loaded"
+          :loading="loading"
         >
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-node" />
@@ -14,7 +14,7 @@
             <v-card-text class="pt-0">
               <v-data-table
                 :headers="nodesTable"
-                :items="nodes"
+                :items="nodes.active"
                 :sort-by="['height']"
                 :sort-desc="[true]"
                 :expanded.sync="expanded"
@@ -26,8 +26,8 @@
               >
                 >
                 <template v-slot:expanded-item="{ headers, item }">
-                  <td :colspan="headers.length" style="background-color:#F4F7FB;">
-                    <v-simple-table style="background-color:#F4F7FB;">
+                  <td :colspan="headers.length" style="background-setColor:#F4F7FB;">
+                    <v-simple-table style="background-setColor:#F4F7FB;">
                       <tbody>
                         <tr>
                           <th class="text-left grey--text" width="100px">
@@ -82,7 +82,7 @@
                             First Seen
                           </th>
                           <td class="secondary--text" style="border: 0px;">
-                            {{ item.created }}
+                            {{ item.created | fromNow }}
                           </td>
                         </tr>
                         <tr>
@@ -90,7 +90,7 @@
                             Last Seen
                           </th>
                           <td class="secondary--text" style="border: 0px;">
-                            {{ item.updated }}
+                            {{ item.updated | fromNow }}
                           </td>
                         </tr>
                       </tbody>
@@ -138,10 +138,7 @@
 
                 <template v-slot:item.height="{ item }">
                   <span v-if="item.height">
-                    {{ item.height.toLocaleString(undefined, {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0
-                    }) }}
+                    {{ item.height | localeString }}
                   </span>
 
                   <span v-if="!item.height">
@@ -154,19 +151,19 @@
                 </template>
 
                 <template v-slot:item.p2p="{ item }">
-                  <v-icon v-if="item.p2p" :color="color(item.p2p)">
+                  <v-icon v-if="item.p2p" :color="setColor(item.p2p)">
                     mdi-check
                   </v-icon>
-                  <v-icon v-if="!item.p2p" :color="color(item.p2p)">
+                  <v-icon v-if="!item.p2p" :color="setColor(item.p2p)">
                     mdi-close
                   </v-icon>
                 </template>
 
                 <template v-slot:item.api="{ item }">
-                  <v-icon v-if="item.api" :color="color(item.api)">
+                  <v-icon v-if="item.api" :color="setColor(item.api)">
                     mdi-check
                   </v-icon>
-                  <v-icon v-if="!item.api" :color="color(item.api)">
+                  <v-icon v-if="!item.api" :color="setColor(item.api)">
                     mdi-close
                   </v-icon>
                 </template>
@@ -176,7 +173,7 @@
                     <span
                       v-for="(k, v) in item.uptime"
                       v-bind:key="v[k]"
-                      :class="color(v) + '--text'"
+                      :class="setColor(v) + '--text'"
                       class="display-1 font-weight-black"
                     >.</span>
                   </div>
@@ -184,7 +181,7 @@
               </v-data-table>
 
               <v-skeleton-loader
-                v-if="!loaded"
+                v-if="loading"
                 class="mx-auto"
                 type="table"
                 loading
@@ -255,30 +252,40 @@ export default {
     }
   },
   computed: mapGetters({
-    nodes: 'nodes/get'
+    nodes: 'nodes/getNodes'
   }),
-  async fetch ({ $axios, store }) {
-    const updated = store.state.nodes.nodes.updated
-    const diff = moment().diff(moment(updated))
 
-    // If cache expired
-    if (!updated || diff > process.env.DATA_CACHE) {
-      store.commit('nodes/empty')
-
-      const nodes = await $axios.$get(process.env.NETWORK_API + '/nodes/all', {
-        timeout: process.env.AXIOS_TIMEOUT
-      })
-
-      nodes.forEach((node) => {
-        store.commit('nodes/add', node)
+  created () {
+    this.pollNodes()
+  },
+  mounted () {
+    this.loading = false
+  },
+  beforeDestroy () {
+    clearInterval(this.nodes)
+  },
+  filters: {
+    fromNow (timestamp) {
+      return moment(timestamp).fromNow()
+    },
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
       })
     }
   },
-  mounted () {
-    this.loaded = true
-  },
   methods: {
-    color (value) {
+    pollNodes () {
+      // Fetch on render
+      this.$store.dispatch('nodes/fetchNodes')
+
+      // Refresh every minute
+      this.nodes = setInterval(() => {
+        this.$store.dispatch('nodes/fetchNodes')
+      }, 60000)
+    },
+    setColor (value) {
       if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
     }
   }

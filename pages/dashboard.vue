@@ -84,10 +84,7 @@
                   <tr v-for="block in blocks.last" :key="block.height">
                     <td>
                       <nuxt-link :to="{ path: '/block/' + block.height }">
-                        {{ block.height.toLocaleString(undefined, {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0
-                        }) }}
+                        {{ block.height | localeString }}
                       </nuxt-link>
                     </td>
                     <td class="primary--text text-truncate" style="max-width: 10vw;">
@@ -189,6 +186,20 @@ export default {
     Panel,
     LineChart
   },
+  filters: {
+    localeString (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    },
+    localeCurrency (string) {
+      return string.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })
+    }
+  },
   data () {
     return {
       loading: true,
@@ -262,8 +273,9 @@ export default {
           yPadding: 10,
           intersect: false,
           displayColors: false,
-          cornerRadius: 4,
-          backgroundColor: 'rgba(23, 5, 75, 0.9)',
+          cornerRadius: 6,
+          backgroundColor: 'rgba(23, 5, 75, 0.8)',
+          mode: 'label',
           callbacks: {
             title (value, chart) {
               return 'Transactions: ' + value[0].yLabel.toLocaleString(undefined, {
@@ -272,7 +284,6 @@ export default {
               })
             },
             label (value, chart) {
-
             }
           }
         },

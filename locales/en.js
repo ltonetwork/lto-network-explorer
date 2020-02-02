@@ -13,7 +13,7 @@ export default {
   },
   panel: {
     price: 'Price',
-    height: 'Network Height',
+    height: 'Height',
     staking: 'LTO Staked',
     nodes: 'Active Nodes'
 
