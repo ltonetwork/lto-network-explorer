@@ -3,7 +3,7 @@
     <v-col
       :cols="12"
       :sm="6"
-      :md="3"
+      :md="6"
       :lg="3"
     >
       <v-card :loading="!market.updated">
@@ -78,7 +78,7 @@
     <v-col
       :cols="12"
       :sm="6"
-      :md="3"
+      :md="6"
       :lg="3"
     >
       <v-card :loading="!nodesCount.updated">
@@ -135,7 +135,7 @@
     <v-col
       :cols="12"
       :sm="6"
-      :md="3"
+      :md="6"
       :lg="3"
     >
       <v-card :loading="!staking.updated">
@@ -192,7 +192,7 @@
     <v-col
       :cols="12"
       :sm="6"
-      :md="3"
+      :md="6"
       :lg="3"
     >
       <v-card :loading="!network.updated">
