@@ -4,7 +4,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="loading"
+          :loading="!staking.updated"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -90,7 +90,7 @@
             </v-card-text>
 
             <v-skeleton-loader
-              v-if="loading"
+              v-if="!staking.updated"
               class="mx-auto"
               type="table"
               loading
@@ -101,13 +101,14 @@
 
       <v-col>
         <v-card
-          :loading="loading"
+          :loading="!staking.updated"
           :loader-height="10"
         >
           <v-sheet>
             <v-card-text>
               <figure class="chart">
                 <DoughnutChart
+                  v-if="staking.updated"
                   :chartData="chartDataSet"
                   :chartOptions="chartOptions"
                   :height="300"
@@ -115,7 +116,7 @@
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              v-if="loading"
+              v-if="!staking.updated"
               class="mx-auto"
               type="image"
               loading
@@ -164,7 +165,6 @@ export default {
   },
   data () {
     return {
-      loading: false,
       chartData: {
         type: 'doughnut',
         datasets: [{
@@ -258,9 +258,6 @@ export default {
   },
   created () {
     this.pollStaking()
-  },
-  mounted () {
-    this.loading = false
   },
   beforeDestroy () {
     clearInterval(this.staking)

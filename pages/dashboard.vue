@@ -4,7 +4,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="loading"
+          :loading="!chart.updated"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -33,13 +33,14 @@
           <v-card-text>
             <v-sheet>
               <v-skeleton-loader
-                v-if="loading"
+                v-if="!chart.updated"
                 class="mx-auto"
                 type="image"
                 loading
               />
               <figure class="chart">
                 <lineChart
+                  v-if="chart.updated"
                   :chartData="chartDataSet"
                   :chartOptions="chartOptions"
                 />
@@ -54,7 +55,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="loading"
+          :loading="!blocks.updated"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -103,7 +104,7 @@
               </v-simple-table>
 
               <v-skeleton-loader
-                v-if="loading"
+                v-if="!blocks.updated"
                 class="mx-auto"
                 type="table"
                 loading
@@ -115,7 +116,7 @@
 
       <v-col>
         <v-card
-          :loading="loading"
+          :loading="!unconfirmed.updated"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -157,7 +158,7 @@
             </v-card-text>
 
             <v-skeleton-loader
-              v-if="loading"
+              v-if="!unconfirmed.updated"
               class="mx-auto"
               type="table"
               loading
@@ -202,7 +203,6 @@ export default {
   },
   data () {
     return {
-      loading: true,
       chartData: {
         labels: null,
         datasets: [
@@ -327,9 +327,6 @@ export default {
     this.pollChart()
     this.pollBlocks()
     this.pollUnconfirmed()
-  },
-  mounted () {
-    this.loading = false
   },
   beforeDestroy () {
     clearInterval(this.chart)

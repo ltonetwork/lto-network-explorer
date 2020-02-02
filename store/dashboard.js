@@ -4,15 +4,15 @@ export const state = () => ({
   dashboard: {
     chart: {
       dataset: [],
-      updated: moment()
+      updated: null
     },
     blocks: {
       last: [],
-      updated: moment()
+      updated: null
     },
     unconfirmed: {
       pool: [],
-      updated: moment()
+      updated: null
     }
   }
 })
@@ -21,13 +21,17 @@ export const actions = {
   async fetchChart ({ commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
+    state.chart.updated = null
+
     const url = process.env.CACHE_API + '/stats/transaction/week'
     const payload = await this.$axios.$get(url)
 
     commit('updateChart', payload)
   },
-  async fetchBlocks ({ rootState, commit }) {
+  async fetchBlocks ({ state, commit }) {
     // Doc: https://docs.ltonetwork.com/public-node
+
+    state.blocks.updated = null
 
     const res = await this.$axios.$get(process.env.LB_API + '/node/status')
     const end = +res.blockchainHeight
@@ -40,6 +44,8 @@ export const actions = {
   },
   async fetchUnconfirmed ({ commit }) {
     // Doc: https://docs.ltonetwork.com/public-node
+
+    state.unconfirmed.updated = null
 
     const url = process.env.LB_API + '/transactions/unconfirmed'
     const payload = await this.$axios.$get(url)

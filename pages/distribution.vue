@@ -4,7 +4,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="loading"
+          :loading="!distribution.updated"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -16,7 +16,7 @@
             <v-card-text class="pt-0">
               <v-data-table
                 :headers="holdersTable"
-                :items="holders"
+                :items="distribution.holders"
                 :sort-by="['']"
                 :sort-desc="[true]"
                 :items-per-page="20"
@@ -67,7 +67,7 @@
               </v-data-table>
             </v-card-text>
             <v-skeleton-loader
-              v-if="loading"
+              v-if="!distribution.updated"
               class="mx-auto"
               type="table"
               loading
@@ -78,13 +78,14 @@
 
       <v-col>
         <v-card
-          :loading="loading"
+          :loading="!distribution.updated"
           :loader-height="10"
         >
           <v-sheet>
             <v-card-text>
               <figure class="chart">
                 <DoughnutChart
+                  v-if="distribution.updated"
                   :chartData="chartDataSet"
                   :chartOptions="chartOptions"
                   :height="300"
@@ -92,7 +93,7 @@
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              v-if="loading"
+              v-if="!distribution.updated"
               class="mx-auto"
               type="image"
               loading
@@ -141,7 +142,6 @@ export default {
   },
   data () {
     return {
-      loading: false,
       chartData: {
         type: 'doughnut',
         datasets: [{
@@ -210,26 +210,23 @@ export default {
     chartDataSet () {
       return {
         type: 'doughnut',
-        labels: this.holders.map(g => g.address),
+        labels: this.distribution.holders.map(g => g.address),
         datasets: [{
           backgroundColor: 'rgba(128, 75, 201, 0.6)',
           label: '',
-          data: this.holders.map(g => g.regular)
+          data: this.distribution.holders.map(g => g.regular)
         }]
       }
     },
     ...mapGetters({
-      holders: 'distribution/getHolders'
+      distribution: 'distribution/getDistribution'
     })
   },
   created () {
     this.pollHolders()
   },
-  mounted () {
-    this.loading = false
-  },
   beforeDestroy () {
-    clearInterval(this.holders)
+    clearInterval(this.distribution)
   },
   methods: {
     pollHolders () {
@@ -237,7 +234,7 @@ export default {
       this.$store.dispatch('distribution/fetchHolders')
 
       // Refresh every minute
-      this.holders = setInterval(() => {
+      this.distribution = setInterval(() => {
         this.$store.dispatch('distribution/fetchHolders')
       }, 60000)
     }

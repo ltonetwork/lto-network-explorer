@@ -4,7 +4,7 @@
     <v-row>
       <v-col>
         <v-card
-          :loading="loading"
+          :loading="!nodes.updated"
         >
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-node" />
@@ -181,7 +181,7 @@
               </v-data-table>
 
               <v-skeleton-loader
-                v-if="loading"
+                v-if="!nodes.updated"
                 class="mx-auto"
                 type="table"
                 loading
@@ -221,7 +221,6 @@ export default {
   },
   data () {
     return {
-      loaded: false,
       nodesTable: [
         {
           text: 'Name',
@@ -268,9 +267,6 @@ export default {
 
   created () {
     this.pollNodes()
-  },
-  mounted () {
-    this.loading = false
   },
   beforeDestroy () {
     clearInterval(this.nodes)

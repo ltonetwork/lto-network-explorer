@@ -3,13 +3,15 @@ import moment from 'moment'
 export const state = () => ({
   distribution: {
     holders: [],
-    updated: moment()
+    updated: null
   }
 })
 
 export const actions = {
   async fetchHolders ({ commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
+
+    state.distribution.updated = null
 
     const url = process.env.CACHE_API + '/address/top/100'
     const payload = await this.$axios.$get(url)
@@ -30,7 +32,7 @@ export const mutations = {
 }
 
 export const getters = {
-  getHolders: (state) => {
-    return state.distribution.holders
+  getDistribution: (state) => {
+    return state.distribution
   }
 }

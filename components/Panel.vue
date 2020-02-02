@@ -6,7 +6,7 @@
       :md="3"
       :lg="3"
     >
-      <v-card :loading="loading">
+      <v-card :loading="!market.updated">
         <v-card-text class="pt-4 pb-2 pl-7 pr-7">
           <v-row>
             <v-col
@@ -81,7 +81,7 @@
       :md="3"
       :lg="3"
     >
-      <v-card :loading="loading">
+      <v-card :loading="!nodesCount.updated">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -138,7 +138,7 @@
       :md="3"
       :lg="3"
     >
-      <v-card :loading="loading">
+      <v-card :loading="!staking.updated">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -195,7 +195,7 @@
       :md="3"
       :lg="3"
     >
-      <v-card :loading="loading">
+      <v-card :loading="!network.updated">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -252,13 +252,6 @@ import { mapGetters } from 'vuex'
 import moment from 'moment'
 
 export default {
-  components: {
-  },
-  data () {
-    return {
-      loading: true
-    }
-  },
   filters: {
     fromNow (timestamp) {
       return moment(timestamp).fromNow()
@@ -289,9 +282,6 @@ export default {
     this.pollNodes()
     this.pollStaking()
     this.pollNetwork()
-  },
-  mounted () {
-    this.loading = false
   },
   beforeDestroy () {
     clearInterval(this.market)

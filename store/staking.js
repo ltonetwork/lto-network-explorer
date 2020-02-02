@@ -3,13 +3,15 @@ import moment from 'moment'
 export const state = () => ({
   staking: {
     generators: [],
-    updated: moment()
+    updated: null
   }
 })
 
 export const actions = {
   async fetchGenerators ({ commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
+
+    state.staking.updated = null
 
     const url = process.env.CACHE_API + '/generator/all/week'
     const payload = await this.$axios.$get(url)
