@@ -20,3 +20,16 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## .env
+
+```
+BASE_ROUTE=/explorer/
+LB_API=https://node.lto.cloud
+CACHE_API=https://api.lto.cloud/v1
+NETWORK_API=https://network.lto.cloud/v1
+BRIDGE_API=https://bridge.lto.network
+LATEST_BLOCKS=10
+AXIOS_TIMEOUT=20000
+ATOMIC=10000000
+```
