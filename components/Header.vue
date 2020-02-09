@@ -162,7 +162,7 @@ export default {
   },
   data () {
     return {
-      calculator: true,
+      calculator: false,
       menu: [
         {
           title: this.$t('menu.overview'),
