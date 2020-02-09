@@ -88,7 +88,7 @@
               <v-list-item-title>{{ wallet.title }}</v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="showCalculator()">
+            <v-list-item @click.stop="calculator = true">
               <v-icon class="mr-2">
                 mdi-calculator
               </v-icon>
@@ -98,6 +98,61 @@
         </v-menu>
       </v-row>
     </v-container>
+
+    <v-row justify="center">
+      <v-dialog
+        v-model="calculator"
+        max-width="600"
+      >
+        <v-card>
+          <v-card-title class="headline font-weight-bold secondary--text">
+            <span class="mr-2 lto-calculator" />
+            {{ $t('calculator.modal_title') }}
+          </v-card-title>
+          <v-card-text>
+            <v-row class="text-center">
+              <v-col
+                :cols="6"
+                :sm="6"
+                :md="6"
+                :xl="6"
+              >
+                t
+              </v-col>
+              <v-col
+                :cols="6"
+                :sm="6"
+                :md="6"
+                :xl="6"
+              >
+                t
+              </v-col>
+            </v-row>
+          </v-card-text>
+
+          <v-card-actions>
+
+            <v-btn
+              @click="dialog = false"
+              color="green darken-1"
+              text
+            >
+              Disagree
+            </v-btn>
+
+            <v-spacer />
+
+            <v-btn
+              href="https://blog.ltonetwork.com/staking-and-leasing-lto-network-node-guide/"
+              color="primary"
+              outlined
+            >
+              {{ $t['calculator.info'] }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </v-app-bar>
 </template>
 <script>
@@ -107,6 +162,7 @@ export default {
   },
   data () {
     return {
+      calculator: true,
       menu: [
         {
           title: this.$t('menu.overview'),
@@ -137,9 +193,6 @@ export default {
     }
   },
   methods: {
-    showCalculator () {
-      alert('not implemented yet')
-    }
   }
 }
 </script>

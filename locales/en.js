@@ -19,7 +19,9 @@ export default {
 
   },
   calculator: {
-    title: 'Calculator'
+    title: 'Calculator',
+    modal_title: 'LTO ROI Calculator',
+    info: 'More Information'
   },
   network: {
     title: 'Explorer',

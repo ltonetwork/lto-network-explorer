@@ -113,7 +113,7 @@
                       {{ $t('distribution.burned_supply') }}
                     </td>
                     <td class="text-right">
-                     - {{ supply.stats.burned_supply | localeCurrency }} LTO
+                      - {{ supply.stats.burned_supply | localeCurrency }} LTO
                     </td>
                   </tr>
                   <tr>
