@@ -81,9 +81,19 @@ export default {
   },
   distribution: {
     title: 'Top Token Holders',
-    stats: 'Share Overview'
+    stats: 'Share Overview',
+    supply: 'Token Supply',
+    supply_details: 'Supply Overview',
+    toll_bridge: 'Toll Bridge',
+    burn_rate: 'Burn Rate',
+    initial_supply: 'Initial Supply',
+    total_supply: 'Total Supply',
+    burned_supply: 'Burned Supply',
+    circulating_mainnet: 'Circulating Mainnet',
+    private_supply_mainnet: 'Private Supply Mainnet',
+    circulating_erc20: 'Circulating ERC20',
+    private_supply_erc20: 'Private Supply ERC20'
   },
-
   links: {
     wallet: 'Web Wallet',
     home: 'Homepage',

@@ -181,6 +181,7 @@ export default {
   proxy: {
     '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: { '^/cache/': '' } },
     '/network/': { target: 'https://network.lto.cloud/v1', pathRewrite: { '^/network/': '' } },
-    '/node/': { target: 'https://node.lto.cloud/', pathRewrite: { '^/node/': '' } }
+    '/node/': { target: 'https://node.lto.cloud/', pathRewrite: { '^/node/': '' } },
+    '/bridge/': { target: 'https://bridge.lto.network/', pathRewrite: { '^/node/': '' } }
   }
 }

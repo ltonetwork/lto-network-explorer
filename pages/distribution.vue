@@ -9,7 +9,7 @@
         :lg="8"
       >
         <v-card
-          :loading="!distribution.updated"
+          :loading="!top.updated"
           :loader-height="10"
         >
           <v-card-title class="secondary--text">
@@ -20,9 +20,9 @@
           <v-sheet>
             <v-card-text class="pa-0">
               <v-data-table
-                v-if="distribution.updated"
-                :headers="holdersTable"
-                :items="distribution.holders"
+                v-if="top.updated"
+                :headers="topTable"
+                :items="top.holders"
                 :sort-by="['']"
                 :sort-desc="[true]"
                 :items-per-page="20"
@@ -73,7 +73,7 @@
               </v-data-table>
             </v-card-text>
             <v-skeleton-loader
-              v-if="!distribution.updated"
+              v-if="!top.updated"
               class="mx-auto"
               type="table"
               loading
@@ -89,22 +89,164 @@
         :lg="4"
       >
         <v-card
-          :loading="!distribution.updated"
+          :loading="!supply.updated"
           :loader-height="10"
+        >
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-transactions" />
+            {{ $t('distribution.supply') }}
+          </v-card-title>
+          <v-sheet>
+            <v-card-text class="pa-0">
+              <v-simple-table class="secondary--text">
+                <tbody>
+                  <tr>
+                    <th class="overline text-left grey--text">
+                      {{ $t('distribution.initial_supply') }}
+                    </th>
+                    <th class="body-2 text-right">
+                      {{ supply.stats.initial_supply | localeCurrency }} LTO
+                    </th>
+                  </tr>
+                  <tr>
+                    <td class="overline text-left grey--text">
+                      {{ $t('distribution.burned_supply') }}
+                    </td>
+                    <td class="text-right">
+                     - {{ supply.stats.burned_supply | localeCurrency }} LTO
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="overline text-left grey--text">
+                      {{ $t('distribution.total_supply') }}
+                    </td>
+                    <td class="text-right">
+                      {{ supply.stats.total_supply | localeCurrency }} LTO
+                    </td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card-text>
+
+            <v-skeleton-loader
+              v-if="!supply.updated"
+              class="mx-auto"
+              type="table"
+              loading
+            />
+          </v-sheet>
+        </v-card>
+
+        <v-card
+          :loading="!supply.updated"
+          :loader-height="10"
+          class="mt-6"
+        >
+          <v-sheet>
+            <v-card-text class="pa-0">
+              <v-simple-table class="secondary--text">
+                <tbody>
+                  <tr>
+                    <th class="overline text-left grey--text">
+                      {{ $t('distribution.circulating_mainnet') }}
+                    </th>
+                    <th class="body-2 text-right">
+                      {{ supply.stats.circulating_mainnet | localeCurrency }} LTO
+                    </th>
+                  </tr>
+                  <tr>
+                    <td class="overline text-left grey--text">
+                      {{ $t('distribution.private_supply_mainnet') }}
+                    </td>
+                    <td class="text-right">
+                      {{ supply.stats.private_supply_mainnet | localeCurrency }} LTO
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="overline text-left grey--text">
+                      {{ $t('distribution.circulating_erc20') }}
+                    </th>
+                    <th class="body-2 text-right">
+                      {{ supply.stats.circulating_erc20 | localeCurrency }} LTO
+                    </th>
+                  </tr>
+                  <tr>
+                    <td class="overline text-left grey--text">
+                      {{ $t('distribution.private_supply_erc20') }}
+                    </td>
+                    <td class="text-right">
+                      {{ supply.stats.private_supply_erc20 | localeCurrency }} LTO
+                    </td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card-text>
+
+            <v-skeleton-loader
+              v-if="!supply.updated"
+              class="mx-auto"
+              type="table"
+              loading
+            />
+          </v-sheet>
+        </v-card>
+
+        <v-card
+          :loading="!supply.updated"
+          :loader-height="10"
+          class="mt-6"
+        >
+          <v-sheet>
+            <v-card-text class="pa-0">
+              <v-simple-table class="secondary--text">
+                <tbody>
+                  <tr>
+                    <th class="overline text-left grey--text">
+                      {{ $t('distribution.burn_rate') }}
+                    </th>
+                    <th class="body-2 text-right">
+                      {{ bridge.toll.burn_rate }} %
+                    </th>
+                  </tr>
+                  <tr>
+                    <td class="overline text-left grey--text">
+                      {{ $t('distribution.burned_supply') }}
+                    </td>
+                    <td class="text-right">
+                      {{ bridge.toll.burned | localeCurrency }} LTO
+                    </td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card-text>
+
+            <v-skeleton-loader
+              v-if="!supply.updated"
+              class="mx-auto"
+              type="table"
+              loading
+            />
+          </v-sheet>
+        </v-card>
+
+        <v-card
+          :loading="!top.updated"
+          :loader-height="10"
+          class="mt-6"
         >
           <v-sheet>
             <v-card-text>
               <figure class="chart">
                 <DoughnutChart
-                  v-if="distribution.updated"
-                  :chartData="chartDataSet"
+                  v-if="top.updated"
+                  :chartData="topChartData"
                   :chartOptions="chartOptions"
                   :height="300"
                 />
               </figure>
             </v-card-text>
             <v-skeleton-loader
-              v-if="!distribution.updated"
+              v-if="!top.updated"
               class="mx-auto"
               type="image"
               loading
@@ -153,15 +295,6 @@ export default {
   },
   data () {
     return {
-      chartData: {
-        type: 'doughnut',
-        datasets: [{
-          data: null,
-          backgroundColor: null,
-          label: null
-        }],
-        labels: null
-      },
       chartOptions: {
         maintainAspectRatio: true,
         responsive: true,
@@ -188,7 +321,7 @@ export default {
           easing: 'easeOutQuint'
         }
       },
-      holdersTable: [
+      topTable: [
         {
           text: 'Address',
           align: 'left',
@@ -218,35 +351,71 @@ export default {
     }
   },
   computed: {
-    chartDataSet () {
+    ...mapGetters({
+      top: 'distribution/getTop',
+      supply: 'distribution/getSupply',
+      bridge: 'distribution/getBridge'
+    }),
+    topChartData () {
       return {
         type: 'doughnut',
-        labels: this.distribution.holders.map(g => g.address),
+        labels: this.top.holders.map(g => g.address),
         datasets: [{
           backgroundColor: 'rgba(128, 75, 201, 0.6)',
           label: '',
-          data: this.distribution.holders.map(g => g.regular)
+          data: this.top.holders.map(g => g.regular)
         }]
       }
     },
-    ...mapGetters({
-      distribution: 'distribution/getDistribution'
-    })
+    bridgeChartData () {
+      return {
+        type: 'doughnut',
+        // labels: this.bridge.volume.map((v, i) => v[i].address),
+        datasets: [{
+          backgroundColor: 'rgba(128, 75, 201, 0.6)',
+          label: ''
+        // data: this.bridge.volume.map((v, i) => v[i].total)
+        }]
+      }
+    }
   },
   created () {
-    this.pollHolders()
+    this.pollTop()
+    this.pollSupply()
+    this.pollBridge()
+    console.log(this.bridge.toll.burn_rate)
   },
   beforeDestroy () {
-    clearInterval(this.distribution)
+    clearInterval(this.top)
+    clearInterval(this.supply)
+    clearInterval(this.bridge)
   },
   methods: {
-    pollHolders () {
+    pollTop () {
       // Fetch on render
-      this.$store.dispatch('distribution/fetchHolders')
+      this.$store.dispatch('distribution/fetchTop')
 
       // Refresh every minute
-      this.distribution = setInterval(() => {
-        this.$store.dispatch('distribution/fetchHolders')
+      this.top = setInterval(() => {
+        this.$store.dispatch('distribution/fetchTop')
+      }, 60000)
+    },
+    pollSupply () {
+      // Fetch on render
+      this.$store.dispatch('distribution/fetchSupply')
+
+      // Refresh every minute
+      this.supply = setInterval(() => {
+        this.$store.dispatch('distribution/fetchSupply')
+      }, 60000)
+    },
+    pollBridge () {
+      // Fetch on render
+      this.$store.dispatch('distribution/fetchBridge')
+
+      // Refresh every minute
+      this.bridge = setInterval(() => {
+        this.$store.dispatch('distribution/fetchBridge')
       }, 60000)
     }
   }
