@@ -1,5 +1,79 @@
 import moment from 'moment'
-import math from 'lodash/math'
+
+/* TODO: Typescript does not like this import. Can't find the types file. */
+//import math from 'lodash/math'
+import * as _ from 'lodash'
+
+import { VueGlobalFunctions } from '../pages/types'
+
+interface Currency {
+  btc: number;
+  eth: number;
+  usd: number;
+  eur: number;
+  gbp: number;
+  cad: number;
+  cny: number;
+}
+
+interface CurrencyChange {
+  currency: Currency;
+  relative: number;
+  absolute: number;
+}
+
+interface PanelState {
+  panel: {
+    market: {
+      price: {
+        change: CurrencyChange;
+        currency: Currency;
+      }
+
+      capital: {
+        change: CurrencyChange;
+        currency: Currency;
+      }
+
+      sparkline: unknown[];
+
+      updated: null | moment.Moment | string;
+    }
+
+    nodes: {
+      active: number;
+      updated: null | moment.Moment | string;
+    }
+
+    staking: {
+      total: number;
+      updated: null | moment.Moment | string;
+    }
+
+    network: {
+      height: number;
+      updated: null | moment.Moment | string;
+    }
+  }
+}
+
+interface MarketPayload {
+  market_data: {
+    price_change_percentage_24h: number;
+    price_change_24h: number;
+    price_change_24h_in_currency: Currency;
+    current_price: Currency;
+    market_cap_change_24h_in_currency: Currency;
+    market_cap: Currency;
+    sparkline_7d: {
+      price: unknown[];
+    }
+  }
+
+  market_cap_change_percentage_24h: number;
+
+  market_cap_change_24h: number;
+}
 
 export const state = () => ({
   panel: {
@@ -71,42 +145,42 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchMarket ({ state, commit }) {
+  async fetchMarket (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
     // Doc: https://www.coingecko.com/api/documentations/v3
 
     // state.state.panel.market.updated = null
 
-    const url = 'https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true'
+    const url: string = 'https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true'
     const payload = await this.$axios.$get(url)
 
     commit('updateMarket', payload)
   },
-  async fetchNodes ({ state, commit }) {
+  async fetchNodes (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
     // state.state.panel.nodes.updated = null
 
-    const url = 'https://network.lto.cloud/v1/nodes/all'
+    const url: string = 'https://network.lto.cloud/v1/nodes/all'
     const payload = await this.$axios.$get(url)
 
     commit('updateNodes', payload)
   },
-  async fetchStaking ({ state, commit }) {
+  async fetchStaking (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     // state.state.panel.staking.updated = null
 
-    const url = process.env.CACHE_API + '/generator/all/week'
+    const url: string = process.env.CACHE_API + '/generator/all/week'
     const payload = await this.$axios.$get(url)
 
     commit('updateStaking', payload)
   },
-  async fetchNetwork ({ state, commit }) {
+  async fetchNetwork (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
     // state.state.panel.network.updated = null
 
-    const url = process.env.LB_API + '/node/status'
+    const url: string = process.env.LB_API + '/node/status'
     const payload = await this.$axios.$get(url)
 
     commit('updateNetwork', payload)
@@ -114,7 +188,7 @@ export const actions = {
 }
 
 export const mutations = {
-  updateMarket (state, payload) {
+  updateMarket (state: PanelState, payload: MarketPayload) {
     const data = {
       price: {
         change: {
@@ -170,31 +244,32 @@ export const mutations = {
 
     state.panel.market = data
   },
-  updateNodes (state, payload) {
+  updateNodes (state: PanelState, payload: unknown[]) {
     state.panel.nodes.active = payload.length
     state.panel.nodes.updated = moment()
   },
-  updateStaking (state, payload) {
-    state.panel.staking.total = math.sumBy(payload, function (o) { return o.pool })
+  updateStaking (state: PanelState, payload: unknown[]) {
+    state.panel.staking.total = _.sumBy(payload, function (o: any) { return o.pool })
     state.panel.staking.updated = moment()
   },
-  updateNetwork (state, payload) {
-    state.panel.network.height = payload.blockchainHeight
+  updateNetwork (state: PanelState, payload: unknown) {
+    console.log(payload)
+    state.panel.network.height = (payload as any).blockchainHeight
     state.panel.network.updated = moment()
   }
 }
 
 export const getters = {
-  getMarket: (state) => {
+  getMarket: (state: PanelState) => {
     return state.panel.market
   },
-  getNodes: (state) => {
+  getNodes: (state: PanelState) => {
     return state.panel.nodes
   },
-  getStaking: (state) => {
+  getStaking: (state: PanelState) => {
     return state.panel.staking
   },
-  getNetwork: (state) => {
+  getNetwork: (state: PanelState) => {
     return state.panel.network
   }
 }

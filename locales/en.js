@@ -1,5 +1,4 @@
 // en.js with English translations
-
 export default {
   menu: {
     overview: 'Dashboard',
@@ -28,7 +27,7 @@ export default {
     total_tx: 'Total Transactions',
     total_fees: 'Total Fees',
     leasing: 'Leasing (LTO)',
-    roi_month: 'Monthly ROI',
+    roi_monthly: 'Monthly ROI',
     roi_yearly: 'Yearly ROI'
   },
   network: {

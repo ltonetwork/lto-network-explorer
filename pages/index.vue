@@ -1,7 +1,6 @@
-
-<script>
+<script lang="ts">
 export default {
-  fetch ({ redirect }) {
+  fetch ({ redirect }: any): void {
     redirect('/dashboard')
   }
 }

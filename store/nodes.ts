@@ -1,5 +1,20 @@
 import moment from 'moment'
 
+import { VueGlobalFunctions } from '../pages/types'
+
+interface Node {
+  updated: moment.Moment;
+  created: moment.Moment;
+  uptime: string[];
+}
+
+interface NodeState {
+  nodes: {
+    active: Node[];
+    updated: null | moment.Moment | string;
+  }
+}
+
 export const state = () => ({
   nodes: {
     active: [],
@@ -8,12 +23,12 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchNodes ({ state, commit }) {
+  async fetchNodes (this: VueGlobalFunctions, { state, commit }: { state: NodeState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
     // state.state.nodes.updated = null
 
-    const url = 'https://network.lto.cloud/v1/nodes/all'
+    const url: string = 'https://network.lto.cloud/v1/nodes/all'
     const payload = await this.$axios.$get(url)
 
     commit('updateNodes', payload)
@@ -21,8 +36,8 @@ export const actions = {
 }
 
 export const mutations = {
-  updateNodes (state, payload) {
-    payload.forEach((n) => {
+  updateNodes (state: NodeState, payload: Node[]) {
+    payload.forEach((n: Node) => {
       n.updated = moment(n.updated)
       n.created = moment(n.created)
       n.uptime = n.uptime.toString().split('')
@@ -34,7 +49,7 @@ export const mutations = {
 }
 
 export const getters = {
-  getNodes: (state) => {
+  getNodes: (state: NodeState) => {
     return state.nodes
   }
 }

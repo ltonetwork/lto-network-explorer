@@ -1,23 +1,24 @@
-
-<script>
+<script lang="ts">
 import { Doughnut, mixins } from 'vue-chartjs'
+import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { ChartData, ChartOptions } from 'chart.js'
 const { reactiveProp } = mixins
 
-export default {
+@Component({
   extends: Doughnut,
-  mixins: [reactiveProp],
-  props: {
-    chartData: {
-      type: Object,
-      default: null
-    },
-    chartOptions: {
-      type: Object,
-      default: null
-    }
-  },
-  mounted () {
+  mixins: [reactiveProp]
+})
+class DoughnutChart extends Mixins(Doughnut) {
+  @Prop({ default: {} })
+  chartData!: ChartData;
+
+  @Prop({ default: {} })
+  chartOptions!: ChartOptions;
+
+  mounted (): void {
     this.renderChart(this.chartData, this.chartOptions)
   }
 }
+
+export default DoughnutChart
 </script>
