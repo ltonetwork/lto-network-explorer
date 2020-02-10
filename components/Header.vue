@@ -252,7 +252,10 @@ export default {
         title: translate('menu.wallet'),
         icon: 'mdi-coins',
         href: 'https://wallet.lto.network/'
-      }
+      },
+      lazy: null,
+      valid: null,
+      select: null
     }
   },
   methods: {

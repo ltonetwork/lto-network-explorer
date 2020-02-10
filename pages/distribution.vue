@@ -383,9 +383,9 @@ class Distribution extends Vue {
     }
   ]
 
-  top: ReturnType<typeof setInterval> | undefined = undefined
-  supply: ReturnType<typeof setInterval> | undefined = undefined
-  bridge: ReturnType<typeof setInterval> | undefined = undefined
+  topTimer: ReturnType<typeof setInterval> | undefined = undefined
+  supplyTimer: ReturnType<typeof setInterval> | undefined = undefined
+  bridgeTimer: ReturnType<typeof setInterval> | undefined = undefined
 
   created (): void {
     this.pollTop()
@@ -394,16 +394,16 @@ class Distribution extends Vue {
   }
 
   beforeDestroy (): void {
-    if (this.top) {
-      clearInterval(this.top)
+    if (this.topTimer) {
+      clearInterval(this.topTimer)
     }
 
-    if (this.supply) {
-      clearInterval(this.supply)
+    if (this.supplyTimer) {
+      clearInterval(this.supplyTimer)
     }
 
-    if (this.bridge) {
-      clearInterval(this.bridge)
+    if (this.bridgeTimer) {
+      clearInterval(this.bridgeTimer)
     }
   }
 
@@ -412,7 +412,7 @@ class Distribution extends Vue {
     this.$store.dispatch('distribution/fetchTop')
 
     // Refresh every minute
-    this.top = setInterval(() => {
+    this.topTimer = setInterval(() => {
       this.$store.dispatch('distribution/fetchTop')
     }, 60000)
   }
@@ -422,7 +422,7 @@ class Distribution extends Vue {
     this.$store.dispatch('distribution/fetchSupply')
 
     // Refresh every minute
-    this.supply = setInterval(() => {
+    this.supplyTimer = setInterval(() => {
       this.$store.dispatch('distribution/fetchSupply')
     }, 60000)
   }
@@ -432,7 +432,7 @@ class Distribution extends Vue {
     this.$store.dispatch('distribution/fetchBridge')
 
     // Refresh every minute
-    this.bridge = setInterval(() => {
+    this.bridgeTimer = setInterval(() => {
       this.$store.dispatch('distribution/fetchBridge')
     }, 60000)
   }
