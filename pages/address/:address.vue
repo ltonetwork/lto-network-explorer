@@ -3,9 +3,9 @@
     <v-snackbar v-model="copied">
       {{ $t('address.copied') }}
       <v-btn
-        @click="copied = false"
         color="red"
         text
+        @click="copied = false"
       >
         Close
       </v-btn>
@@ -54,8 +54,8 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-text="$t('address.balance.regular')" class="pa-0 overline" />
-                <v-icon v-on="on" small class="ml-1 grey--text">
+                <span class="pa-0 overline" v-text="$t('address.balance.regular')" />
+                <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
@@ -82,8 +82,8 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-text="$t('address.balance.generating')" class="pa-0 overline" />
-                <v-icon v-on="on" small class="ml-1 grey--text">
+                <span class="pa-0 overline" v-text="$t('address.balance.generating')" />
+                <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
@@ -109,8 +109,8 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-text="$t('address.balance.available')" class="pa-0 overline" />
-                <v-icon v-on="on" small class="ml-1 grey--text">
+                <span class="pa-0 overline" v-text="$t('address.balance.available')" />
+                <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
@@ -136,8 +136,8 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-text="$t('address.balance.effective')" class="pa-0 overline" />
-                <v-icon v-on="on" small class="ml-1 grey--text">
+                <span class="pa-0 overline" v-text="$t('address.balance.effective')" />
+                <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
@@ -208,7 +208,7 @@
               <template v-slot:item.type="{ item }">
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <v-icon v-on="on" color="secondary">
+                    <v-icon color="secondary" v-on="on">
                       {{ icon(item.type) }}
                     </v-icon>
                   </template>
@@ -266,19 +266,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import moment from 'moment'
-export default {
+import '@nuxtjs/axios'
+
+export default Vue.extend({
   components: {
   },
   filters: {
-    localeString (string) {
+    localeString (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     },
-    localeCurrency (string) {
+    localeCurrency (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
@@ -344,24 +347,24 @@ export default {
     // an address in order to determine the `limit` parameter.
 
     const balance = await $axios.$get(process.env.LB_API + '/addresses/balance/details/' + params.address, {
-      timeout: process.env.AXIOS_TIMEOUT
+      timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    balance.regular = balance.regular / process.env.ATOMIC
-    balance.generating = balance.generating / process.env.ATOMIC
-    balance.available = balance.available / process.env.ATOMIC
-    balance.effective = balance.effective / process.env.ATOMIC
+    balance.regular = balance.regular / Number(process.env.ATOMIC)
+    balance.generating = balance.generating / Number(process.env.ATOMIC)
+    balance.available = balance.available / Number(process.env.ATOMIC)
+    balance.effective = balance.effective / Number(process.env.ATOMIC)
 
     let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/100', {
-      timeout: process.env.AXIOS_TIMEOUT
+      timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
     transactions = transactions[0]
 
     if (transactions.length >= 1) {
-      transactions.forEach((tx) => {
+      transactions.forEach((tx: any) => {
         tx.timestamp = moment(tx.timestamp).format('DD-MM-YY HH:MM:SS')
-        tx.fee = (tx.fee / process.env.ATOMIC)
+        tx.fee = (tx.fee / Number(process.env.ATOMIC))
 
         if (tx.sender === params.address) {
           tx.label = 'out'
@@ -378,7 +381,7 @@ export default {
     }
   },
   methods: {
-    name (value) {
+    name (value: number): string {
       // Genesis Transfer
       if (value === 1) {
         return 'Genesis'
@@ -402,14 +405,16 @@ export default {
         return 'Anchor'
       } else { return 'light' }
     },
-    color (value) {
+    color (value: string): string {
       if (value === 'out') {
         return 'orange'
       } else if (value === 'in') {
         return 'green'
       }
+
+      return ''
     },
-    icon (value) {
+    icon (value: number): string {
       // Genesis Transfer
       if (value === 1) {
         return 'mdi-power'
@@ -433,9 +438,9 @@ export default {
         return 'mdi-anchor'
       } else { return 'Unknown' }
     },
-    copy () {
+    copy (): void {
       this.copied = true
     }
   }
-}
+})
 </script>

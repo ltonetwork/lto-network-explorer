@@ -174,7 +174,7 @@
                   <div class="pb-5">
                     <span
                       v-for="(k, v) in item.uptime"
-                      v-bind:key="v[k]"
+                      :key="v[k]"
                       :class="setColor(v) + '--text'"
                       class="display-1 font-weight-black"
                     >.</span>
@@ -196,96 +196,105 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-import Panel from '~/components/Panel'
+import { Component } from 'vue-property-decorator'
+import { translate } from '../locales/index'
+import Panel from '../components/Panel.vue'
 
-export default {
+@Component({
   head () {
     return {
-      title: this.$t('nodes.title')
+      title: translate('nodes.title')
     }
   },
   components: {
     Panel
   },
   filters: {
-    fromNow (timestamp) {
+    fromNow (timestamp: number): string {
       return moment(timestamp).fromNow()
     },
-    localeString (string) {
+    localeString (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     }
   },
-  data () {
-    return {
-      nodesTable: [
-        {
-          text: 'Name',
-          align: 'left',
-          value: 'name'
-        },
-        {
-          text: 'Host:Port',
-          align: 'left',
-          value: 'address'
-        },
-        {
-          text: 'Height',
-          align: 'center',
-          value: 'height'
-        },
-        {
-          text: 'Version',
-          align: 'center',
-          value: 'version'
-        },
-        {
-          text: 'Public P2P',
-          align: 'center',
-          value: 'p2p'
-        },
-        {
-          text: 'Public API',
-          align: 'center',
-          value: 'api'
-        },
-        {
-          text: 'API Uptime',
-          align: 'center',
-          value: 'uptime'
-        }
-      ],
-      expanded: []
-    }
-  },
   computed: mapGetters({
     nodes: 'nodes/getNodes'
-  }),
-
-  created () {
-    this.pollNodes()
-  },
-  beforeDestroy () {
-    clearInterval(this.nodes)
-  },
-  methods: {
-    pollNodes () {
-      // Fetch on render
-      this.$store.dispatch('nodes/fetchNodes')
-
-      // Refresh every minute
-      this.nodes = setInterval(() => {
-        this.$store.dispatch('nodes/fetchNodes')
-      }, 60000)
+  })
+})
+class Nodes extends Vue {
+  nodesTable = [
+    {
+      text: 'Name',
+      align: 'left',
+      value: 'name'
     },
-    setColor (value) {
-      if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
+    {
+      text: 'Host:Port',
+      align: 'left',
+      value: 'address'
+    },
+    {
+      text: 'Height',
+      align: 'center',
+      value: 'height'
+    },
+    {
+      text: 'Version',
+      align: 'center',
+      value: 'version'
+    },
+    {
+      text: 'Public P2P',
+      align: 'center',
+      value: 'p2p'
+    },
+    {
+      text: 'Public API',
+      align: 'center',
+      value: 'api'
+    },
+    {
+      text: 'API Uptime',
+      align: 'center',
+      value: 'uptime'
+    }
+  ]
+
+  expanded = []
+
+  nodes: ReturnType<typeof setInterval> | undefined = undefined;
+
+  created (): void {
+    this.pollNodes()
+  }
+
+  beforeDestroy (): void {
+    if (this.nodes) {
+      clearInterval(this.nodes)
     }
   }
+
+  pollNodes (): void {
+    // Fetch on render
+    this.$store.dispatch('nodes/fetchNodes')
+
+    // Refresh every minute
+    this.nodes = setInterval(() => {
+      this.$store.dispatch('nodes/fetchNodes')
+    }, 60000)
+  }
+
+  setColor (value: number): string {
+    if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
+  }
 }
+
+export default Nodes
 </script>

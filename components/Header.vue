@@ -57,9 +57,9 @@
         >
           <template v-slot:activator="{ on }">
             <v-btn
-              v-on="on"
               icon
               class="white--text hidden-md-and-up"
+              v-on="on"
             >
               <v-icon dark large>
                 mdi-dots-vertical
@@ -131,11 +131,10 @@
           </v-card-text>
 
           <v-card-actions>
-
             <v-btn
-              @click="dialog = false"
               color="green darken-1"
               text
+              @click="dialog = false"
             >
               Disagree
             </v-btn>
@@ -155,38 +154,52 @@
     </v-row>
   </v-app-bar>
 </template>
-<script>
+<script lang="ts">
+import { translate } from '../locales/index'
+
+interface HeaderLinks {
+  menu: HeaderLink[];
+  wallet: HeaderLink;
+  calculator: boolean;
+}
+
+interface HeaderLink {
+  title: string;
+  icon: string;
+  to?: string;
+  href?: string;
+}
 
 export default {
   components: {
   },
-  data () {
+  data (): HeaderLinks {
     return {
       calculator: false,
       menu: [
         {
-          title: this.$t('menu.overview'),
+          title: translate('menu.overview'),
           icon: 'mdi-cube-outline',
           to: '/dashboard'
         },
         {
-          title: this.$t('menu.nodes'),
+          title: translate('menu.nodes'),
           icon: 'mdi-hexagon-slice-6',
           to: '/nodes'
         },
         {
-          title: this.$t('menu.staking'),
+          title: translate('menu.staking'),
           icon: 'mdi-layers',
           to: '/staking'
         },
         {
-          title: this.$t('menu.distribution'),
+          title: translate('menu.distribution'),
           icon: 'mdi-chart-donut',
           to: '/distribution'
         }
       ],
       wallet: {
-        title: this.$t('menu.wallet'),
+        title: translate('menu.wallet'),
         icon: 'mdi-coins',
         href: 'https://wallet.lto.network/'
       }

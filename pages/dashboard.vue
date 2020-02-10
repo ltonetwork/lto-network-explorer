@@ -21,9 +21,9 @@
                 v-for="filter in chartFilters"
                 :key="filter"
                 :value="filter"
-                @click="filterChart()"
                 label
                 class="white--text transparent font-weight-thin overline"
+                @click="filterChart()"
               >
                 {{ filter }}
               </v-chip>
@@ -41,8 +41,8 @@
               <figure class="chart">
                 <lineChart
                   v-if="chart.updated"
-                  :chartData="chartDataSet"
-                  :chartOptions="chartOptions"
+                  :chart-data="chartDataSet"
+                  :chart-options="chartOptions"
                 />
               </figure>
             </v-sheet>
@@ -139,7 +139,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="tx in unconfirmed.pool" v-bind:key="tx.id">
+                  <tr v-for="tx in unconfirmed.pool" :key="tx.id">
                     <td class="text-truncate" style="max-width: 26vh;">
                       {{ tx.id }}
                     </td>
@@ -169,17 +169,35 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
+import Vue from 'vue'
+import { ChartTooltipItem } from 'chart.js'
 import { mapGetters } from 'vuex'
-import Panel from '~/components/Panel'
-import LineChart from '~/components/LineChart'
+import Panel from '../components/Panel.vue'
+import LineChart from '../components/LineChart.vue'
+import { translate } from '../locales/index'
 
-export default {
+interface DataSet {
+  backgroundColor: string;
+  borderColor: string;
+  borderWidth: string;
+  pointBorderWidth: string;
+  pointRotation: string;
+  spanGaps: boolean;
+  data: any;
+}
+
+interface ChartDataSet {
+  labels: any[];
+  datasets: DataSet[];
+}
+
+export default Vue.extend({
   // name: 'Dashboard',
   head () {
     return {
-      title: this.$t('network.title')
+      title: translate('network.title')
     }
   },
   components: {
@@ -187,13 +205,13 @@ export default {
     LineChart
   },
   filters: {
-    localeString (string) {
+    localeString (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     },
-    localeCurrency (string) {
+    localeCurrency (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
@@ -230,7 +248,7 @@ export default {
             time: {
               unit: 'day'
             },
-            callback (value, chart) {
+            callback (value: any): string {
               return value
             },
             distribution: 'series',
@@ -249,7 +267,7 @@ export default {
             ticks: {
               display: true,
               beginAtZero: false,
-              callback (value, chart) {
+              callback (value: any): string {
                 return value.toLocaleString(undefined, {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 2
@@ -276,14 +294,16 @@ export default {
           backgroundColor: 'rgba(23, 5, 75, 0.8)',
           mode: 'label',
           callbacks: {
-            title (value, chart) {
-              return 'Transactions: ' + value[0].yLabel.toLocaleString(undefined, {
+            title (value: ChartTooltipItem[]): string {
+              return 'Transactions: ' + (value[0].yLabel as string | number).toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2
               })
-            },
-            label (value, chart) {
+            }/*,
+             Commented for now to keep typescript from complaining
+            label (value, chart): void {
             }
+            */
           }
         },
         legend: {
@@ -300,9 +320,10 @@ export default {
     }
   },
   computed: {
-    chartDataSet () {
+    chartDataSet (): ChartDataSet {
+      /* this.chart is a timer.. not a chart? */
       return {
-        labels: this.chart.dataset.map(d => d.period),
+        labels: this.chart.dataset.map((d: unknown) => (d as any).period),
         datasets: [
           {
             backgroundColor: 'rgba(249, 246, 252, .6)',
@@ -311,7 +332,7 @@ export default {
             pointBorderWidth: '0',
             pointRotation: '45',
             spanGaps: true,
-            data: this.chart.dataset.map(d => d.count)
+            data: this.chart.dataset.map((d: unknown) => (d as any).count)
           }
         ]
       }
@@ -322,18 +343,18 @@ export default {
       unconfirmed: 'dashboard/getUnconfirmed'
     })
   },
-  created () {
+  created (): void {
     this.pollChart()
     this.pollBlocks()
     this.pollUnconfirmed()
   },
-  beforeDestroy () {
+  beforeDestroy (): void {
     clearInterval(this.chart)
     clearInterval(this.blocks)
     clearInterval(this.unconfirmed)
   },
   methods: {
-    pollChart () {
+    pollChart (): void {
       // Fetch on render
       this.$store.dispatch('dashboard/fetchChart')
 
@@ -342,7 +363,7 @@ export default {
         this.$store.dispatch('dashboard/fetchChart')
       }, 60000)
     },
-    pollBlocks () {
+    pollBlocks (): void {
       // Fetch on render
       this.$store.dispatch('dashboard/fetchBlocks')
 
@@ -351,7 +372,7 @@ export default {
         this.$store.dispatch('dashboard/fetchBlocks')
       }, 10000)
     },
-    pollUnconfirmed () {
+    pollUnconfirmed (): void {
       // Fetch on render
       this.$store.dispatch('dashboard/fetchUnconfirmed')
 
@@ -360,9 +381,9 @@ export default {
         this.$store.dispatch('dashboard/fetchUnconfirmed')
       }, 5000)
     },
-    filterChart () {
+    filterChart (): void {
       alert('not implemented yet')
     }
   }
-}
+})
 </script>

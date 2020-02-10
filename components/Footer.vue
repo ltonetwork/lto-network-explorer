@@ -28,11 +28,11 @@
           >
             <template v-slot:item="{ item, attrs, on }">
               <v-list-item
-                v-bind="attrs"
-                v-on="on"
                 :key="item.code"
+                v-bind="attrs"
                 :to="switchLocalePath(item.code)"
                 tag="nuxt-link"
+                v-on="on"
               >
                 <v-list-item-content>
                   <v-list-item-title
@@ -144,11 +144,11 @@
           >
             <template v-slot:item="{ item, attrs, on }">
               <v-list-item
-                v-bind="attrs"
-                v-on="on"
                 :key="item.code"
+                v-bind="attrs"
                 :to="switchLocalePath(item.code)"
                 tag="nuxt-link"
+                v-on="on"
               >
                 <v-list-item-content>
                   <v-list-item-title
@@ -217,35 +217,56 @@
   </v-footer>
 </template>
 
-<script>
+<script lang="ts">
+import { i18n, translate } from '../locales/index'
+import i18nconfig from '../nuxt.config'
+
+interface Link {
+  name: string;
+  href: string;
+}
+
+interface FooterLinks {
+  links: Link[];
+  resources: Link[];
+  socials: Link[];
+}
+
+interface Locale {
+  name: string;
+  code: string;
+  iso: string;
+  file: string;
+}
+
 export default {
-  data () {
+  data (): FooterLinks {
     return {
       links: [
         {
-          name: this.$t('links.wallet'),
+          name: translate('links.wallet'),
           href: 'https://wallet.lto.network'
         },
         {
-          name: this.$t('links.home'),
+          name: translate('links.home'),
           href: 'https://lto.network'
         },
         {
-          name: this.$t('links.blog'),
+          name: translate('links.blog'),
           href: 'https://blog.lto.network'
         }
       ],
       resources: [
         {
-          name: this.$t('resources.api'),
+          name: translate('resources.api'),
           href: 'https://api.lto.cloud'
         },
         {
-          name: this.$t('resources.support'),
+          name: translate('resources.support'),
           href: 'https://t.me/ltotech'
         },
         {
-          name: this.$t('resources.github'),
+          name: translate('resources.github'),
           href: 'https://github.com/ltonetwork/'
         }
       ],
@@ -266,8 +287,8 @@ export default {
     }
   },
   computed: {
-    locales () {
-      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
+    locales (): Locale[] {
+      return i18nconfig.i18n.locales.filter(i => i.code !== i18n.locale)
     }
   }
 }
