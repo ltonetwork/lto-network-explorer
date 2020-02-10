@@ -316,7 +316,10 @@ export default Vue.extend({
       },
       chartFilters: [
         'day', 'week', 'month', 'year'
-      ]
+      ],
+      chartTimer: null,
+      blocksTimer: null,
+      unconfirmedTimer: null
     }
   },
   computed: {
@@ -349,9 +352,17 @@ export default Vue.extend({
     this.pollUnconfirmed()
   },
   beforeDestroy (): void {
-    clearInterval(this.chart)
-    clearInterval(this.blocks)
-    clearInterval(this.unconfirmed)
+    if (this.chartTimer) {
+      clearInterval(this.chartTimer)
+    }
+
+    if (this.blocksTimer) {
+      clearInterval(this.blocksTimer)
+    }
+
+    if (this.unconfirmedTimer) {
+      clearInterval(this.unconfirmedTimer)
+    }
   },
   methods: {
     pollChart (): void {
@@ -359,7 +370,7 @@ export default Vue.extend({
       this.$store.dispatch('dashboard/fetchChart')
 
       // Refresh every minute
-      this.chart = setInterval(() => {
+      this.chartTimer = setInterval(() => {
         this.$store.dispatch('dashboard/fetchChart')
       }, 60000)
     },
@@ -368,7 +379,7 @@ export default Vue.extend({
       this.$store.dispatch('dashboard/fetchBlocks')
 
       // Refresh every minute
-      this.blocks = setInterval(() => {
+      this.blocksTimer = setInterval(() => {
         this.$store.dispatch('dashboard/fetchBlocks')
       }, 10000)
     },
@@ -377,7 +388,7 @@ export default Vue.extend({
       this.$store.dispatch('dashboard/fetchUnconfirmed')
 
       // Refresh every 10 seconds
-      this.unconfirmed = setInterval(() => {
+      this.unconfirmedTimer = setInterval(() => {
         this.$store.dispatch('dashboard/fetchUnconfirmed')
       }, 5000)
     },

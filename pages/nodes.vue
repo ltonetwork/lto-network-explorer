@@ -269,15 +269,15 @@ class Nodes extends Vue {
 
   expanded = []
 
-  nodes: ReturnType<typeof setInterval> | undefined = undefined;
+  nodesTimer: ReturnType<typeof setInterval> | undefined = undefined;
 
   created (): void {
     this.pollNodes()
   }
 
   beforeDestroy (): void {
-    if (this.nodes) {
-      clearInterval(this.nodes)
+    if (this.nodesTimer) {
+      clearInterval(this.nodesTimer)
     }
   }
 
@@ -286,7 +286,7 @@ class Nodes extends Vue {
     this.$store.dispatch('nodes/fetchNodes')
 
     // Refresh every minute
-    this.nodes = setInterval(() => {
+    this.nodesTimer = setInterval(() => {
       this.$store.dispatch('nodes/fetchNodes')
     }, 60000)
   }

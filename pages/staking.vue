@@ -272,15 +272,15 @@ class Staking extends Vue {
     }
   ]
 
-  staking: ReturnType<typeof setInterval> | undefined = undefined;
+  stakingTimer: ReturnType<typeof setInterval> | undefined = undefined;
 
   created (): void {
     this.pollStaking()
   }
 
   beforeDestroy (): void {
-    if (this.staking) {
-      clearInterval(this.staking)
+    if (this.stakingTimer) {
+      clearInterval(this.stakingTimer)
     }
   }
 
@@ -289,7 +289,7 @@ class Staking extends Vue {
     this.$store.dispatch('staking/fetchGenerators')
 
     // Refresh every minute
-    this.staking = setInterval(() => {
+    this.stakingTimer = setInterval(() => {
       this.$store.dispatch('staking/fetchGenerators')
     }, 60000)
   }
