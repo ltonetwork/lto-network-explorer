@@ -289,7 +289,7 @@ import DoughnutChart from '../components/DoughnutChart.vue'
         maximumFractionDigits: 2
       })
     },
-    localePecentage (string: number): string {
+    localePercentage (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2

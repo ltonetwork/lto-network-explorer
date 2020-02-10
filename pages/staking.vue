@@ -90,7 +90,7 @@
                 </template>
 
                 <template v-slot:item.share="{ item }">
-                  {{ item.share | localePecentage }}%
+                  {{ item.share | localePercentage }}%
                 </template>
               </v-data-table>
             </v-card-text>
@@ -171,7 +171,7 @@ import Panel from '../components/Panel.vue'
         maximumFractionDigits: 2
       })
     },
-    localePecentage (string: number): string {
+    localePercentage (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
