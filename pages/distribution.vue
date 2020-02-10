@@ -56,19 +56,19 @@
                 </template>
 
                 <template v-slot:item.regular="{ item }">
-                  {{ item.regular | localeCurrency }}
+                  {{ item.regular | parseAtomic | parseNumber }}
                 </template>
 
                 <template v-slot:item.generating="{ item }">
-                  {{ item.generating | localeCurrency }}
+                  {{ item.generating | parseAtomic | parseNumber }}
                 </template>
 
                 <template v-slot:item.available="{ item }">
-                  {{ item.available | localeCurrency }}
+                  {{ item.available | parseAtomic | parseNumber }}
                 </template>
 
                 <template v-slot:item.effective="{ item }">
-                  {{ item.effective | localeCurrency }}
+                  {{ item.effective | parseAtomic | parseNumber }}
                 </template>
               </v-data-table>
             </v-card-text>
@@ -105,7 +105,7 @@
                       {{ $t('distribution.initial_supply') }}
                     </th>
                     <th class="body-2 text-right">
-                      {{ supply.stats.initial_supply | localeCurrency }} LTO
+                      {{ supply.stats.initial_supply | parseAtomic | parseNumber }} LTO
                     </th>
                   </tr>
                   <tr>
@@ -113,7 +113,7 @@
                       {{ $t('distribution.burned_supply') }}
                     </td>
                     <td class="text-right">
-                      - {{ supply.stats.burned_supply | localeCurrency }} LTO
+                      - {{ supply.stats.burned_supply | parseAtomic | parseNumber }} LTO
                     </td>
                   </tr>
                   <tr>
@@ -121,7 +121,7 @@
                       {{ $t('distribution.total_supply') }}
                     </td>
                     <td class="text-right">
-                      {{ supply.stats.total_supply | localeCurrency }} LTO
+                      {{ supply.stats.total_supply | parseAtomic | parseNumber }} LTO
                     </td>
                   </tr>
                 </tbody>
@@ -151,7 +151,7 @@
                       {{ $t('distribution.circulating_mainnet') }}
                     </th>
                     <th class="body-2 text-right">
-                      {{ supply.stats.circulating_mainnet | localeCurrency }} LTO
+                      {{ supply.stats.circulating_mainnet | parseAtomic | parseNumber }} LTO
                     </th>
                   </tr>
                   <tr>
@@ -159,7 +159,7 @@
                       {{ $t('distribution.private_supply_mainnet') }}
                     </td>
                     <td class="text-right">
-                      {{ supply.stats.private_supply_mainnet | localeCurrency }} LTO
+                      {{ supply.stats.private_supply_mainnet | parseAtomic | parseNumber }} LTO
                     </td>
                   </tr>
                   <tr>
@@ -167,7 +167,7 @@
                       {{ $t('distribution.circulating_erc20') }}
                     </th>
                     <th class="body-2 text-right">
-                      {{ supply.stats.circulating_erc20 | localeCurrency }} LTO
+                      {{ supply.stats.circulating_erc20 | parseAtomic | parseNumber }} LTO
                     </th>
                   </tr>
                   <tr>
@@ -175,7 +175,7 @@
                       {{ $t('distribution.private_supply_erc20') }}
                     </td>
                     <td class="text-right">
-                      {{ supply.stats.private_supply_erc20 | localeCurrency }} LTO
+                      {{ supply.stats.private_supply_erc20 | parseAtomic | parseNumber }} LTO
                     </td>
                   </tr>
                 </tbody>
@@ -213,7 +213,7 @@
                       {{ $t('distribution.burned_supply') }}
                     </td>
                     <td class="text-right">
-                      {{ bridge.toll.burned | localeCurrency }} LTO
+                      {{ bridge.toll.burned | parseAtomic | parseNumber }} LTO
                     </td>
                   </tr>
                 </tbody>
@@ -275,26 +275,6 @@ import DoughnutChart from '../components/DoughnutChart.vue'
   components: {
     Panel,
     DoughnutChart
-  },
-  filters: {
-    localeString (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    },
-    localePercentage (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    }
   },
   computed: {
     ...mapGetters({

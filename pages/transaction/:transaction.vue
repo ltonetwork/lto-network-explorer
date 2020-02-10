@@ -34,7 +34,7 @@
                     <td class="font-weight-bold secondary--text">
                       {{ $t('explorer.timestamp') }}
                     </td>
-                    <td>{{ transaction.timestamp }}</td>
+                    <td>{{ transaction.timestamp | parseTime }}</td>
                   </tr>
 
                   <tr>
@@ -43,7 +43,7 @@
                     </td>
                     <td>
                       <nuxt-link :to="{ path: '/block/' + transaction.height }">
-                        {{ transaction.height | localeString }}
+                        {{ transaction.height | parseString }}
                       </nuxt-link>
                     </td>
                   </tr>
@@ -77,7 +77,7 @@
                       {{ $t('explorer.amount') }}
                     </td>
                     <td>
-                      {{ transaction.amount | localeCurrency }}
+                      {{ transaction.amount | parseAtomic | parseNumber }}
                     </td>
                   </tr>
                   <tr /><tr>
@@ -85,7 +85,7 @@
                       {{ $t('explorer.fee') }}
                     </td>
                     <td>
-                      {{ transaction.fee | localeCurrency }}
+                      {{ transaction.fee | parseAtomic | parseNumber }}
                     </td>
                   </tr>
                   <tr v-show="!mass">
@@ -137,10 +137,7 @@
                       </nuxt-link>
                     </td>
                     <td class="text-right">
-                      {{ tx.amount.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      }) }}
+                      {{ tx.amount | parseAtomic | parseNumber }}
                     </td>
                   </tr>
                 </tbody>
@@ -163,20 +160,6 @@ import { Transfer, Transaction } from '../types'
 @Component({
   components: {
   },
-  filters: {
-    localeString (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    }
-  },
   validate (/* { params } */): boolean {
     // return !isNaN(params.address)
     return true
@@ -186,7 +169,6 @@ import { Transfer, Transaction } from '../types'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    transaction.timestamp = moment(transaction.timestamp).format('DD-MM-YY HH:MM:SS')
     transaction.fee = Number(transaction.fee) / Number(process.env.ATOMIC)
 
     // If mass transfer

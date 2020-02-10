@@ -94,13 +94,6 @@ export const mutations = {
     state.dashboard.blocks.updated = moment()
   },
   updateUnconfirmed (state: DashboardState, payload: Transaction[]) {
-    payload.forEach((tx: Transaction) => {
-      tx.fee = (+tx.fee / Number(process.env.ATOMIC)).toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    })
-
     state.dashboard.unconfirmed.pool = payload
     state.dashboard.unconfirmed.updated = moment()
   }

@@ -10,7 +10,7 @@
         <v-card class="mt-n12">
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-block" />
-            {{ $t('block.title') }} #{{ height | localeString }}
+            {{ $t('block.title') }} #{{ height | parseString }}
           </v-card-title>
           <v-card-text class="pa-0">
             <v-simple-table>
@@ -20,7 +20,7 @@
                     <td class="font-weight-bold secondary--text">
                       {{ $t('explorer.timestamp') }}
                     </td>
-                    <td>{{ block.timestamp }}</td>
+                    <td>{{ block.timestamp | parseTime }}</td>
                   </tr>
                   <tr>
                     <td class="font-weight-bold secondary--text">
@@ -49,7 +49,7 @@
                     <td class="font-weight-bold secondary--text">
                       {{ $t('explorer.tx') }}
                     </td>
-                    <td>{{ block.transactionCount | localeString }}</td>
+                    <td>{{ block.transactionCount | parseString }}</td>
                   </tr>
                   <tr>
                     <td class="font-weight-bold secondary--text">
@@ -109,7 +109,7 @@
               :headers="txTable"
               :items="filteredItems"
               :sort-by="['timestamp']"
-              :sort-desc="[false]"
+              :sort-desc="[true]"
               :items-per-page="10"
               no-data-text="this block does not contain any transactions"
             >
@@ -157,11 +157,11 @@
               </template>
 
               <template v-slot:item.fee="{ item }">
-                {{ item.fee | localeCurrency }}
+                {{ item.fee | parseAtomic | parseNumber }}
               </template>
 
               <template v-slot:item.timestamp="{ item }">
-                {{ item.timestamp }}
+                {{ item.timestamp | parseTime }}
               </template>
             </v-data-table>
           </v-card-text>
@@ -189,20 +189,6 @@ import { Block, Transaction } from '../types'
       })
     }
   },
-  filters: {
-    localeString (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    }
-  },
   computed: {
     filteredItems (): string {
       return (this as any).block.transactions.filter((i: any) => {
@@ -218,11 +204,8 @@ import { Block, Transaction } from '../types'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    block.timestamp = moment(block.timestamp).format('DD-MM-YY HH:MM:SS')
-
     if (block.transactions.length >= 1) {
       block.transactions.forEach((tx: Transaction) => {
-        tx.timestamp = moment(tx.timestamp).format('DD-MM-YY HH:MM:SS')
         tx.fee = Number(tx.fee) / Number(process.env.ATOMIC)
       })
     }

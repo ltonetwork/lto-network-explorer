@@ -140,7 +140,7 @@
 
                 <template v-slot:item.height="{ item }">
                   <span v-if="item.height">
-                    {{ item.height | localeString }}
+                    {{ item.height | parseString }}
                   </span>
 
                   <span v-if="!item.height">
@@ -212,17 +212,6 @@ import Panel from '../components/Panel.vue'
   },
   components: {
     Panel
-  },
-  filters: {
-    fromNow (timestamp: number): string {
-      return moment(timestamp).fromNow()
-    },
-    localeString (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    }
   },
   computed: mapGetters({
     nodes: 'nodes/getNodes'

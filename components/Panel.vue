@@ -28,12 +28,12 @@
             >
               <span v-if="market.price.change.relative > 0" class="caption green--text ma-0">
                 <v-icon x-small color="green">mdi-arrow-up</v-icon>
-                {{ market.price.change.relative | localeCurrency }}%
+                {{ market.price.change.relative | parseAtomic | parseNumber }}%
               </span>
 
               <span v-if="market.price.change.relative < 0" class="caption red--text ma-0">
                 <v-icon x-small color="red">mdi-arrow-down</v-icon>
-                {{ market.price.change.relative | localeCurrency }}%
+                {{ market.price.change.relative | parseAtomic | parseNumber }}%
               </span>
 
               <span class="caption grey--text ma-0">(24h)</span>
@@ -49,7 +49,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                €{{ market.price.currency.eur | localeCurrency }}
+                €{{ market.price.currency.eur | parseAtomic | parseNumber }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -113,7 +113,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                {{ nodesCount.active | localeString }}
+                {{ nodesCount.active | parseString }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -171,7 +171,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                {{ staking.total | localeCurrency }}
+                {{ staking.total | parseAtomic | parseNumber }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -229,7 +229,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                {{ network.height | localeString }}
+                {{ network.height | parseString }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -258,23 +258,6 @@ import moment from 'moment'
 import { Component } from 'vue-property-decorator'
 
 @Component({
-  filters: {
-    fromNow (timestamp: number): string {
-      return moment(timestamp).fromNow()
-    },
-    localeString (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 3
-      })
-    }
-  },
   computed: {
     ...mapGetters({
       market: 'panel/getMarket',

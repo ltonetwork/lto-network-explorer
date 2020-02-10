@@ -84,7 +84,7 @@
                   <tr v-for="block in blocks.last" :key="block.height">
                     <td>
                       <nuxt-link :to="{ path: '/block/' + block.height }">
-                        {{ block.height | localeString }}
+                        {{ block.height | parseString }}
                       </nuxt-link>
                     </td>
                     <td class="primary--text text-truncate" style="max-width: 26vh;">
@@ -149,7 +149,7 @@
                       </nuxt-link>
                     </td>
                     <td class="text-right">
-                      {{ tx.fee }}
+                      {{ tx.fee | parseAtomic | parseNumber }}
                     </td>
                   </tr>
                 </tbody>
@@ -205,20 +205,6 @@ interface ChartDataSet {
   components: {
     Panel,
     LineChart
-  },
-  filters: {
-    localeString (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    }
   },
   computed: {
     chartDataSet (): ChartData {

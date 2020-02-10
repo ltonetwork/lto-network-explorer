@@ -63,10 +63,7 @@
             </v-tooltip>
 
             <p class="title font-weight-bold secondary--text mt-2 mb-0">
-              {{ balance.regular.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              }) }}
+              {{ balance.regular | parseAtomic | parseNumber }}
             </p>
           </v-card-text>
         </v-card>
@@ -91,10 +88,7 @@
             </v-tooltip>
 
             <p class="title font-weight-bold secondary--text mt-2 mb-0">
-              {{ balance.generating.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              }) }}
+              {{ balance.generating | parseAtomic | parseNumber }}
             </p>
           </v-card-text>
         </v-card>
@@ -118,10 +112,7 @@
             </v-tooltip>
 
             <p class="title font-weight-bold secondary--text mt-2 mb-0">
-              {{ balance.available.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              }) }}
+              {{ balance.available | parseAtomic | parseNumber }}
             </p>
           </v-card-text>
         </v-card>
@@ -145,10 +136,7 @@
             </v-tooltip>
 
             <p class="title font-weight-bold secondary--text mt-2 mb-0">
-              {{ balance.effective.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              }) }}
+              {{ balance.effective | parseAtomic | parseNumber }}
             </p>
           </v-card-text>
         </v-card>
@@ -192,7 +180,7 @@
               :headers="txTable"
               :items="filteredItems"
               :sort-by="['timestamp']"
-              :sort-desc="[false]"
+              :sort-desc="[true]"
               :items-per-page="10"
               no-data-text="this block does not contain any transactions"
               class="secondary--text"
@@ -256,14 +244,11 @@
               </template>
 
               <template v-slot:item.fee="{ item }">
-                {{ item.fee.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                }) }}
+                {{ item.fee | parseAtomic | parseNumber }}
               </template>
 
               <template v-slot:item.timestamp="{ item }">
-                {{ item.timestamp }}
+                {{ item.timestamp | fromNow }}
               </template>
 
               <template v-slot:item.label="{ item }">
@@ -296,20 +281,6 @@ import * as _ from 'lodash'
 @Component({
   components: {
   },
-  filters: {
-    localeString (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    }
-  },
   computed: {
     filteredItems (): string {
       return (this as any).transactions.filter((i: any) => {
@@ -335,11 +306,6 @@ import * as _ from 'lodash'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    balance.regular = balance.regular / Number(process.env.ATOMIC)
-    balance.generating = balance.generating / Number(process.env.ATOMIC)
-    balance.available = balance.available / Number(process.env.ATOMIC)
-    balance.effective = balance.effective / Number(process.env.ATOMIC)
-
     let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/100', {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
@@ -348,9 +314,6 @@ import * as _ from 'lodash'
 
     if (transactions.length >= 1) {
       transactions.forEach((tx: any) => {
-        tx.timestamp = moment(tx.timestamp).format('DD-MM-YY HH:MM:SS')
-        tx.fee = (tx.fee / Number(process.env.ATOMIC))
-
         if (tx.sender === params.address) {
           tx.label = 'out'
         } else if (tx.recipient === params.address) {

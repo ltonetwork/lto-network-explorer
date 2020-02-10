@@ -52,6 +52,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '@/plugins/filters.ts' }
   ],
   /*
   ** Nuxt.js dev-modules

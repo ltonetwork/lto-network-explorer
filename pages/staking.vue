@@ -78,7 +78,7 @@
                 </template>
 
                 <template v-slot:item.pool="{ item }">
-                  {{ item.pool | localeCurrency }}
+                  {{ item.pool | parseAtomic | parseNumber }}
                 </template>
 
                 <template v-slot:item.blocks="{ item }">
@@ -86,7 +86,7 @@
                 </template>
 
                 <template v-slot:item.earnings="{ item }">
-                  {{ item.earnings | localeCurrency }}
+                  {{ item.earnings | parseAtomic | parseNumber }}
                 </template>
 
                 <template v-slot:item.share="{ item }">
@@ -157,26 +157,6 @@ import Panel from '../components/Panel.vue'
   components: {
     Panel,
     DoughnutChart
-  },
-  filters: {
-    localeString (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
-    },
-    localeCurrency (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    },
-    localePercentage (string: number): string {
-      return string.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
-    }
   },
   computed: {
     chartDataSet (): ChartData & { type: ChartType } {
