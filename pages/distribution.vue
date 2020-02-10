@@ -258,15 +258,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import Panel from '~/components/Panel'
-import DoughnutChart from '~/components/DoughnutChart'
+import { Component } from 'vue-property-decorator'
+import { translate } from '../locales/index'
+import Panel from '../components/Panel.vue'
+import DoughnutChart from '../components/DoughnutChart.vue'
 
-export default {
+@Component({
   head () {
     return {
-      title: this.$t('distribution.title')
+      title: translate('distribution.title')
     }
   },
   components: {
@@ -274,80 +277,23 @@ export default {
     DoughnutChart
   },
   filters: {
-    localeString (string) {
+    localeString (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     },
-    localeCurrency (string) {
+    localeCurrency (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })
     },
-    localePecentage (string) {
+    localePecentage (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })
-    }
-  },
-  data () {
-    return {
-      chartOptions: {
-        maintainAspectRatio: true,
-        responsive: true,
-        tooltips: {
-          titleFontColor: '#fff',
-          titleSpacing: 0,
-          titleFontSize: 12,
-          titleFontStyle: 'normal',
-          titleMarginBottom: 0,
-          xPadding: 15,
-          yPadding: 10,
-          intersect: false,
-          displayColors: false,
-          cornerRadius: 6,
-          backgroundColor: 'rgba(23, 5, 75, 0.8)',
-          mode: 'label'
-        },
-        legend: {
-          display: false,
-          position: 'bottom'
-        },
-        animation: {
-          duration: 1000,
-          easing: 'easeOutQuint'
-        }
-      },
-      topTable: [
-        {
-          text: 'Address',
-          align: 'left',
-          value: 'address'
-        },
-        {
-          text: 'Regular',
-          align: 'center',
-          value: 'regular'
-        },
-        {
-          text: 'Generating',
-          align: 'center',
-          value: 'generating'
-        },
-        {
-          text: 'Available',
-          align: 'center',
-          value: 'available'
-        },
-        {
-          text: 'Effective',
-          align: 'center',
-          value: 'effective'
-        }
-      ]
     }
   },
   computed: {
@@ -357,13 +303,14 @@ export default {
       bridge: 'distribution/getBridge'
     }),
     topChartData () {
+      /* Again, this.top is a timer, not an object.. */
       return {
         type: 'doughnut',
-        labels: this.top.holders.map(g => g.address),
+        labels: (this as any).top.holders.map((g: unknown) => (g as any).address),
         datasets: [{
           backgroundColor: 'rgba(128, 75, 201, 0.6)',
           label: '',
-          data: this.top.holders.map(g => g.regular)
+          data: (this as any).top.holders.map((g: unknown) => (g as any).regular)
         }]
       }
     },
@@ -378,46 +325,119 @@ export default {
         }]
       }
     }
-  },
-  created () {
+  }
+})
+class Distribution extends Vue {
+  chartOptions = {
+    maintainAspectRatio: true,
+    responsive: true,
+    tooltips: {
+      titleFontColor: '#fff',
+      titleSpacing: 0,
+      titleFontSize: 12,
+      titleFontStyle: 'normal',
+      titleMarginBottom: 0,
+      xPadding: 15,
+      yPadding: 10,
+      intersect: false,
+      displayColors: false,
+      cornerRadius: 6,
+      backgroundColor: 'rgba(23, 5, 75, 0.8)',
+      mode: 'label'
+    },
+    legend: {
+      display: false,
+      position: 'bottom'
+    },
+    animation: {
+      duration: 1000,
+      easing: 'easeOutQuint'
+    }
+  }
+
+  topTable = [
+    {
+      text: 'Address',
+      align: 'left',
+      value: 'address'
+    },
+    {
+      text: 'Regular',
+      align: 'center',
+      value: 'regular'
+    },
+    {
+      text: 'Generating',
+      align: 'center',
+      value: 'generating'
+    },
+    {
+      text: 'Available',
+      align: 'center',
+      value: 'available'
+    },
+    {
+      text: 'Effective',
+      align: 'center',
+      value: 'effective'
+    }
+  ]
+
+  top: ReturnType<typeof setInterval> | undefined = undefined
+  supply: ReturnType<typeof setInterval> | undefined = undefined
+  bridge: ReturnType<typeof setInterval> | undefined = undefined
+
+  created (): void {
     this.pollTop()
     this.pollSupply()
     this.pollBridge()
-    console.log(this.bridge.toll.burn_rate)
-  },
-  beforeDestroy () {
-    clearInterval(this.top)
-    clearInterval(this.supply)
-    clearInterval(this.bridge)
-  },
-  methods: {
-    pollTop () {
-      // Fetch on render
-      this.$store.dispatch('distribution/fetchTop')
+    console.log((this as any).bridge.toll.burn_rate)
+  }
 
-      // Refresh every minute
-      this.top = setInterval(() => {
-        this.$store.dispatch('distribution/fetchTop')
-      }, 60000)
-    },
-    pollSupply () {
-      // Fetch on render
-      this.$store.dispatch('distribution/fetchSupply')
+  beforeDestroy (): void {
+    if (this.top) {
+      clearInterval(this.top)
+    }
 
-      // Refresh every minute
-      this.supply = setInterval(() => {
-        this.$store.dispatch('distribution/fetchSupply')
-      }, 60000)
-    },
-    pollBridge () {
-      // Fetch on render
-      this.$store.dispatch('distribution/fetchBridge')
+    if (this.supply) {
+      clearInterval(this.supply)
+    }
 
-      // Refresh every minute
-      this.bridge = setInterval(() => {
-        this.$store.dispatch('distribution/fetchBridge')
-      }, 60000)
+    if (this.bridge) {
+      clearInterval(this.bridge)
     }
   }
+
+  pollTop (): void {
+    // Fetch on render
+    this.$store.dispatch('distribution/fetchTop')
+
+    // Refresh every minute
+    this.top = setInterval(() => {
+      this.$store.dispatch('distribution/fetchTop')
+    }, 60000)
+  }
+
+  pollSupply (): void {
+    // Fetch on render
+    this.$store.dispatch('distribution/fetchSupply')
+
+    // Refresh every minute
+    this.supply = setInterval(() => {
+      this.$store.dispatch('distribution/fetchSupply')
+    }, 60000)
+  }
+
+  pollBridge (): void {
+    // Fetch on render
+    this.$store.dispatch('distribution/fetchBridge')
+
+    // Refresh every minute
+    this.bridge = setInterval(() => {
+      this.$store.dispatch('distribution/fetchBridge')
+    }, 60000)
+  }
 }
+
+export default Distribution
 </script>

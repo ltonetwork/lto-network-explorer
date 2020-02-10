@@ -16,5 +16,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-explicit-any': 'off'
   }
 }

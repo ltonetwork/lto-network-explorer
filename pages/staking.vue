@@ -139,15 +139,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import DoughnutChart from '~/components/DoughnutChart'
-import Panel from '~/components/Panel'
+import { Component } from 'vue-property-decorator'
+import { translate } from '../locales/index'
+import DoughnutChart from '../components/DoughnutChart.vue'
+import Panel from '../components/Panel.vue'
 
-export default {
+@Component({
   head () {
     return {
-      title: this.$t('staking.title')
+      title: translate('staking.title')
     }
   },
   components: {
@@ -155,137 +158,145 @@ export default {
     DoughnutChart
   },
   filters: {
-    localeString (string) {
+    localeString (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     },
-    localeCurrency (string) {
+    localeCurrency (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })
     },
-    localePecentage (string) {
+    localePecentage (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })
-    }
-  },
-  data () {
-    return {
-      chartData: {
-        type: 'doughnut',
-        datasets: [{
-          data: null,
-          backgroundColor: null,
-          label: null
-        }],
-        labels: null
-      },
-      chartOptions: {
-        maintainAspectRatio: true,
-        responsive: true,
-        tooltips: {
-          titleFontColor: '#fff',
-          titleSpacing: 0,
-          titleFontSize: 12,
-          titleFontStyle: 'normal',
-          titleMarginBottom: 0,
-          xPadding: 15,
-          yPadding: 10,
-          intersect: false,
-          displayColors: false,
-          cornerRadius: 6,
-          backgroundColor: 'rgba(23, 5, 75, 0.8)',
-          mode: 'label'
-        },
-        legend: {
-          display: false,
-          position: 'bottom'
-        },
-        animation: {
-          duration: 1000,
-          easing: 'easeOutQuint'
-        }
-      },
-      generatorsTable: [
-        {
-          text: 'Payout',
-          align: 'center',
-          value: 'payout'
-        },
-        {
-          text: 'Label',
-          align: 'left',
-          value: 'label'
-        },
-        {
-          text: 'Generator',
-          align: 'left',
-          value: 'generator'
-        },
-
-        {
-          text: 'Pool',
-          align: 'center',
-          value: 'pool'
-        },
-        {
-          text: 'Forged Blocks',
-          align: 'center',
-          value: 'blocks'
-        },
-        {
-          text: 'Earnings',
-          align: 'center',
-          value: 'earnings'
-        },
-        {
-          text: 'Share',
-          align: 'center',
-          value: 'share'
-        }
-      ]
     }
   },
   computed: {
     chartDataSet () {
       return {
         type: 'doughnut',
-        labels: this.staking.generators.map(g => g.generator),
+        labels: (this as any).staking.generators.map((g: unknown) => (g as any).generator),
         datasets: [{
           backgroundColor: 'rgba(128, 75, 201, 0.6)',
           label: '',
-          data: this.staking.generators.map(g => g.share)
+          data: (this as any).staking.generators.map((g: unknown) => (g as any).share)
         }]
       }
     },
     ...mapGetters({
       staking: 'staking/getGenerators'
     })
-  },
-  created () {
-    this.pollStaking()
-  },
-  beforeDestroy () {
-    clearInterval(this.staking)
-  },
-  methods: {
-    pollStaking () {
-      // Fetch on render
-      this.$store.dispatch('staking/fetchGenerators')
+  }
+})
+class Staking extends Vue {
+  chartData = {
+    type: 'doughnut',
+    datasets: [{
+      data: null,
+      backgroundColor: null,
+      label: null
+    }],
+    labels: null
+  }
 
-      // Refresh every minute
-      this.staking = setInterval(() => {
-        this.$store.dispatch('staking/fetchGenerators')
-      }, 60000)
+  chartOptions = {
+    maintainAspectRatio: true,
+    responsive: true,
+    tooltips: {
+      titleFontColor: '#fff',
+      titleSpacing: 0,
+      titleFontSize: 12,
+      titleFontStyle: 'normal',
+      titleMarginBottom: 0,
+      xPadding: 15,
+      yPadding: 10,
+      intersect: false,
+      displayColors: false,
+      cornerRadius: 6,
+      backgroundColor: 'rgba(23, 5, 75, 0.8)',
+      mode: 'label'
     },
-    setColor (value) {
-      if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
+    legend: {
+      display: false,
+      position: 'bottom'
+    },
+    animation: {
+      duration: 1000,
+      easing: 'easeOutQuint'
     }
   }
+
+  generatorsTable = [
+    {
+      text: 'Payout',
+      align: 'center',
+      value: 'payout'
+    },
+    {
+      text: 'Label',
+      align: 'left',
+      value: 'label'
+    },
+    {
+      text: 'Generator',
+      align: 'left',
+      value: 'generator'
+    },
+
+    {
+      text: 'Pool',
+      align: 'center',
+      value: 'pool'
+    },
+    {
+      text: 'Forged Blocks',
+      align: 'center',
+      value: 'blocks'
+    },
+    {
+      text: 'Earnings',
+      align: 'center',
+      value: 'earnings'
+    },
+    {
+      text: 'Share',
+      align: 'center',
+      value: 'share'
+    }
+  ]
+
+  staking: ReturnType<typeof setInterval> | undefined = undefined;
+
+  created (): void {
+    this.pollStaking()
+  }
+
+  beforeDestroy (): void {
+    if (this.staking) {
+      clearInterval(this.staking)
+    }
+  }
+
+  pollStaking (): void {
+    // Fetch on render
+    this.$store.dispatch('staking/fetchGenerators')
+
+    // Refresh every minute
+    this.staking = setInterval(() => {
+      this.$store.dispatch('staking/fetchGenerators')
+    }, 60000)
+  }
+
+  setColor (value: number): string {
+    if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
+  }
 }
+
+export default Staking
 </script>

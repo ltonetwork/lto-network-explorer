@@ -153,20 +153,23 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import moment from 'moment'
+import '@nuxtjs/axios'
+import { Transfer, Transaction } from '../types'
 
-export default {
+export default Vue.extend({
   components: {
   },
   filters: {
-    localeString (string) {
+    localeString (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     },
-    localeCurrency (string) {
+    localeCurrency (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
@@ -179,27 +182,27 @@ export default {
       mass: false
     }
   },
-  validate ({ params }) {
+  validate ({ params }): boolean {
     // return !isNaN(params.address)
     return true
   },
   async asyncData ({ $axios, params }) {
-    const transaction = await $axios.$get(process.env.LB_API + '/transactions/info/' + params.transaction, {
-      timeout: process.env.AXIOS_TIMEOUT
+    const transaction: Transaction = await $axios.$get(process.env.LB_API + '/transactions/info/' + params.transaction, {
+      timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
     transaction.timestamp = moment(transaction.timestamp).format('DD-MM-YY HH:MM:SS')
-    transaction.fee = (transaction.fee / process.env.ATOMIC)
+    transaction.fee = transaction.fee / Number(process.env.ATOMIC)
 
     // If mass transfer
     let mass = false
 
     if (transaction.type === 11) {
       mass = true
-      transaction.amount = transaction.totalAmount / process.env.ATOMIC
+      transaction.amount = transaction.totalAmount / Number(process.env.ATOMIC)
 
-      transaction.transfers.forEach((tx) => {
-        tx.amount = (tx.amount / process.env.ATOMIC)
+      transaction.transfers.forEach((tx: Transfer) => {
+        tx.amount = tx.amount / Number(process.env.ATOMIC)
       })
     } else if (transaction.type === 8 || transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
       transaction.amount = 0
@@ -211,7 +214,7 @@ export default {
     }
   },
   methods: {
-    name (value) {
+    name (value: number): string {
       // Genesis Transfer
       if (value === 1) {
         return 'Genesis'
@@ -236,5 +239,5 @@ export default {
       } else { return 'light' }
     }
   }
-}
+})
 </script>

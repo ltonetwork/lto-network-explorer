@@ -151,26 +151,30 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import moment from 'moment'
+import '@nuxtjs/axios'
+import { translate } from '../../locales/index'
+import { Block, Transaction } from '../types'
 
-export default {
+export default Vue.extend({
   head () {
     return {
-      title: this.$t('block.title') + ' #' + this.height.toLocaleString(undefined, {
+      title: translate('block.title') + ' #' + (this as any).height.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     }
   },
   filters: {
-    localeString (string) {
+    localeString (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     },
-    localeCurrency (string) {
+    localeCurrency (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
@@ -209,20 +213,20 @@ export default {
       ]
     }
   },
-  validate ({ params }) {
-    return !isNaN(params.block)
+  validate ({ params }): boolean {
+    return !isNaN(Number(params.block))
   },
   async asyncData ({ $axios, params }) {
-    const block = await $axios.$get(process.env.LB_API + '/blocks/at/' + params.block, {
-      timeout: process.env.AXIOS_TIMEOUT
+    const block: Block = await $axios.$get(process.env.LB_API + '/blocks/at/' + params.block, {
+      timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
     block.timestamp = moment(block.timestamp).format('DD-MM-YY HH:MM:SS')
 
     if (block.transactions.length >= 1) {
-      block.transactions.forEach((tx) => {
+      block.transactions.forEach((tx: Transaction) => {
         tx.timestamp = moment(tx.timestamp).format('DD-MM-YY HH:MM:SS')
-        tx.fee = (tx.fee / process.env.ATOMIC)
+        tx.fee = (tx.fee / Number(process.env.ATOMIC))
       })
     }
     return {
@@ -230,7 +234,7 @@ export default {
     }
   },
   methods: {
-    name (value) {
+    name (value: number): string {
       // Genesis Transfer
       if (value === 1) {
         return 'Genesis'
@@ -254,7 +258,7 @@ export default {
         return 'Anchor'
       } else { return 'light' }
     },
-    icon (value) {
+    icon (value: number): string {
       // Genesis Transfer
       if (value === 1) {
         return 'mdi-power'
@@ -279,5 +283,5 @@ export default {
       } else { return 'Unknown' }
     }
   }
-}
+})
 </script>
