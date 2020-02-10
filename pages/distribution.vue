@@ -391,7 +391,6 @@ class Distribution extends Vue {
     this.pollTop()
     this.pollSupply()
     this.pollBridge()
-    console.log((this as any).bridge.toll.burn_rate)
   }
 
   beforeDestroy (): void {

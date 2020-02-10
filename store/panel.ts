@@ -253,7 +253,6 @@ export const mutations = {
     state.panel.staking.updated = moment()
   },
   updateNetwork (state: PanelState, payload: unknown) {
-    console.log(payload)
     state.panel.network.height = (payload as any).blockchainHeight
     state.panel.network.updated = moment()
   }

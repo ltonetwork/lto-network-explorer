@@ -66,6 +66,7 @@
     </v-container>
   </v-toolbar>
 </template>
+
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Watch } from 'vue-property-decorator'
@@ -83,7 +84,7 @@ class Search extends Vue {
   }
 
   focus (e: number): void {
-    console.log(e)
+    // console.log(e)
   }
 
   validateQuery (): void {
@@ -119,50 +120,4 @@ class Search extends Vue {
 }
 
 export default Search
-
-/*
-export default {
-  data: () => ({
-    query: null,
-    valid: false,
-    url: null
-  }),
-  watch: {
-    query () {
-      this.validateQuery()
-    }
-  },
-  methods: {
-    focus (e) {
-      console.log(e)
-    },
-    validateQuery () {
-      // Reset
-      this.valid = false
-
-      // Block
-      if (Number.isInteger(+this.query) && this.query.length <= 6) {
-        this.valid = true
-        this.url = '/block/' + this.query
-      // Tx
-      } else if (this.query.length === 44) {
-        this.valid = true
-        this.url = '/transaction/' + this.query
-      // Address
-      } else if (this.query.length === 35) {
-        this.valid = true
-        this.url = '/address/' + this.query
-      }
-    },
-    executeQuery () {
-      if (this.valid) {
-        this.$router.push(this.url)
-      }
-    },
-    showCalculator () {
-      alert('not implemented yet')
-    }
-  }
-}
-*/
 </script>
