@@ -285,10 +285,10 @@ import { Component } from 'vue-property-decorator'
   }
 })
 class Panel extends Vue {
-  market: ReturnType<typeof setInterval> | undefined = undefined
-  nodesCount: ReturnType<typeof setInterval> | undefined = undefined
-  staking: ReturnType<typeof setInterval> | undefined = undefined
-  network: ReturnType<typeof setInterval> | undefined = undefined
+  marketTimer: ReturnType<typeof setInterval> | undefined = undefined
+  nodesCountTimer: ReturnType<typeof setInterval> | undefined = undefined
+  stakingTimer: ReturnType<typeof setInterval> | undefined = undefined
+  networkTimer: ReturnType<typeof setInterval> | undefined = undefined
 
   created (): void {
     this.pollMarket()
@@ -298,20 +298,20 @@ class Panel extends Vue {
   }
 
   beforeDestroy (): void {
-    if (this.market) {
-      clearInterval(this.market)
+    if (this.marketTimer) {
+      clearInterval(this.marketTimer)
     }
 
-    if (this.nodesCount) {
-      clearInterval(this.nodesCount)
+    if (this.nodesCountTimer) {
+      clearInterval(this.nodesCountTimer)
     }
 
-    if (this.staking) {
-      clearInterval(this.staking)
+    if (this.stakingTimer) {
+      clearInterval(this.stakingTimer)
     }
 
-    if (this.network) {
-      clearInterval(this.network)
+    if (this.networkTimer) {
+      clearInterval(this.networkTimer)
     }
   }
 
@@ -320,7 +320,7 @@ class Panel extends Vue {
     this.$store.dispatch('panel/fetchMarket')
 
     // Refresh every minute
-    this.market = setInterval(() => {
+    this.marketTimer = setInterval(() => {
       this.$store.dispatch('panel/fetchMarket')
     }, 60000)
   }
@@ -330,7 +330,7 @@ class Panel extends Vue {
     this.$store.dispatch('panel/fetchNodes')
 
     // Refresh every minute
-    this.nodesCount = setInterval(() => {
+    this.nodesCountTimer = setInterval(() => {
       this.$store.dispatch('panel/fetchNodes')
     }, 60000)
   }
@@ -340,7 +340,7 @@ class Panel extends Vue {
     this.$store.dispatch('panel/fetchStaking')
 
     // Refresh every minute
-    this.staking = setInterval(() => {
+    this.stakingTimer = setInterval(() => {
       this.$store.dispatch('panel/fetchStaking')
     }, 60000)
   }
@@ -350,7 +350,7 @@ class Panel extends Vue {
     this.$store.dispatch('panel/fetchNetwork')
 
     // Refresh every minute
-    this.network = setInterval(() => {
+    this.networkTimer = setInterval(() => {
       this.$store.dispatch('panel/fetchNetwork')
     }, 60000)
   }
