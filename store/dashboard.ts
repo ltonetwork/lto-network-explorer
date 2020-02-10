@@ -1,5 +1,7 @@
 import moment from 'moment'
 
+import { Transaction } from '../pages/Types'
+
 export const state = () => ({
   dashboard: {
     chart: {
@@ -23,7 +25,7 @@ export const actions = {
 
     // state.dashboard.chart.updated = null
 
-    const url = process.env.CACHE_API + '/stats/transaction/week'
+    const url: string = process.env.CACHE_API + '/stats/transaction/week'
     const payload = await this.$axios.$get(url)
 
     commit('updateChart', payload)
@@ -34,10 +36,10 @@ export const actions = {
     // state.dashboard.blocks.updated = null
 
     const res = await this.$axios.$get(process.env.LB_API + '/node/status')
-    const end = +res.blockchainHeight
-    const start = end - process.env.LATEST_BLOCKS + 1
+    const end: number = +res.blockchainHeight
+    const start: number = end - Number(process.env.LATEST_BLOCKS) + 1
 
-    const url = process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end
+    const url: string = process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end
     const payload = await this.$axios.$get(url)
 
     commit('updateBlocks', payload)
@@ -47,7 +49,7 @@ export const actions = {
 
     // state.dashboard.unconfirmed.updated = null
 
-    const url = process.env.LB_API + '/transactions/unconfirmed'
+    const url: string = process.env.LB_API + '/transactions/unconfirmed'
     const payload = await this.$axios.$get(url)
 
     commit('updateUnconfirmed', payload)
@@ -72,7 +74,7 @@ export const mutations = {
     state.dashboard.blocks.updated = moment()
   },
   updateUnconfirmed (state, payload) {
-    payload.forEach((tx) => {
+    payload.forEach((tx: Transaction) => {
       tx.fee = (+tx.fee / process.env.ATOMIC).toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2

@@ -13,7 +13,7 @@ export const actions = {
 
     // state.state.staking.updated = null
 
-    const url = process.env.CACHE_API + '/generator/all/week'
+    const url: string = process.env.CACHE_API + '/generator/all/week'
     const payload = await this.$axios.$get(url)
 
     commit('updateGenerators', payload)

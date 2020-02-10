@@ -13,7 +13,7 @@ export const actions = {
 
     // state.state.nodes.updated = null
 
-    const url = 'https://network.lto.cloud/v1/nodes/all'
+    const url: string = 'https://network.lto.cloud/v1/nodes/all'
     const payload = await this.$axios.$get(url)
 
     commit('updateNodes', payload)

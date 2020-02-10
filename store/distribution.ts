@@ -33,7 +33,7 @@ export const actions = {
   async fetchTop ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
-    const url = process.env.CACHE_API + '/address/top/100'
+    const url: string = process.env.CACHE_API + '/address/top/100'
     const payload = await this.$axios.$get(url)
 
     commit('updateTop', payload)
@@ -41,7 +41,7 @@ export const actions = {
   async fetchSupply ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
-    const url = process.env.BRIDGE_API + '/stats/token-supply'
+    const url: string = process.env.BRIDGE_API + '/stats/token-supply'
     const payload = await this.$axios.$get(url)
 
     commit('updateSupply', payload)
@@ -49,7 +49,7 @@ export const actions = {
   async fetchBridge ({ state, commit }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
-    const url = process.env.BRIDGE_API + '/stats'
+    const url: string = process.env.BRIDGE_API + '/stats'
     const payload = await this.$axios.$get(url)
 
     commit('updateBridge', payload)
