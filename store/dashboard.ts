@@ -1,6 +1,26 @@
 import moment from 'moment'
+import '@nuxtjs/axios'
 
-import { Transaction } from '../pages/Types'
+import { Transaction, Block, VueGlobalFunctions } from '../pages/types'
+
+interface DashboardState {
+  dashboard: {
+    chart: { 
+      dataset: unknown[];
+      updated: null | moment.Moment;
+    };
+
+    blocks: {
+      last: Block[];
+      updated: null | moment.Moment;
+    }
+
+    unconfirmed: {
+      pool: Transaction[];
+      updated: null | moment.Moment;
+    }
+  }
+}
 
 export const state = () => ({
   dashboard: {
@@ -20,7 +40,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchChart ({ state, commit }) {
+  async fetchChart (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     // state.dashboard.chart.updated = null
@@ -30,12 +50,12 @@ export const actions = {
 
     commit('updateChart', payload)
   },
-  async fetchBlocks ({ state, commit }) {
+  async fetchBlocks (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
     // state.dashboard.blocks.updated = null
 
-    const res = await this.$axios.$get(process.env.LB_API + '/node/status')
+    const res: any = await this.$axios.$get(process.env.LB_API + '/node/status')
     const end: number = +res.blockchainHeight
     const start: number = end - Number(process.env.LATEST_BLOCKS) + 1
 
@@ -44,7 +64,7 @@ export const actions = {
 
     commit('updateBlocks', payload)
   },
-  async fetchUnconfirmed ({ state, commit }) {
+  async fetchUnconfirmed (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
     // state.dashboard.unconfirmed.updated = null
@@ -57,15 +77,15 @@ export const actions = {
 }
 
 export const mutations = {
-  updateChart (state, payload) {
-    payload.forEach((d) => {
+  updateChart (state: DashboardState, payload: unknown[]) {
+    payload.forEach((d: any) => {
       d.period = moment(d.period)
     })
 
     state.dashboard.chart.dataset = payload
     state.dashboard.chart.updated = moment()
   },
-  updateBlocks (state, payload) {
+  updateBlocks (state: DashboardState, payload: Block[]) {
     payload.forEach((b) => {
       b.timestamp = moment(b.timestamp).fromNow()
     })
@@ -73,9 +93,9 @@ export const mutations = {
     state.dashboard.blocks.last = payload.reverse()
     state.dashboard.blocks.updated = moment()
   },
-  updateUnconfirmed (state, payload) {
+  updateUnconfirmed (state: DashboardState, payload: Transaction[]) {
     payload.forEach((tx: Transaction) => {
-      tx.fee = (+tx.fee / process.env.ATOMIC).toLocaleString(undefined, {
+      tx.fee = (+tx.fee / Number(process.env.ATOMIC)).toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })
@@ -87,13 +107,13 @@ export const mutations = {
 }
 
 export const getters = {
-  getChart: (state) => {
+  getChart: (state: DashboardState) => {
     return state.dashboard.chart
   },
-  getBlocks: (state) => {
+  getBlocks: (state: DashboardState) => {
     return state.dashboard.blocks
   },
-  getUnconfirmed: (state) => {
+  getUnconfirmed: (state: DashboardState) => {
     return state.dashboard.unconfirmed
   }
 }

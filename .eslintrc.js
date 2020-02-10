@@ -15,7 +15,10 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/no-unused-vars': 0,
+    '@typescript-eslint/no-non-null-assertion': 0
   }
 }

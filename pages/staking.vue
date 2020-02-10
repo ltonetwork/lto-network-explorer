@@ -141,6 +141,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { ChartData, ChartType } from 'chart.js'
 import { mapGetters } from 'vuex'
 import { Component } from 'vue-property-decorator'
 import { translate } from '../locales/index'
@@ -178,7 +179,7 @@ import Panel from '../components/Panel.vue'
     }
   },
   computed: {
-    chartDataSet () {
+    chartDataSet (): ChartData & { type: ChartType } {
       return {
         type: 'doughnut',
         labels: (this as any).staking.generators.map((g: unknown) => (g as any).generator),

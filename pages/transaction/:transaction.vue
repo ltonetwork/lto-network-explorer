@@ -182,7 +182,7 @@ export default Vue.extend({
       mass: false
     }
   },
-  validate ({ params }): boolean {
+  validate (/* { params } */): boolean {
     // return !isNaN(params.address)
     return true
   },
@@ -192,7 +192,7 @@ export default Vue.extend({
     })
 
     transaction.timestamp = moment(transaction.timestamp).format('DD-MM-YY HH:MM:SS')
-    transaction.fee = transaction.fee / Number(process.env.ATOMIC)
+    transaction.fee = Number(transaction.fee) / Number(process.env.ATOMIC)
 
     // If mass transfer
     let mass = false

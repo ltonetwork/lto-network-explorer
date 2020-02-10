@@ -226,7 +226,7 @@ export default Vue.extend({
     if (block.transactions.length >= 1) {
       block.transactions.forEach((tx: Transaction) => {
         tx.timestamp = moment(tx.timestamp).format('DD-MM-YY HH:MM:SS')
-        tx.fee = (tx.fee / Number(process.env.ATOMIC))
+        tx.fee = Number(tx.fee) / Number(process.env.ATOMIC)
       })
     }
     return {

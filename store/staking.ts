@@ -1,5 +1,14 @@
 import moment from 'moment'
 
+import { VueGlobalFunctions } from '../pages/types'
+
+interface StakingState {
+  staking: {
+    generators: unknown[];
+    updated: null | moment.Moment;
+  }
+}
+
 export const state = () => ({
   staking: {
     generators: [],
@@ -8,7 +17,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchGenerators ({ state, commit }) {
+  async fetchGenerators (this: VueGlobalFunctions, { state, commit }: { state: StakingState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     // state.state.staking.updated = null
@@ -21,8 +30,8 @@ export const actions = {
 }
 
 export const mutations = {
-  updateGenerators (state, payload) {
-    payload.forEach((g) => {
+  updateGenerators (state: StakingState, payload: unknown[]) {
+    payload.forEach((g: any) => {
       g.updated = moment(g.updated)
     })
 
@@ -32,7 +41,7 @@ export const mutations = {
 }
 
 export const getters = {
-  getGenerators: (state) => {
+  getGenerators: (state: StakingState) => {
     return state.staking
   }
 }
