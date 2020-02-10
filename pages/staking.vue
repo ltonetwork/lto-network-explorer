@@ -195,6 +195,7 @@ import Panel from '../components/Panel.vue'
     })
   }
 })
+
 class Staking extends Vue {
   chartData = {
     type: 'doughnut',

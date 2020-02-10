@@ -339,8 +339,8 @@ export default Vue.extend({
     }
   },
   computed: {
-    filteredItems () {
-      return this.transactions.filter((i) => {
+    filteredItems (): string {
+      return (this as any).transactions.filter((i: any) => {
         return !this.txType || (i.type === this.txType)
       })
     }
