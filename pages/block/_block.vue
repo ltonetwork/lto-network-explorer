@@ -173,13 +173,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 import moment from 'moment'
 import '@nuxtjs/axios'
 import * as _ from 'lodash'
 import { translate } from '../../locales/index'
 import { Block, Transaction } from '../types'
 
-export default Vue.extend({
+@Component({
   head () {
     return {
       title: translate('block.title') + ' #' + (this as any).height.toLocaleString(undefined, {
@@ -202,52 +203,10 @@ export default Vue.extend({
       })
     }
   },
-  data () {
-    return {
-      height: this.$route.params.block,
-      txTable: [
-        {
-          text: 'Type',
-          align: 'left',
-          value: 'type'
-        },
-        {
-          text: 'ID',
-          align: 'left',
-          value: 'id'
-        },
-        {
-          text: 'Sender',
-          align: 'left',
-          value: 'sender'
-        },
-        {
-          text: 'Fee',
-          align: 'right',
-          value: 'fee'
-        },
-        {
-          text: 'Timestamp',
-          align: 'right',
-          value: 'timestamp'
-        }
-      ],
-      txFilter: [
-        { text: 'Genesis', value: 1 },
-        { text: 'Transfer', value: 4 },
-        { text: 'Lease', value: 8 },
-        { text: 'Cancel Lease', value: 9 },
-        { text: 'Mass Transfer', value: 11 },
-        { text: 'Script', value: 13 },
-        { text: 'Anchor', value: 15 }
-      ],
-      txType: null
-    }
-  },
   computed: {
     filteredItems (): string {
       return (this as any).block.transactions.filter((i: any) => {
-        return !this.txType || _.includes(this.txType, i.type) || (this.txType! as any).length === 0
+        return !(this as any).txType || _.includes((this as any).txType, i.type) || ((this as any).txType! as any).length === 0
       })
     }
   },
@@ -270,56 +229,100 @@ export default Vue.extend({
     return {
       block
     }
-  },
-  methods: {
-    name (value: number): string {
-      // Genesis Transfer
-      if (value === 1) {
-        return 'Genesis'
-      } else if (value === 4) {
-      // Transfer
-        return 'Transfer'
-      } else if (value === 8) {
-      // Lease
-        return 'Lease'
-      } else if (value === 9) {
-        // Cancel Lease
-        return 'Cancel Lease'
-      } else if (value === 11) {
-        // Mass Transfer
-        return 'Mass Transfer'
-      } else if (value === 13) {
-        // Set Script
-        return 'Script'
-      } else if (value === 15) {
-        // Anchor
-        return 'Anchor'
-      } else { return 'light' }
-    },
-    icon (value: number): string {
-      // Genesis Transfer
-      if (value === 1) {
-        return 'mdi-power'
-      } else if (value === 4) {
-      // Transfer
-        return 'mdi-send'
-      } else if (value === 8) {
-      // Lease
-        return 'mdi-file-document-box-plus'
-      } else if (value === 9) {
-        // Cancel Lease
-        return 'mdi-file-document-box-remove'
-      } else if (value === 11) {
-        // Mass Transfer
-        return 'mdi-coins'
-      } else if (value === 13) {
-        // Set Script
-        return 'mdi-script-text'
-      } else if (value === 15) {
-        // Anchor
-        return 'mdi-anchor'
-      } else { return 'Unknown' }
-    }
   }
 })
+
+class Blocks extends Vue {
+  height = (this as any).route.params.block
+  txTable = [
+    {
+      text: 'Type',
+      align: 'left',
+      value: 'type'
+    },
+    {
+      text: 'ID',
+      align: 'left',
+      value: 'id'
+    },
+    {
+      text: 'Sender',
+      align: 'left',
+      value: 'sender'
+    },
+    {
+      text: 'Fee',
+      align: 'right',
+      value: 'fee'
+    },
+    {
+      text: 'Timestamp',
+      align: 'right',
+      value: 'timestamp'
+    }
+  ]
+  txFilter = [
+    { text: 'Genesis', value: 1 },
+    { text: 'Transfer', value: 4 },
+    { text: 'Lease', value: 8 },
+    { text: 'Cancel Lease', value: 9 },
+    { text: 'Mass Transfer', value: 11 },
+    { text: 'Script', value: 13 },
+    { text: 'Anchor', value: 15 }
+  ]
+
+  txType = null
+
+  name (value: number): string {
+    // Genesis Transfer
+    if (value === 1) {
+      return 'Genesis'
+    } else if (value === 4) {
+    // Transfer
+      return 'Transfer'
+    } else if (value === 8) {
+    // Lease
+      return 'Lease'
+    } else if (value === 9) {
+      // Cancel Lease
+      return 'Cancel Lease'
+    } else if (value === 11) {
+      // Mass Transfer
+      return 'Mass Transfer'
+    } else if (value === 13) {
+      // Set Script
+      return 'Script'
+    } else if (value === 15) {
+      // Anchor
+      return 'Anchor'
+    } else { return 'light' }
+  }
+
+  icon (value: number): string {
+    // Genesis Transfer
+    if (value === 1) {
+      return 'mdi-power'
+    } else if (value === 4) {
+    // Transfer
+      return 'mdi-send'
+    } else if (value === 8) {
+    // Lease
+      return 'mdi-file-document-box-plus'
+    } else if (value === 9) {
+      // Cancel Lease
+      return 'mdi-file-document-box-remove'
+    } else if (value === 11) {
+      // Mass Transfer
+      return 'mdi-coins'
+    } else if (value === 13) {
+      // Set Script
+      return 'mdi-script-text'
+    } else if (value === 15) {
+      // Anchor
+      return 'mdi-anchor'
+    } else { return 'Unknown' }
+  }
+}
+
+export default Blocks
 </script>
