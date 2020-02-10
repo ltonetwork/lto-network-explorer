@@ -168,9 +168,14 @@
             {{ $t('address.transactions') }}
           </v-card-title>
           <v-card-text class="pa-0">
+            <v-select
+              :items="['4', '8', '9', '11', '13', '15']"
+              v-model="txType"
+              label="Transaction Type"
+            />
             <v-data-table
               :headers="txTable"
-              :items="transactions"
+              :items="filteredItems"
               :sort-by="['timestamp']"
               :sort-desc="[false]"
               :items-per-page="10"
@@ -326,7 +331,15 @@ export default {
           align: 'center',
           value: 'label'
         }
-      ]
+      ],
+      txType: null
+    }
+  },
+  computed: {
+    filteredItems () {
+      return this.transactions.filter((i) => {
+        return !this.txType || (i.type === this.txType)
+      })
     }
   },
   validate ({ params }) {
