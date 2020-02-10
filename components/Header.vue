@@ -119,11 +119,8 @@
               >
                 <v-form
                   ref="form"
-                  v-model="valid"
-                  :lazy-validation="lazy"
                 >
                   <v-select
-                    v-model="select"
                     :items="['items']"
                     :hint="$t('calculator.active_leases')"
                     item-text="state"
@@ -134,7 +131,6 @@
                     single-line
                   />
                   <v-select
-                    v-model="select"
                     :items="['items']"
                     :hint="$t('calculator.total_tx')"
                     item-text="state"
@@ -145,7 +141,6 @@
                     single-line
                   />
                   <v-select
-                    v-model="select"
                     :items="['items']"
                     :hint="$t('calculator.total_fees')"
                     item-text="state"
@@ -165,11 +160,8 @@
               >
                 <v-form
                   ref="form"
-                  v-model="valid"
-                  :lazy-validation="lazy"
                 >
                   <v-select
-                    v-model="select"
                     :items="['items']"
                     :hint="$t('calculator.leasing')"
                     item-text="state"
@@ -252,10 +244,7 @@ export default {
         title: translate('menu.wallet'),
         icon: 'mdi-coins',
         href: 'https://wallet.lto.network/'
-      },
-      lazy: null,
-      valid: null,
-      select: null
+      }
     }
   },
   methods: {
