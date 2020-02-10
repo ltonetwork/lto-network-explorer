@@ -21,9 +21,9 @@
                 v-for="filter in chartFilters"
                 :key="filter"
                 :value="filter"
-                @click="filterChart()"
                 label
                 class="white--text transparent font-weight-thin overline"
+                @click="filterChart()"
               >
                 {{ filter }}
               </v-chip>
@@ -41,8 +41,8 @@
               <figure class="chart">
                 <lineChart
                   v-if="chart.updated"
-                  :chartData="chartDataSet"
-                  :chartOptions="chartOptions"
+                  :chart-data="chartDataSet"
+                  :chart-options="chartOptions"
                 />
               </figure>
             </v-sheet>
@@ -139,7 +139,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="tx in unconfirmed.pool" v-bind:key="tx.id">
+                  <tr v-for="tx in unconfirmed.pool" :key="tx.id">
                     <td class="text-truncate" style="max-width: 26vh;">
                       {{ tx.id }}
                     </td>

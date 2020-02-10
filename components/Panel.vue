@@ -17,7 +17,7 @@
               :lg="6"
               class="pt-0 pb-1 pl-0 pr-0"
             >
-              <v-card-subtitle v-text="$t('panel.price')" class="pa-0" />
+              <v-card-subtitle class="pa-0" v-text="$t('panel.price')" />
             </v-col>
             <v-col
               :cols="6"
@@ -93,7 +93,7 @@
               :lg="6"
               class="pt-0 pb-1 pl-0 pr-0"
             >
-              <v-card-subtitle v-text="$t('panel.nodes')" class="pa-0" />
+              <v-card-subtitle class="pa-0" v-text="$t('panel.nodes')" />
             </v-col>
             <v-col
               :cols="6"
@@ -151,7 +151,7 @@
               :lg="6"
               class="pt-0 pb-1 pl-0 pr-0"
             >
-              <v-card-subtitle v-text="$t('panel.staking')" class="pa-0" />
+              <v-card-subtitle class="pa-0" v-text="$t('panel.staking')" />
             </v-col>
             <v-col
               :cols="6"
@@ -209,7 +209,7 @@
               :lg="6"
               class="pt-0 pb-1 pl-0 pr-0"
             >
-              <v-card-subtitle v-text="$t('panel.height')" class="pa-0" />
+              <v-card-subtitle class="pa-0" v-text="$t('panel.height')" />
             </v-col>
             <v-col
               :cols="6"
@@ -251,22 +251,24 @@
     </v-col>
   </v-row>
 </template>
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import { Component } from 'vue-property-decorator'
 
-export default {
+@Component({
   filters: {
-    fromNow (timestamp) {
+    fromNow (timestamp: number): string {
       return moment(timestamp).fromNow()
     },
-    localeString (string) {
+    localeString (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })
     },
-    localeCurrency (string) {
+    localeCurrency (string: number): string {
       return string.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 3
@@ -280,56 +282,78 @@ export default {
       staking: 'panel/getStaking',
       network: 'panel/getNetwork'
     })
-  },
-  created () {
+  }
+})
+class Panel extends Vue {
+  market: ReturnType<typeof setInterval> | undefined = undefined
+  nodesCount: ReturnType<typeof setInterval> | undefined = undefined
+  staking: ReturnType<typeof setInterval> | undefined = undefined
+  network: ReturnType<typeof setInterval> | undefined = undefined
+
+  created (): void {
     this.pollMarket()
     this.pollNodes()
     this.pollStaking()
-    this.pollNetwork()
-  },
-  beforeDestroy () {
-    clearInterval(this.market)
-    clearInterval(this.nodesCount)
-    clearInterval(this.staking)
-    clearInterval(this.network)
-  },
-  methods: {
-    pollMarket () {
-      // Fetch on render
-      this.$store.dispatch('panel/fetchMarket')
+  }
 
-      // Refresh every minute
-      this.market = setInterval(() => {
-        this.$store.dispatch('panel/fetchMarket')
-      }, 60000)
-    },
-    pollNodes () {
-      // Fetch on render
-      this.$store.dispatch('panel/fetchNodes')
+  beforeDestroy (): void {
+    if (this.market) {
+      clearInterval(this.market)
+    }
 
-      // Refresh every minute
-      this.nodesCount = setInterval(() => {
-        this.$store.dispatch('panel/fetchNodes')
-      }, 60000)
-    },
-    pollStaking () {
-      // Fetch on render
-      this.$store.dispatch('panel/fetchStaking')
+    if (this.nodesCount) {
+      clearInterval(this.nodesCount)
+    }
 
-      // Refresh every minute
-      this.staking = setInterval(() => {
-        this.$store.dispatch('panel/fetchStaking')
-      }, 60000)
-    },
-    pollNetwork () {
-      // Fetch on render
-      this.$store.dispatch('panel/fetchNetwork')
+    if (this.staking) {
+      clearInterval(this.staking)
+    }
 
-      // Refresh every minute
-      this.network = setInterval(() => {
-        this.$store.dispatch('panel/fetchNetwork')
-      }, 60000)
+    if (this.network) {
+      clearInterval(this.network)
     }
   }
+
+  pollMarket (): void {
+    // Fetch on render
+    this.$store.dispatch('panel/fetchMarket')
+
+    // Refresh every minute
+    this.market = setInterval(() => {
+      this.$store.dispatch('panel/fetchMarket')
+    }, 60000)
+  }
+
+  pollNodes (): void {
+    // Fetch on render
+    this.$store.dispatch('panel/fetchNodes')
+
+    // Refresh every minute
+    this.nodesCount = setInterval(() => {
+      this.$store.dispatch('panel/fetchNodes')
+    }, 60000)
+  }
+
+  pollStaking (): void {
+    // Fetch on render
+    this.$store.dispatch('panel/fetchStaking')
+
+    // Refresh every minute
+    this.staking = setInterval(() => {
+      this.$store.dispatch('panel/fetchStaking')
+    }, 60000)
+  }
+
+  pollNetwork (): void {
+    // Fetch on render
+    this.$store.dispatch('panel/fetchNetwork')
+
+    // Refresh every minute
+    this.network = setInterval(() => {
+      this.$store.dispatch('panel/fetchNetwork')
+    }, 60000)
+  }
 }
+
+export default Panel
 </script>

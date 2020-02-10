@@ -16,8 +16,6 @@
           <v-text-field
             id="search"
             v-model="query"
-            @keydown.enter="executeQuery"
-            @focus="focus"
             solo-inverted
             hide-details
             single-line
@@ -28,6 +26,8 @@
             color="white"
             class="search"
             clearable
+            @keydown.enter="executeQuery"
+            @focus="focus"
           >
             <template v-slot:default="t">
               <span style="color:rgba(255,255,255, 0.4)">{{ t }}</span>
@@ -52,12 +52,12 @@
           :lg="2"
         >
           <v-btn
-            @click="showCalculator"
             class="hidden-sm-and-down"
             color="rgba(255,255,255,0.1)"
             rounded
             outlined
             large
+            @click="showCalculator"
           >
             {{ $t('calculator.title') }}
           </v-btn>
@@ -66,8 +66,61 @@
     </v-container>
   </v-toolbar>
 </template>
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import { Component, Watch } from 'vue-property-decorator'
 
+@Component({
+})
+class Search extends Vue {
+  query: string | null = null;
+  valid = false;
+  url: string | null = null;
+
+  @Watch('query')
+  onQueryChanged (): void {
+    this.validateQuery()
+  }
+
+  focus (e: number): void {
+    console.log(e)
+  }
+
+  validateQuery (): void {
+    // Reset
+    this.valid = false
+
+    if (this.query !== null) {
+      // Block
+      if (Number.isInteger(+this.query) && this.query.length <= 6) {
+        this.valid = true
+        this.url = '/block/' + this.query
+      // Tx
+      } else if (this.query.length === 44) {
+        this.valid = true
+        this.url = '/transaction/' + this.query
+      // Address
+      } else if (this.query.length === 35) {
+        this.valid = true
+        this.url = '/address/' + this.query
+      }
+    }
+  }
+
+  executeQuery (): void {
+    if (this.valid) {
+      this.$router.push(this.url!)
+    }
+  }
+
+  showCalculator (): void {
+    alert('not implemented yet')
+  }
+}
+
+export default Search
+
+/*
 export default {
   data: () => ({
     query: null,
@@ -111,4 +164,5 @@ export default {
     }
   }
 }
+*/
 </script>

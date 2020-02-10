@@ -3,9 +3,9 @@
     <v-snackbar v-model="copied">
       {{ $t('address.copied') }}
       <v-btn
-        @click="copied = false"
         color="red"
         text
+        @click="copied = false"
       >
         Close
       </v-btn>
@@ -54,8 +54,8 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-text="$t('address.balance.regular')" class="pa-0 overline" />
-                <v-icon v-on="on" small class="ml-1 grey--text">
+                <span class="pa-0 overline" v-text="$t('address.balance.regular')" />
+                <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
@@ -82,8 +82,8 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-text="$t('address.balance.generating')" class="pa-0 overline" />
-                <v-icon v-on="on" small class="ml-1 grey--text">
+                <span class="pa-0 overline" v-text="$t('address.balance.generating')" />
+                <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
@@ -109,8 +109,8 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-text="$t('address.balance.available')" class="pa-0 overline" />
-                <v-icon v-on="on" small class="ml-1 grey--text">
+                <span class="pa-0 overline" v-text="$t('address.balance.available')" />
+                <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
@@ -136,8 +136,8 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-text="$t('address.balance.effective')" class="pa-0 overline" />
-                <v-icon v-on="on" small class="ml-1 grey--text">
+                <span class="pa-0 overline" v-text="$t('address.balance.effective')" />
+                <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
@@ -208,7 +208,7 @@
               <template v-slot:item.type="{ item }">
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <v-icon v-on="on" color="secondary">
+                    <v-icon color="secondary" v-on="on">
                       {{ icon(item.type) }}
                     </v-icon>
                   </template>

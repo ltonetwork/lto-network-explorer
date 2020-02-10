@@ -120,8 +120,8 @@
               <figure class="chart">
                 <DoughnutChart
                   v-if="staking.updated"
-                  :chartData="chartDataSet"
-                  :chartOptions="chartOptions"
+                  :chart-data="chartDataSet"
+                  :chart-options="chartOptions"
                   :height="300"
                 />
               </figure>

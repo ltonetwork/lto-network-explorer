@@ -1,34 +1,34 @@
-<script>
+<script lang="ts">
 import { Line, mixins } from 'vue-chartjs'
+import { Component, Prop, Mixins, Watch } from 'vue-property-decorator'
+import { ChartData, ChartOptions } from 'chart.js'
 const { reactiveProp } = mixins
 
-export default {
+@Component({
   extends: Line,
-  mixins: [reactiveProp],
-  props: {
-    chartData: {
-      type: Object,
-      default: null
-    },
-    chartOptions: {
-      type: Object,
-      default: null
-    }
-  },
-  watch: {
-    data () {
-      this._chart.destroy()
-      // this.renderChart(this.data, this.options);
-      this.renderLineChart()
-    }
-  },
-  mounted () {
+  mixins: [reactiveProp]
+})
+class LineChart extends Mixins(Line) {
+  @Prop({ default: {} })
+  chartData!: ChartData;
+
+  @Prop({ default: {} })
+  chartOptions!: ChartOptions;
+
+  @Watch('data')
+  onPropertyChanged (): void {
+    this.$data._chart.destroy()
     this.renderLineChart()
-  },
-  methods: {
-    renderLineChart () {
-      this.renderChart(this.chartData, this.chartOptions)
-    }
+  }
+
+  mounted (): void {
+    this.renderLineChart()
+  }
+
+  renderLineChart (): void {
+    this.renderChart(this.chartData, this.chartOptions)
   }
 }
+
+export default LineChart
 </script>

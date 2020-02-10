@@ -239,8 +239,8 @@
               <figure class="chart">
                 <DoughnutChart
                   v-if="top.updated"
-                  :chartData="topChartData"
-                  :chartOptions="chartOptions"
+                  :chart-data="topChartData"
+                  :chart-options="chartOptions"
                   :height="300"
                 />
               </figure>

@@ -174,7 +174,7 @@
                   <div class="pb-5">
                     <span
                       v-for="(k, v) in item.uptime"
-                      v-bind:key="v[k]"
+                      :key="v[k]"
                       :class="setColor(v) + '--text'"
                       class="display-1 font-weight-black"
                     >.</span>
