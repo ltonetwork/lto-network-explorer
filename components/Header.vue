@@ -117,7 +117,45 @@
                 :md="6"
                 :xl="6"
               >
-                t
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  :lazy-validation="lazy"
+                >
+                  <v-select
+                    v-model="select"
+                    :items="['items']"
+                    :hint="$t('calculator.active_leases')"
+                    item-text="state"
+                    item-value="abbr"
+                    label="test"
+                    persistent-hint
+                    return-object
+                    single-line
+                  />
+                  <v-select
+                    v-model="select"
+                    :items="['items']"
+                    :hint="$t('calculator.total_tx')"
+                    item-text="state"
+                    item-value="abbr"
+                    label="test"
+                    persistent-hint
+                    return-object
+                    single-line
+                  />
+                  <v-select
+                    v-model="select"
+                    :items="['items']"
+                    :hint="$t('calculator.total_fees')"
+                    item-text="state"
+                    item-value="abbr"
+                    label="test"
+                    persistent-hint
+                    return-object
+                    single-line
+                  />
+                </v-form>
               </v-col>
               <v-col
                 :cols="6"
@@ -125,20 +163,33 @@
                 :md="6"
                 :xl="6"
               >
-                t
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  :lazy-validation="lazy"
+                >
+                  <v-select
+                    v-model="select"
+                    :items="['items']"
+                    :hint="$t('calculator.leasing')"
+                    item-text="state"
+                    item-value="abbr"
+                    label="test"
+                    persistent-hint
+                    return-object
+                    single-line
+                  />
+                </v-form>
               </v-col>
             </v-row>
           </v-card-text>
 
-          <v-card-actions>
+          <v-card-actions class="secondary">
+            {{ $t('calculator.roi_monthly') }}
 
-            <v-btn
-              @click="dialog = false"
-              color="green darken-1"
-              text
-            >
-              Disagree
-            </v-btn>
+            <v-spacer />
+
+            {{ $t('calculator.roi_yearly') }}
 
             <v-spacer />
 
@@ -147,7 +198,7 @@
               color="primary"
               outlined
             >
-              {{ $t['calculator.info'] }}
+              {{ $t('calculator.info') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -162,7 +213,7 @@ export default {
   },
   data () {
     return {
-      calculator: false,
+      calculator: true,
       menu: [
         {
           title: this.$t('menu.overview'),
