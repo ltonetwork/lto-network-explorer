@@ -228,6 +228,7 @@ import Panel from '../components/Panel.vue'
     nodes: 'nodes/getNodes'
   })
 })
+
 class Nodes extends Vue {
   nodesTable = [
     {

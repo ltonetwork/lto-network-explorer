@@ -233,7 +233,7 @@ import { Block, Transaction } from '../types'
 })
 
 class Blocks extends Vue {
-  height = (this as any).route.params.block
+  height = (this as any).$nuxt.$route.params.block
   txTable = [
     {
       text: 'Type',

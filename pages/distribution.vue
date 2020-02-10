@@ -327,6 +327,7 @@ import DoughnutChart from '../components/DoughnutChart.vue'
     }
   }
 })
+
 class Distribution extends Vue {
   chartOptions = {
     maintainAspectRatio: true,

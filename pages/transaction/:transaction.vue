@@ -155,11 +155,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 import moment from 'moment'
 import '@nuxtjs/axios'
 import { Transfer, Transaction } from '../types'
 
-export default Vue.extend({
+@Component({
   components: {
   },
   filters: {
@@ -174,12 +175,6 @@ export default Vue.extend({
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })
-    }
-  },
-  data () {
-    return {
-      transaction: this.$route.params.transaction,
-      mass: false
     }
   },
   validate (/* { params } */): boolean {
@@ -212,32 +207,39 @@ export default Vue.extend({
       mass,
       transaction
     }
-  },
-  methods: {
-    name (value: number): string {
-      // Genesis Transfer
-      if (value === 1) {
-        return 'Genesis'
-      } else if (value === 4) {
-      // Transfer
-        return 'Transfer'
-      } else if (value === 8) {
-      // Lease
-        return 'Lease'
-      } else if (value === 9) {
-        // Cancel Lease
-        return 'Cancel Lease'
-      } else if (value === 11) {
-        // Mass Transfer
-        return 'Mass Transfer'
-      } else if (value === 13) {
-        // Set Script
-        return 'Script'
-      } else if (value === 15) {
-        // Anchor
-        return 'Anchor'
-      } else { return 'light' }
-    }
   }
 })
+
+class Transactions extends Vue {
+  transaction = (this as any).$nuxt.$route.params.transaction
+
+  mass = false
+
+  name (value: number): string {
+    // Genesis Transfer
+    if (value === 1) {
+      return 'Genesis'
+    } else if (value === 4) {
+    // Transfer
+      return 'Transfer'
+    } else if (value === 8) {
+    // Lease
+      return 'Lease'
+    } else if (value === 9) {
+      // Cancel Lease
+      return 'Cancel Lease'
+    } else if (value === 11) {
+      // Mass Transfer
+      return 'Mass Transfer'
+    } else if (value === 13) {
+      // Set Script
+      return 'Script'
+    } else if (value === 15) {
+      // Anchor
+      return 'Anchor'
+    } else { return 'light' }
+  }
+}
+
+export default Transactions
 </script>

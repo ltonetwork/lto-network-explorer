@@ -110,7 +110,7 @@ class Search extends Vue {
 
   executeQuery (): void {
     if (this.valid) {
-      this.$router.push(this.url!)
+      (this as any).$nuxt.$router.push(this.url!)
     }
   }
 

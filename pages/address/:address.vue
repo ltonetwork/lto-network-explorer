@@ -368,7 +368,7 @@ import * as _ from 'lodash'
 })
 
 class Address extends Vue {
-  address = this.$route.params.address
+  address = (this as any).$nuxt.$route.params.address
 
   copied = false
 
