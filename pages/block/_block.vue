@@ -83,11 +83,31 @@
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-transactions" />
             {{ $t('transaction.title') }}
+
+            <v-spacer />
+
+            <div style="width:100px;">
+              <span class="body-2 grey--text mb-3 mr-2">{{ $t('explorer.type') }}</span>
+
+              <v-select
+                v-model="txType"
+                label="All"
+                :items="txFilter"
+                outlined
+                single-line
+                cache-items
+                color="secondary"
+                item-color="secondary"
+                multiple
+                dense
+                class="body-2 pa-0 ma-0"
+              />
+            </div>
           </v-card-title>
           <v-card-text class="pa-0">
             <v-data-table
               :headers="txTable"
-              :items="block.transactions"
+              :items="filteredItems"
               :sort-by="['timestamp']"
               :sort-desc="[false]"
               :items-per-page="10"
@@ -155,6 +175,7 @@
 import Vue from 'vue'
 import moment from 'moment'
 import '@nuxtjs/axios'
+import * as _ from 'lodash'
 import { translate } from '../../locales/index'
 import { Block, Transaction } from '../types'
 
@@ -210,7 +231,24 @@ export default Vue.extend({
           align: 'right',
           value: 'timestamp'
         }
-      ]
+      ],
+      txFilter: [
+        { text: 'Genesis', value: 1 },
+        { text: 'Transfer', value: 4 },
+        { text: 'Lease', value: 8 },
+        { text: 'Cancel Lease', value: 9 },
+        { text: 'Mass Transfer', value: 11 },
+        { text: 'Script', value: 13 },
+        { text: 'Anchor', value: 15 }
+      ],
+      txType: null
+    }
+  },
+  computed: {
+    filteredItems (): string {
+      return (this as any).block.transactions.filter((i: any) => {
+        return !this.txType || _.includes(this.txType, i.type) || (this.txType! as any).length === 0
+      })
     }
   },
   validate ({ params }): boolean {

@@ -166,13 +166,28 @@
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-transactions" />
             {{ $t('address.transactions') }}
+
+            <v-spacer />
+
+            <div style="width:100px;">
+              <span class="body-2 grey--text mb-3 mr-2">{{ $t('explorer.type') }}</span>
+
+              <v-select
+                v-model="txType"
+                label="All"
+                :items="txFilter"
+                outlined
+                single-line
+                cache-items
+                color="secondary"
+                item-color="secondary"
+                multiple
+                dense
+                class="body-2 pa-0 ma-0"
+              />
+            </div>
           </v-card-title>
           <v-card-text class="pa-0">
-            <v-select
-              v-model="txType"
-              :items="['4', '8', '9', '11', '13', '15']"
-              label="Transaction Type"
-            />
             <v-data-table
               :headers="txTable"
               :items="filteredItems"
@@ -275,6 +290,7 @@
 import Vue from 'vue'
 import moment from 'moment'
 import '@nuxtjs/axios'
+import * as _ from 'lodash'
 
 export default Vue.extend({
   components: {
@@ -335,13 +351,22 @@ export default Vue.extend({
           value: 'label'
         }
       ],
+      txFilter: [
+        { text: 'Genesis', value: 1 },
+        { text: 'Transfer', value: 4 },
+        { text: 'Lease', value: 8 },
+        { text: 'Cancel Lease', value: 9 },
+        { text: 'Mass Transfer', value: 11 },
+        { text: 'Script', value: 13 },
+        { text: 'Anchor', value: 15 }
+      ],
       txType: null
     }
   },
   computed: {
     filteredItems (): string {
       return (this as any).transactions.filter((i: any) => {
-        return !this.txType || (i.type === this.txType)
+        return !this.txType || _.includes(this.txType, i.type) || (this.txType! as any).length === 0
       })
     }
   },
@@ -457,3 +482,7 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+
+</style>
