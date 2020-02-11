@@ -169,18 +169,11 @@ import { Transfer, Transaction } from '../types'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    transaction.fee = Number(transaction.fee) / Number(process.env.ATOMIC)
-
     // If mass transfer
     let mass = false
 
     if (transaction.type === 11) {
       mass = true
-      transaction.amount = transaction.totalAmount / Number(process.env.ATOMIC)
-
-      transaction.transfers.forEach((tx: Transfer) => {
-        tx.amount = tx.amount / Number(process.env.ATOMIC)
-      })
     } else if (transaction.type === 8 || transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
       transaction.amount = 0
     }

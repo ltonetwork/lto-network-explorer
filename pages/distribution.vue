@@ -56,19 +56,19 @@
                 </template>
 
                 <template v-slot:item.regular="{ item }">
-                  {{ item.regular | parseAtomic | parseNumber }}
+                  {{ item.regular | parseNumber }}
                 </template>
 
                 <template v-slot:item.generating="{ item }">
-                  {{ item.generating | parseAtomic | parseNumber }}
+                  {{ item.generating | parseNumber }}
                 </template>
 
                 <template v-slot:item.available="{ item }">
-                  {{ item.available | parseAtomic | parseNumber }}
+                  {{ item.available | parseNumber }}
                 </template>
 
                 <template v-slot:item.effective="{ item }">
-                  {{ item.effective | parseAtomic | parseNumber }}
+                  {{ item.effective | parseNumber }}
                 </template>
               </v-data-table>
             </v-card-text>
@@ -105,7 +105,7 @@
                       {{ $t('distribution.initial_supply') }}
                     </th>
                     <th class="body-2 text-right">
-                      {{ supply.stats.initial_supply | parseAtomic | parseNumber }} LTO
+                      {{ supply.stats.initial_supply | parseNumber }} LTO
                     </th>
                   </tr>
                   <tr>
@@ -113,7 +113,7 @@
                       {{ $t('distribution.burned_supply') }}
                     </td>
                     <td class="text-right">
-                      - {{ supply.stats.burned_supply | parseAtomic | parseNumber }} LTO
+                      - {{ supply.stats.burned_supply | parseNumber }} LTO
                     </td>
                   </tr>
                   <tr>
@@ -121,7 +121,7 @@
                       {{ $t('distribution.total_supply') }}
                     </td>
                     <td class="text-right">
-                      {{ supply.stats.total_supply | parseAtomic | parseNumber }} LTO
+                      {{ supply.stats.total_supply | parseNumber }} LTO
                     </td>
                   </tr>
                 </tbody>
@@ -151,7 +151,7 @@
                       {{ $t('distribution.circulating_mainnet') }}
                     </th>
                     <th class="body-2 text-right">
-                      {{ supply.stats.circulating_mainnet | parseAtomic | parseNumber }} LTO
+                      {{ supply.stats.circulating_mainnet | parseNumber }} LTO
                     </th>
                   </tr>
                   <tr>
@@ -159,7 +159,7 @@
                       {{ $t('distribution.private_supply_mainnet') }}
                     </td>
                     <td class="text-right">
-                      {{ supply.stats.private_supply_mainnet | parseAtomic | parseNumber }} LTO
+                      {{ supply.stats.private_supply_mainnet | parseNumber }} LTO
                     </td>
                   </tr>
                   <tr>
@@ -167,7 +167,7 @@
                       {{ $t('distribution.circulating_erc20') }}
                     </th>
                     <th class="body-2 text-right">
-                      {{ supply.stats.circulating_erc20 | parseAtomic | parseNumber }} LTO
+                      {{ supply.stats.circulating_erc20 | parseNumber }} LTO
                     </th>
                   </tr>
                   <tr>
@@ -175,7 +175,7 @@
                       {{ $t('distribution.private_supply_erc20') }}
                     </td>
                     <td class="text-right">
-                      {{ supply.stats.private_supply_erc20 | parseAtomic | parseNumber }} LTO
+                      {{ supply.stats.private_supply_erc20 | parseNumber }} LTO
                     </td>
                   </tr>
                 </tbody>
@@ -213,7 +213,7 @@
                       {{ $t('distribution.burned_supply') }}
                     </td>
                     <td class="text-right">
-                      {{ bridge.toll.burned | parseAtomic | parseNumber }} LTO
+                      {{ bridge.toll.burned | parseNumber }} LTO
                     </td>
                   </tr>
                 </tbody>

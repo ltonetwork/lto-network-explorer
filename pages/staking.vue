@@ -78,19 +78,19 @@
                 </template>
 
                 <template v-slot:item.pool="{ item }">
-                  {{ item.pool | parseAtomic | parseNumber }}
+                  {{ item.pool | parseNumber }}
                 </template>
 
                 <template v-slot:item.blocks="{ item }">
-                  {{ item.blocks }}
+                  {{ item.blocks | parseString }}
                 </template>
 
                 <template v-slot:item.earnings="{ item }">
-                  {{ item.earnings | parseAtomic | parseNumber }}
+                  {{ item.earnings | parseNumber }}
                 </template>
 
                 <template v-slot:item.share="{ item }">
-                  {{ item.share | localePercentage }}%
+                  {{ item.share | parseNumber }}%
                 </template>
               </v-data-table>
             </v-card-text>

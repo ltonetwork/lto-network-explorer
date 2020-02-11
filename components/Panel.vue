@@ -28,12 +28,12 @@
             >
               <span v-if="market.price.change.relative > 0" class="caption green--text ma-0">
                 <v-icon x-small color="green">mdi-arrow-up</v-icon>
-                {{ market.price.change.relative | parseAtomic | parseNumber }}%
+                {{ market.price.change.relative | parseNumber }}%
               </span>
 
               <span v-if="market.price.change.relative < 0" class="caption red--text ma-0">
                 <v-icon x-small color="red">mdi-arrow-down</v-icon>
-                {{ market.price.change.relative | parseAtomic | parseNumber }}%
+                {{ market.price.change.relative | parseNumber }}%
               </span>
 
               <span class="caption grey--text ma-0">(24h)</span>
@@ -49,7 +49,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                €{{ market.price.currency.eur | parseAtomic | parseNumber }}
+                €{{ market.price.currency.eur | parseNumber }}
               </span>
 
               <p class="overline grey--text ma-0">
@@ -171,7 +171,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                {{ staking.total | parseAtomic | parseNumber }}
+                {{ staking.total | parseNumber }}
               </span>
 
               <p class="overline grey--text ma-0">

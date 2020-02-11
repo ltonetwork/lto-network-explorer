@@ -204,11 +204,6 @@ import { Block, Transaction } from '../types'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    if (block.transactions.length >= 1) {
-      block.transactions.forEach((tx: Transaction) => {
-        tx.fee = Number(tx.fee) / Number(process.env.ATOMIC)
-      })
-    }
     return {
       block
     }
