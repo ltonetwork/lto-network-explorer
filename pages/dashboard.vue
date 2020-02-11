@@ -306,11 +306,10 @@ class Dashboard extends Vue {
             minimumFractionDigits: 0,
             maximumFractionDigits: 2
           })
-        }/*,
-          Commented for now to keep typescript from complaining
-        label (value, chart): void {
+        },
+        label (value: ChartTooltipItem[]): string {
+          return ''
         }
-        */
       }
     },
     legend: {
