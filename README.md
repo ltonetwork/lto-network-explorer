@@ -25,7 +25,7 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ```
 BASE_ROUTE=/explorer/
-LB_API=https://node.lto.cloud
+LB_API=https://nodes.lto.network
 CACHE_API=https://api.lto.cloud/v1
 NETWORK_API=https://network.lto.cloud/v1
 BRIDGE_API=https://bridge.lto.network
