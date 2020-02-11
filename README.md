@@ -1,6 +1,6 @@
-# lto-network-explorer
+# LTO Network Explorer
 
-> Network Explorer for the LTO Network backed by LTO Services Cached Chain services.
+> Serverlesss Network Explorer built for the LTO Network powered by multiple API services.
 
 ## Build Setup
 
