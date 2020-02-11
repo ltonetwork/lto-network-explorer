@@ -350,14 +350,35 @@ class Header extends Vue {
       if (Number.isInteger(+this.query) && this.query.length <= 6) {
         this.valid = true
         this.url = '/block/' + this.query
-      // Tx
-      } else if (this.query.length === 44) {
-        this.valid = true
-        this.url = '/transaction/' + this.query
       // Address
       } else if (this.query.length === 35) {
         this.valid = true
         this.url = '/address/' + this.query
+      // Tx
+      } else if (this.query.length === 44) {
+        this.valid = true
+        this.url = '/transaction/' + this.query
+      } else if (this.query.length === 43) {
+        // Script
+
+        // TODO
+        //
+        // LTO Network Node does not come with the
+        // functionality to look up transaction type
+        // 13 (script). For now it returns an error
+        // message, however, api.lto.node supports
+        // type 13: eg: https://api.lto.cloud/v1/transaction/7cP2Z5PF4Y4Hy94pbBryRRkAiZq8A6p5smaygEapQxR
+        //
+        // Note: this is the only known type 13 tx known
+        // to exist on  the LTO blockchain, hence for now
+        // its ignored on grounds of common sense.
+
+        this.valid = false
+
+        // TODO
+        //
+        // Display error message
+        console.error('transaction type 13 (script) not supported')
       }
     }
   }
