@@ -201,6 +201,10 @@
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
+              <template v-slot:header.amount="{ header }">
+                <span class="overline grey--text">{{ header.text }}</span>
+              </template>
+
               <template v-slot:header.fee="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
@@ -241,6 +245,10 @@
                   {{ item.recipient }}
                 </nuxt-link>
                 <span v-if="!item.recipient">N/A</span>
+              </template>
+
+              <template v-slot:item.amount="{ item }">
+                {{ item.amount | parseAtomic | parseNumber }}
               </template>
 
               <template v-slot:item.fee="{ item }">
@@ -357,6 +365,11 @@ class Address extends Vue {
       text: 'Recipient',
       align: 'left',
       value: 'recipient'
+    },
+    {
+      text: 'Amount',
+      align: 'right',
+      value: 'amount'
     },
     {
       text: 'Fee',
