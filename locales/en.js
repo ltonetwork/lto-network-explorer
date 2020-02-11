@@ -19,8 +19,7 @@ export default {
   },
   calculator: {
     title: 'Calculator',
-    modal_title: 'LTO ROI Calculator',
-    info: 'More Information',
+    modal_title: 'ROI Calculator',
     network_input: 'Network',
     leaser_input: 'You',
     active_leases: 'Active Leases (LTO)',

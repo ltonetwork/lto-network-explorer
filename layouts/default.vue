@@ -1,7 +1,6 @@
 <template>
   <v-app light>
     <Header />
-    <Search />
     <v-content>
       <v-container>
         <nuxt />
@@ -11,16 +10,22 @@
   </v-app>
 </template>
 
-<script>
-import Header from '~/components/Header'
-import Search from '~/components/Search'
-import Footer from '~/components/Footer'
+<script lang="ts">
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 
-export default {
+import Header from '~/components/Header.vue'
+import Footer from '~/components/Footer.vue'
+
+@Component({
   components: {
     Header,
-    Search,
     Footer
   }
+})
+
+class Layout extends Vue {
 }
+
+export default Layout
 </script>
