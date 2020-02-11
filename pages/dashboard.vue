@@ -298,7 +298,7 @@ class Dashboard extends Vue {
       intersect: false,
       displayColors: false,
       cornerRadius: 6,
-      backgroundColor: 'rgba(23, 5, 75, 0.8)',
+      backgroundColor: 'rgba(23, 5, 75, 1)',
       mode: 'label',
       callbacks: {
         title (value: ChartTooltipItem[]): string {
