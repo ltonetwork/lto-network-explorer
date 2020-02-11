@@ -31,5 +31,5 @@ NETWORK_API=https://network.lto.cloud/v1
 BRIDGE_API=https://bridge.lto.network
 LATEST_BLOCKS=10
 AXIOS_TIMEOUT=20000
-ATOMIC=10000000
+ATOMIC=100000000
 ```
