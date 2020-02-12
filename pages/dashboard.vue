@@ -17,6 +17,7 @@
               v-model="selectedFilter"
               mandatory
               active-class="primary"
+              :value="chart.filter"
             >
               <v-chip
                 v-for="filter in chartFilters"
@@ -228,6 +229,7 @@ interface ChartDataSet {
 
 class Dashboard extends Vue {
   filters = {
+    type: 'week',
     start: moment().subtract(7, 'day').format('YYYY-MM-DD'),
     end: moment().format('YYYY-MM-DD'),
     granularity: 'day'
@@ -338,6 +340,7 @@ class Dashboard extends Vue {
   filterChanged (): void {
     if (this.selectedFilter === 'week') {
       this.filters = {
+        type: 'week',
         start: moment().subtract(1, 'week').format('YYYY-MM-DD'),
         end: moment().format('YYYY-MM-DD'),
         granularity: 'day'
@@ -346,6 +349,7 @@ class Dashboard extends Vue {
       this.$store.dispatch('dashboard/fetchChart', this.filters)
     } else if (this.selectedFilter === 'month') {
       this.filters = {
+        type: 'month',
         start: moment().subtract(1, 'month').format('YYYY-MM-DD'),
         end: moment().format('YYYY-MM-DD'),
         granularity: 'day'
@@ -354,6 +358,7 @@ class Dashboard extends Vue {
       this.$store.dispatch('dashboard/fetchChart', this.filters)
     } else if (this.selectedFilter === 'year') {
       this.filters = {
+        type: 'year',
         start: moment().subtract(1, 'year').format('YYYY-MM-DD'),
         end: moment().format('YYYY-MM-DD'),
         granularity: 'day'
@@ -393,7 +398,7 @@ class Dashboard extends Vue {
 
     // Refresh every minute
     this.chartTimer = setInterval(() => {
-      this.$store.dispatch('dashboard/fetchChart')
+      this.$store.dispatch('dashboard/fetchChart', this.filters)
     }, 60000)
   }
 

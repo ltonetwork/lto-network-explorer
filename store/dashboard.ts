@@ -6,6 +6,7 @@ import { Transaction, Block, VueGlobalFunctions } from '../pages/types'
 interface DashboardState {
   dashboard: {
     chart: { 
+      filter: string;
       dataset: unknown[];
       updated: null | moment.Moment;
     };
@@ -22,9 +23,15 @@ interface DashboardState {
   }
 }
 
+interface Chart {
+  date: moment.Moment;
+  transactions: number;
+}
+
 export const state = () => ({
   dashboard: {
     chart: {
+      filter: 'week',
       dataset: [],
       updated: null
     },
@@ -43,9 +50,12 @@ export const actions = {
   async fetchChart (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }, filters: any) {
     // Doc: https://stats.lto.network/api-docs/
 
+    commit('resetUpdated')
+
     const url: string = process.env.STATS_API + '/transactions?startdate=' + filters.start + '&enddate=' + filters.end + '&granularity=' + filters.granularity
     const payload = await this.$axios.$get(url)
 
+    commit('setFilter', filters.type)
     commit('setChart', payload)
   },
   async fetchBlocks (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
@@ -71,9 +81,15 @@ export const actions = {
 }
 
 export const mutations = {
-  setChart (state: DashboardState, payload: unknown[]) {
+  resetUpdated(state: DashboardState) {
+    state.dashboard.chart.updated = null
+  },
+  setFilter(state: DashboardState, filter: string) {
+    state.dashboard.chart.filter = filter
+  },
+  setChart (state: DashboardState, payload: Chart[]) {
 
-    payload.forEach((d: any) => {
+    payload.forEach((d: Chart) => {
       d.date = moment(d.date)
     })
 
