@@ -173,7 +173,10 @@ export default {
     }
   },
   generate: {
-    fallback: true
+    fallback: false,
+    exclude: [
+      /^(?=.*\btypes\b).*$/
+    ]
   },
   router: {
     // Set the "Base" of the router.
