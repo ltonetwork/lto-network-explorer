@@ -40,21 +40,17 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchChart (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
-    // Doc: https://github.com/bbjansen/lto-cache-api
+  async fetchChart (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }, filters: any) {
+    // Doc: https://stats.lto.network/api-docs/
 
-    // state.dashboard.chart.updated = null
-
-    const url: string = process.env.CACHE_API + '/stats/transaction/week'
+    const url: string = process.env.STATS_API + '/transactions?startdate=' + filters.start + '&enddate=' + filters.end + '&granularity=' + filters.granularity
     const payload = await this.$axios.$get(url)
 
     commit('updateChart', payload)
   },
   async fetchBlocks (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
+
     // Doc: https://docs.ltonetwork.com/public-node
-
-    // state.dashboard.blocks.updated = null
-
     const res: any = await this.$axios.$get(process.env.LB_API + '/node/status')
     const end: number = +res.blockchainHeight
     const start: number = end - Number(process.env.LATEST_BLOCKS) + 1
@@ -67,8 +63,6 @@ export const actions = {
   async fetchUnconfirmed (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
-    // state.dashboard.unconfirmed.updated = null
-
     const url: string = process.env.LB_API + '/transactions/unconfirmed'
     const payload = await this.$axios.$get(url)
 
@@ -78,8 +72,9 @@ export const actions = {
 
 export const mutations = {
   updateChart (state: DashboardState, payload: unknown[]) {
+
     payload.forEach((d: any) => {
-      d.period = moment(d.period)
+      d.date = moment(d.date)
     })
 
     state.dashboard.chart.dataset = payload

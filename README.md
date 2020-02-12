@@ -29,6 +29,7 @@ LB_API=https://nodes.lto.network
 CACHE_API=https://api.lto.cloud/v1
 NETWORK_API=https://network.lto.cloud/v1
 BRIDGE_API=https://bridge.lto.network
+STATS_API=https://stats.lto.network
 LATEST_BLOCKS=10
 AXIOS_TIMEOUT=20000
 ATOMIC=100000000

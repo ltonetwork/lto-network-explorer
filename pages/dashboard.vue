@@ -14,6 +14,7 @@
             <v-spacer />
 
             <v-chip-group
+              v-model="selectedFilter"
               mandatory
               active-class="primary"
             >
@@ -23,7 +24,6 @@
                 :value="filter"
                 label
                 class="white--text transparent font-weight-thin overline"
-                @click="filterChart()"
               >
                 {{ filter }}
               </v-chip>
@@ -175,7 +175,8 @@ import Vue from 'vue'
 import { ChartData, ChartType, ChartTooltipItem } from 'chart.js'
 
 import { mapGetters } from 'vuex'
-import { Component } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
+import moment from 'moment'
 import Panel from '../components/Panel.vue'
 import LineChart from '../components/LineChart.vue'
 import { translate } from '../locales/index'
@@ -209,11 +210,11 @@ interface ChartDataSet {
   computed: {
     chartDataSet (): ChartData {
       return {
-        labels: (this as any).chart.dataset.map((d: unknown) => (d as any).period),
+        labels: (this as any).chart.dataset.map((d: any) => (d as any).date),
         datasets: [{
           backgroundColor: 'rgba(249, 246, 252, .6)',
           borderColor: '#804BC9',
-          data: (this as any).chart.dataset.map((d: unknown) => (d as any).count)
+          data: (this as any).chart.dataset.map((d: any) => (d as any).transactions)
         }]
       }
     },
@@ -226,6 +227,14 @@ interface ChartDataSet {
 })
 
 class Dashboard extends Vue {
+  filters = {
+    start: moment().subtract(7, 'day').format('YYYY-MM-DD'),
+    end: moment().format('YYYY-MM-DD'),
+    granularity: 'day'
+  }
+
+  selectedFilter = null
+
   chartData = {
     labels: null,
     datasets: [
@@ -322,8 +331,37 @@ class Dashboard extends Vue {
   }
 
   chartFilters = [
-    'day', 'week', 'month', 'year'
+    'week', 'month', 'year'
   ]
+
+  @Watch('selectedFilter')
+  filterChanged (): void {
+    if (this.selectedFilter === 'week') {
+      this.filters = {
+        start: moment().subtract(1, 'week').format('YYYY-MM-DD'),
+        end: moment().format('YYYY-MM-DD'),
+        granularity: 'day'
+      }
+
+      this.$store.dispatch('dashboard/fetchChart', this.filters)
+    } else if (this.selectedFilter === 'month') {
+      this.filters = {
+        start: moment().subtract(1, 'month').format('YYYY-MM-DD'),
+        end: moment().format('YYYY-MM-DD'),
+        granularity: 'day'
+      }
+
+      this.$store.dispatch('dashboard/fetchChart', this.filters)
+    } else if (this.selectedFilter === 'year') {
+      this.filters = {
+        start: moment().subtract(1, 'year').format('YYYY-MM-DD'),
+        end: moment().format('YYYY-MM-DD'),
+        granularity: 'day'
+      }
+
+      this.$store.dispatch('dashboard/fetchChart', this.filters)
+    }
+  }
 
   chartTimer: ReturnType<typeof setInterval> | undefined = undefined;
   blocksTimer: ReturnType<typeof setInterval> | undefined = undefined;
@@ -351,7 +389,7 @@ class Dashboard extends Vue {
 
   pollChart (): void {
     // Fetch on render
-    this.$store.dispatch('dashboard/fetchChart')
+    this.$store.dispatch('dashboard/fetchChart', this.filters)
 
     // Refresh every minute
     this.chartTimer = setInterval(() => {
@@ -380,7 +418,7 @@ class Dashboard extends Vue {
   }
 
   filterChart (): void {
-    alert('not implemented yet')
+    alert(this.selectedFilter)
   }
 }
 
