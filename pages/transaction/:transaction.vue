@@ -59,7 +59,7 @@
                     </td>
                   </tr>
 
-                  <tr v-show="!mass">
+                  <tr v-show="transaction.type === 11">
                     <td class="font-weight-bold secondary--text">
                       {{ $t('explorer.recipient') }}
                     </td>
@@ -88,7 +88,7 @@
                       {{ transaction.fee | parseAtomic | parseNumber }}
                     </td>
                   </tr>
-                  <tr v-show="!mass">
+                  <tr v-if="transaction.type === 11">
                     <td class="font-weight-bold secondary--text">
                       {{ $t('explorer.signature') }}
                     </td>
@@ -105,7 +105,7 @@
       </v-col>
 
       <v-col
-        v-show="mass"
+        v-if="transaction.type === 11 "
         :cols="12"
         :sm="12"
         :md="12"
@@ -146,6 +146,110 @@
           </v-card-text>
         </v-card>
       </v-col>
+
+      <v-col
+        v-if="valid"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
+      >
+        <v-card class="green dark">
+          <v-card-text class="pa-3">
+            <v-row>
+              <v-col
+                :cols="4"
+                :sm="2"
+                :md="2"
+                :lg="2"
+              >
+                <v-icon style="font-size:5rem;" class="mt-2">
+                  mdi-check
+                </v-icon>
+              </v-col>
+              <v-col
+                :cols="8"
+                :sm="10"
+                :md="10"
+                :lg="10"
+              >
+                <div class="headline font-weight-bold">
+                  {{ $t('transaction.valid') }}
+                </div>
+                <div class="title">
+                  {{ hash }}
+                </div>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col
+        v-if="invalid"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
+      >
+        <v-card class="red dark">
+          <v-card-text class="pa-3">
+            <v-row>
+              <v-col
+                :cols="4"
+                :sm="2"
+                :md="2"
+                :lg="2"
+              >
+                <v-icon style="font-size:5rem;" class="mt-2">
+                  mdi-close
+                </v-icon>
+              </v-col>
+              <v-col
+                :cols="8"
+                :sm="10"
+                :md="10"
+                :lg="10"
+              >
+                <div class="headline font-weight-bold">
+                  {{ $t('transaction.invalid') }}
+                </div>
+                <div class="title">
+                  {{ hash }}
+                </div>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col
+        v-if="transaction.type === 15 "
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
+      >
+        <v-card>
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-anchor" />
+            {{ $t('transaction.anchors') }}
+          </v-card-title>
+          <v-card-text>
+            <div v-for="(anchor, i) in transaction.anchors " :key="i" class="secondary--text">
+              {{ anchor }}
+            </div>
+            <div style="width:300px">
+              <v-select
+                v-model="encodeAnchor"
+                cache-items
+                :items="['hex', 'base58','base64']"
+                value="hex"
+              />
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -155,7 +259,9 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import moment from 'moment'
 import '@nuxtjs/axios'
+import baseX from 'base-x'
 import { Transfer, Transaction } from '../types'
+const bs58 = baseX('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz')
 
 @Component({
   components: {
@@ -169,17 +275,11 @@ import { Transfer, Transaction } from '../types'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    // If mass transfer
-    let mass = false
-
-    if (transaction.type === 11) {
-      mass = true
-    } else if (transaction.type === 8 || transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
+    if (transaction.type === 8 || transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
       transaction.amount = 0
     }
 
     return {
-      mass,
       transaction
     }
   }
@@ -187,8 +287,17 @@ import { Transfer, Transaction } from '../types'
 
 class Transactions extends Vue {
   transaction = (this as any).$nuxt.$route.params.transaction
+  hash = (this as any).$nuxt.$route.query.hash
+  valid = false
+  invalid = false
 
-  mass = false
+  created (): void {
+    if (this.hash) {
+      // Validate
+
+      this.invalid = true
+    }
+  }
 
   name (value: number): string {
     // Genesis Transfer
@@ -207,7 +316,7 @@ class Transactions extends Vue {
       // Mass Transfer
       return 'Mass Transfer'
     } else if (value === 13) {
-      // Set Script
+      // `Set Script
       return 'Script'
     } else if (value === 15) {
       // Anchor

@@ -59,7 +59,10 @@ export default {
     }
   },
   transaction: {
-    title: 'Transaction'
+    title: 'Transaction',
+    anchors: 'Anchors',
+    valid: 'Hash Valid',
+    invalid: 'Hash Invalid'
   },
   explorer: {
     index: 'Height',

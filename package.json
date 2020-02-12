@@ -21,6 +21,7 @@
     "@types/lodash": "^4.14.149",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
+    "base-x": "^3.0.7",
     "chart.js": "^2.9.3",
     "fs": "0.0.1-security",
     "install": "^0.13.0",

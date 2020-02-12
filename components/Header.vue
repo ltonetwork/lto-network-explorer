@@ -388,6 +388,13 @@ class Header extends Vue {
       (this as any).$nuxt.$router.push(this.url!)
     }
   }
+
+  calculateRIO (): void {
+  //  SUM(FEE 30 days) /30  / SUM(Stake)= avarage ROI last 3
+
+    this.montly_roi = 0
+    this.yearly_roi = 0
+  }
 }
 
 export default Header
