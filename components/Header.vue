@@ -277,7 +277,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Watch } from 'vue-property-decorator'
-import { translate } from '../locales/index'
+import { translate } from '../plugins/translate'
 
 interface HeaderLinks {
   menu: HeaderLink[];

@@ -20,7 +20,7 @@
             <v-card-text class="pa-0">
               <v-data-table
                 v-if="staking.updated"
-                :headers="generatorsTable"
+                :headers="headers"
                 :items="staking.generators"
                 :sort-by="['share']"
                 :sort-desc="[true]"
@@ -144,7 +144,7 @@ import Vue from 'vue'
 import { ChartData, ChartType } from 'chart.js'
 import { mapGetters } from 'vuex'
 import { Component } from 'vue-property-decorator'
-import { translate } from '../locales/index'
+import { translate } from '../plugins/translate'
 import DoughnutChart from '../components/DoughnutChart.vue'
 import Panel from '../components/Panel.vue'
 
@@ -214,7 +214,7 @@ class Staking extends Vue {
     }
   }
 
-  generatorsTable = [
+  headers = [
     {
       text: 'Payout',
       align: 'center',

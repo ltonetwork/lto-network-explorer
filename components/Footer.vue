@@ -218,7 +218,7 @@
 </template>
 
 <script lang="ts">
-import { i18n, translate } from '../locales/index'
+import { i18n, translate } from '../plugins/translate'
 import i18nconfig from '../nuxt.config'
 
 interface Link {

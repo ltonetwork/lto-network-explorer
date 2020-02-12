@@ -177,7 +177,7 @@ import { Component } from 'vue-property-decorator'
 import moment from 'moment'
 import '@nuxtjs/axios'
 import * as _ from 'lodash'
-import { translate } from '../../locales/index'
+import { translate } from '../../plugins/translate'
 import { Block, Transaction } from '../types'
 
 @Component({

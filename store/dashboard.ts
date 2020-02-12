@@ -46,7 +46,7 @@ export const actions = {
     const url: string = process.env.STATS_API + '/transactions?startdate=' + filters.start + '&enddate=' + filters.end + '&granularity=' + filters.granularity
     const payload = await this.$axios.$get(url)
 
-    commit('updateChart', payload)
+    commit('setChart', payload)
   },
   async fetchBlocks (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
 
@@ -58,7 +58,7 @@ export const actions = {
     const url: string = process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end
     const payload = await this.$axios.$get(url)
 
-    commit('updateBlocks', payload)
+    commit('setBlocks', payload)
   },
   async fetchUnconfirmed (this: VueGlobalFunctions, { state, commit }: { state: DashboardState, commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
@@ -66,12 +66,12 @@ export const actions = {
     const url: string = process.env.LB_API + '/transactions/unconfirmed'
     const payload = await this.$axios.$get(url)
 
-    commit('updateUnconfirmed', payload)
+    commit('setUnconfirmed', payload)
   }
 }
 
 export const mutations = {
-  updateChart (state: DashboardState, payload: unknown[]) {
+  setChart (state: DashboardState, payload: unknown[]) {
 
     payload.forEach((d: any) => {
       d.date = moment(d.date)
@@ -80,7 +80,7 @@ export const mutations = {
     state.dashboard.chart.dataset = payload
     state.dashboard.chart.updated = moment()
   },
-  updateBlocks (state: DashboardState, payload: Block[]) {
+  setBlocks (state: DashboardState, payload: Block[]) {
     payload.forEach((b) => {
       b.timestamp = moment(b.timestamp).fromNow()
     })
@@ -88,7 +88,7 @@ export const mutations = {
     state.dashboard.blocks.last = payload.reverse()
     state.dashboard.blocks.updated = moment()
   },
-  updateUnconfirmed (state: DashboardState, payload: Transaction[]) {
+  setUnconfirmed (state: DashboardState, payload: Transaction[]) {
     state.dashboard.unconfirmed.pool = payload
     state.dashboard.unconfirmed.updated = moment()
   }

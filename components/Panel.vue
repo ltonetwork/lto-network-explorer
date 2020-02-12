@@ -310,11 +310,11 @@ class Panel extends Vue {
 
   pollNodes (): void {
     // Fetch on render
-    this.$store.dispatch('panel/fetchNodes')
+    this.$store.dispatch('panel/fetch')
 
     // Refresh every minute
     this.nodesCountTimer = setInterval(() => {
-      this.$store.dispatch('panel/fetchNodes')
+      this.$store.dispatch('panel/fetch')
     }, 60000)
   }
 

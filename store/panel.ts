@@ -155,7 +155,7 @@ export const actions = {
 
     commit('updateMarket', payload)
   },
-  async fetchNodes (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
+  async fetch (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
     // state.state.panel.nodes.updated = null

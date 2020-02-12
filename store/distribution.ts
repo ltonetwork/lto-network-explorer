@@ -80,7 +80,7 @@ export const actions = {
     const url: string = process.env.CACHE_API + '/address/top/100'
     const payload = await this.$axios.$get(url)
 
-    commit('updateTop', payload)
+    commit('setTop', payload)
   },
   async fetchSupply (this: VueGlobalFunctions, { state, commit }: { state: DistributionState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
@@ -88,7 +88,7 @@ export const actions = {
     const url: string = process.env.BRIDGE_API + '/stats/token-supply'
     const payload = await this.$axios.$get(url)
 
-    commit('updateSupply', payload)
+    commit('setSupply', payload)
   },
   async fetchBridge (this: VueGlobalFunctions, { state, commit }: { state: DistributionState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
@@ -96,12 +96,12 @@ export const actions = {
     const url: string = process.env.BRIDGE_API + '/stats'
     const payload = await this.$axios.$get(url)
 
-    commit('updateBridge', payload)
+    commit('setBridge', payload)
   }
 }
 
 export const mutations = {
-  updateTop (state: DistributionState, payload: unknown[]) {
+  setTop (state: DistributionState, payload: unknown[]) {
     payload.forEach((h: any) => {
       h.updated = moment(h.updated)
     })
@@ -109,11 +109,11 @@ export const mutations = {
     state.distribution.top.holders = payload
     state.distribution.top.updated = moment()
   },
-  updateSupply (state: DistributionState, payload: Supply) {
+  setSupply (state: DistributionState, payload: Supply) {
     state.distribution.supply.stats = payload
     state.distribution.supply.updated = moment()
   },
-  updateBridge (state: DistributionState, payload: any) {
+  setBridge (state: DistributionState, payload: any) {
     state.distribution.bridge.volume = payload.volume
     state.distribution.bridge.toll = { burn_rate: payload.burn_rate, burned: payload.burned }
     state.distribution.bridge.updated = moment()

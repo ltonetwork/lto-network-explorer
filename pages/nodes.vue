@@ -15,7 +15,7 @@
             <v-card-text class="pa-0">
               <v-data-table
                 v-if="nodes.updated"
-                :headers="nodesTable"
+                :headers="headers"
                 :items="nodes.active"
                 :sort-by="['height']"
                 :sort-desc="[true]"
@@ -201,7 +201,7 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 import { Component } from 'vue-property-decorator'
-import { translate } from '../locales/index'
+import { translate } from '../plugins/translate'
 import Panel from '../components/Panel.vue'
 
 @Component({
@@ -219,7 +219,7 @@ import Panel from '../components/Panel.vue'
 })
 
 class Nodes extends Vue {
-  nodesTable = [
+  headers = [
     {
       text: 'Name',
       align: 'left',

@@ -20,17 +20,15 @@ export const actions = {
   async fetchGenerators (this: VueGlobalFunctions, { state, commit }: { state: StakingState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
-    // state.state.staking.updated = null
-
     const url: string = process.env.CACHE_API + '/generator/all/week'
     const payload = await this.$axios.$get(url)
 
-    commit('updateGenerators', payload)
+    commit('setGenerators', payload)
   }
 }
 
 export const mutations = {
-  updateGenerators (state: StakingState, payload: unknown[]) {
+  setGenerators (state: StakingState, payload: unknown[]) {
     payload.forEach((g: any) => {
       g.updated = moment(g.updated)
     })

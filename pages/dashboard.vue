@@ -179,7 +179,7 @@ import { Component, Watch } from 'vue-property-decorator'
 import moment from 'moment'
 import Panel from '../components/Panel.vue'
 import LineChart from '../components/LineChart.vue'
-import { translate } from '../locales/index'
+import { translate } from '../plugins/translate'
 
 interface DataSet {
   backgroundColor: string;

@@ -2,10 +2,24 @@ import moment from 'moment'
 
 import { VueGlobalFunctions } from '../pages/types'
 
+
 interface Node {
+  address: keyof typeof Node;
+  ip: string;
+  port: number;
+  name: string;
+  app: string;
+  version: string;
   updated: moment.Moment;
   created: moment.Moment;
+  height: number;
+  p2p: number;
+  api: number;
   uptime: string[];
+  country: string;
+  region: string;
+  city: string;
+  coordinates: string;
 }
 
 interface NodeState {
@@ -26,17 +40,15 @@ export const actions = {
   async fetchNodes (this: VueGlobalFunctions, { state, commit }: { state: NodeState, commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
-    // state.state.nodes.updated = null
-
-    const url: string = 'https://network.lto.cloud/v1/nodes/all'
+    const url: string = process.env.NETWORK_API + '/nodes/all'
     const payload = await this.$axios.$get(url)
 
-    commit('updateNodes', payload)
+    commit('setNodes', payload)
   }
 }
 
 export const mutations = {
-  updateNodes (state: NodeState, payload: Node[]) {
+  setNodes (state: NodeState, payload: Node[]) {
     payload.forEach((n: Node) => {
       n.updated = moment(n.updated)
       n.created = moment(n.created)

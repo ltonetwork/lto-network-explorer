@@ -21,7 +21,7 @@
             <v-card-text class="pa-0">
               <v-data-table
                 v-if="top.updated"
-                :headers="topTable"
+                :headers="headers"
                 :items="top.holders"
                 :sort-by="['']"
                 :sort-desc="[true]"
@@ -262,7 +262,7 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import { Component } from 'vue-property-decorator'
-import { translate } from '../locales/index'
+import { translate } from '../plugins/translate'
 import Panel from '../components/Panel.vue'
 import DoughnutChart from '../components/DoughnutChart.vue'
 
@@ -336,7 +336,7 @@ class Distribution extends Vue {
     }
   }
 
-  topTable = [
+  headers = [
     {
       text: 'Address',
       align: 'left',
