@@ -175,7 +175,7 @@
                     <span
                       v-for="(k, v) in item.uptime"
                       :key="v[k]"
-                      :class="setColor(v) + '--text'"
+                      :class="setColor(k) + '--text'"
                       class="display-1 font-weight-black"
                     >.</span>
                   </div>

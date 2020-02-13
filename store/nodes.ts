@@ -1,7 +1,5 @@
 import moment from 'moment'
-
 import { VueGlobalFunctions } from '../pages/types'
-
 
 interface Node {
   address: keyof typeof Node;
@@ -15,7 +13,7 @@ interface Node {
   height: number;
   p2p: number;
   api: number;
-  uptime: string[];
+  uptime: number[];
   country: string;
   region: string;
   city: string;
@@ -52,7 +50,7 @@ export const mutations = {
     payload.forEach((n: Node) => {
       n.updated = moment(n.updated)
       n.created = moment(n.created)
-      n.uptime = n.uptime.toString().split('')
+      n.uptime = n.uptime.toString().split('').map(Number)
     })
 
     state.nodes.active = payload
