@@ -103,8 +103,8 @@ export const mutations = {
     state.transactions.pagination.totalItems = payload.length
     
   },
-  setPagination (state: TransactionsState, payload: any[]) {
-    state.transactions.pagination.payload
+  setPagination (state: TransactionsState, payload: any) {
+    state.transactions.pagination = payload
     state.transactions.updated = moment()
 
   }
