@@ -236,15 +236,24 @@
             {{ $t('transaction.anchors') }}
           </v-card-title>
           <v-card-text>
-            <div v-for="(anchor, i) in transaction.anchors " :key="i" class="secondary--text">
-              {{ anchor }}
-            </div>
+            <!--
+              // Blockchain structure shows there can be multiple anchors,
+              // to an transaction, but have not discovered any tx supporting
+              // that. For now, to make the code simpler, only take the first.
+
+              <div v-for="(anchor, i) in transaction.anchors " :key="i" class="secondary--text">
+                {{ anchor }}
+              </div>
+            -->
+
+            <v-text-field v-model="anchor" readonly />
+
             <div style="width:300px">
               <v-select
-                v-model="encodeAnchor"
                 cache-items
                 :items="['hex', 'base58','base64']"
                 value="hex"
+                @change="encodeAnchor"
               />
             </div>
           </v-card-text>
@@ -259,13 +268,12 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import moment from 'moment'
 import '@nuxtjs/axios'
-import baseX from 'base-x'
 import { Transfer, Transaction } from '../types'
-const bs58 = baseX('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz')
+import { EncoderService } from '../../plugins/encoder'
+
 
 @Component({
-  components: {
-  },
+
   validate (/* { params } */): boolean {
     // return !isNaN(params.address)
     return true
@@ -286,16 +294,30 @@ const bs58 = baseX('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz')
 })
 
 class Transactions extends Vue {
-  transaction = (this as any).$nuxt.$route.params.transaction
   hash = (this as any).$nuxt.$route.query.hash
   valid = false
   invalid = false
+  anchor = null
 
   created (): void {
+    this.anchor = (this as any).transaction.anchors[0]
+
     if (this.hash) {
       // Validate
 
-      this.invalid = true
+      this.valid = true
+    }
+  }
+
+  encodeAnchor (value: string): void {
+    if (value === 'hex') {
+
+    } else if (value === 'base58') {
+
+      // console.log(EncoderService.base64Decode(this.anchor))
+      
+    } else if (value === 'base64') {
+
     }
   }
 
