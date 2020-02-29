@@ -39,7 +39,7 @@ export class EncoderServiceImpl implements EncoderService {
     return hashBytes.length === 32;
   }
 
-  base64Encode(buffer: number[]) {
+  base64Encode(buffer: Uint8Array) {
     return Buffer.from(String.fromCharCode(...buffer), Encoding.binary).toString(Encoding.base64);
   }
 
@@ -48,7 +48,7 @@ export class EncoderServiceImpl implements EncoderService {
     return new Uint8Array(bytes.split('').map(char => char.charCodeAt(0)));
   }
 
-  base58Encode(buffer: number[]) {
+  base58Encode(buffer: Uint8Array) {
     if (buffer.length === 0) {
       return '';
     }
@@ -124,7 +124,7 @@ export class EncoderServiceImpl implements EncoderService {
     return new Uint8Array(bytes.reverse());
   }
 
-  hexEncode(buffer: number[]) {
+  hexEncode(buffer: Uint8Array) {
     return Buffer.from(String.fromCharCode(...buffer), Encoding.binary).toString(Encoding.hex);
   }
 
@@ -135,11 +135,11 @@ export class EncoderServiceImpl implements EncoderService {
 }
 
 export abstract class EncoderService {
-  abstract base64Encode(buffer: number[]): string;
+  abstract base64Encode(buffer: Uint8Array): string;
   abstract base64Decode(hash: string): Uint8Array;
-  abstract base58Encode(buffer: number[]): string;
+  abstract base58Encode(buffer: Uint8Array): string;
   abstract base58Decode(hash: string): Uint8Array;
-  abstract hexEncode(buffer: number[]): string;
+  abstract hexEncode(buffer: Uint8Array): string;
   abstract hexDecode(hash: string): Uint8Array;
   abstract decode(hash: string, encoding: Encoding): Uint8Array;
   abstract validateSHA256(hash: string, encoding: Encoding): boolean;

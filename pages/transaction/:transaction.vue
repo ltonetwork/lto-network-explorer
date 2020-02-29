@@ -269,8 +269,7 @@ import { Component } from 'vue-property-decorator'
 import moment from 'moment'
 import '@nuxtjs/axios'
 import { Transfer, Transaction } from '../types'
-import { EncoderService } from '../../plugins/encoder'
-
+import { EncoderServiceImpl } from '../../plugins/encoder'
 
 @Component({
 
@@ -297,27 +296,50 @@ class Transactions extends Vue {
   hash = (this as any).$nuxt.$route.query.hash
   valid = false
   invalid = false
-  anchor = null
+  anchor = ''
+
+  decodedAnchor: Uint8Array = new Uint8Array()
+  hexAnchor = '';
+  base58Anchor = '';
+  base64Anchor = '';
+  encoder = new EncoderServiceImpl()
 
   created (): void {
-    this.anchor = (this as any).transaction.anchors[0]
+    /* If we have any anchors, setup the decoded anchor so we don't need to
+     * repeatedly decode/encode. It is base58 format on the transaction. */
+    if ((this as any).transaction.anchors) {
+      this.decodedAnchor = this.encoder.base58Decode((this as any).transaction.anchors[0])
 
-    if (this.hash) {
-      // Validate
+      /* Might as well precompute the different forms, rather than requiring
+       * an encode on every different selection. */
+      this.hexAnchor = this.encoder.hexEncode(this.decodedAnchor)
+      this.base58Anchor = this.encoder.base58Encode(this.decodedAnchor)
+      this.base64Anchor = this.encoder.base64Encode(this.decodedAnchor)
 
-      this.valid = true
+      /* Default format is hex. */
+      this.anchor = this.hexAnchor
+
+      /* If a hash is given in the query string, we verify that the anchor encoded
+       * in one of the three forms matches the hash. */
+      if (this.hash) {
+        const valid = this.hash === this.hexAnchor ||
+                      this.hash === this.base58Anchor ||
+                      this.hash === this.base64Anchor
+
+        this.valid = valid
+        this.invalid = !valid
+      }
     }
   }
 
+  /* Encode the anchor into the specified format */
   encodeAnchor (value: string): void {
     if (value === 'hex') {
-
+      this.anchor = this.hexAnchor
     } else if (value === 'base58') {
-
-      // console.log(EncoderService.base64Decode(this.anchor))
-      
+      this.anchor = this.base58Anchor
     } else if (value === 'base64') {
-
+      this.anchor = this.base64Anchor
     }
   }
 
