@@ -1,6 +1,5 @@
-// NOT BEING USED
-// NEEDS CLEANING
-
+// Code below is taken from the old LTO explorer
+// See: https://github.com/legalthings/lto-network-frontend/blob/a86650ce6f8667fce897a435dd972a22f38ad8f3/libs/core/src/lib/services/encoder.service.ts
 
 export enum Encoding {
   base64 = 'base64',
