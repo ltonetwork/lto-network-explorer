@@ -235,7 +235,7 @@ class Dashboard extends Vue {
     granularity: 'day'
   }
 
-  selectedFilter = null
+  selectedFilter: moment.unitOfTime.DurationConstructor = 'week'
 
   chartData = {
     labels: null,
@@ -338,34 +338,14 @@ class Dashboard extends Vue {
 
   @Watch('selectedFilter')
   filterChanged (): void {
-    if (this.selectedFilter === 'week') {
-      this.filters = {
-        type: 'week',
-        start: moment().subtract(1, 'week').format('YYYY-MM-DD'),
-        end: moment().format('YYYY-MM-DD'),
-        granularity: 'day'
-      }
-
-      this.$store.dispatch('dashboard/fetchChart', this.filters)
-    } else if (this.selectedFilter === 'month') {
-      this.filters = {
-        type: 'month',
-        start: moment().subtract(1, 'month').format('YYYY-MM-DD'),
-        end: moment().format('YYYY-MM-DD'),
-        granularity: 'day'
-      }
-
-      this.$store.dispatch('dashboard/fetchChart', this.filters)
-    } else if (this.selectedFilter === 'year') {
-      this.filters = {
-        type: 'year',
-        start: moment().subtract(1, 'year').format('YYYY-MM-DD'),
-        end: moment().format('YYYY-MM-DD'),
-        granularity: 'day'
-      }
-
-      this.$store.dispatch('dashboard/fetchChart', this.filters)
+    this.filters = {
+      type: this.selectedFilter,
+      start: moment().subtract(1, this.selectedFilter).format('YYYY-MM-DD'),
+      end: moment().format('YYYY-MM-DD'),
+      granularity: 'day'
     }
+
+    this.$store.dispatch('dashboard/fetchChart', this.filters)
   }
 
   chartTimer: ReturnType<typeof setInterval> | undefined = undefined;
