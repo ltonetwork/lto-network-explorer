@@ -98,7 +98,7 @@ export const mutations = {
   },
   setBlocks(state: DashboardState, payload: Block[]) {
     payload.map((b) => {
-      b.timestamp = moment(b.timestamp).utc().format('HH:mm:ss')
+      b.timestamp = moment(b.timestamp).format('HH:mm:ss')
     })
 
     state.dashboard.blocks.last = payload.reverse()
