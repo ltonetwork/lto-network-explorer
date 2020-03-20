@@ -51,10 +51,6 @@
               <span class="title font-weight-bold secondary--text">
                 €{{ market.price.currency.eur | parseNumber }}
               </span>
-
-              <p class="overline grey--text ma-0">
-                (CoinGecko)
-              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -115,10 +111,6 @@
               <span class="title font-weight-bold secondary--text">
                 {{ nodesCount.active | parseString }}
               </span>
-
-              <p class="overline grey--text ma-0">
-                (LTO Services)
-              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -166,17 +158,11 @@
             <v-col
               :cols="6"
               :sm="6"
-              :md="6"
-              :lg="6"
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
                 {{ staking.total | parseNumber }}
               </span>
-
-              <p class="overline grey--text ma-0">
-                (LTO Services)
-              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -231,10 +217,6 @@
               <span class="title font-weight-bold secondary--text">
                 {{ network.height | parseString }}
               </span>
-
-              <p class="overline grey--text ma-0">
-                (LTO Network)
-              </p>
             </v-col>
             <v-col
               :cols="6"
