@@ -7,7 +7,7 @@
       :lg="6"
       :xl="3"
     >
-      <v-card :loading="!market.updated">
+      <v-card :loading="!market.updated" height="100%">
         <v-card-text class="pt-4 pb-2 pl-7 pr-7">
           <v-row>
             <v-col
@@ -83,7 +83,7 @@
       :lg="6"
       :xl="3"
     >
-      <v-card :loading="!nodesCount.updated">
+      <v-card :loading="!nodesCount.updated" height="100%">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -141,7 +141,7 @@
       :lg="6"
       :xl="3"
     >
-      <v-card :loading="!staking.updated">
+      <v-card :loading="!staking.updated" height="100%">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -199,7 +199,7 @@
       :lg="6"
       :xl="3"
     >
-      <v-card :loading="!network.updated">
+      <v-card :loading="!network.updated" height="100%">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -254,7 +254,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import { Component } from 'vue-property-decorator'
 
 @Component({
@@ -267,7 +266,7 @@ import { Component } from 'vue-property-decorator'
     })
   }
 })
-class Panel extends Vue {
+export default class Panel extends Vue {
   marketTimer: ReturnType<typeof setInterval> | undefined = undefined
   nodesCountTimer: ReturnType<typeof setInterval> | undefined = undefined
   stakingTimer: ReturnType<typeof setInterval> | undefined = undefined
@@ -339,5 +338,4 @@ class Panel extends Vue {
   }
 }
 
-export default Panel
 </script>

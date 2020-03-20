@@ -161,7 +161,7 @@ interface HeaderLink {
 
 @Component({})
 
-class Header extends Vue {
+export default class Header extends Vue {
   menu = [
     {
       title: translate('menu.overview'),
@@ -263,5 +263,4 @@ class Header extends Vue {
   }
 }
 
-export default Header
 </script>
