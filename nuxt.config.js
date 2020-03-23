@@ -181,7 +181,7 @@ export default {
   router: {
     // Set the "Base" of the router.
     // https://router.vuejs.org/en/api/options.html#base
-    base: '/explorer/'
+    base: '/lto-network-explorer/'
   },
   proxy: {
     '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: { '^/cache/': '' } },
