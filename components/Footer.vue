@@ -17,31 +17,6 @@
             <img :src="require('@/assets/logo.png')" class="mr-3" height="30" style="margin-bottom:-7px;">
             <span class="font-weight-black">LTO</span> Explorer
           </v-toolbar-title>
-
-          <v-select
-            :items="locales"
-            dark
-            label="Langauge"
-            prepend-icon="mdi-earth"
-            style="width:250px;"
-            class="mt-12"
-          >
-            <template v-slot:item="{ item, attrs, on }">
-              <v-list-item
-                :key="item.code"
-                v-bind="attrs"
-                :to="switchLocalePath(item.code)"
-                tag="nuxt-link"
-                v-on="on"
-              >
-                <v-list-item-content>
-                  <v-list-item-title
-                    v-text="item.name"
-                  />
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-          </v-select>
         </v-col>
         <v-col
           :cols="12"
@@ -134,30 +109,6 @@
             <img :src="require('@/assets/logo.png')" class="mr-3" height="30" style="margin-bottom:-7px;">
             <span class="font-weight-black">LTO</span> Explorer
           </v-toolbar-title>
-
-          <v-select
-            :items="locales"
-            dark
-            label="Langauge"
-            prepend-icon="mdi-earth"
-            class="mt-10"
-          >
-            <template v-slot:item="{ item, attrs, on }">
-              <v-list-item
-                :key="item.code"
-                v-bind="attrs"
-                :to="switchLocalePath(item.code)"
-                tag="nuxt-link"
-                v-on="on"
-              >
-                <v-list-item-content>
-                  <v-list-item-title
-                    v-text="item.name"
-                  />
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-          </v-select>
         </v-col>
         <v-col
           :cols="12"
@@ -218,8 +169,7 @@
 </template>
 
 <script lang="ts">
-import { i18n, translate } from '../plugins/translate'
-import i18nconfig from '../nuxt.config'
+import { translate } from '~/plugins/translate'
 
 interface Link {
   name: string;
@@ -284,11 +234,6 @@ export default {
           href: 'https://www.reddit.com/r/LTONetwork'
         }
       ]
-    }
-  },
-  computed: {
-    locales (): Locale[] {
-      return i18nconfig.i18n.locales.filter(i => i.code !== i18n.locale)
     }
   }
 }

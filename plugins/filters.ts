@@ -14,8 +14,8 @@ Vue.filter("parseString", function (string: string): string {
 
 Vue.filter("parseNumber", function (amount: number): string {
     return ((amount || 0).toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3
     }))
 })
 

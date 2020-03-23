@@ -235,7 +235,7 @@ class Dashboard extends Vue {
     granularity: 'day'
   }
 
-  selectedFilter: moment.unitOfTime.DurationConstructor = 'week'
+  selectedFilter: moment.unitOfTime.DurationConstructor = 'month'
 
   chartData = {
     labels: null,
