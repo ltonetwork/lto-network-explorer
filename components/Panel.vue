@@ -7,7 +7,7 @@
       :lg="6"
       :xl="3"
     >
-      <v-card :loading="!market.updated">
+      <v-card :loading="!market.updated" height="100%">
         <v-card-text class="pt-4 pb-2 pl-7 pr-7">
           <v-row>
             <v-col
@@ -51,10 +51,6 @@
               <span class="title font-weight-bold secondary--text">
                 €{{ market.price.currency.eur | parseNumber }}
               </span>
-
-              <p class="overline grey--text ma-0">
-                (CoinGecko)
-              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -83,7 +79,7 @@
       :lg="6"
       :xl="3"
     >
-      <v-card :loading="!nodesCount.updated">
+      <v-card :loading="!nodesCount.updated" height="100%">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -115,10 +111,6 @@
               <span class="title font-weight-bold secondary--text">
                 {{ nodesCount.active | parseString }}
               </span>
-
-              <p class="overline grey--text ma-0">
-                (LTO Services)
-              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -141,7 +133,7 @@
       :lg="6"
       :xl="3"
     >
-      <v-card :loading="!staking.updated">
+      <v-card :loading="!staking.updated" height="100%">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -166,17 +158,11 @@
             <v-col
               :cols="6"
               :sm="6"
-              :md="6"
-              :lg="6"
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
                 {{ staking.total | parseNumber }}
               </span>
-
-              <p class="overline grey--text ma-0">
-                (LTO Services)
-              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -199,7 +185,7 @@
       :lg="6"
       :xl="3"
     >
-      <v-card :loading="!network.updated">
+      <v-card :loading="!network.updated" height="100%">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>
             <v-col
@@ -231,10 +217,6 @@
               <span class="title font-weight-bold secondary--text">
                 {{ network.height | parseString }}
               </span>
-
-              <p class="overline grey--text ma-0">
-                (LTO Network)
-              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -254,7 +236,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import { Component } from 'vue-property-decorator'
 
 @Component({
@@ -267,7 +248,7 @@ import { Component } from 'vue-property-decorator'
     })
   }
 })
-class Panel extends Vue {
+export default class Panel extends Vue {
   marketTimer: ReturnType<typeof setInterval> | undefined = undefined
   nodesCountTimer: ReturnType<typeof setInterval> | undefined = undefined
   stakingTimer: ReturnType<typeof setInterval> | undefined = undefined
@@ -339,5 +320,4 @@ class Panel extends Vue {
   }
 }
 
-export default Panel
 </script>

@@ -88,13 +88,6 @@
                 </v-icon>
                 <v-list-item-title>{{ wallet.title }}</v-list-item-title>
               </v-list-item>
-
-              <v-list-item @click="calculator = true">
-                <v-icon class="mr-2">
-                  mdi-calculator
-                </v-icon>
-                <v-list-item-title>{{ $t('calculator.title') }}</v-list-item-title>
-              </v-list-item>
             </v-list>
           </v-menu>
         </v-row>
@@ -111,9 +104,6 @@
         <v-row justify="center">
           <v-col
             :cols="12"
-            :sm="12"
-            :md="8"
-            :lg="6"
           >
             <v-text-field
               id="search"
@@ -146,132 +136,10 @@
               </template>
             </v-text-field>
           </v-col>
-
-          <v-col
-            :cols="0"
-            :sm="0"
-            :md="2"
-            :lg="2"
-          >
-            <v-btn
-              class="hidden-sm-and-down"
-              color="rgba(255,255,255,0.1)"
-              rounded
-              outlined
-              large
-              @click.stop="calculator = true"
-            >
-              {{ $t('calculator.title') }}
-            </v-btn>
-          </v-col>
         </v-row>
       </v-container>
     </v-toolbar>
 
-    <v-dialog
-      v-model="calculator"
-      max-width="600"
-    >
-      <v-card>
-        <v-card-title class="headline font-weight-bold secondary--text">
-          <span class="mr-2 lto-calculator" />
-          {{ $t('calculator.modal_title') }}
-
-          <v-spacer />
-
-          <v-btn
-            color="grey"
-            text
-            class="mr-n6 mt-n3"
-            @click.native="calculator = false"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text>
-          <v-row class="text-center">
-            <v-col
-              :cols="6"
-              :sm="6"
-              :md="6"
-              :xl="6"
-            >
-              <v-form
-                ref="form"
-              >
-                <v-text-field
-                  :hint="$t('calculator.active_leases')"
-                  :value="10000"
-                  persistent-hint
-                  single-line
-                  color="secondary"
-                  type="number"
-                />
-                <v-text-field
-                  :hint="$t('calculator.total_tx')"
-                  :value="100000"
-                  persistent-hint
-                  single-line
-                  color="secondary"
-                  type="number"
-                />
-                <v-text-field
-                  :hint="$t('calculator.total_fees')"
-                  :value="15000"
-                  disabled
-                  persistent-hint
-                  single-line
-                  color="secondary"
-                  type="number"
-                />
-              </v-form>
-            </v-col>
-            <v-col
-              :cols="6"
-              :sm="6"
-              :md="6"
-              :xl="6"
-            >
-              <v-form
-                ref="form"
-              >
-                <v-text-field
-                  :hint="$t('calculator.leasing')"
-                  :value="0"
-                  persistent-hint
-                  single-line
-                  color="secondary"
-                  type="number"
-                />
-              </v-form>
-            </v-col>
-          </v-row>
-        </v-card-text>
-
-        <v-card-actions class="secondary white--text">
-          <v-spacer />
-          <span class="overline grey--text mr-5">{{ $t('calculator.roi_monthly') }}</span>
-          <span class="body-1">{{ montly_roi }} %</span>
-
-          <v-spacer />
-
-          <span class="overline grey--text mr-5">{{ $t('calculator.roi_yearly') }}</span>
-          <span class="body-1">{{ yearly_roi }} %</span>
-
-          <v-spacer />
-
-          <v-btn
-            href="https://blog.ltonetwork.com/staking-and-leasing-lto-network-node-guide/"
-            color="primary"
-            text
-          >
-            <v-icon class="pa-0" small>
-              mdi-help-circle
-            </v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 <script lang="ts">
@@ -293,7 +161,7 @@ interface HeaderLink {
 
 @Component({})
 
-class Header extends Vue {
+export default class Header extends Vue {
   menu = [
     {
       title: translate('menu.overview'),
@@ -322,8 +190,6 @@ class Header extends Vue {
     icon: 'mdi-coins',
     href: 'https://wallet.lto.network/'
   }
-
-  calculator = false
 
   montly_roi = 0
   yearly_roi = 0
@@ -397,5 +263,4 @@ class Header extends Vue {
   }
 }
 
-export default Header
 </script>

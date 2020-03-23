@@ -185,6 +185,10 @@
               no-data-text="this block does not contain any transactions"
               class="secondary--text"
             >
+              <template v-slot:header.label="{ header }">
+                <span class="overline grey--text">{{ header.text }}</span>
+              </template>
+
               <template v-slot:header.type="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
@@ -213,8 +217,17 @@
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.label="{ header }">
-                <span class="overline grey--text">{{ header.text }}</span>
+              <template v-slot:item.label="{ item }">
+                <v-btn
+                  :color="color(item.label)"
+                  outlined
+                  dark
+                  small
+                  style="width:30px;"
+                  class="text-center"
+                >
+                  {{ item.label }}
+                </v-btn>
               </template>
 
               <template v-slot:item.type="{ item }">
@@ -229,19 +242,19 @@
               </template>
 
               <template v-slot:item.id="{ item }">
-                <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text text-truncate" style="max-width: 26vh;">
+                <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text text-truncate" style="max-width: 16vh;">
                   {{ item.id }}
                 </nuxt-link>
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text text-truncate" style="max-width: 26vh;">
+                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text text-truncate" style="max-width: 16vh;">
                   {{ item.sender }}
                 </nuxt-link>
               </template>
 
               <template v-slot:item.recipient="{ item }">
-                <nuxt-link v-if="item.recipient" :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text text-truncate" style="max-width: 26vh;">
+                <nuxt-link v-if="item.recipient" :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text text-truncate" style="max-width: 16vh;">
                   {{ item.recipient }}
                 </nuxt-link>
                 <span v-if="!item.recipient">N/A</span>
@@ -257,19 +270,6 @@
 
               <template v-slot:item.timestamp="{ item }">
                 {{ item.timestamp | fromNow }}
-              </template>
-
-              <template v-slot:item.label="{ item }">
-                <v-btn
-                  :color="color(item.label)"
-                  outlined
-                  dark
-                  small
-                  style="width:30px;"
-                  class="text-center"
-                >
-                  {{ item.label }}
-                </v-btn>
               </template>
             </v-data-table>
           </v-card-text>
@@ -301,7 +301,7 @@ import * as _ from 'lodash'
     return true
   },
   async asyncData ({ $axios, params }) {
-    // Pagination still needs to be implemented osible that a store
+    // Pagination still needs to be implemented possible that a store
     // may be required due to many transactions linked to active
     // addresses
 
@@ -338,7 +338,7 @@ import * as _ from 'lodash'
   }
 })
 
-class Address extends Vue {
+export default class Address extends Vue {
   address = (this as any).$nuxt.$route.params.address
 
   copied = false
@@ -346,6 +346,11 @@ class Address extends Vue {
   balance = null
 
   txTable = [
+    {
+      text: 'I / O',
+      align: 'center',
+      value: 'label'
+    },
     {
       text: 'Type',
       align: 'left',
@@ -380,11 +385,6 @@ class Address extends Vue {
       text: 'Timestamp',
       align: 'center',
       value: 'timestamp'
-    },
-    {
-      text: 'I / O',
-      align: 'center',
-      value: 'label'
     }
   ]
 
@@ -459,5 +459,4 @@ class Address extends Vue {
   }
 }
 
-export default Address
 </script>
