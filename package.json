@@ -1,9 +1,8 @@
 {
   "name": "lto-network-explorer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Serverlesss Network Explorer built for the LTO Network powered by multiple API services.",
   "author": "B.B. Jansen <bobjansen@pm.me>",
-  "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
