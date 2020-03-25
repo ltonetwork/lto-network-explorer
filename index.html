@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>1.5 - Helping you keep social distance.</title>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.1/css/bulma.min.css" integrity="sha256-1nEaE91OpXJD7M6W5uSiqxhdmrY+lOOTHC1iUxU9Pds=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-floating-social-share@2.3.0/dist/jquery.floating-social-share.min.css" integrity="sha256-xR2B+zQtr48HjVHVPIK6Z+JEX7AVis62UqZe74T1CcE=" crossorigin="anonymous">
+
+    <style>
+      .is-gradient {
+        background-image: linear-gradient(225deg, #C9A1F0 0%, #7AB2EB 100%);
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="container">
+
+        <div class="navbar-brand">
+          <a class="navbar-item" href="./">
+            <img src="./assets/logo-onepointfive.svg" alt="1.5 App" height="50" style="margin-right: 7px;">
+            <p class="is-size-5 has-text-dark has-text-weight-semibold"> Social Distancing App</p>
+          </a>
+
+          <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div class="navbar-menu is-hidden-desktop" id="navMenu">
+          <div class="navbar-start">
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="navbar-item"><a href="#" class="modal-button" data-target="modal-support">Support</a></div>
+              <div class="navbar-item"><a href="#" class="modal-button" data-target="modal-privacy">Privacy</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-start">
+        </div>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="navbar-item"><a href="#" class="modal-button" data-target="modal-support">Support</a></div>
+              <div class="navbar-item"><a href="#" class="modal-button" data-target="modal-privacy">Privacy</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero is-gradient is-fullheight-with-navbar">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns">
+
+            <div class="column is-half">
+              <img src="./assets/preview_iphonex_portrait_sad.png" />
+            </div>
+
+            <div class="column is-half">
+              <h1 class="title has-text-white">
+                1.5 - Social Distancing App
+              </h1>
+
+              <hr>
+
+              <p class="subtitle has-text-white">
+                Having a hard time keeping 1.5 meters away from others? 1.5 warns you when another device enters your zone. Help stop the spread of COVID-19, keep your distance with 1.5.
+              </p>
+
+              <hr>
+
+              <div class="is-inline-flex">
+                <img src="./assets/soon_apple_xs.png" />
+                <img src="./assets/soon_google_xs.png" />
+              </div>
+
+              <br />
+              <br />
+              <br />
+
+              <a class="button is-black has-text-white is-size-5" href="./app-release.apk">
+                <span class="icon">
+                  <i class="fas fa-download"></i>
+                </span>
+                <span>Download Android BETA</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="modal-support">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Support</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body has-text-justified">
+            <p>
+              1.5 assists you with social distancing. The app scans for nearby mobile devices and it warns you when a device enters your 1.5 meter parameter. The phone vibrates and a pop-up appears. The pop up contains a graphic that can be shown to the other person. It is a friendly reminder that aims to defuse the situation. 
+            </p>
+
+            <br />
+
+            <p>
+              This is a social distancing app and it works using Bluetooth. Devices of family members and so forth can be excluded. The parameter can be adjusted from a minimum of 1.5 meters up to 4 meters, depending on your preference or local regulation. 1.5 aims to help stop the spread of COVID-19. It is not full proof.
+            </p>
+
+            <br />
+
+            <p>
+              Please follow the advice of the World Health Organisation and your local government.
+            </p>
+            </section>
+        </div>
+      </div>
+
+      <div class="modal" id="modal-privacy">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Private Policy</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body has-text-justified">
+            <p>
+              work in progress.
+            </p>
+            </section>
+        </div>
+      </div>
+
+    </section>
+      
+      <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/jquery-floating-social-share@2.3.0/dist/jquery.floating-social-share.min.js" integrity="sha256-Wh9v88l3JPpn5UbDL1VDcxuAmd/SWzbt4jH/DT94anc=" crossorigin="anonymous"></script>
+      <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+      
+      <script>
+        $(document).ready(function() {
+          $("body").floatingSocialShare({
+            buttons: ["facebook", "twitter", "linkedin", "reddit", "telegram", "whatsapp", "tumblr"],
+            text: "share with:"
+          });
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+
+          // Get all "navbar-burger" elements
+          const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+          // Check if there are any navbar burgers
+          if ($navbarBurgers.length > 0) {
+
+            // Add a click event on each of them
+            $navbarBurgers.forEach(el => {
+              el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+              });
+            });
+          }
+
+          // Modals
+
+          var rootEl = document.documentElement;
+          var $modals = getAll('.modal');
+          var $modalButtons = getAll('.modal-button');
+          var $modalCloses = getAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button');
+
+          if ($modalButtons.length > 0) {
+            $modalButtons.forEach(function ($el) {
+              $el.addEventListener('click', function () {
+                var target = $el.dataset.target;
+                var $target = document.getElementById(target);
+                rootEl.classList.add('is-clipped');
+                $target.classList.add('is-active');
+              });
+            });
+          }
+
+          if ($modalCloses.length > 0) {
+            $modalCloses.forEach(function ($el) {
+              $el.addEventListener('click', function () {
+                closeModals();
+              });
+            });
+          }
+
+          document.addEventListener('keydown', function (event) {
+            var e = event || window.event;
+            if (e.keyCode === 27) {
+              closeModals();
+            }
+          });
+
+          function closeModals() {
+            rootEl.classList.remove('is-clipped');
+            $modals.forEach(function ($el) {
+              $el.classList.remove('is-active');
+            });
+          }
+
+          // Functions
+
+          function getAll(selector) {
+            return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+          }
+
+        });
+      </script>
+
+  </body>
+</html>
