@@ -59,6 +59,17 @@
                     </td>
                   </tr>
 
+                  <tr>
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.recipient') }}
+                    </td>
+                    <td>
+                      <nuxt-link :to="{ path: '/address/' + transaction.recipient }">
+                        {{ transaction.recipient }}
+                      </nuxt-link>
+                    </td>
+                  </tr>
+
                   <tr v-show="transaction.type === 11">
                     <td class="font-weight-bold secondary--text">
                       {{ $t('explorer.recipient') }}
