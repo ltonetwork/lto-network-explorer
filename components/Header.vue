@@ -249,6 +249,7 @@ export default class Header extends Vue {
         // TODO
         //
         // Display error message
+        // eslint-disable-next-line no-console
         console.error('transaction type 13 (script) not supported')
       }
     }

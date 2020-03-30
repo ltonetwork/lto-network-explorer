@@ -106,13 +106,15 @@ export default {
     private_supply_erc20: 'Private Supply ERC20'
   },
   links: {
-    wallet: 'Web Wallet',
-    home: 'Homepage',
-    blog: 'Blog'
+    wallet: 'Wallet',
+    home: 'Website',
+    blog: 'Blog',
+    source: 'Source'
   },
   resources: {
-    api: 'API Services',
+    api: 'API Service',
     support: 'Tech Chat',
+    documentation: 'Documentation',
     github: 'Github'
   },
   footer: {

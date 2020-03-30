@@ -269,7 +269,7 @@
               </template>
 
               <template v-slot:item.timestamp="{ item }">
-                {{ item.timestamp | parseTimeHour }}
+                {{ item.timestamp | parseTime }}
               </template>
             </v-data-table>
           </v-card-text>

@@ -195,21 +195,25 @@ export default {
       links: [
         {
           name: translate('links.wallet'),
-          href: 'https://wallet.lto.network'
+          href: 'https://wallet.lto.network/start'
         },
         {
           name: translate('links.home'),
-          href: 'https://lto.network'
+          href: 'https://ltonetwork.com/'
         },
         {
-          name: translate('links.blog'),
-          href: 'https://blog.lto.network'
+          name: translate('links.source'),
+          href: 'https://lto.tools/'
         }
       ],
       resources: [
         {
           name: translate('resources.api'),
-          href: 'https://api.lto.cloud'
+          href: 'https://nodes.lto.network'
+        },
+        {
+          name: translate('resources.documentation'),
+          href: 'https://docs.ltonetwork.com/'
         },
         {
           name: translate('resources.support'),
@@ -226,8 +230,8 @@ export default {
           href: 'https://twitter.com/ltonetwork'
         },
         {
-          name: 'Telegram',
-          href: 'https://t.me/LTOnetwork'
+          name: 'Blog',
+          href: 'https://blog.ltonetwork.com/'
         },
         {
           name: 'Reddit',
