@@ -103,7 +103,7 @@
       <v-container>
         <v-row justify="center">
           <v-col
-            :cols="12"
+            :cols="7"
           >
             <v-text-field
               id="search"
@@ -119,7 +119,6 @@
               class="search"
               clearable
               @keydown.enter="executeQuery"
-              @focus="focus"
             >
               <template v-slot:default="t">
                 <span style="color:rgba(255,255,255, 0.4)">{{ t }}</span>
@@ -140,6 +139,20 @@
       </v-container>
     </v-toolbar>
 
+    <v-snackbar
+      v-model="alert"
+      color="red"
+      :top="true"
+    >
+      Invalid address
+      <v-btn
+        dark
+        text
+        @click="alert = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script lang="ts">
@@ -197,15 +210,7 @@ export default class Header extends Vue {
   query: string | null = null;
   valid = false;
   url: string | null = null;
-
-  @Watch('query')
-  onQueryChanged (): void {
-    this.validateQuery()
-  }
-
-  focus (e: number): void {
-    // console.log(e)
-  }
+  alert = false;
 
   validateQuery (): void {
     // Reset
@@ -250,9 +255,11 @@ export default class Header extends Vue {
   }
 
   executeQuery (): void {
+    this.validateQuery()
     if (this.valid) {
-      (this as any).$nuxt.$router.push(this.url!)
+      return (this as any).$nuxt.$router.push(this.url!)
     }
+    this.alert = true
   }
 
   calculateRIO (): void {
@@ -264,3 +271,15 @@ export default class Header extends Vue {
 }
 
 </script>
+
+<style lang="scss">
+  #search {
+    color: white !important;
+  }
+
+  .search {
+    .theme--light.v-icon {
+      color: white;
+    }
+  }
+</style>
