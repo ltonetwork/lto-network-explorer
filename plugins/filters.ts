@@ -16,7 +16,7 @@ Vue.filter('parseNumber', function (amount: number): string {
   return ((amount || 0).toLocaleString(undefined, {
     minimumFractionDigits: 3,
     maximumFractionDigits: 3
-  }))
+  }).replace(/[.]?[0]*$/, ''))
 })
 
 Vue.filter('parseTimeHour', function (timestamp: number): string {
