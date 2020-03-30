@@ -142,9 +142,7 @@
                 <tbody>
                   <tr v-for="tx in unconfirmed.pool" :key="tx.id">
                     <td class="text-truncate" style="max-width: 26vh;">
-                      <nuxt-link :to="{ path: '/address/' + tx.sender }">
-                        {{ tx.id }}
-                      </nuxt-link>
+                      {{ tx.id }}
                     </td>
                     <td class="primary--text text-truncate" style="max-width: 26vh;">
                       <nuxt-link :to="{ path: '/address/' + tx.sender }">
