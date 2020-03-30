@@ -269,7 +269,7 @@
               </template>
 
               <template v-slot:item.timestamp="{ item }">
-                {{ item.timestamp | fromNow }}
+                {{ item.timestamp | parseTimeHour }}
               </template>
             </v-data-table>
           </v-card-text>
@@ -282,7 +282,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
-import moment from 'moment'
 import '@nuxtjs/axios'
 import * as _ from 'lodash'
 
@@ -314,7 +313,7 @@ import * as _ from 'lodash'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/9999', {
+    let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/100', {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 

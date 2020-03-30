@@ -36,21 +36,19 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchTransactions (this: VueGlobalFunctions, { state, commit }: { state: TransactionsState, commit: any }, address: string) {
-    
+  async fetchTransactions (this: VueGlobalFunctions, { state, commit }: { state: TransactionsState; commit: any }, address: string) {
     // Doc: https://stats.lto.network/api-docs/
-    
+
     return new Promise((resolve) => {
       setTimeout(async() => {
 
-        const url: string = process.env.LB_API + '/transactions/address/' + address + '/limit/9999'
+        const url: string = process.env.LB_API + '/transactions/address/' + address + '/limit/100'
         const payload = await this.$axios.$get(url)
 
-        const data = { 
+        const data = {
           items: payload,
-          address: address
+          address
         }
-
 
         commit('setTransactions', data)
         resolve()
@@ -62,8 +60,7 @@ export const actions = {
 export const mutations = {
   setTransactions (state: TransactionsState, payload: any,) {
     let items = payload.items[0]
-    let address = payload.address
-  
+    const address = payload.address
     if (items.length >= 1) {
       items.forEach((tx: any) => {
         if (tx.sender === address) {
@@ -101,12 +98,10 @@ export const mutations = {
 
     state.transactions.items = items
     state.transactions.pagination.totalItems = payload.length
-    
   },
   setPagination (state: TransactionsState, payload: any) {
     state.transactions.pagination = payload
     state.transactions.updated = moment()
-
   }
 }
 

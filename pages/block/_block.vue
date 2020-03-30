@@ -239,6 +239,7 @@ class Blocks extends Vue {
       value: 'timestamp'
     }
   ]
+
   txFilter = [
     { text: 'Genesis', value: 1 },
     { text: 'Transfer', value: 4 },

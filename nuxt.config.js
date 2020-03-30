@@ -179,8 +179,6 @@ export default {
     ]
   },
   router: {
-    // Set the "Base" of the router.
-    // https://router.vuejs.org/en/api/options.html#base
     base: '/lto-network-explorer/'
   },
   proxy: {
