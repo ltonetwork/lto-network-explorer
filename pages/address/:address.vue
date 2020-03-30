@@ -231,14 +231,7 @@
               </template>
 
               <template v-slot:item.type="{ item }">
-                <v-tooltip top>
-                  <template v-slot:activator="{ on }">
-                    <v-icon color="secondary" v-on="on">
-                      {{ icon(item.type) }}
-                    </v-icon>
-                  </template>
-                  {{ name(item.type) }}
-                </v-tooltip>
+                {{ name(item.type) }}
               </template>
 
               <template v-slot:item.id="{ item }">

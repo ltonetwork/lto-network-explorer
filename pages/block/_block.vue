@@ -121,6 +121,10 @@
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
+              <template v-slot:header.timestamp="{ header }">
+                <span class="overline grey--text">{{ header.text }}</span>
+              </template>
+
               <template v-slot:header.sender="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
@@ -129,25 +133,18 @@
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.timestamp="{ header }">
-                <span class="overline grey--text">{{ header.text }}</span>
-              </template>
-
               <template v-slot:item.type="{ item }">
-                <v-tooltip top>
-                  <template v-slot:activator="{ on }">
-                    <v-icon color="secondary" v-on="on">
-                      {{ icon(item.type) }}
-                    </v-icon>
-                  </template>
-                  {{ name(item.type) }}
-                </v-tooltip>
+                {{ name(item.type) }}
               </template>
 
               <template v-slot:item.id="{ item }">
                 <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text text-truncate" style="max-width: 26vh;">
                   {{ item.id }}
                 </nuxt-link>
+              </template>
+
+              <template v-slot:item.timestamp="{ item }">
+                 {{ item.timestamp | parseTime }}
               </template>
 
               <template v-slot:item.sender="{ item }">
@@ -158,10 +155,6 @@
 
               <template v-slot:item.fee="{ item }">
                 {{ item.fee | parseAtomic | parseNumber }}
-              </template>
-
-              <template v-slot:item.timestamp="{ item }">
-                {{ item.timestamp | parseTime }}
               </template>
             </v-data-table>
           </v-card-text>
@@ -174,7 +167,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
-import moment from 'moment'
 import '@nuxtjs/axios'
 import * as _ from 'lodash'
 import { translate } from '../../plugins/translate'
@@ -224,6 +216,11 @@ class Blocks extends Vue {
       value: 'id'
     },
     {
+      text: 'Timestamp',
+      align: 'right',
+      value: 'timestamp'
+    },
+    {
       text: 'Sender',
       align: 'left',
       value: 'sender'
@@ -232,11 +229,6 @@ class Blocks extends Vue {
       text: 'Fee',
       align: 'right',
       value: 'fee'
-    },
-    {
-      text: 'Timestamp',
-      align: 'right',
-      value: 'timestamp'
     }
   ]
 
