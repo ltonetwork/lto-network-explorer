@@ -54,8 +54,9 @@
 
     <v-row>
       <v-col
-          :cols="6"
-          :sm="6"
+        :cols="12"
+        :sm="12"
+        :md="6"
       >
         <v-card
           :loading="!blocks.updated"
@@ -118,8 +119,9 @@
       </v-col>
 
       <v-col
-          :cols="6"
-          :sm="6"
+        :cols="12"
+        :sm="12"
+        :md="6"
       >
         <v-card
           :loading="!unconfirmed.updated"

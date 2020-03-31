@@ -103,7 +103,9 @@
       <v-container>
         <v-row justify="center">
           <v-col
-            :cols="7"
+            :cols="12"
+            :sm="12"
+            :md="7"
           >
             <v-text-field
               id="search"

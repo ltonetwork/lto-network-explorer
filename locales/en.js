@@ -8,7 +8,7 @@ export default {
     wallet: 'Web Wallet'
   },
   search: {
-    label: 'transaction ID, address or block height'
+    label: 'address, transaction id or block height'
   },
   panel: {
     price: 'Price',
