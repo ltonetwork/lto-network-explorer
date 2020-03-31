@@ -25,7 +25,8 @@
                 :items="top.holders"
                 :sort-by="['']"
                 :sort-desc="[true]"
-                :items-per-page="20"
+                :items-per-page="10"
+                :footer-props="{'items-per-page-options': [10, 50, 100]}"
                 item-key="address"
                 class="secondary--text"
               >

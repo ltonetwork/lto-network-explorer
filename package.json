@@ -4,16 +4,16 @@
   "description": "Serverlesss Network Explorer built for the LTO Network powered by multiple API services.",
   "author": "B.B. Jansen <bobjansen@pm.me>",
   "contributors": [
-      {
-          "name": "Bob Jansen",
-          "email": "bobjansen@pm.me",
-          "url": "https://bbjansen.me"
-      },
-      {
-          "name": "Renato Cardoso",
-          "email": "re2005@gmail.com",
-          "url": "https://renato.amsterdam"
-      }
+    {
+      "name": "Bob Jansen",
+      "email": "bobjansen@pm.me",
+      "url": "https://bbjansen.me"
+    },
+    {
+      "name": "Renato Cardoso",
+      "email": "re2005@gmail.com",
+      "url": "https://renato.amsterdam"
+    }
   ],
   "scripts": {
     "dev": "nuxt",

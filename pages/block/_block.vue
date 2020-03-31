@@ -111,6 +111,7 @@
               :sort-by="['timestamp']"
               :sort-desc="[true]"
               :items-per-page="10"
+              :footer-props="{'items-per-page-options': [10, 50, 100]}"
               no-data-text="this block does not contain any transactions"
             >
               <template v-slot:header.type="{ header }">
@@ -144,7 +145,7 @@
               </template>
 
               <template v-slot:item.timestamp="{ item }">
-                 {{ item.timestamp | parseTime }}
+                {{ item.timestamp | parseTime }}
               </template>
 
               <template v-slot:item.sender="{ item }">
@@ -169,8 +170,8 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import '@nuxtjs/axios'
 import * as _ from 'lodash'
-import { translate } from '../../plugins/translate'
-import { Block, Transaction } from '../types'
+import { Block } from '../types'
+import { translate } from '~/plugins/translate'
 
 @Component({
   head () {
