@@ -2,7 +2,7 @@
 
 > Serverlesss Network Explorer built for the LTO Network powered by multiple API services.
 
-https://ltonetwork.github.io/lto-network-explorer/dashboard/
+https://ltonetwork.github.io/lto-network-explorer/
 
 ## Build Setup
 
