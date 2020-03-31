@@ -307,7 +307,7 @@ import * as _ from 'lodash'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/100', {
+    let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/200', {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
@@ -382,13 +382,13 @@ export default class Address extends Vue {
   ]
 
   txFilter = [
+    { text: 'Anchor', value: 15 },
     { text: 'Genesis', value: 1 },
     { text: 'Transfer', value: 4 },
     { text: 'Lease', value: 8 },
     { text: 'Cancel Lease', value: 9 },
     { text: 'Mass Transfer', value: 11 },
-    { text: 'Script', value: 13 },
-    { text: 'Anchor', value: 15 }
+    { text: 'Script', value: 13 }
   ]
 
   txType = null

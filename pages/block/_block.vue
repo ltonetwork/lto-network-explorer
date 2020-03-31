@@ -234,13 +234,13 @@ class Blocks extends Vue {
   ]
 
   txFilter = [
+    { text: 'Anchor', value: 15 },
     { text: 'Genesis', value: 1 },
     { text: 'Transfer', value: 4 },
     { text: 'Lease', value: 8 },
     { text: 'Cancel Lease', value: 9 },
     { text: 'Mass Transfer', value: 11 },
-    { text: 'Script', value: 13 },
-    { text: 'Anchor', value: 15 }
+    { text: 'Script', value: 13 }
   ]
 
   txType = null

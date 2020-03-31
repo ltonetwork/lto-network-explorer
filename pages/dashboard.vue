@@ -53,7 +53,10 @@
     </v-row>
 
     <v-row>
-      <v-col>
+      <v-col
+          :cols="6"
+          :sm="6"
+      >
         <v-card
           :loading="!blocks.updated"
           :loader-height="10"
@@ -114,7 +117,10 @@
         </v-card>
       </v-col>
 
-      <v-col>
+      <v-col
+          :cols="6"
+          :sm="6"
+      >
         <v-card
           :loading="!unconfirmed.updated"
           :loader-height="10"
