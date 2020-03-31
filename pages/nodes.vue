@@ -21,7 +21,7 @@
                 :sort-desc="[true]"
                 :expanded.sync="expanded"
                 :items-per-page="10"
-                :footer-props="{'items-per-page-options': [10, 50, 100]}"
+                :footer-props="{'items-per-page-options': [10, 50, 100, -1]}"
                 single-expand
                 show-expand
                 item-key="address"

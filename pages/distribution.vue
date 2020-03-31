@@ -26,7 +26,7 @@
                 :sort-by="['']"
                 :sort-desc="[true]"
                 :items-per-page="10"
-                :footer-props="{'items-per-page-options': [10, 50, 100]}"
+                :footer-props="{'items-per-page-options': [10, 50, 100, -1]}"
                 item-key="address"
                 class="secondary--text"
               >

@@ -111,7 +111,7 @@
               :sort-by="['timestamp']"
               :sort-desc="[true]"
               :items-per-page="10"
-              :footer-props="{'items-per-page-options': [10, 50, 100]}"
+              :footer-props="{'items-per-page-options': [10, 50, 100, -1]}"
               no-data-text="this block does not contain any transactions"
             >
               <template v-slot:header.type="{ header }">
