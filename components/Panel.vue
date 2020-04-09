@@ -49,7 +49,7 @@
               class="pt-1 pb-0 pl-0 pr-0"
             >
               <span class="title font-weight-bold secondary--text">
-                €{{ market.price.currency.usd | parseNumber }}
+                ${{ market.price.currency.usd | parseNumber }}
               </span>
             </v-col>
             <v-col
