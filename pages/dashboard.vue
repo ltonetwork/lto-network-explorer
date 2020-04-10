@@ -219,11 +219,11 @@ interface ChartDataSet {
   computed: {
     chartDataSet (): ChartData {
       return {
-        labels: (this as any).chart.dataset.map((d: any) => (d as any).date),
+        labels: (this as any).chart.dataset.map((d: any) => (d as any).period),
         datasets: [{
           backgroundColor: 'rgba(249, 246, 252, .6)',
           borderColor: '#804BC9',
-          data: (this as any).chart.dataset.map((d: any) => (d as any).transactions)
+          data: (this as any).chart.dataset.map((d: any) => (d as any).count)
         }]
       }
     },
@@ -238,12 +238,11 @@ interface ChartDataSet {
 class Dashboard extends Vue {
   filters = {
     type: 'week',
-    start: moment().subtract(7, 'day').format('YYYY-MM-DD'),
-    end: moment().format('YYYY-MM-DD'),
-    granularity: 'day'
+    start: moment().subtract(1, 'week').utc().format('x'),
+    end: moment().utc().format('x')
   }
 
-  selectedFilter: moment.unitOfTime.DurationConstructor = 'month'
+  selectedFilter: moment.unitOfTime.DurationConstructor = 'week'
 
   chartData = {
     labels: null,
@@ -263,13 +262,17 @@ class Dashboard extends Vue {
   chartOptions = {
     maintainAspectRatio: false,
     responsive: true,
+    ticks: {
+      source: 'auto'
+    },
     scales: {
       xAxes: [{
         id: 'x-axis',
         type: 'time',
         ticks: {
           autoSkip: true,
-          maxRotation: 45
+          maxRotation: 45,
+          offset: true
         },
         time: {
           unit: 'day'
@@ -277,7 +280,7 @@ class Dashboard extends Vue {
         callback (value: any): string {
           return value
         },
-        distribution: 'series',
+        distribution: 'linear',
         gridLines: {
           display: true
         },
@@ -341,16 +344,15 @@ class Dashboard extends Vue {
   }
 
   chartFilters = [
-    'week', 'month', 'year'
+    'day', 'week', 'month'
   ]
 
   @Watch('selectedFilter')
   filterChanged (): void {
     this.filters = {
       type: this.selectedFilter,
-      start: moment().subtract(1, this.selectedFilter).format('YYYY-MM-DD'),
-      end: moment().format('YYYY-MM-DD'),
-      granularity: 'day'
+      start: moment().subtract(1, this.selectedFilter).utc().format('x'),
+      end: moment().utc().format('x')
     }
 
     this.$store.dispatch('dashboard/fetchChart', this.filters)
@@ -387,7 +389,7 @@ class Dashboard extends Vue {
     // Refresh every minute
     this.chartTimer = setInterval(() => {
       this.$store.dispatch('dashboard/fetchChart', this.filters)
-    }, 60000)
+    }, 3600000)
   }
 
   pollBlocks (): void {

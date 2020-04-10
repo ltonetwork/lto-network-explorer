@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 /* TODO: Typescript does not like this import. Can't find the types file. */
-//import math from 'lodash/math'
+// import math from 'lodash/math'
 import * as _ from 'lodash'
 
 import { VueGlobalFunctions } from '../pages/types'
@@ -28,33 +28,33 @@ interface PanelState {
       price: {
         change: CurrencyChange;
         currency: Currency;
-      }
+      };
 
       capital: {
         change: CurrencyChange;
         currency: Currency;
-      }
+      };
 
       sparkline: unknown[];
 
       updated: null | moment.Moment | string;
-    }
+    };
 
     nodes: {
       active: number;
       updated: null | moment.Moment | string;
-    }
+    };
 
     staking: {
       total: number;
       updated: null | moment.Moment | string;
-    }
+    };
 
     network: {
       height: number;
       updated: null | moment.Moment | string;
-    }
-  }
+    };
+  };
 }
 
 interface MarketPayload {
@@ -67,8 +67,8 @@ interface MarketPayload {
     market_cap: Currency;
     sparkline_7d: {
       price: unknown[];
-    }
-  }
+    };
+  };
 
   market_cap_change_percentage_24h: number;
 
@@ -145,27 +145,27 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchMarket (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
+  async fetchMarket (this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
     // Doc: https://www.coingecko.com/api/documentations/v3
 
     // state.state.panel.market.updated = null
 
-    const url: string = 'https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true'
+    const url = 'https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true'
     const payload = await this.$axios.$get(url)
 
     commit('updateMarket', payload)
   },
-  async fetch (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
+  async fetch (this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
     // state.state.panel.nodes.updated = null
 
-    const url: string = 'https://network.lto.cloud/v1/nodes/all'
+    const url = 'https://network.lto.cloud/v1/nodes/all'
     const payload = await this.$axios.$get(url)
 
     commit('updateNodes', payload)
   },
-  async fetchStaking (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
+  async fetchStaking (this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     // state.state.panel.staking.updated = null
@@ -175,7 +175,7 @@ export const actions = {
 
     commit('updateStaking', payload)
   },
-  async fetchNetwork (this: VueGlobalFunctions, { state, commit }: { state: PanelState, commit: any }) {
+  async fetchNetwork (this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
     // state.state.panel.network.updated = null

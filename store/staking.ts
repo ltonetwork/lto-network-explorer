@@ -6,7 +6,7 @@ interface StakingState {
   staking: {
     generators: unknown[];
     updated: null | moment.Moment;
-  }
+  };
 }
 
 export const state = () => ({
@@ -17,7 +17,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchGenerators (this: VueGlobalFunctions, { state, commit }: { state: StakingState, commit: any }) {
+  async fetchGenerators (this: VueGlobalFunctions, { state, commit }: { state: StakingState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     const url: string = process.env.CACHE_API + '/generator/all/week'

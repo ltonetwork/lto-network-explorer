@@ -7,7 +7,7 @@ interface Bridge {
   toll: {
     burn_rate: number;
     burned: number;
-  }
+  };
   updated: null | moment.Moment | string;
 }
 
@@ -26,22 +26,22 @@ interface DistributionState {
     top: {
       holders: unknown[];
       updated: null | moment.Moment | string;
-    }
+    };
 
     bridge: {
       volume: unknown[];
       toll: {
         burn_rate: number;
         burned: number;
-      }
+      };
       updated: null | moment.Moment | string;
-    }
+    };
 
     supply: {
       stats: Supply;
       updated: null | moment.Moment | string;
-    }
-  }
+    };
+  };
 }
 
 export const state = () => ({

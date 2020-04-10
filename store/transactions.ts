@@ -2,6 +2,7 @@ import moment from 'moment'
 import { VueGlobalFunctions } from '../pages/types'
 
 interface Transaction {
+
 }
 
 interface Pagination {
@@ -10,15 +11,15 @@ interface Pagination {
   rowsPerPage: number;
   sortBy: string;
   totalItems: number;
-  rowsPerPageItems: number[]
+  rowsPerPageItems: number[];
 }
 
 interface TransactionsState {
   transactions: {
-    pagination: Pagination,
-    items: Transaction[]
+    pagination: Pagination;
+    items: Transaction[];
     updated: null | moment.Moment | string;
-  }
+  };
 }
 
 export const state = () => ({
@@ -36,12 +37,11 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchTransactions (this: VueGlobalFunctions, { state, commit }: { state: TransactionsState; commit: any }, address: string) {
+  fetchTransactions (this: VueGlobalFunctions, { state, commit }: { state: TransactionsState; commit: any }, address: string) {
     // Doc: https://stats.lto.network/api-docs/
 
     return new Promise((resolve) => {
-      setTimeout(async() => {
-
+      setTimeout(async () => {
         const url: string = process.env.LB_API + '/transactions/address/' + address + '/limit/200'
         const payload = await this.$axios.$get(url)
 
@@ -81,12 +81,12 @@ export const mutations = {
         const sortB = b[sortBy]
 
         if (descending) {
-          if (sortA < sortB) return 1
-          if (sortA > sortB) return -1
+          if (sortA < sortB) { return 1 }
+          if (sortA > sortB) { return 1 }
           return 0
         } else {
-          if (sortA < sortB) return -1
-          if (sortA > sortB) return 1
+          if (sortA < sortB) { return 1 }
+          if (sortA > sortB) { return 1 }
           return 0
         }
       })

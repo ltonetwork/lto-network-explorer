@@ -24,7 +24,7 @@ interface NodeState {
   nodes: {
     active: Node[];
     updated: null | moment.Moment | string;
-  }
+  };
 }
 
 export const state = () => ({
@@ -35,7 +35,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchNodes (this: VueGlobalFunctions, { state, commit }: { state: NodeState, commit: any }) {
+  async fetchNodes (this: VueGlobalFunctions, { state, commit }: { state: NodeState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
     const url: string = process.env.NETWORK_API + '/nodes/all'

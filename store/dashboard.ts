@@ -1,7 +1,7 @@
 import moment from 'moment'
 import '@nuxtjs/axios'
 
-import {Block, Transaction, VueGlobalFunctions} from '../pages/types'
+import { Block, Transaction, VueGlobalFunctions } from '../pages/types'
 
 interface DashboardState {
   dashboard: {
@@ -14,18 +14,18 @@ interface DashboardState {
     blocks: {
       last: Block[];
       updated: null | moment.Moment;
-    }
+    };
 
     unconfirmed: {
       pool: Transaction[];
       updated: null | moment.Moment;
-    }
-  }
+    };
+  };
 }
 
 interface Chart {
-  date: moment.Moment;
-  transactions: number;
+  period: moment.Moment;
+  count: number;
 }
 
 export const state = () => ({
@@ -47,19 +47,18 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchChart(this: VueGlobalFunctions, {state, commit}: { state: DashboardState, commit: any }, filters: any) {
-    // Doc: https://stats.lto.network/api-docs/
+  async fetchChart (this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }, filters: any) {
+    // Doc: https://github.com/bbjansen/lto-chain-api
 
     commit('resetUpdated')
 
-    const url: string = process.env.STATS_API + '/transactions?startdate=' + filters.start + '&enddate=' + filters.end + '&granularity=' + filters.granularity
+    const url: string = process.env.CACHE_API + '/stats/transaction/' + filters.start + '/' + filters.end
     const payload = await this.$axios.$get(url)
 
     commit('setFilter', filters.type)
     commit('setChart', payload)
   },
-  async fetchBlocks(this: VueGlobalFunctions, {state, commit}: { state: DashboardState, commit: any }) {
-
+  async fetchBlocks (this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
     const res: any = await this.$axios.$get(process.env.LB_API + '/node/status')
     const end: number = +res.blockchainHeight
@@ -70,7 +69,7 @@ export const actions = {
 
     commit('setBlocks', payload)
   },
-  async fetchUnconfirmed(this: VueGlobalFunctions, {state, commit}: { state: DashboardState, commit: any }) {
+  async fetchUnconfirmed (this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
     const url: string = process.env.LB_API + '/transactions/unconfirmed'
@@ -81,22 +80,21 @@ export const actions = {
 }
 
 export const mutations = {
-  resetUpdated(state: DashboardState) {
+  resetUpdated (state: DashboardState) {
     state.dashboard.chart.updated = null
   },
-  setFilter(state: DashboardState, filter: string) {
+  setFilter (state: DashboardState, filter: string) {
     state.dashboard.chart.filter = filter
   },
-  setChart(state: DashboardState, payload: Chart[]) {
-
+  setChart (state: DashboardState, payload: Chart[]) {
     payload.forEach((d: Chart) => {
-      d.date = moment(d.date)
+      d.period = moment(d.period)
     })
 
     state.dashboard.chart.dataset = payload
     state.dashboard.chart.updated = moment()
   },
-  setBlocks(state: DashboardState, payload: Block[]) {
+  setBlocks (state: DashboardState, payload: Block[]) {
     payload.map((b) => {
       b.timestamp = moment(b.timestamp).format('HH:mm:ss')
     })
@@ -104,7 +102,7 @@ export const mutations = {
     state.dashboard.blocks.last = payload.reverse()
     state.dashboard.blocks.updated = moment()
   },
-  setUnconfirmed(state: DashboardState, payload: Transaction[]) {
+  setUnconfirmed (state: DashboardState, payload: Transaction[]) {
     state.dashboard.unconfirmed.pool = payload
     state.dashboard.unconfirmed.updated = moment()
   }
