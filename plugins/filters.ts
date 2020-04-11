@@ -36,13 +36,13 @@ Vue.filter('truncateString', function (str: string): string {
     return ''
   }
   const strLen = str.length
-  const frontLen = 12
-  const backLen = 12
+  const tip = 12
+  const tail = 12
   const truncateStr = '...'
 
-  if ((frontLen >= strLen) || (backLen >= strLen) || (frontLen + backLen >= strLen)) {
+  if ((tip >= strLen) || (tail >= strLen) || (tip + tail >= strLen)) {
     return str
   } else {
-    return str.slice(0, frontLen) + truncateStr + str.slice(strLen - backLen)
+    return str.slice(0, tip) + truncateStr + str.slice(strLen - tail)
   }
 })
