@@ -130,8 +130,8 @@
                 </template>
 
                 <template v-slot:item.name="{ item }">
-                  <span class="font-weight-bold d-inline-block text-truncate" style="max-width: 26vh;">
-                    {{ item.name }}
+                  <span class="font-weight-bold d-inline-block">
+                    {{ item.name | truncateString }}
                   </span>
                 </template>
 

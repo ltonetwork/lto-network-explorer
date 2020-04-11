@@ -143,8 +143,8 @@
                 <tbody>
                   <tr v-for="(tx, i) in transaction.transfers" :key="i">
                     <td>
-                      <nuxt-link :to="{ path: '/address/' + tx.recipient }" class="d-inline-block primary--text text-truncate" style="max-width: 95%;">
-                        {{ tx.recipient }}
+                      <nuxt-link :to="{ path: '/address/' + tx.recipient }" class="d-inline-block primary--text">
+                        {{ tx.recipient | truncateString }}
                       </nuxt-link>
                     </td>
                     <td class="text-right">

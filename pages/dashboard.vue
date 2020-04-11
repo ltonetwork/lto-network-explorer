@@ -92,9 +92,9 @@
                         {{ block.height | parseString }}
                       </nuxt-link>
                     </td>
-                    <td class="primary--text text-truncate" style="max-width: 26vh;">
+                    <td class="primary--text">
                       <nuxt-link :to="{ path: '/address/' + block.generator }">
-                        {{ block.generator }}
+                        {{ block.generator | truncateString }}
                       </nuxt-link>
                     </td>
                     <td class="text-center">
@@ -149,12 +149,12 @@
                 </thead>
                 <tbody>
                   <tr v-for="tx in unconfirmed.pool" :key="tx.id">
-                    <td class="text-truncate" style="max-width: 26vh;">
-                      {{ tx.id }}
+                    <td>
+                      {{ tx.id | truncateString }}
                     </td>
-                    <td class="primary--text text-truncate" style="max-width: 26vh;">
+                    <td class="primary--text">
                       <nuxt-link :to="{ path: '/address/' + tx.sender }">
-                        {{ tx.sender }}
+                        {{ tx.sender | truncateString }}
                       </nuxt-link>
                     </td>
                     <td class="text-right">

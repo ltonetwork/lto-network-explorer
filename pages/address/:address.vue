@@ -236,8 +236,8 @@
               </template>
 
               <template v-slot:item.id="{ item }">
-                <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text text-truncate" style="max-width: 16vh;">
-                  {{ item.id }}
+                <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text">
+                  {{ item.id | truncateString }}
                 </nuxt-link>
               </template>
 
@@ -246,14 +246,14 @@
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text text-truncate" style="max-width: 16vh;">
-                  {{ item.sender }}
+                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text">
+                  {{ item.sender | truncateString }}
                 </nuxt-link>
               </template>
 
               <template v-slot:item.recipient="{ item }">
-                <nuxt-link v-if="item.recipient" :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text text-truncate" style="max-width: 16vh;">
-                  {{ item.recipient }}
+                <nuxt-link v-if="item.recipient" :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text">
+                  {{ item.recipient | truncateString }}
                 </nuxt-link>
                 <span v-if="!item.recipient">N/A</span>
               </template>

@@ -30,3 +30,19 @@ Vue.filter('parseTime', function (timestamp: number): string {
 Vue.filter('fromNow', function (timestamp: number): string {
   return moment(timestamp).fromNow()
 })
+
+Vue.filter('truncateString', function (str: string): string {
+  if (str === null) {
+    return ''
+  }
+  const strLen = str.length
+  const frontLen = 12
+  const backLen = 12
+  const truncateStr = '...'
+
+  if ((frontLen >= strLen) || (backLen >= strLen) || (frontLen + backLen >= strLen)) {
+    return str
+  } else {
+    return str.slice(0, frontLen) + truncateStr + str.slice(strLen - backLen)
+  }
+})
