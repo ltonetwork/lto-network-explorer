@@ -16,7 +16,7 @@ Vue.filter('parseNumber', function (amount: number): string {
   return ((amount || 0).toLocaleString(undefined, {
     minimumFractionDigits: 3,
     maximumFractionDigits: 3
-  }).replace(/[.]?[0]*$/, ''))
+  }))
 })
 
 Vue.filter('parseTimeHour', function (timestamp: number): string {
@@ -32,17 +32,16 @@ Vue.filter('fromNow', function (timestamp: number): string {
 })
 
 Vue.filter('truncateString', function (str: string): string {
-  if (str === null) {
+  if (!str) {
     return ''
   }
-  const strLen = str.length
   const tip = 12
   const tail = 12
-  const truncateStr = '...'
+  const filler = '...'
 
-  if ((tip >= strLen) || (tail >= strLen) || (tip + tail >= strLen)) {
+  if ((tip >= str.length) || (tail >= str.length) || (tip + tail >= str.length)) {
     return str
   } else {
-    return str.slice(0, tip) + truncateStr + str.slice(strLen - tail)
+    return str.slice(0, tip) + filler + str.slice(str.length - tail)
   }
 })

@@ -241,10 +241,6 @@
                 </nuxt-link>
               </template>
 
-              <template v-slot:item.timestamp="{ item }">
-                {{ item.timestamp | parseTime }}
-              </template>
-
               <template v-slot:item.sender="{ item }">
                 <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text">
                   {{ item.sender | truncateString }}
@@ -264,6 +260,10 @@
 
               <template v-slot:item.fee="{ item }">
                 {{ item.fee | parseAtomic | parseNumber }}
+              </template>
+
+              <template v-slot:item.timestamp="{ item }">
+                {{ item.timestamp | parseTime }}
               </template>
             </v-data-table>
           </v-card-text>
@@ -355,11 +355,6 @@ export default class Address extends Vue {
       value: 'id'
     },
     {
-      text: 'Timestamp',
-      align: 'center',
-      value: 'timestamp'
-    },
-    {
       text: 'Sender',
       align: 'left',
       value: 'sender'
@@ -378,6 +373,11 @@ export default class Address extends Vue {
       text: 'Fee',
       align: 'right',
       value: 'fee'
+    },
+    {
+      text: 'Timestamp',
+      align: 'center',
+      value: 'timestamp'
     }
   ]
 
