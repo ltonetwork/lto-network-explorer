@@ -170,7 +170,10 @@ export const actions = {
 
     // state.state.panel.staking.updated = null
 
-    const url: string = process.env.CACHE_API + '/generator/all/week'
+    const start = moment().subtract(1, 'week').format('x')
+    const end = moment().format('x')
+
+    const url: string = process.env.CACHE_API + '/generator/all/' + start + '/' + end
     const payload = await this.$axios.$get(url)
 
     commit('updateStaking', payload)

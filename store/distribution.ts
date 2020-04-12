@@ -3,7 +3,7 @@ import moment from 'moment'
 import { VueGlobalFunctions } from '../pages/types'
 
 interface Bridge {
-  volumn: unknown[];
+  volume: unknown[];
   toll: {
     burn_rate: number;
     burned: number;
@@ -74,7 +74,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchTop (this: VueGlobalFunctions, { state, commit }: { state: DistributionState, commit: any }) {
+  async fetchTop (this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     const url: string = process.env.CACHE_API + '/address/top/100'
@@ -82,7 +82,7 @@ export const actions = {
 
     commit('setTop', payload)
   },
-  async fetchSupply (this: VueGlobalFunctions, { state, commit }: { state: DistributionState, commit: any }) {
+  async fetchSupply (this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     const url: string = process.env.BRIDGE_API + '/stats/token-supply'
@@ -90,7 +90,7 @@ export const actions = {
 
     commit('setSupply', payload)
   },
-  async fetchBridge (this: VueGlobalFunctions, { state, commit }: { state: DistributionState, commit: any }) {
+  async fetchBridge (this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     const url: string = process.env.BRIDGE_API + '/stats'
