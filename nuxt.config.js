@@ -17,7 +17,7 @@ export default {
       { hid: 'description', name: 'description', content: 'LTO Network Explorer' || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/explorer/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/lto-network-explorer/favicon.ico' }
     ]
   },
   /*
