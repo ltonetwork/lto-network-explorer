@@ -355,28 +355,31 @@ class Transactions extends Vue {
   }
 
   name (value: number): string {
-    // Genesis Transfer
     if (value === 1) {
       return 'Genesis'
     } else if (value === 4) {
-    // Transfer
       return 'Transfer'
     } else if (value === 8) {
-    // Lease
       return 'Lease'
     } else if (value === 9) {
-      // Cancel Lease
       return 'Cancel Lease'
     } else if (value === 11) {
-      // Mass Transfer
       return 'Mass Transfer'
     } else if (value === 13) {
-      // `Set Script
       return 'Script'
     } else if (value === 15) {
-      // Anchor
       return 'Anchor'
-    } else { return 'light' }
+    } else if (value === 16) {
+      return 'Invoke Association'
+    } else if (value === 17) {
+      return 'Revoke Association'
+    } else if (value === 18) {
+      return 'Sponsor'
+    } else if (value === 19) {
+      return 'Cancel Sponsor'
+    } else {
+      return 'Unknown'
+    }
   }
 }
 

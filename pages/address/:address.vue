@@ -394,28 +394,31 @@ export default class Address extends Vue {
   txType = null
 
   name (value: number): string {
-    // Genesis Transfer
     if (value === 1) {
       return 'Genesis'
     } else if (value === 4) {
-    // Transfer
       return 'Transfer'
     } else if (value === 8) {
-    // Lease
       return 'Lease'
     } else if (value === 9) {
-      // Cancel Lease
       return 'Cancel Lease'
     } else if (value === 11) {
-      // Mass Transfer
       return 'Mass Transfer'
     } else if (value === 13) {
-      // Set Script
       return 'Script'
     } else if (value === 15) {
-      // Anchor
       return 'Anchor'
-    } else { return 'light' }
+    } else if (value === 16) {
+      return 'Invoke Association'
+    } else if (value === 17) {
+      return 'Revoke Association'
+    } else if (value === 18) {
+      return 'Sponsor'
+    } else if (value === 19) {
+      return 'Cancel Sponsor'
+    } else {
+      return 'Unknown'
+    }
   }
 
   color (value: string): string {
@@ -444,7 +447,21 @@ export default class Address extends Vue {
     } else if (value === 15) {
       // Anchor
       return 'mdi-anchor'
-    } else { return 'Unknown' }
+    } else if (value === 16) {
+      // Invoke Association
+      return 'mdi-link-plus'
+    } else if (value === 17) {
+      // Revoke Association
+      return 'mdi-link-off'
+    } else if (value === 18) {
+      // Sponsor
+      return 'mdi-heart'
+    } else if (value === 19) {
+      // Cancel Sponsor
+      return 'mdi-heart-broken'
+    } else {
+      return 'Unknown'
+    }
   }
 
   copy (): void {
