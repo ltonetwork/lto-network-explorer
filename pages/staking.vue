@@ -72,7 +72,7 @@
                 </template>
 
                 <template v-slot:item.generator="{ item }">
-                  <nuxt-link :to="{ path: '/address/' + item.generator }" class="d-inline-block primary--text">
+                  <nuxt-link :to="{ path: '/addresses/' + item.generator }" class="d-inline-block primary--text">
                     {{ item.generator | truncateString }}
                   </nuxt-link>
                 </template>

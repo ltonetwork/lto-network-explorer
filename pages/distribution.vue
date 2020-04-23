@@ -51,7 +51,7 @@
                 </template>
 
                 <template v-slot:item.address="{ item }">
-                  <nuxt-link :to="{ path: '/address/' + item.address }" class="d-inline-block primary--text">
+                  <nuxt-link :to="{ path: '/addresses/' + item.address }" class="d-inline-block primary--text">
                     {{ item.address | truncateString }}
                   </nuxt-link>
                 </template>
