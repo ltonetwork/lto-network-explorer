@@ -311,6 +311,7 @@ class Blocks extends Vue {
       return 'Unknown'
     }
   }
+}
 
 export default Blocks
 </script>
