@@ -1,0 +1,17 @@
+schema: "https://specs.letsflow.io/v0.2.0/scenario/schema.json#"
+title: The basics
+
+
+actors:
+  initiator:
+    title: Initiator
+
+actions:
+  complete:
+    title: Complete the process
+    actor: initiator
+
+states:
+  initial:
+    action: complete
+    transition: :success

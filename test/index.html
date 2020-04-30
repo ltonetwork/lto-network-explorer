@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="1.5 - Helping you with Social Distancing.">
+  <meta property="og:description" content="Fight COVID-19 with 1.5, a simple distancing app for iOS and Android.">
+  <meta property="og:image" content="https://onepointfive.app/assets/social-onepointfive.png">
+  <meta property="og:url" content="http://euro-travel-example.com/index.htm">
+  <meta property="og:site_name" content="1.5 - Helping you with Social Distancing.">
+
+  <meta name="twitter:title" content="1.5 -  Helping you with Social Distancing. ">
+  <meta name="twitter:description" content="Fight COVID-19 with 1.5, a simple distancing app for iOS and Android.">
+  <meta name="twitter:image" content="https://onepointfive.app">
+  <meta name="twitter:card" content="Fight COVID-19 with 1.5, a simple distancing app for iOS and Android.">
+  <meta name="twitter:image:alt" content="Fight COVID-19 with 1.5, a simple distancing app for iOS and Android.">
+  <meta name="twitter:site" content="@ltonetwork">
+
+  <title>1.5 - Helping you keep Social Distance.</title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.1/css/bulma.min.css" integrity="sha256-1nEaE91OpXJD7M6W5uSiqxhdmrY+lOOTHC1iUxU9Pds=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-floating-social-share@2.3.0/dist/jquery.floating-social-share.min.css" integrity="sha256-xR2B+zQtr48HjVHVPIK6Z+JEX7AVis62UqZe74T1CcE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" integrity="sha256-3h45mwconzsKjTUULjY+EoEkoRhXcOIU4l5YAw2tSOU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" integrity="sha256-etrwgFLGpqD4oNAFW08ZH9Bzif5ByXK2lXNHKy7LQGo=" crossorigin="anonymous">
+
+  <style>
+    .hero-body {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .is-gradient {
+      background-image: linear-gradient(225deg, #C9A1F0 0%, #7AB2EB 100%);
+    }
+
+    .partner-logo {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 200px;
+      border: none !important;
+    }
+    
+  .tabs a {
+    border: none !important;
+  }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="./">
+          <img src="./assets/logo-onepointfive.svg" alt="1.5 App" height="50" style="margin-right: 7px;">
+          <p class="is-size-5 has-text-dark has-text-weight-semibold"> Social Distancing App</p>
+        </a>
+
+        <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div class="navbar-menu is-hidden-desktop" id="navMenu">
+        <div class="navbar-start">
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="navbar-item"><a href="#" class="modal-button" data-target="modal-about">About</a></div>
+            <div class="navbar-item"><a href="./resources/1.5-press-release.pdf" class="modal-button">Press Release</a></div>
+            <div class="navbar-item"><a href="./resources/1.5-mediakit.zip" class="modal-button">Media Kit</a></div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-start">
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item"><a href="#" class="modal-button" data-target="modal-about">About</a></div>
+          <div class="navbar-item"><a href="./resources/1.5-press-release.pdf" class="modal-button">Press Release</a></div>
+          <div class="navbar-item"><a href="./resources/1.5-mediakit.zip" class="modal-button">Media Kit</a></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero is-gradient is-fullheight-with-navbar">
+    <div class="hero-body">
+      <div class="container">
+
+        <div class="columns is-vcentered">
+          <div class="column is-half">
+
+            <div id="carousel" class="is-hidden-touch">
+              <img src="./assets/preview_iphonex_portrait_sad.png">
+              <img src="./assets/preview_iphonex_portrait_happy.png">
+              <img src="./assets/preview_iphonex_portrait_settings.png">
+              <img src="./assets/preview_nexus4_angle1_sad.png.png">
+              <img src="./assets/preview_nexus4_portrait_happy.png">
+              <img src="./assets/preview_nexus4_portrait_settings.png">
+            </div>
+
+            <img src="./assets/preview_iphonex_portrait_sad.png" class="is-hidden-desktop">
+          </div>
+
+          <div class="column is-half">
+            <h1 class="title is-2 has-text-white">
+              1.5 - Social Distancing App
+            </h1>
+
+            <hr>
+
+            <h2 class="subtitle is-4 has-text-white">
+              Having a hard time keeping 1.5 meters away from others? 1.5 warns you when another device enters your zone. Help stop the spread of COVID-19, keep your distance with 1.5.
+            </h2>
+
+            <hr>
+
+            <div class="has-text-centered">
+
+              <!--
+
+                            ENABLE WHEN APP IS AVAILABLE ON STORE
+
+
+                            <div class="is-inline-flex content">
+                                <img src="./assets/badges/badge_apple.png" /> &nbsp; &nbsp;
+
+                                <img src="./assets/badges/badge_google.png" />
+                            </div>
+                            
+                            <br />
+                            <br />
+                            <br />
+                        
+                        !-->
+              <div class="buttons has-text-centered">
+
+
+                <a class="button is-black is-outlined has-text-white is-medium" href="#" onclick="alert('iOS beta coming soon!')">
+                  <span class="icon">
+                    <i class="fas fa-download"></i>
+                  </span>
+                  <span>iOS BETA</span>
+                </a>
+
+                &nbsp; &nbsp;
+
+                <a class="button is-black is-outlined has-text-white is-medium" href="./resources/app-release.apk">
+                  <span class="icon">
+                    <i class="fas fa-download"></i>
+                  </span>
+                  <span>Android BETA</span>
+                </a>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-foot">
+      <div class="container">
+        <div class="tabs is-centered">
+          <ul>
+            <li><a><img class="partner-logo" src="assets/tbwa.png" alt="TBWA"></a></li>
+            <li><a><img class="partner-logo" src="assets/lto-network.png" alt="LTO Network"></a></li>
+            <li><a><img class="partner-logo" src="assets/meltwater.png" alt="Meltwater"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-medium">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-two-thirds has-text-centered">
+          <p class="is-size-4">We are looking for people who want to get involved in this project. Are you a developer and interested to help us? Please reach out below.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-grey is-medium">
+    <div class="container">
+      <div class="title-wrapper has-text-centered">
+        <h2 class="title is-2 is-spaced">Keep me up to date!</h2>
+        <h3 class="subtitle is-5 is-muted">Or drop us a message. We'd love to hear from you</h3>
+        <div class="divider is-centered"></div>
+      </div>
+      <div class="content-wrapper">
+        <div class="columns">
+          <div class="column is-6 is-offset-3">
+            <div id="mc_embed_signup">
+              <form action="https://ltonetwork.us17.list-manage.com/subscribe/post?u=1508bdb96b4379a9aeb07c6e8&amp;id=2d5cc8815f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div class="columns is-multiline">
+                  <div class="column is-6">
+                    <input class="input is-medium" type="text" placeholder="Name *" name="NAME" id="mce-NAME">
+                  </div>
+                  <div class="column is-6">
+                    <input class="input is-medium" type="email" placeholder="Company" name="COMPANY" id="mce-COMPANY">
+                  </div>
+                  <div class="column is-12">
+                    <input class="input is-medium" type="text" placeholder="Email *" name="EMAIL" id="mce-EMAIL">
+                  </div>
+                  <div class="column is-12">
+                    <textarea class="textarea" rows="6" placeholder="" name="MESSAGE" id="mce-MESSAGE"></textarea>
+                  </div>
+                  <div class="column is-12">
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div> <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_1508bdb96b4379a9aeb07c6e8_2d5cc8815f" tabindex="-1" value=""></div>
+                    <div class="form-footer has-text-right mt-10">
+                      <div class="clear"><input type="submit" value="Submit" name="subscribe" id="mc-embedded-subscribe" class="button cta is-large is-dark primary-btn form-button raised is-clear"></div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" id="modal-about">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">About 1.5</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body has-text-justified">
+        <p>
+          1.5 assists you with social distancing. The app scans for nearby mobile devices and it warns you when a device enters your 1.5 meter parameter. The phone vibrates and a pop-up appears. The pop up contains a graphic that can be shown to the other person. It is a friendly reminder that aims to defuse the situation.
+        </p>
+
+        <br />
+
+        <p>
+          This is a social distancing app and it works using Bluetooth. Devices of family members and so forth can be excluded. The parameter can be adjusted from a minimum of 1.5 meters up to 4 meters, depending on your preference or local regulation. 1.5 aims to help stop the spread of COVID-19. It is not full proof.
+        </p>
+
+        <br />
+
+        <p>
+          Please follow the advice of the World Health Organisation and your local government.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-terms">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Terms and Conditions</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body has-text-justified">
+        <p class="has-text-weight-bold">Introduction</p>
+        <p>
+          LTO Network B.V. (“LTO Network”) is a limited liability corporation under Dutch law and is incorporated in Amsterdam, the Netherlands. LTO Network built the 1.5 app as a free to use app (“the App”). The App is provided at no cost and is intended for use as is. By downloading or using the App, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the App.
+        </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Functionality</p>
+
+        <p>
+          The App will require Bluetooth turned ON. The App does not require an internet connection. The App requires Push Notifications to be turned on, on your phone. LTO Network cannot take responsibility for the App not working at full functionality if these requirements are not met.
+        </p>
+
+        <br />
+
+        <p>
+          The App establishes distances between phones by using their Bluetooth RSSI signal. The App will measure other phones within a radius of 1.5 meters as long as those phones have their Bluetooth turned ON. Those other phones need not have the App installed in order for the App to detect their presence.
+        </p>
+
+        <br />
+
+        <p>
+          By extension of this measurement, a person may be able to detect another person entering his/her sphere of 1.5 meters, as most people carry a phone with Bluetooth turned ON with them. Even though this may be used as an approximation, it will not be accurate in 100% of the cases.
+        </p>
+
+        <br />
+
+        <p>For example:</p>
+
+        <ul>
+          <li>- the other person may not be carrying a phone with them</li>
+          <li>- the other person may be carrying a phone with them, with Bluetooth turned OFF</li>
+          <li>- the App may measure a phone or other Bluetooth device, which is not actually carried by a person (for example : a television)</li>
+        </ul>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Copyright</p>
+        <p>
+          You’re not allowed to copy, or modify the App, any part of the App, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the App, and you also shouldn’t try to translate the App into other languages, or make derivative versions. The App itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to LTO Network.
+        </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Development Rights</p>
+        <p>
+          LTO Network is committed to ensuring that the App is as useful and efficient as possible. For that reason, we reserve the right to make changes to the App at any time and for any reason. We will never charge you for the App.
+        </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Responsibilities and Liabilities</p>
+        <p>
+          The App is provided free of charge and intended as a means of support for “social distancing” between people. It in no way aims to be a substitute for instructions provided by government and health authorities or a user’s own common sense.
+        </p>
+
+        <br />
+
+        <p>
+          If at any time information provided by the App conflicts with information or instructions provided by health authorities, the government or a user’s own common sense, information provided by the App will yield and the former information will prevail. The user of the App is at all times responsible for his/her own health and of those around him/her.
+        </p>
+
+        <br />
+
+        <p>
+          LTO Network B.V. accepts no liability for any loss, direct or indirect, a user may experience as a result of relying wholly on the functionality of the App.
+        </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Roadmap</p>
+        <p>
+          At some point, we may wish to update the app. The app is currently available on Android & iOS – the requirements for both systems (and for any additional systems we decide to extend the availability of the app to) may change, and you’ll need to download the updates if you want to keep using the app. LTO Network B.V. does not promise that it will always update the app so that it is relevant to you and/or works with the Android & iOS version that you have installed on your device. However, you promise to always accept updates to the application when offered to you, We may also wish to stop providing the app, and may terminate use of it at any time without giving notice of termination to you. Unless we tell you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must stop using the app, and (if needed) delete it from your device.
+        </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Changes to This Terms and Conditions</p>
+        <p>
+          We may update our Terms and Conditions from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Terms and Conditions on this page. These changes are effective immediately after they are posted on this page.
+        </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Changes Us</p>
+        <p>
+          If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at support[at]ltonetwork[dot]com.
+        </p>
+
+      </section>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-privacy">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Private Policy</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body has-text-justified">
+        <p class="has-text-weight-bold">Introduction</p>
+        <p>
+          LTO Network B.V. (“LTO Network”) is a limited liability corporation under Dutch law and is incorporated in Amsterdam, the Netherlands. LTO Network built the 1.5 app as a free to use app (“the App”). The App is provided at no cost and is intended for use as is. This document is used to inform users of the App regarding our policies with the collection, use, and disclosure of Personal Information.
+        </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Personal Data</p>
+
+        <p>
+          The App does not use Personal Information to function. It establishes distances between users using a phone’s Bluetooth signal. This information cannot be traced back to an individual.
+        </p>
+
+        <br />
+        <br />
+
+        <p>
+          The App does <b>not</b> use geolocation information from the device. The App does <b>not</b> require login information, like for example an email address.
+        </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Changes to this Privacy Policy</p>
+        <p>
+          We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page. </p>
+
+        <br />
+        <br />
+
+        <p class="has-text-weight-bold">Contact Us</p>
+        <p>
+          If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at support[at]ltonetwork[dot]com.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container has-text-centered">
+
+      <div class="content">
+        <p>
+          <strong>1.5</strong> by <a href="https://ltonetwork.com?utm_source=Onepointfive">LTO Network</a>. The source code is licensed
+          <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPLv3</a>. The website content is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+        </p>
+
+        <p>
+          <a href="#" class="modal-button" data-target="modal-terms">Terms and Conditions</a> &#8212;
+          <a href="#" class="modal-button" data-target="modal-privacy">Privacy Policy</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-floating-social-share@2.3.0/dist/jquery.floating-social-share.min.js" integrity="sha256-Wh9v88l3JPpn5UbDL1VDcxuAmd/SWzbt4jH/DT94anc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" integrity="sha256-DHF4zGyjT7GOMPBwpeehwoey18z8uiz98G4PRu2lV0A=" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Carousel
+      $('#carousel').slick({
+        accessibility: false,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        infinite: true,
+        arrows: false,
+        dots: true,
+        slidesToShow: 1,
+      });
+
+      // Social Media
+      $("body").floatingSocialShare({
+        buttons: ["facebook", "twitter", "linkedin", "reddit", "telegram", "whatsapp", "tumblr"],
+        text: "share with:",
+        popup: false
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Get all "navbar-burger" elements
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+      // Check if there are any navbar burgers
+      if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+          el.addEventListener('click', () => {
+
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+
+          });
+        });
+      }
+
+      // Modals
+
+      var rootEl = document.documentElement;
+      var $modals = getAll('.modal');
+      var $modalButtons = getAll('.modal-button');
+      var $modalCloses = getAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button');
+
+      if ($modalButtons.length > 0) {
+        $modalButtons.forEach(function($el) {
+          $el.addEventListener('click', function() {
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+            rootEl.classList.add('is-clipped');
+            $target.classList.add('is-active');
+          });
+        });
+      }
+
+      if ($modalCloses.length > 0) {
+        $modalCloses.forEach(function($el) {
+          $el.addEventListener('click', function() {
+            closeModals();
+          });
+        });
+      }
+
+      document.addEventListener('keydown', function(event) {
+        var e = event || window.event;
+        if (e.keyCode === 27) {
+          closeModals();
+        }
+      });
+
+      function closeModals() {
+        rootEl.classList.remove('is-clipped');
+        $modals.forEach(function($el) {
+          $el.classList.remove('is-active');
+        });
+      }
+
+      // Functions
+
+      function getAll(selector) {
+        return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+      }
+
+    });
+
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161982650-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-161982650-1');
+
+  </script>
+</body>
+
+</html>
