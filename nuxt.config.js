@@ -147,13 +147,15 @@ export default {
         code: 'en',
         iso: 'en-US',
         file: 'en.js'
-      },
+      }
+      /*,
       {
         name: 'Nederlands',
         code: 'nl',
         iso: 'NL',
         file: 'nl.js'
       }
+      */
     ],
     langDir: 'locales/',
     seo: true,
