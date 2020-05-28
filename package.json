@@ -1,8 +1,8 @@
 {
   "name": "lto-network-explorer",
   "version": "1.0.5",
-  "description": "Serverlesss network explorer built for the LTO Network powered by multiple API services.",
-  "author": "BB. Jansen <bobjansen@pm.me>",
+  "description": "Network explorer built for the LTO Network Public Chain.",
+  "author": "LTO Network",
   "contributors": [
     {
       "name": "BB. Jansen",
