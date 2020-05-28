@@ -52,7 +52,7 @@ export const actions = {
 
     commit('resetUpdated')
 
-    const url: string = process.env.CACHE_API + '/stats/transaction/' + filters.start + '/' + filters.end
+    const url: string = process.env.CACHE_API + '/stats/transaction/all/' + filters.start + '/' + filters.end
     const payload = await this.$axios.$get(url)
 
     commit('setFilter', filters.type)
