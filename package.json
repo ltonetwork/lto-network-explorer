@@ -1,7 +1,7 @@
 {
   "name": "lto-network-explorer",
-  "version": "1.0.5",
-  "description": "Network explorer built for the LTO Network Public Chain.",
+  "version": "1.0.6",
+  "description": "Network explorer to interact with the LTO Network.",
   "author": "LTO Network",
   "contributors": [
     {

@@ -293,7 +293,7 @@ import { EncoderServiceImpl } from '../../plugins/encoder'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    if (transaction.type === 8 || transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
+    if (transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
       transaction.amount = 0
     }
 
