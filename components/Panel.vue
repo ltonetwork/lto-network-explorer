@@ -51,6 +51,10 @@
               <span class="title font-weight-bold secondary--text">
                 ${{ market.price.currency.usd | parseNumber }}
               </span>
+
+              <p class="overline grey--text ma-0 mt-2">
+                (CoinGecko)
+              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -111,6 +115,10 @@
               <span class="title font-weight-bold secondary--text">
                 {{ nodesCount.active | parseString }}
               </span>
+
+              <p class="overline grey--text ma-0 mt-2">
+                (LTO Tools)
+              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -119,7 +127,9 @@
               :lg="6"
               class="pa-0 d-flex align-end justify-end"
             >
-              <span class="caption grey--text ma-0">{{ nodesCount.updated | fromNow }}</span>
+              <span class="caption grey--text ma-0">
+                {{ nodesCount.updated | fromNow }}
+              </span>
             </v-col>
           </v-row>
         </v-card-text>
@@ -151,7 +161,9 @@
               :md="6"
               :lg="6"
               class="pt-0 pb-2 pl-0 pr-0 text-right"
-            />
+            >
+              <span class="caption grey--text ma-0">(7d)</span>
+            </v-col>
           </v-row>
 
           <v-row>
@@ -163,6 +175,10 @@
               <span class="title font-weight-bold secondary--text">
                 {{ staking.total | parseNumber }}
               </span>
+
+              <p class="overline grey--text ma-0 mt-2">
+                (LTO Services)
+              </p>
             </v-col>
             <v-col
               :cols="6"
@@ -171,7 +187,9 @@
               :lg="6"
               class="pa-0 d-flex align-end justify-end"
             >
-              <span class="caption grey--text ma-0">{{ staking.updated | fromNow }}</span>
+              <span class="caption grey--text ma-0">
+                {{ staking.updated | fromNow }}
+              </span>
             </v-col>
           </v-row>
         </v-card-text>
@@ -217,6 +235,10 @@
               <span class="title font-weight-bold secondary--text">
                 {{ network.height | parseString }}
               </span>
+
+              <p class="overline grey--text ma-0 mt-2">
+                (LTO Network)
+              </p>
             </v-col>
             <v-col
               :cols="6"
