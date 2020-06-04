@@ -17,7 +17,7 @@ export default {
       { hid: 'description', name: 'description', content: 'LTO Network Explorer' || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/lto-network-explorer/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
   /*
@@ -181,7 +181,8 @@ export default {
     ]
   },
   router: {
-    base: '/lto-network-explorer/'
+    base: '',
+    middleware: 'redirect'
   },
   proxy: {
     '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: { '^/cache/': '' } },

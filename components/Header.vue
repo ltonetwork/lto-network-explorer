@@ -222,15 +222,15 @@ export default class Header extends Vue {
       // Block
       if (Number.isInteger(+this.query) && this.query.length <= 6) {
         this.valid = true
-        this.url = '/blocks/' + this.query
+        this.url = '/block/' + this.query
       // Address
       } else if (this.query.length === 35) {
         this.valid = true
-        this.url = '/addresses/' + this.query
+        this.url = '/address/' + this.query
       // Tx
       } else if (this.query.length === 44) {
         this.valid = true
-        this.url = '/transactions/' + this.query
+        this.url = '/transaction/' + this.query
       } else if (this.query.length === 43) {
         // Script
 

@@ -1,0 +1,14 @@
+[
+    {
+      "from": "/addresses",
+      "to": "/address"
+    },
+    {
+      "from": "/blocks",
+      "to": "/block"
+    },
+    {
+      "from": "/transactions",
+      "to": "/transaction"
+    }  
+  ]

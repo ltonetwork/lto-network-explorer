@@ -88,12 +88,12 @@
                 <tbody>
                   <tr v-for="block in blocks.last" :key="block.height">
                     <td>
-                      <nuxt-link :to="{ path: '/blocks/' + block.height }">
+                      <nuxt-link :to="{ path: '/block/' + block.height }">
                         {{ block.height | parseString }}
                       </nuxt-link>
                     </td>
                     <td class="primary--text">
-                      <nuxt-link :to="{ path: '/addresses/' + block.generator }">
+                      <nuxt-link :to="{ path: '/address/' + block.generator }">
                         {{ block.generator | truncateString }}
                       </nuxt-link>
                     </td>
@@ -153,7 +153,7 @@
                       {{ tx.id | truncateString }}
                     </td>
                     <td class="primary--text">
-                      <nuxt-link :to="{ path: '/addresses/' + tx.sender }">
+                      <nuxt-link :to="{ path: '/address/' + tx.sender }">
                         {{ tx.sender | truncateString }}
                       </nuxt-link>
                     </td>

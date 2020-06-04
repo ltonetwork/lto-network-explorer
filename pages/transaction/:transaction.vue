@@ -42,7 +42,7 @@
                       {{ $t('explorer.block') }}
                     </td>
                     <td>
-                      <nuxt-link :to="{ path: '/blocks/' + transaction.height }">
+                      <nuxt-link :to="{ path: '/block/' + transaction.height }">
                         {{ transaction.height | parseString }}
                       </nuxt-link>
                     </td>
@@ -53,7 +53,7 @@
                       {{ $t('explorer.sender') }}
                     </td>
                     <td>
-                      <nuxt-link :to="{ path: '/addresses/' + transaction.sender }">
+                      <nuxt-link :to="{ path: '/address/' + transaction.sender }">
                         {{ transaction.sender }}
                       </nuxt-link>
                     </td>
@@ -64,7 +64,7 @@
                       {{ $t('explorer.recipient') }}
                     </td>
                     <td>
-                      <nuxt-link :to="{ path: '/addresses/' + transaction.recipient }">
+                      <nuxt-link :to="{ path: '/address/' + transaction.recipient }">
                         {{ transaction.recipient }}
                       </nuxt-link>
                     </td>
@@ -75,7 +75,7 @@
                       {{ $t('explorer.recipient') }}
                     </td>
                     <td>
-                      <nuxt-link v-if="transaction.recipient" :to="{ path: '/addresses/' + transaction.recipient }">
+                      <nuxt-link v-if="transaction.recipient" :to="{ path: '/address/' + transaction.recipient }">
                         {{ transaction.recipient }}
                       </nuxt-link>
 
@@ -143,7 +143,7 @@
                 <tbody>
                   <tr v-for="(tx, i) in transaction.transfers" :key="i">
                     <td>
-                      <nuxt-link :to="{ path: '/addresses/' + tx.recipient }" class="d-inline-block primary--text">
+                      <nuxt-link :to="{ path: '/address/' + tx.recipient }" class="d-inline-block primary--text">
                         {{ tx.recipient | truncateString }}
                       </nuxt-link>
                     </td>
@@ -289,7 +289,7 @@ import { EncoderServiceImpl } from '../../plugins/encoder'
     return true
   },
   async asyncData ({ $axios, params }) {
-    const transaction: Transaction = await $axios.$get(process.env.LB_API + '/transactions/info/' + params.transaction, {
+    const transaction: Transaction = await $axios.$get(process.env.LB_API + '/transaction/info/' + params.transaction, {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 

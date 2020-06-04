@@ -27,7 +27,7 @@
                       {{ $t('explorer.generator') }}
                     </td>
                     <td>
-                      <nuxt-link :to="{ path: '/addresses/' + block.generator }">
+                      <nuxt-link :to="{ path: '/address/' + block.generator }">
                         {{ block.generator }}
                       </nuxt-link>
                     </td>
@@ -139,13 +139,13 @@
               </template>
 
               <template v-slot:item.id="{ item }">
-                <nuxt-link :to="{ path: '/transactions/' + item.id }" class="d-inline-block primary--text">
+                <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text">
                   {{ item.id | truncateString }}
                 </nuxt-link>
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <nuxt-link :to="{ path: '/addresses/' + item.sender }" class="d-inline-block primary--text">
+                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text">
                   {{ item.sender | truncateString }}
                 </nuxt-link>
               </template>
@@ -193,7 +193,7 @@ import { translate } from '~/plugins/translate'
     return !isNaN(Number(params.block))
   },
   async asyncData ({ $axios, params }) {
-    const block: Block = await $axios.$get(process.env.LB_API + '/blocks/at/' + params.block, {
+    const block: Block = await $axios.$get(process.env.LB_API + '/block/at/' + params.block, {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 

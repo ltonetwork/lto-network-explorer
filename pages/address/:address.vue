@@ -236,19 +236,19 @@
               </template>
 
               <template v-slot:item.id="{ item }">
-                <nuxt-link :to="{ path: '/transactions/' + item.id }" class="d-inline-block primary--text">
+                <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text">
                   {{ item.id | truncateString }}
                 </nuxt-link>
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <nuxt-link :to="{ path: '/addresses/' + item.sender }" class="d-inline-block primary--text">
+                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text">
                   {{ item.sender | truncateString }}
                 </nuxt-link>
               </template>
 
               <template v-slot:item.recipient="{ item }">
-                <nuxt-link v-if="item.recipient" :to="{ path: '/addresses/' + item.recipient }" class="d-inline-block primary--text">
+                <nuxt-link v-if="item.recipient" :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text">
                   {{ item.recipient | truncateString }}
                 </nuxt-link>
                 <span v-if="!item.recipient">N/A</span>
@@ -303,11 +303,11 @@ import * as _ from 'lodash'
     // required: method to get total sum of transactions linked to the
     // an address in order to determine the `limit` parameter.
 
-    const balance = await $axios.$get(process.env.LB_API + '/addresses/balance/details/' + params.address, {
+    const balance = await $axios.$get(process.env.LB_API + '/address/balance/details/' + params.address, {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/200', {
+    let transactions = await $axios.$get(process.env.LB_API + '/transaction/address/' + params.address + '/limit/200', {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 

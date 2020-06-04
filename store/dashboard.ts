@@ -64,7 +64,7 @@ export const actions = {
     const end: number = +res.blockchainHeight
     const start: number = end - Number(process.env.LATEST_BLOCKS) + 1
 
-    const url: string = process.env.LB_API + '/blocks/headers/seq/' + start + '/' + end
+    const url: string = process.env.LB_API + '/block/headers/seq/' + start + '/' + end
     const payload = await this.$axios.$get(url)
 
     commit('setBlocks', payload)
@@ -72,7 +72,7 @@ export const actions = {
   async fetchUnconfirmed (this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
-    const url: string = process.env.LB_API + '/transactions/unconfirmed'
+    const url: string = process.env.LB_API + '/transaction/unconfirmed'
     const payload = await this.$axios.$get(url)
 
     commit('setUnconfirmed', payload)
