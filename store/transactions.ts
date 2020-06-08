@@ -42,7 +42,7 @@ export const actions = {
 
     return new Promise((resolve) => {
       setTimeout(async () => {
-        const url: string = process.env.LB_API + '/transaction/address/' + address + '/limit/200'
+        const url: string = process.env.LB_API + '/transactions/addresses/' + address + '/limit/200'
         const payload = await this.$axios.$get(url)
 
         const data = {
