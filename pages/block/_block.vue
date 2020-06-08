@@ -193,7 +193,7 @@ import { translate } from '~/plugins/translate'
     return !isNaN(Number(params.block))
   },
   async asyncData ({ $axios, params }) {
-    const block: Block = await $axios.$get(process.env.LB_API + '/block/at/' + params.block, {
+    const block: Block = await $axios.$get(process.env.LB_API + '/blocks/at/' + params.block, {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
