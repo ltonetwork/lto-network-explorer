@@ -307,7 +307,7 @@ import * as _ from 'lodash'
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    let transactions = await $axios.$get(process.env.LB_API + '/transactions/addresses/' + params.address + '/limit/200', {
+    let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/200', {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
