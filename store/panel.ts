@@ -170,10 +170,7 @@ export const actions = {
 
     // state.state.panel.staking.updated = null
 
-    const start = moment().subtract(1, 'week').format('x')
-    const end = moment().format('x')
-
-    const url: string = process.env.CACHE_API + '/generator/all/' + start + '/' + end
+    const url: string = process.env.CACHE_API + '/generator/staking/weekly'
     const payload = await this.$axios.$get(url)
 
     commit('updateStaking', payload)
@@ -252,7 +249,7 @@ export const mutations = {
     state.panel.nodes.updated = moment()
   },
   updateStaking (state: PanelState, payload: unknown[]) {
-    state.panel.staking.total = _.sumBy(payload, function (o: any) { return o.pool })
+    state.panel.staking.total = _.sumBy(payload, function (o: any) { return o.balance })
     state.panel.staking.updated = moment()
   },
   updateNetwork (state: PanelState, payload: unknown) {

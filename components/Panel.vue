@@ -177,7 +177,7 @@
               </span>
 
               <p class="overline grey--text ma-0 mt-2">
-                (LTO Services)
+                (LTO Tools)
               </p>
             </v-col>
             <v-col
