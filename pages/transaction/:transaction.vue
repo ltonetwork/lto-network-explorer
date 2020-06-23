@@ -289,7 +289,7 @@ import { EncoderServiceImpl } from '../../plugins/encoder'
     return true
   },
   async asyncData ({ $axios, params }) {
-    const transaction: Transaction = await $axios.$get(process.env.LB_API + '/transaction/info/' + params.transaction, {
+    const transaction: Transaction = await $axios.$get(process.env.LB_API + '/transactions/info/' + params.transaction, {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 

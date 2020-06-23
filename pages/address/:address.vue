@@ -303,11 +303,11 @@ import * as _ from 'lodash'
     // required: method to get total sum of transactions linked to the
     // an address in order to determine the `limit` parameter.
 
-    const balance = await $axios.$get(process.env.LB_API + '/address/balance/details/' + params.address, {
+    const balance = await $axios.$get(process.env.LB_API + '/addresses/balance/details/' + params.address, {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
-    let transactions = await $axios.$get(process.env.LB_API + '/transaction/address/' + params.address + '/limit/200', {
+    let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/200', {
       timeout: Number(process.env.AXIOS_TIMEOUT)
     })
 
