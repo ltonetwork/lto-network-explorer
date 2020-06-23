@@ -30,7 +30,7 @@ export class EncoderServiceImpl implements EncoderService {
         return this.hexDecode(hash);
     }
 
-    throw new Error(`Uncnown encoding: ${encoding}`);
+    throw new Error(`Unknown encoding: ${encoding}`);
   }
 
   validateSHA256(hash: string, encoding: Encoding) {

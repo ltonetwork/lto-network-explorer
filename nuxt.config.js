@@ -10,7 +10,7 @@ export default {
   */
   head: {
     titleTemplate: '%s - LTO Network',
-    title: 'Explorer',
+    title: 'LTO Network Explorer',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -19,6 +19,11 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
+  },
+  pwa: {
+    meta: {
+      title: 'LTO Network Explorer'
+    }
   },
   /*
   ** Customize fonts
