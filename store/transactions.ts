@@ -37,7 +37,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  fetchTransactions (this: VueGlobalFunctions, { state, commit }: { state: TransactionsState; commit: any }, address: string) {
+  fetchTransactions(this: VueGlobalFunctions, { state, commit }: { state: TransactionsState; commit: any }, address: string) {
     // Doc: https://stats.lto.network/api-docs/
 
     return new Promise((resolve) => {
@@ -58,7 +58,7 @@ export const actions = {
 }
 
 export const mutations = {
-  setTransactions (state: TransactionsState, payload: any,) {
+  setTransactions(state: TransactionsState, payload: any) {
     let items = payload.items[0]
     const address = payload.address
     if (items.length >= 1) {
@@ -81,12 +81,20 @@ export const mutations = {
         const sortB = b[sortBy]
 
         if (descending) {
-          if (sortA < sortB) { return 1 }
-          if (sortA > sortB) { return 1 }
+          if (sortA < sortB) {
+            return 1
+          }
+          if (sortA > sortB) {
+            return 1
+          }
           return 0
         } else {
-          if (sortA < sortB) { return 1 }
-          if (sortA > sortB) { return 1 }
+          if (sortA < sortB) {
+            return 1
+          }
+          if (sortA > sortB) {
+            return 1
+          }
           return 0
         }
       })
@@ -99,7 +107,7 @@ export const mutations = {
     state.transactions.items = items
     state.transactions.pagination.totalItems = payload.length
   },
-  setPagination (state: TransactionsState, payload: any) {
+  setPagination(state: TransactionsState, payload: any) {
     state.transactions.pagination = payload
     state.transactions.updated = moment()
   }

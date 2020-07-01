@@ -47,7 +47,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchChart (this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }, filters: any) {
+  async fetchChart(this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }, filters: any) {
     // Doc: https://github.com/bbjansen/lto-chain-api
 
     commit('resetUpdated')
@@ -58,7 +58,7 @@ export const actions = {
     commit('setFilter', filters.type)
     commit('setChart', payload)
   },
-  async fetchBlocks (this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }) {
+  async fetchBlocks(this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
     const res: any = await this.$axios.$get(process.env.LB_API + '/node/status')
     const end: number = +res.blockchainHeight
@@ -69,7 +69,7 @@ export const actions = {
 
     commit('setBlocks', payload)
   },
-  async fetchUnconfirmed (this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }) {
+  async fetchUnconfirmed(this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
     const url: string = process.env.LB_API + '/transactions/unconfirmed'
@@ -80,13 +80,13 @@ export const actions = {
 }
 
 export const mutations = {
-  resetUpdated (state: DashboardState) {
+  resetUpdated(state: DashboardState) {
     state.dashboard.chart.updated = null
   },
-  setFilter (state: DashboardState, filter: string) {
+  setFilter(state: DashboardState, filter: string) {
     state.dashboard.chart.filter = filter
   },
-  setChart (state: DashboardState, payload: Chart[]) {
+  setChart(state: DashboardState, payload: Chart[]) {
     payload.forEach((d: Chart) => {
       d.period = moment(d.period)
     })
@@ -94,7 +94,7 @@ export const mutations = {
     state.dashboard.chart.dataset = payload
     state.dashboard.chart.updated = moment()
   },
-  setBlocks (state: DashboardState, payload: Block[]) {
+  setBlocks(state: DashboardState, payload: Block[]) {
     payload.map((b) => {
       b.timestamp = moment(b.timestamp).fromNow()
     })
@@ -102,7 +102,7 @@ export const mutations = {
     state.dashboard.blocks.last = payload.reverse()
     state.dashboard.blocks.updated = moment()
   },
-  setUnconfirmed (state: DashboardState, payload: Transaction[]) {
+  setUnconfirmed(state: DashboardState, payload: Transaction[]) {
     state.dashboard.unconfirmed.pool = payload
     state.dashboard.unconfirmed.updated = moment()
   }

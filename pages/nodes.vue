@@ -198,94 +198,99 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { mapGetters } from 'vuex'
-import moment from 'moment'
-import { Component } from 'vue-property-decorator'
-import { translate } from '../plugins/translate'
-import Panel from '../components/Panel.vue'
+  import Vue from 'vue'
+  import { mapGetters } from 'vuex'
+  import { Component } from 'vue-property-decorator'
+  import { translate } from '../plugins/translate'
+  import Panel from '../components/Panel.vue'
 
-@Component({
-  head () {
-    return {
-      title: translate('nodes.title')
-    }
-  },
-  components: {
-    Panel
-  },
-  computed: mapGetters({
-    nodes: 'nodes/getNodes'
+  @Component({
+    head() {
+      return {
+        title: translate('nodes.title')
+      }
+    },
+    components: {
+      Panel
+    },
+    computed: mapGetters({
+      nodes: 'nodes/getNodes'
+    })
   })
-})
 
-class Nodes extends Vue {
-  headers = [
-    {
-      text: 'Name',
-      align: 'left',
-      value: 'name'
-    },
-    {
-      text: 'Host:Port',
-      align: 'left',
-      value: 'address'
-    },
-    {
-      text: 'Height',
-      align: 'center',
-      value: 'height'
-    },
-    {
-      text: 'Version',
-      align: 'center',
-      value: 'version'
-    },
-    {
-      text: 'Public P2P',
-      align: 'center',
-      value: 'p2p'
-    },
-    {
-      text: 'Public API',
-      align: 'center',
-      value: 'api'
-    },
-    {
-      text: 'API Uptime',
-      align: 'center',
-      value: 'uptime'
+  class Nodes extends Vue {
+    headers = [
+      {
+        text: 'Name',
+        align: 'left',
+        value: 'name'
+      },
+      {
+        text: 'Host:Port',
+        align: 'left',
+        value: 'address'
+      },
+      {
+        text: 'Height',
+        align: 'center',
+        value: 'height'
+      },
+      {
+        text: 'Version',
+        align: 'center',
+        value: 'version'
+      },
+      {
+        text: 'Public P2P',
+        align: 'center',
+        value: 'p2p'
+      },
+      {
+        text: 'Public API',
+        align: 'center',
+        value: 'api'
+      },
+      {
+        text: 'API Uptime',
+        align: 'center',
+        value: 'uptime'
+      }
+    ]
+
+    expanded = []
+
+    nodesTimer: ReturnType<typeof setInterval> | undefined = undefined;
+
+    created(): void {
+      this.pollNodes()
     }
-  ]
 
-  expanded = []
-
-  nodesTimer: ReturnType<typeof setInterval> | undefined = undefined;
-
-  created (): void {
-    this.pollNodes()
-  }
-
-  beforeDestroy (): void {
-    if (this.nodesTimer) {
-      clearInterval(this.nodesTimer)
+    beforeDestroy(): void {
+      if (this.nodesTimer) {
+        clearInterval(this.nodesTimer)
+      }
     }
-  }
 
-  pollNodes (): void {
-    // Fetch on render
-    this.$store.dispatch('nodes/fetchNodes')
-
-    // Refresh every minute
-    this.nodesTimer = setInterval(() => {
+    pollNodes(): void {
+      // Fetch on render
       this.$store.dispatch('nodes/fetchNodes')
-    }, 60000)
+
+      // Refresh every minute
+      this.nodesTimer = setInterval(() => {
+        this.$store.dispatch('nodes/fetchNodes')
+      }, 60000)
+    }
+
+    setColor(value: number): string {
+      if (value === 0) {
+        return 'red'
+      } else if (value === 1) {
+        return 'green'
+      } else {
+        return 'dark'
+      }
+    }
   }
 
-  setColor (value: number): string {
-    if (value === 0) { return 'red' } else if (value === 1) { return 'green' } else { return 'dark' }
-  }
-}
-
-export default Nodes
+  export default Nodes
 </script>

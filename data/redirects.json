@@ -1,14 +1,14 @@
 [
     {
-      "from": "/addresses",
-      "to": "/address"
+        "from": "/addresses",
+        "to": "/address"
     },
     {
-      "from": "/blocks",
-      "to": "/block"
+        "from": "/blocks",
+        "to": "/block"
     },
     {
-      "from": "/transactions",
-      "to": "/transaction"
-    }  
-  ]
+        "from": "/transactions",
+        "to": "/transaction"
+    }
+]

@@ -11,21 +11,21 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+  import Vue from 'vue'
+  import { Component } from 'vue-property-decorator'
 
-import Header from '~/components/Header.vue'
-import Footer from '~/components/Footer.vue'
+  import Header from '~/components/Header.vue'
+  import Footer from '~/components/Footer.vue'
 
-@Component({
-  components: {
-    Header,
-    Footer
+  @Component({
+    components: {
+      Header,
+      Footer
+    }
+  })
+
+  class Layout extends Vue {
   }
-})
 
-class Layout extends Vue {
-}
-
-export default Layout
+  export default Layout
 </script>

@@ -158,120 +158,120 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Watch } from 'vue-property-decorator'
-import { translate } from '../plugins/translate'
+  import Vue from 'vue'
+  import { Component } from 'vue-property-decorator'
+  import { translate } from '../plugins/translate'
 
-interface HeaderLinks {
-  menu: HeaderLink[];
-  wallet: HeaderLink;
-}
-
-interface HeaderLink {
-  title: string;
-  icon: string;
-  to?: string;
-  href?: string;
-}
-
-@Component({})
-
-export default class Header extends Vue {
-  menu = [
-    {
-      title: translate('menu.overview'),
-      icon: 'mdi-cube-outline',
-      to: '/dashboard'
-    }
-    // {
-    //   title: translate('menu.nodes'),
-    //   icon: 'mdi-hexagon-slice-6',
-    //   to: '/nodes'
-    // },
-    // {
-    //   title: translate('menu.staking'),
-    //   icon: 'mdi-layers',
-    //   to: '/staking'
-    // },
-    // {
-    //   title: translate('menu.distribution'),
-    //   icon: 'mdi-chart-donut',
-    //   to: '/distribution'
-    // }
-  ]
-
-  wallet = {
-    title: translate('menu.wallet'),
-    icon: 'mdi-coins',
-    href: 'https://wallet.lto.network/'
+  interface HeaderLinks {
+    menu: HeaderLink[];
+    wallet: HeaderLink;
   }
 
-  montly_roi = 0
-  yearly_roi = 0
+  interface HeaderLink {
+    title: string;
+    icon: string;
+    to?: string;
+    href?: string;
+  }
 
-  query: string | null = null;
-  valid = false;
-  url: string | null = null;
-  alert = false;
+  @Component({})
 
-  validateQuery (): void {
-    // Reset
-    this.valid = false
+  export default class Header extends Vue {
+    menu = [
+      {
+        title: translate('menu.overview'),
+        icon: 'mdi-cube-outline',
+        to: '/dashboard'
+      }
+      // {
+      //   title: translate('menu.nodes'),
+      //   icon: 'mdi-hexagon-slice-6',
+      //   to: '/nodes'
+      // },
+      // {
+      //   title: translate('menu.staking'),
+      //   icon: 'mdi-layers',
+      //   to: '/staking'
+      // },
+      // {
+      //   title: translate('menu.distribution'),
+      //   icon: 'mdi-chart-donut',
+      //   to: '/distribution'
+      // }
+    ]
 
-    if (this.query !== null) {
-      // Block
-      if (Number.isInteger(+this.query) && this.query.length <= 6) {
-        this.valid = true
-        this.url = '/block/' + this.query
-      // Address
-      } else if (this.query.length === 35) {
-        this.valid = true
-        this.url = '/address/' + this.query
-      // Tx
-      } else if (this.query.length === 44) {
-        this.valid = true
-        this.url = '/transaction/' + this.query
-      } else if (this.query.length === 43) {
-        // Script
+    wallet = {
+      title: translate('menu.wallet'),
+      icon: 'mdi-coins',
+      href: 'https://wallet.lto.network/'
+    }
 
-        // TODO
-        //
-        // LTO Network Node does not come with the
-        // functionality to look up transaction type
-        // 13 (script). For now it returns an error
-        // message, however, api.lto.node supports
-        // type 13: eg: https://api.lto.cloud/v1/transaction/7cP2Z5PF4Y4Hy94pbBryRRkAiZq8A6p5smaygEapQxR
-        //
-        // Note: this is the only known type 13 tx known
-        // to exist on  the LTO blockchain, hence for now
-        // its ignored on grounds of common sense.
+    montly_roi = 0
+    yearly_roi = 0
 
-        this.valid = false
+    query: string | null = null;
+    valid = false;
+    url: string | null = null;
+    alert = false;
 
-        // TODO
-        //
-        // Display error message
-        // eslint-disable-next-line no-console
-        console.error('transaction type 13 (script) not supported')
+    validateQuery(): void {
+      // Reset
+      this.valid = false
+
+      if (this.query !== null) {
+        // Block
+        if (Number.isInteger(+this.query) && this.query.length <= 6) {
+          this.valid = true
+          this.url = '/block/' + this.query
+          // Address
+        } else if (this.query.length === 35) {
+          this.valid = true
+          this.url = '/address/' + this.query
+          // Tx
+        } else if (this.query.length === 44) {
+          this.valid = true
+          this.url = '/transaction/' + this.query
+        } else if (this.query.length === 43) {
+          // Script
+
+          // TODO
+          //
+          // LTO Network Node does not come with the
+          // functionality to look up transaction type
+          // 13 (script). For now it returns an error
+          // message, however, api.lto.node supports
+          // type 13: eg: https://api.lto.cloud/v1/transaction/7cP2Z5PF4Y4Hy94pbBryRRkAiZq8A6p5smaygEapQxR
+          //
+          // Note: this is the only known type 13 tx known
+          // to exist on  the LTO blockchain, hence for now
+          // its ignored on grounds of common sense.
+
+          this.valid = false
+
+          // TODO
+          //
+          // Display error message
+          // eslint-disable-next-line no-console
+          console.error('transaction type 13 (script) not supported')
+        }
       }
     }
-  }
 
-  executeQuery (): void {
-    this.validateQuery()
-    if (this.valid) {
-      return (this as any).$nuxt.$router.push(this.url!)
+    executeQuery(): void {
+      this.validateQuery()
+      if (this.valid) {
+        return (this as any).$nuxt.$router.push(this.url!)
+      }
+      this.alert = true
     }
-    this.alert = true
-  }
 
-  calculateRIO (): void {
-  //  SUM(FEE 30 days) /30  / SUM(Stake)= avarage ROI last 3
+    calculateRIO(): void {
+      //  SUM(FEE 30 days) /30  / SUM(Stake)= avarage ROI last 3
 
-    this.montly_roi = 0
-    this.yearly_roi = 0
+      this.montly_roi = 0
+      this.yearly_roi = 0
+    }
   }
-}
 
 </script>
 

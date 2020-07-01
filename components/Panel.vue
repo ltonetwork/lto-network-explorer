@@ -256,90 +256,90 @@
   </v-row>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import { mapGetters } from 'vuex'
-import { Component } from 'vue-property-decorator'
+  import Vue from 'vue'
+  import { mapGetters } from 'vuex'
+  import { Component } from 'vue-property-decorator'
 
-@Component({
-  computed: {
-    ...mapGetters({
-      market: 'panel/getMarket',
-      nodesCount: 'panel/getNodes',
-      staking: 'panel/getStaking',
-      network: 'panel/getNetwork'
-    })
-  }
-})
-export default class Panel extends Vue {
-  marketTimer: ReturnType<typeof setInterval> | undefined = undefined
-  nodesCountTimer: ReturnType<typeof setInterval> | undefined = undefined
-  stakingTimer: ReturnType<typeof setInterval> | undefined = undefined
-  networkTimer: ReturnType<typeof setInterval> | undefined = undefined
+  @Component({
+    computed: {
+      ...mapGetters({
+        market: 'panel/getMarket',
+        nodesCount: 'panel/getNodes',
+        staking: 'panel/getStaking',
+        network: 'panel/getNetwork'
+      })
+    }
+  })
+  export default class Panel extends Vue {
+    marketTimer: ReturnType<typeof setInterval> | undefined = undefined
+    nodesCountTimer: ReturnType<typeof setInterval> | undefined = undefined
+    stakingTimer: ReturnType<typeof setInterval> | undefined = undefined
+    networkTimer: ReturnType<typeof setInterval> | undefined = undefined
 
-  created (): void {
-    this.pollMarket()
-    this.pollNodes()
-    this.pollStaking()
-    this.pollNetwork()
-  }
-
-  beforeDestroy (): void {
-    if (this.marketTimer) {
-      clearInterval(this.marketTimer)
+    created(): void {
+      this.pollMarket()
+      this.pollNodes()
+      this.pollStaking()
+      this.pollNetwork()
     }
 
-    if (this.nodesCountTimer) {
-      clearInterval(this.nodesCountTimer)
+    beforeDestroy(): void {
+      if (this.marketTimer) {
+        clearInterval(this.marketTimer)
+      }
+
+      if (this.nodesCountTimer) {
+        clearInterval(this.nodesCountTimer)
+      }
+
+      if (this.stakingTimer) {
+        clearInterval(this.stakingTimer)
+      }
+
+      if (this.networkTimer) {
+        clearInterval(this.networkTimer)
+      }
     }
 
-    if (this.stakingTimer) {
-      clearInterval(this.stakingTimer)
-    }
-
-    if (this.networkTimer) {
-      clearInterval(this.networkTimer)
-    }
-  }
-
-  pollMarket (): void {
-    // Fetch on render
-    this.$store.dispatch('panel/fetchMarket')
-
-    // Refresh every minute
-    this.marketTimer = setInterval(() => {
+    pollMarket(): void {
+      // Fetch on render
       this.$store.dispatch('panel/fetchMarket')
-    }, 60000)
-  }
 
-  pollNodes (): void {
-    // Fetch on render
-    this.$store.dispatch('panel/fetch')
+      // Refresh every minute
+      this.marketTimer = setInterval(() => {
+        this.$store.dispatch('panel/fetchMarket')
+      }, 60000)
+    }
 
-    // Refresh every minute
-    this.nodesCountTimer = setInterval(() => {
+    pollNodes(): void {
+      // Fetch on render
       this.$store.dispatch('panel/fetch')
-    }, 60000)
-  }
 
-  pollStaking (): void {
-    // Fetch on render
-    this.$store.dispatch('panel/fetchStaking')
+      // Refresh every minute
+      this.nodesCountTimer = setInterval(() => {
+        this.$store.dispatch('panel/fetch')
+      }, 60000)
+    }
 
-    // Refresh every minute
-    this.stakingTimer = setInterval(() => {
+    pollStaking(): void {
+      // Fetch on render
       this.$store.dispatch('panel/fetchStaking')
-    }, 60000)
-  }
 
-  pollNetwork (): void {
-    // Fetch on render
-    this.$store.dispatch('panel/fetchNetwork')
+      // Refresh every minute
+      this.stakingTimer = setInterval(() => {
+        this.$store.dispatch('panel/fetchStaking')
+      }, 60000)
+    }
 
-    // Refresh every minute
-    this.networkTimer = setInterval(() => {
+    pollNetwork(): void {
+      // Fetch on render
       this.$store.dispatch('panel/fetchNetwork')
-    }, 60000)
+
+      // Refresh every minute
+      this.networkTimer = setInterval(() => {
+        this.$store.dispatch('panel/fetchNetwork')
+      }, 60000)
+    }
   }
-}
 
 </script>

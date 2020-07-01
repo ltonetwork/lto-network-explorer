@@ -120,7 +120,7 @@ export default {
       light: true,
       options: {
         customProperties: true,
-        minifyTheme (css) {
+        minifyTheme(css) {
           return process.env.NODE_ENV === 'production'
             ? css.replace(/[\r\n|\r|\n]/g, '')
             : css
@@ -184,7 +184,7 @@ export default {
     /*
   ** You can extend webpack config here
   */
-    extend (config, ctx) {
+    extend(config, ctx) {
       config.node = {
         fs: 'empty'
       }
@@ -201,9 +201,21 @@ export default {
     middleware: 'redirect'
   },
   proxy: {
-    '/cache/': { target: 'https://api.lto.cloud/v1', pathRewrite: { '^/cache/': '' } },
-    '/network/': { target: 'https://network.lto.cloud/v1', pathRewrite: { '^/network/': '' } },
-    '/node/': { target: 'https://nodes.lto.network', pathRewrite: { '^/node/': '' } },
-    '/bridge/': { target: 'https://bridge.lto.network', pathRewrite: { '^/node/': '' } }
+    '/cache/': {
+      target: 'https://api.lto.cloud/v1',
+      pathRewrite: { '^/cache/': '' }
+    },
+    '/network/': {
+      target: 'https://network.lto.cloud/v1',
+      pathRewrite: { '^/network/': '' }
+    },
+    '/node/': {
+      target: 'https://nodes.lto.network',
+      pathRewrite: { '^/node/': '' }
+    },
+    '/bridge/': {
+      target: 'https://bridge.lto.network',
+      pathRewrite: { '^/node/': '' }
+    }
   }
 }

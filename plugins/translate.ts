@@ -8,10 +8,10 @@ import nl from '../locales/nl';
 Vue.use(VueI18n);
 
 const i18n = new VueI18n({
-   locale: 'en',
-   fallbackLocale: 'en',
-   messages: { en, nl },
-   silentTranslationWarn: true
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: { en, nl },
+  silentTranslationWarn: true
 })
 
 const translate = (key: string): string => {

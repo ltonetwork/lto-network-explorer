@@ -169,76 +169,76 @@
 </template>
 
 <script lang="ts">
-import { translate } from '~/plugins/translate'
+  import { translate } from '~/plugins/translate'
 
-interface Link {
-  name: string;
-  href: string;
-}
+  interface Link {
+    name: string;
+    href: string;
+  }
 
-interface FooterLinks {
-  links: Link[];
-  resources: Link[];
-  socials: Link[];
-}
+  interface FooterLinks {
+    links: Link[];
+    resources: Link[];
+    socials: Link[];
+  }
 
-interface Locale {
-  name: string;
-  code: string;
-  iso: string;
-  file: string;
-}
+  interface Locale {
+    name: string;
+    code: string;
+    iso: string;
+    file: string;
+  }
 
-export default {
-  data (): FooterLinks {
-    return {
-      links: [
-        {
-          name: translate('links.wallet'),
-          href: 'https://wallet.lto.network/start'
-        },
-        {
-          name: translate('links.home'),
-          href: 'https://ltonetwork.com/'
-        },
-        {
-          name: translate('links.source'),
-          href: 'https://lto.tools/'
-        }
-      ],
-      resources: [
-        {
-          name: translate('resources.api'),
-          href: 'https://nodes.lto.network'
-        },
-        {
-          name: translate('resources.documentation'),
-          href: 'https://docs.ltonetwork.com/'
-        },
-        {
-          name: translate('resources.support'),
-          href: 'https://t.me/ltotech'
-        },
-        {
-          name: translate('resources.github'),
-          href: 'https://github.com/ltonetwork/'
-        }
-      ],
-      socials: [
-        {
-          name: 'Twitter',
-          href: 'https://twitter.com/ltonetwork'
-        },
-        {
-          name: 'Blog',
-          href: 'https://blog.ltonetwork.com/'
-        },
-        {
-          name: 'Reddit',
-          href: 'https://www.reddit.com/r/LTONetwork'
-        }
-      ]
+  export default {
+    data(): FooterLinks {
+      return {
+        links: [
+          {
+            name: translate('links.wallet'),
+            href: 'https://wallet.lto.network/start'
+          },
+          {
+            name: translate('links.home'),
+            href: 'https://ltonetwork.com/'
+          },
+          {
+            name: translate('links.source'),
+            href: 'https://lto.tools/'
+          }
+        ],
+        resources: [
+          {
+            name: translate('resources.api'),
+            href: 'https://nodes.lto.network'
+          },
+          {
+            name: translate('resources.documentation'),
+            href: 'https://docs.ltonetwork.com/'
+          },
+          {
+            name: translate('resources.support'),
+            href: 'https://t.me/ltotech'
+          },
+          {
+            name: translate('resources.github'),
+            href: 'https://github.com/ltonetwork/'
+          }
+        ],
+        socials: [
+          {
+            name: 'Twitter',
+            href: 'https://twitter.com/ltonetwork'
+          },
+          {
+            name: 'Blog',
+            href: 'https://blog.ltonetwork.com/'
+          },
+          {
+            name: 'Reddit',
+            href: 'https://www.reddit.com/r/LTONetwork'
+          }
+        ]
+      }
     }
   }
-}
 </script>

@@ -1,5 +1,4 @@
 import moment from 'moment'
-
 /* TODO: Typescript does not like this import. Can't find the types file. */
 // import math from 'lodash/math'
 import * as _ from 'lodash'
@@ -145,7 +144,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchMarket (this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
+  async fetchMarket(this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
     // Doc: https://www.coingecko.com/api/documentations/v3
 
     // state.state.panel.market.updated = null
@@ -155,7 +154,7 @@ export const actions = {
 
     commit('updateMarket', payload)
   },
-  async fetch (this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
+  async fetch(this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
     // state.state.panel.nodes.updated = null
@@ -165,7 +164,7 @@ export const actions = {
 
     commit('updateNodes', payload)
   },
-  async fetchStaking (this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
+  async fetchStaking(this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     // state.state.panel.staking.updated = null
@@ -175,7 +174,7 @@ export const actions = {
 
     commit('updateStaking', payload)
   },
-  async fetchNetwork (this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
+  async fetchNetwork(this: VueGlobalFunctions, { state, commit }: { state: PanelState; commit: any }) {
     // Doc: https://docs.ltonetwork.com/public-node
 
     // state.state.panel.network.updated = null
@@ -188,7 +187,7 @@ export const actions = {
 }
 
 export const mutations = {
-  updateMarket (state: PanelState, payload: MarketPayload) {
+  updateMarket(state: PanelState, payload: MarketPayload) {
     const data = {
       price: {
         change: {
@@ -244,15 +243,17 @@ export const mutations = {
 
     state.panel.market = data
   },
-  updateNodes (state: PanelState, payload: unknown[]) {
+  updateNodes(state: PanelState, payload: unknown[]) {
     state.panel.nodes.active = payload.length
     state.panel.nodes.updated = moment()
   },
-  updateStaking (state: PanelState, payload: unknown[]) {
-    state.panel.staking.total = _.sumBy(payload, function (o: any) { return o.balance })
+  updateStaking(state: PanelState, payload: unknown[]) {
+    state.panel.staking.total = _.sumBy(payload, function (o: any) {
+      return o.balance
+    })
     state.panel.staking.updated = moment()
   },
-  updateNetwork (state: PanelState, payload: unknown) {
+  updateNetwork(state: PanelState, payload: unknown) {
     state.panel.network.height = (payload as any).blockchainHeight
     state.panel.network.updated = moment()
   }
