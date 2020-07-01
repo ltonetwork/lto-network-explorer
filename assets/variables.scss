@@ -2,11 +2,11 @@
 // Variables: https://github.com/vuetifyjs/vuetify/tree/master/packages/vuetify/src/styles
 
 body {
-  color: #17054B;
+    color: #17054B;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 // Global
@@ -21,16 +21,16 @@ $border-radius-root: 6px;
 
 
 $headings: (
-  'h1': (
-    'line-height': 31px
-  ),
-  'h2': (
-    'line-height': 31px
-  )
+        'h1': (
+                'line-height': 31px
+        ),
+        'h2': (
+                'line-height': 31px
+        )
 );
 
 
-// Card 
+// Card
 
 $card-border-radius: 6px;
 
@@ -46,18 +46,16 @@ $tooltip-background-color: rgba(23, 5, 75, 1);
 
 // Snackbar
 $snackbar-text-color: white;
-$snackbar-background-color:  rgba(23, 5, 75, 1);
+$snackbar-background-color: rgba(23, 5, 75, 1);
 
 // Data Tables
 $data-table-expanded-content-box-shadow: 0;
 
 $material-light: (
-    'bg-color': #E5E5E5,
-    'fg-color' :#E5E5E5,
-    'text-color': var(--v-secondary-base)
+        'bg-color': #E5E5E5,
+        'fg-color' :#E5E5E5,
+        'text-color': var(--v-secondary-base)
 );
-
-
 
 
 @import '~vuetify/src/styles/styles.sass';

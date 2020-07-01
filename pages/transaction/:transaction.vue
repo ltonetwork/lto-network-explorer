@@ -91,7 +91,8 @@
                       {{ transaction.amount | parseAtomic | parseNumber }}
                     </td>
                   </tr>
-                  <tr /><tr>
+                  <tr />
+                  <tr>
                     <td class="font-weight-bold secondary--text">
                       {{ $t('explorer.fee') }}
                     </td>
@@ -275,113 +276,112 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import moment from 'moment'
-import '@nuxtjs/axios'
-import { Transfer, Transaction } from '../types'
-import { EncoderServiceImpl } from '../../plugins/encoder'
+  import Vue from 'vue'
+  import { Component } from 'vue-property-decorator'
+  import '@nuxtjs/axios'
+  import { Transaction, Transfer } from '../types'
+  import { EncoderServiceImpl } from '../../plugins/encoder'
 
-@Component({
+  @Component({
 
-  validate (/* { params } */): boolean {
-    // return !isNaN(params.address)
-    return true
-  },
-  async asyncData ({ $axios, params }) {
-    const transaction: Transaction = await $axios.$get(process.env.LB_API + '/transactions/info/' + params.transaction, {
-      timeout: Number(process.env.AXIOS_TIMEOUT)
-    })
+    validate(/* { params } */): boolean {
+      // return !isNaN(params.address)
+      return true
+    },
+    async asyncData({ $axios, params }) {
+      const transaction: Transaction = await $axios.$get(process.env.LB_API + '/transactions/info/' + params.transaction, {
+        timeout: Number(process.env.AXIOS_TIMEOUT)
+      })
 
-    if (transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
-      transaction.amount = 0
+      if (transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
+        transaction.amount = 0
+      }
+
+      return {
+        transaction
+      }
+    }
+  })
+
+  class Transactions extends Vue {
+    hash = (this as any).$nuxt.$route.query.hash
+    valid = false
+    invalid = false
+    anchor = ''
+
+    decodedAnchor: Uint8Array = new Uint8Array()
+    hexAnchor = '';
+    base58Anchor = '';
+    base64Anchor = '';
+    encoder = new EncoderServiceImpl()
+
+    created(): void {
+      /* If we have any anchors, setup the decoded anchor so we don't need to
+       * repeatedly decode/encode. It is base58 format on the transaction. */
+      if ((this as any).transaction.anchors) {
+        this.decodedAnchor = this.encoder.base58Decode((this as any).transaction.anchors[0])
+
+        /* Might as well precompute the different forms, rather than requiring
+         * an encode on every different selection. */
+        this.hexAnchor = this.encoder.hexEncode(this.decodedAnchor)
+        this.base58Anchor = this.encoder.base58Encode(this.decodedAnchor)
+        this.base64Anchor = this.encoder.base64Encode(this.decodedAnchor)
+
+        /* Default format is hex. */
+        this.anchor = this.hexAnchor
+
+        /* If a hash is given in the query string, we verify that the anchor encoded
+         * in one of the three forms matches the hash. */
+        if (this.hash) {
+          const valid = this.hash === this.hexAnchor ||
+            this.hash === this.base58Anchor ||
+            this.hash === this.base64Anchor
+
+          this.valid = valid
+          this.invalid = !valid
+        }
+      }
     }
 
-    return {
-      transaction
+    /* Encode the anchor into the specified format */
+    encodeAnchor(value: string): void {
+      if (value === 'hex') {
+        this.anchor = this.hexAnchor
+      } else if (value === 'base58') {
+        this.anchor = this.base58Anchor
+      } else if (value === 'base64') {
+        this.anchor = this.base64Anchor
+      }
     }
-  }
-})
 
-class Transactions extends Vue {
-  hash = (this as any).$nuxt.$route.query.hash
-  valid = false
-  invalid = false
-  anchor = ''
-
-  decodedAnchor: Uint8Array = new Uint8Array()
-  hexAnchor = '';
-  base58Anchor = '';
-  base64Anchor = '';
-  encoder = new EncoderServiceImpl()
-
-  created (): void {
-    /* If we have any anchors, setup the decoded anchor so we don't need to
-     * repeatedly decode/encode. It is base58 format on the transaction. */
-    if ((this as any).transaction.anchors) {
-      this.decodedAnchor = this.encoder.base58Decode((this as any).transaction.anchors[0])
-
-      /* Might as well precompute the different forms, rather than requiring
-       * an encode on every different selection. */
-      this.hexAnchor = this.encoder.hexEncode(this.decodedAnchor)
-      this.base58Anchor = this.encoder.base58Encode(this.decodedAnchor)
-      this.base64Anchor = this.encoder.base64Encode(this.decodedAnchor)
-
-      /* Default format is hex. */
-      this.anchor = this.hexAnchor
-
-      /* If a hash is given in the query string, we verify that the anchor encoded
-       * in one of the three forms matches the hash. */
-      if (this.hash) {
-        const valid = this.hash === this.hexAnchor ||
-                      this.hash === this.base58Anchor ||
-                      this.hash === this.base64Anchor
-
-        this.valid = valid
-        this.invalid = !valid
+    name(value: number): string {
+      if (value === 1) {
+        return 'Genesis'
+      } else if (value === 4) {
+        return 'Transfer'
+      } else if (value === 8) {
+        return 'Lease'
+      } else if (value === 9) {
+        return 'Cancel Lease'
+      } else if (value === 11) {
+        return 'Mass Transfer'
+      } else if (value === 13) {
+        return 'Script'
+      } else if (value === 15) {
+        return 'Anchor'
+      } else if (value === 16) {
+        return 'Invoke Association'
+      } else if (value === 17) {
+        return 'Revoke Association'
+      } else if (value === 18) {
+        return 'Sponsor'
+      } else if (value === 19) {
+        return 'Cancel Sponsor'
+      } else {
+        return 'Unknown'
       }
     }
   }
 
-  /* Encode the anchor into the specified format */
-  encodeAnchor (value: string): void {
-    if (value === 'hex') {
-      this.anchor = this.hexAnchor
-    } else if (value === 'base58') {
-      this.anchor = this.base58Anchor
-    } else if (value === 'base64') {
-      this.anchor = this.base64Anchor
-    }
-  }
-
-  name (value: number): string {
-    if (value === 1) {
-      return 'Genesis'
-    } else if (value === 4) {
-      return 'Transfer'
-    } else if (value === 8) {
-      return 'Lease'
-    } else if (value === 9) {
-      return 'Cancel Lease'
-    } else if (value === 11) {
-      return 'Mass Transfer'
-    } else if (value === 13) {
-      return 'Script'
-    } else if (value === 15) {
-      return 'Anchor'
-    } else if (value === 16) {
-      return 'Invoke Association'
-    } else if (value === 17) {
-      return 'Revoke Association'
-    } else if (value === 18) {
-      return 'Sponsor'
-    } else if (value === 19) {
-      return 'Cancel Sponsor'
-    } else {
-      return 'Unknown'
-    }
-  }
-}
-
-export default Transactions
+  export default Transactions
 </script>

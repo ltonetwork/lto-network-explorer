@@ -260,165 +260,165 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { mapGetters } from 'vuex'
-import { Component } from 'vue-property-decorator'
-import { translate } from '../plugins/translate'
-import Panel from '../components/Panel.vue'
-import DoughnutChart from '../components/DoughnutChart.vue'
+  import Vue from 'vue'
+  import { mapGetters } from 'vuex'
+  import { Component } from 'vue-property-decorator'
+  import { translate } from '../plugins/translate'
+  import Panel from '../components/Panel.vue'
+  import DoughnutChart from '../components/DoughnutChart.vue'
 
-@Component({
-  head () {
-    return {
-      title: translate('distribution.title')
-    }
-  },
-  components: {
-    Panel,
-    DoughnutChart
-  },
-  computed: {
-    ...mapGetters({
-      top: 'distribution/getTop',
-      supply: 'distribution/getSupply',
-      bridge: 'distribution/getBridge'
-    }),
-    topChartData () {
-      /* Again, this.top is a timer, not an object.. */
+  @Component({
+    head() {
       return {
-        type: 'doughnut',
-        labels: (this as any).top.holders.map((g: unknown) => (g as any).address),
-        datasets: [{
-          backgroundColor: 'rgba(128, 75, 201, 0.6)',
-          label: '',
-          data: (this as any).top.holders.map((g: unknown) => (g as any).regular)
-        }]
+        title: translate('distribution.title')
       }
     },
-    bridgeChartData () {
-      return {
-        type: 'doughnut',
-        // labels: this.bridge.volume.map((v, i) => v[i].address),
-        datasets: [{
-          backgroundColor: 'rgba(128, 75, 201, 0.6)',
-          label: ''
-        // data: this.bridge.volume.map((v, i) => v[i].total)
-        }]
+    components: {
+      Panel,
+      DoughnutChart
+    },
+    computed: {
+      ...mapGetters({
+        top: 'distribution/getTop',
+        supply: 'distribution/getSupply',
+        bridge: 'distribution/getBridge'
+      }),
+      topChartData() {
+        /* Again, this.top is a timer, not an object.. */
+        return {
+          type: 'doughnut',
+          labels: (this as any).top.holders.map((g: unknown) => (g as any).address),
+          datasets: [{
+            backgroundColor: 'rgba(128, 75, 201, 0.6)',
+            label: '',
+            data: (this as any).top.holders.map((g: unknown) => (g as any).regular)
+          }]
+        }
+      },
+      bridgeChartData() {
+        return {
+          type: 'doughnut',
+          // labels: this.bridge.volume.map((v, i) => v[i].address),
+          datasets: [{
+            backgroundColor: 'rgba(128, 75, 201, 0.6)',
+            label: ''
+            // data: this.bridge.volume.map((v, i) => v[i].total)
+          }]
+        }
       }
     }
-  }
-})
+  })
 
-class Distribution extends Vue {
-  chartOptions = {
-    maintainAspectRatio: true,
-    responsive: true,
-    tooltips: {
-      titleFontColor: '#fff',
-      titleSpacing: 0,
-      titleFontSize: 12,
-      titleFontStyle: 'normal',
-      titleMarginBottom: 0,
-      xPadding: 15,
-      yPadding: 10,
-      intersect: false,
-      displayColors: false,
-      cornerRadius: 6,
-      backgroundColor: 'rgba(23, 5, 75, 1)',
-      mode: 'label'
-    },
-    legend: {
-      display: false,
-      position: 'bottom'
-    },
-    animation: {
-      duration: 1000,
-      easing: 'easeOutQuint'
-    }
-  }
-
-  headers = [
-    {
-      text: 'Address',
-      align: 'left',
-      value: 'address'
-    },
-    {
-      text: 'Regular',
-      align: 'center',
-      value: 'regular'
-    },
-    {
-      text: 'Generating',
-      align: 'center',
-      value: 'generating'
-    },
-    {
-      text: 'Available',
-      align: 'center',
-      value: 'available'
-    },
-    {
-      text: 'Effective',
-      align: 'center',
-      value: 'effective'
-    }
-  ]
-
-  topTimer: ReturnType<typeof setInterval> | undefined = undefined
-  supplyTimer: ReturnType<typeof setInterval> | undefined = undefined
-  bridgeTimer: ReturnType<typeof setInterval> | undefined = undefined
-
-  created (): void {
-    this.pollTop()
-    this.pollSupply()
-    this.pollBridge()
-  }
-
-  beforeDestroy (): void {
-    if (this.topTimer) {
-      clearInterval(this.topTimer)
+  class Distribution extends Vue {
+    chartOptions = {
+      maintainAspectRatio: true,
+      responsive: true,
+      tooltips: {
+        titleFontColor: '#fff',
+        titleSpacing: 0,
+        titleFontSize: 12,
+        titleFontStyle: 'normal',
+        titleMarginBottom: 0,
+        xPadding: 15,
+        yPadding: 10,
+        intersect: false,
+        displayColors: false,
+        cornerRadius: 6,
+        backgroundColor: 'rgba(23, 5, 75, 1)',
+        mode: 'label'
+      },
+      legend: {
+        display: false,
+        position: 'bottom'
+      },
+      animation: {
+        duration: 1000,
+        easing: 'easeOutQuint'
+      }
     }
 
-    if (this.supplyTimer) {
-      clearInterval(this.supplyTimer)
+    headers = [
+      {
+        text: 'Address',
+        align: 'left',
+        value: 'address'
+      },
+      {
+        text: 'Regular',
+        align: 'center',
+        value: 'regular'
+      },
+      {
+        text: 'Generating',
+        align: 'center',
+        value: 'generating'
+      },
+      {
+        text: 'Available',
+        align: 'center',
+        value: 'available'
+      },
+      {
+        text: 'Effective',
+        align: 'center',
+        value: 'effective'
+      }
+    ]
+
+    topTimer: ReturnType<typeof setInterval> | undefined = undefined
+    supplyTimer: ReturnType<typeof setInterval> | undefined = undefined
+    bridgeTimer: ReturnType<typeof setInterval> | undefined = undefined
+
+    created(): void {
+      this.pollTop()
+      this.pollSupply()
+      this.pollBridge()
     }
 
-    if (this.bridgeTimer) {
-      clearInterval(this.bridgeTimer)
+    beforeDestroy(): void {
+      if (this.topTimer) {
+        clearInterval(this.topTimer)
+      }
+
+      if (this.supplyTimer) {
+        clearInterval(this.supplyTimer)
+      }
+
+      if (this.bridgeTimer) {
+        clearInterval(this.bridgeTimer)
+      }
     }
-  }
 
-  pollTop (): void {
-    // Fetch on render
-    this.$store.dispatch('distribution/fetchTop')
-
-    // Refresh every minute
-    this.topTimer = setInterval(() => {
+    pollTop(): void {
+      // Fetch on render
       this.$store.dispatch('distribution/fetchTop')
-    }, 60000)
-  }
 
-  pollSupply (): void {
-    // Fetch on render
-    this.$store.dispatch('distribution/fetchSupply')
+      // Refresh every minute
+      this.topTimer = setInterval(() => {
+        this.$store.dispatch('distribution/fetchTop')
+      }, 60000)
+    }
 
-    // Refresh every minute
-    this.supplyTimer = setInterval(() => {
+    pollSupply(): void {
+      // Fetch on render
       this.$store.dispatch('distribution/fetchSupply')
-    }, 60000)
-  }
 
-  pollBridge (): void {
-    // Fetch on render
-    this.$store.dispatch('distribution/fetchBridge')
+      // Refresh every minute
+      this.supplyTimer = setInterval(() => {
+        this.$store.dispatch('distribution/fetchSupply')
+      }, 60000)
+    }
 
-    // Refresh every minute
-    this.bridgeTimer = setInterval(() => {
+    pollBridge(): void {
+      // Fetch on render
       this.$store.dispatch('distribution/fetchBridge')
-    }, 60000)
-  }
-}
 
-export default Distribution
+      // Refresh every minute
+      this.bridgeTimer = setInterval(() => {
+        this.$store.dispatch('distribution/fetchBridge')
+      }, 60000)
+    }
+  }
+
+  export default Distribution
 </script>

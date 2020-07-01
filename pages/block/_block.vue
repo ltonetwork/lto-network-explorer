@@ -166,152 +166,152 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import '@nuxtjs/axios'
-import * as _ from 'lodash'
-import { Block } from '../types'
-import { translate } from '~/plugins/translate'
+  import Vue from 'vue'
+  import { Component } from 'vue-property-decorator'
+  import '@nuxtjs/axios'
+  import * as _ from 'lodash'
+  import { Block } from '../types'
+  import { translate } from '~/plugins/translate'
 
-@Component({
-  head () {
-    return {
-      title: translate('block.title') + ' #' + (this as any).height.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
+  @Component({
+    head() {
+      return {
+        title: translate('block.title') + ' #' + (this as any).height.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        })
+      }
+    },
+    computed: {
+      filteredItems(): string {
+        return (this as any).block.transactions.filter((i: any) => {
+          return !(this as any).txType || _.includes((this as any).txType, i.type) || ((this as any).txType! as any).length === 0
+        })
+      }
+    },
+    validate({ params }): boolean {
+      return !isNaN(Number(params.block))
+    },
+    async asyncData({ $axios, params }) {
+      const block: Block = await $axios.$get(process.env.LB_API + '/blocks/at/' + params.block, {
+        timeout: Number(process.env.AXIOS_TIMEOUT)
       })
+
+      return {
+        block
+      }
     }
-  },
-  computed: {
-    filteredItems (): string {
-      return (this as any).block.transactions.filter((i: any) => {
-        return !(this as any).txType || _.includes((this as any).txType, i.type) || ((this as any).txType! as any).length === 0
-      })
+  })
+
+  class Blocks extends Vue {
+    height = (this as any).$nuxt.$route.params.block
+    txTable = [
+      {
+        text: 'Type',
+        align: 'left',
+        value: 'type'
+      },
+      {
+        text: 'ID',
+        align: 'left',
+        value: 'id'
+      },
+      {
+        text: 'Sender',
+        align: 'left',
+        value: 'sender'
+      },
+      {
+        text: 'Fee',
+        align: 'right',
+        value: 'fee'
+      },
+      {
+        text: 'Timestamp',
+        align: 'right',
+        value: 'timestamp'
+      }
+    ]
+
+    txFilter = [
+      { text: 'Anchor', value: 15 },
+      { text: 'Genesis', value: 1 },
+      { text: 'Transfer', value: 4 },
+      { text: 'Lease', value: 8 },
+      { text: 'Cancel Lease', value: 9 },
+      { text: 'Mass Transfer', value: 11 },
+      { text: 'Script', value: 13 }
+    ]
+
+    txType = null
+
+    name(value: number): string {
+      if (value === 1) {
+        return 'Genesis'
+      } else if (value === 4) {
+        return 'Transfer'
+      } else if (value === 8) {
+        return 'Lease'
+      } else if (value === 9) {
+        return 'Cancel Lease'
+      } else if (value === 11) {
+        return 'Mass Transfer'
+      } else if (value === 13) {
+        return 'Script'
+      } else if (value === 15) {
+        return 'Anchor'
+      } else if (value === 16) {
+        return 'Invoke Association'
+      } else if (value === 17) {
+        return 'Revoke Association'
+      } else if (value === 18) {
+        return 'Sponsor'
+      } else if (value === 19) {
+        return 'Cancel Sponsor'
+      } else {
+        return 'Unknown'
+      }
     }
-  },
-  validate ({ params }): boolean {
-    return !isNaN(Number(params.block))
-  },
-  async asyncData ({ $axios, params }) {
-    const block: Block = await $axios.$get(process.env.LB_API + '/blocks/at/' + params.block, {
-      timeout: Number(process.env.AXIOS_TIMEOUT)
-    })
 
-    return {
-      block
-    }
-  }
-})
-
-class Blocks extends Vue {
-  height = (this as any).$nuxt.$route.params.block
-  txTable = [
-    {
-      text: 'Type',
-      align: 'left',
-      value: 'type'
-    },
-    {
-      text: 'ID',
-      align: 'left',
-      value: 'id'
-    },
-    {
-      text: 'Sender',
-      align: 'left',
-      value: 'sender'
-    },
-    {
-      text: 'Fee',
-      align: 'right',
-      value: 'fee'
-    },
-    {
-      text: 'Timestamp',
-      align: 'right',
-      value: 'timestamp'
-    }
-  ]
-
-  txFilter = [
-    { text: 'Anchor', value: 15 },
-    { text: 'Genesis', value: 1 },
-    { text: 'Transfer', value: 4 },
-    { text: 'Lease', value: 8 },
-    { text: 'Cancel Lease', value: 9 },
-    { text: 'Mass Transfer', value: 11 },
-    { text: 'Script', value: 13 }
-  ]
-
-  txType = null
-
-  name (value: number): string {
-    if (value === 1) {
-      return 'Genesis'
-    } else if (value === 4) {
-      return 'Transfer'
-    } else if (value === 8) {
-      return 'Lease'
-    } else if (value === 9) {
-      return 'Cancel Lease'
-    } else if (value === 11) {
-      return 'Mass Transfer'
-    } else if (value === 13) {
-      return 'Script'
-    } else if (value === 15) {
-      return 'Anchor'
-    } else if (value === 16) {
-      return 'Invoke Association'
-    } else if (value === 17) {
-      return 'Revoke Association'
-    } else if (value === 18) {
-      return 'Sponsor'
-    } else if (value === 19) {
-      return 'Cancel Sponsor'
-    } else {
-      return 'Unknown'
-    }
-  }
-
-  icon (value: number): string {
-    // Genesis Transfer
-    if (value === 1) {
-      return 'mdi-power'
-    } else if (value === 4) {
-    // Transfer
-      return 'mdi-send'
-    } else if (value === 8) {
-    // Lease
-      return 'mdi-file-document-box-plus'
-    } else if (value === 9) {
-      // Cancel Lease
-      return 'mdi-file-document-box-remove'
-    } else if (value === 11) {
-      // Mass Transfer
-      return 'mdi-coins'
-    } else if (value === 13) {
-      // Set Script
-      return 'mdi-script-text'
-    } else if (value === 15) {
-      // Anchor
-      return 'mdi-anchor'
-    } else if (value === 16) {
-      // Invoke Association
-      return 'mdi-link-plus'
-    } else if (value === 17) {
-      // Revoke Association
-      return 'mdi-link-off'
-    } else if (value === 18) {
-      // Sponsor
-      return 'mdi-heart'
-    } else if (value === 19) {
-      // Cancel Sponsor
-      return 'mdi-heart-broken'
-    } else {
-      return 'Unknown'
+    icon(value: number): string {
+      // Genesis Transfer
+      if (value === 1) {
+        return 'mdi-power'
+      } else if (value === 4) {
+        // Transfer
+        return 'mdi-send'
+      } else if (value === 8) {
+        // Lease
+        return 'mdi-file-document-box-plus'
+      } else if (value === 9) {
+        // Cancel Lease
+        return 'mdi-file-document-box-remove'
+      } else if (value === 11) {
+        // Mass Transfer
+        return 'mdi-coins'
+      } else if (value === 13) {
+        // Set Script
+        return 'mdi-script-text'
+      } else if (value === 15) {
+        // Anchor
+        return 'mdi-anchor'
+      } else if (value === 16) {
+        // Invoke Association
+        return 'mdi-link-plus'
+      } else if (value === 17) {
+        // Revoke Association
+        return 'mdi-link-off'
+      } else if (value === 18) {
+        // Sponsor
+        return 'mdi-heart'
+      } else if (value === 19) {
+        // Cancel Sponsor
+        return 'mdi-heart-broken'
+      } else {
+        return 'Unknown'
+      }
     }
   }
-}
 
-export default Blocks
+  export default Blocks
 </script>

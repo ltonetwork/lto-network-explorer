@@ -35,7 +35,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchNodes (this: VueGlobalFunctions, { state, commit }: { state: NodeState; commit: any }) {
+  async fetchNodes(this: VueGlobalFunctions, { state, commit }: { state: NodeState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
     const url: string = process.env.NETWORK_API + '/nodes/all'
@@ -46,7 +46,7 @@ export const actions = {
 }
 
 export const mutations = {
-  setNodes (state: NodeState, payload: Node[]) {
+  setNodes(state: NodeState, payload: Node[]) {
     payload.forEach((n: Node) => {
       n.updated = moment(n.updated)
       n.created = moment(n.created)

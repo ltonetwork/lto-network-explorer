@@ -74,7 +74,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchTop (this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
+  async fetchTop(this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     const url: string = process.env.CACHE_API + '/address/top/100'
@@ -82,7 +82,7 @@ export const actions = {
 
     commit('setTop', payload)
   },
-  async fetchSupply (this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
+  async fetchSupply(this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     const url: string = process.env.BRIDGE_API + '/stats/token-supply'
@@ -90,7 +90,7 @@ export const actions = {
 
     commit('setSupply', payload)
   },
-  async fetchBridge (this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
+  async fetchBridge(this: VueGlobalFunctions, { state, commit }: { state: DistributionState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     const url: string = process.env.BRIDGE_API + '/stats'
@@ -101,7 +101,7 @@ export const actions = {
 }
 
 export const mutations = {
-  setTop (state: DistributionState, payload: unknown[]) {
+  setTop(state: DistributionState, payload: unknown[]) {
     payload.forEach((h: any) => {
       h.updated = moment(h.updated)
     })
@@ -109,11 +109,11 @@ export const mutations = {
     state.distribution.top.holders = payload
     state.distribution.top.updated = moment()
   },
-  setSupply (state: DistributionState, payload: Supply) {
+  setSupply(state: DistributionState, payload: Supply) {
     state.distribution.supply.stats = payload
     state.distribution.supply.updated = moment()
   },
-  setBridge (state: DistributionState, payload: any) {
+  setBridge(state: DistributionState, payload: any) {
     state.distribution.bridge.volume = payload.volume
     state.distribution.bridge.toll = { burn_rate: payload.burn_rate, burned: payload.burned }
     state.distribution.bridge.updated = moment()

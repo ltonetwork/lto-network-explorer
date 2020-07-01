@@ -157,7 +157,7 @@
 
             <v-spacer />
 
-            <div style="width:100px;">
+            <div style="width:120px;">
               <span class="body-2 grey--text mb-3 mr-2">{{ $t('explorer.type') }}</span>
 
               <v-select
@@ -169,22 +169,25 @@
                 cache-items
                 color="secondary"
                 item-color="secondary"
-                multiple
                 dense
-                class="body-2 pa-0 ma-0"
+                class="body-3 pa-0 ma-0"
+                @change="onFilterChange()"
               />
             </div>
           </v-card-title>
           <v-card-text class="pa-0">
             <v-data-table
+              :loading="isLoading"
               :headers="txTable"
-              :items="filteredItems"
+              :items="transactions"
               :sort-by="['timestamp']"
               :sort-desc="[true]"
               :items-per-page="10"
-              :footer-props="{'items-per-page-options': [10, 50, 100, -1]}"
+              :footer-props="{'items-per-page-options': [10, 25, 50]}"
               no-data-text="this block does not contain any transactions"
               class="secondary--text"
+              :server-items-length="total"
+              :options.sync="options"
             >
               <template v-slot:header.label="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
@@ -248,7 +251,11 @@
               </template>
 
               <template v-slot:item.recipient="{ item }">
-                <nuxt-link v-if="item.recipient" :to="{ path: '/address/' + item.recipient }" class="d-inline-block primary--text">
+                <nuxt-link
+                  v-if="item.recipient"
+                  :to="{ path: '/address/' + item.recipient }"
+                  class="d-inline-block primary--text"
+                >
                   {{ item.recipient | truncateString }}
                 </nuxt-link>
                 <span v-if="!item.recipient">N/A</span>
@@ -274,199 +281,244 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import '@nuxtjs/axios'
-import * as _ from 'lodash'
+  import Vue from 'vue'
+  import { Component, Watch } from 'vue-property-decorator'
+  import '@nuxtjs/axios'
 
-@Component({
-  components: {
-  },
-  computed: {
-    filteredItems (): string {
-      return (this as any).transactions.filter((i: any) => {
-        return !(this as any).txType || _.includes((this as any).txType, i.type) || ((this as any).txType! as any).length === 0
+  @Component({
+    components: {},
+    computed: {},
+    validate({ params }) {
+      // return !isNaN(params.address)
+      return true
+    },
+    async asyncData({ $axios, params }) {
+      // Pagination still needs to be implemented possible that a store
+      // may be required due to many transactions linked to active
+      // addresses
+
+      // eg: https://codepen.io/paulpv/pen/zWPKao
+
+      // required: method to get total sum of transactions linked to the
+      // an address in order to determine the `limit` parameter.
+
+      const balance = await $axios.$get(process.env.LB_API + '/addresses/balance/details/' + params.address, {
+        timeout: Number(process.env.AXIOS_TIMEOUT)
       })
+
+      return {
+        balance
+      }
     }
-  },
-  validate ({ params }) {
-    // return !isNaN(params.address)
-    return true
-  },
-  async asyncData ({ $axios, params }) {
-    // Pagination still needs to be implemented possible that a store
-    // may be required due to many transactions linked to active
-    // addresses
+  })
 
-    // eg: https://codepen.io/paulpv/pen/zWPKao
+  export default class Address extends Vue {
+    address = (this as any).$nuxt.$route.params.address
+    copied = false
+    balance = null
+    transactions = []
+    isLoading = false
+    total = 0
+    options: any = {}
+    limit = 10
 
-    // required: method to get total sum of transactions linked to the
-    // an address in order to determine the `limit` parameter.
-
-    const balance = await $axios.$get(process.env.LB_API + '/addresses/balance/details/' + params.address, {
-      timeout: Number(process.env.AXIOS_TIMEOUT)
-    })
-
-    let transactions = await $axios.$get(process.env.LB_API + '/transactions/address/' + params.address + '/limit/200', {
-      timeout: Number(process.env.AXIOS_TIMEOUT)
-    })
-
-    transactions = transactions[0]
-
-    if (transactions.length >= 1) {
-      transactions.forEach((tx: any) => {
-        if (tx.sender === params.address) {
-          tx.label = 'out'
-        } else if (tx.recipient === params.address) {
-          tx.label = 'in'
-        } else {
-          tx.label = 'out' // Mass Tx
+    async makeRequest() {
+      this.isLoading = true
+      try {
+        const { data, headers } = await this.$axios.get(`${process.env.LB_API}/index/transactions/addresses/${this.address}?${this.queryParameters}`, {
+          timeout: Number(process.env.AXIOS_TIMEOUT),
+          headers: {
+            'Access-Control-Expose-Headers': '*'
+          }
+        })
+        this.total = Number(headers['x-total'])
+        this.transactions = data
+        if (this.transactions.length > 0) {
+          this.transactions.forEach((tx: any) => {
+            if (tx.sender === this.address) {
+              tx.label = 'out'
+            } else if (tx.recipient === this.address) {
+              tx.label = 'in'
+            } else {
+              tx.label = 'out'
+            }
+          })
         }
-      })
+      } catch (e) {
+        // Do something
+      } finally {
+        this.isLoading = false
+      }
     }
-    return {
-      balance,
-      transactions
+
+    get queryParameters() {
+      return `offset=${this.offset}&limit=${this.options.itemsPerPage}&type=${this.filterType}`
+    }
+
+    get offset() {
+      return (this.limit * this.options.page) - this.limit
+    }
+
+    get filterType() {
+      return this.typeMap[this.txType]
+    }
+
+    onFilterChange() {
+      this.makeRequest()
+    }
+
+    @Watch('options')
+    onOptionsChange() {
+      this.makeRequest()
+    }
+
+    txTable = [
+      {
+        text: 'I / O',
+        align: 'center',
+        value: 'label'
+      },
+      {
+        text: 'Type',
+        align: 'left',
+        value: 'type'
+      },
+      {
+        text: 'ID',
+        align: 'left',
+        value: 'id'
+      },
+      {
+        text: 'Sender',
+        align: 'left',
+        value: 'sender'
+      },
+      {
+        text: 'Recipient',
+        align: 'left',
+        value: 'recipient'
+      },
+      {
+        text: 'Amount',
+        align: 'right',
+        value: 'amount'
+      },
+      {
+        text: 'Fee',
+        align: 'right',
+        value: 'fee'
+      },
+      {
+        text: 'Timestamp',
+        align: 'center',
+        value: 'timestamp'
+      }
+    ]
+
+    txFilter = [
+      { text: 'Anchor', value: 15 },
+      { text: 'Transfer', value: 4 },
+      { text: 'Start Lease', value: 8 },
+      { text: 'Cancel Lease', value: 9 },
+      { text: 'Mass Transfer', value: 11 }
+    ]
+
+    txType = 4
+
+    typeMap: any = {
+      1: 'genesis',
+      4: 'transfer',
+      8: 'start_lease',
+      9: 'cancel_lease',
+      11: 'mass_transfer',
+      13: 'script',
+      15: 'anchor',
+      16: 'invoke_association',
+      17: 'revoke_association',
+      18: 'sponsor',
+      19: 'cancel_sponsor'
+    }
+
+    name(value: number): string {
+      if (value === 1) {
+        return 'Genesis'
+      } else if (value === 4) {
+        return 'Transfer'
+      } else if (value === 8) {
+        return 'Lease'
+      } else if (value === 9) {
+        return 'Cancel Lease'
+      } else if (value === 11) {
+        return 'Mass Transfer'
+      } else if (value === 13) {
+        return 'Script'
+      } else if (value === 15) {
+        return 'Anchor'
+      } else if (value === 16) {
+        return 'Invoke Association'
+      } else if (value === 17) {
+        return 'Revoke Association'
+      } else if (value === 18) {
+        return 'Sponsor'
+      } else if (value === 19) {
+        return 'Cancel Sponsor'
+      } else {
+        return 'Unknown'
+      }
+    }
+
+    color(value: string): string {
+      if (value === 'out') {
+        return 'orange'
+      } else if (value === 'in') {
+        return 'green'
+      } else {
+        return ''
+      }
+    }
+
+    icon(value: number): string {
+      // Genesis Transfer
+      if (value === 1) {
+        return 'mdi-power'
+      } else if (value === 4) {
+        // Transfer
+        return 'mdi-send'
+      } else if (value === 8) {
+        // Lease
+        return 'mdi-file-document-box-plus'
+      } else if (value === 9) {
+        // Cancel Lease
+        return 'mdi-file-document-box-remove'
+      } else if (value === 11) {
+        // Mass Transfer
+        return 'mdi-coins'
+      } else if (value === 13) {
+        // Set Script
+        return 'mdi-script-text'
+      } else if (value === 15) {
+        // Anchor
+        return 'mdi-anchor'
+      } else if (value === 16) {
+        // Invoke Association
+        return 'mdi-link-plus'
+      } else if (value === 17) {
+        // Revoke Association
+        return 'mdi-link-off'
+      } else if (value === 18) {
+        // Sponsor
+        return 'mdi-heart'
+      } else if (value === 19) {
+        // Cancel Sponsor
+        return 'mdi-heart-broken'
+      } else {
+        return 'Unknown'
+      }
+    }
+
+    copy(): void {
+      this.copied = true
     }
   }
-})
-
-export default class Address extends Vue {
-  address = (this as any).$nuxt.$route.params.address
-
-  copied = false
-
-  balance = null
-
-  txTable = [
-    {
-      text: 'I / O',
-      align: 'center',
-      value: 'label'
-    },
-    {
-      text: 'Type',
-      align: 'left',
-      value: 'type'
-    },
-    {
-      text: 'ID',
-      align: 'left',
-      value: 'id'
-    },
-    {
-      text: 'Sender',
-      align: 'left',
-      value: 'sender'
-    },
-    {
-      text: 'Recipient',
-      align: 'left',
-      value: 'recipient'
-    },
-    {
-      text: 'Amount',
-      align: 'right',
-      value: 'amount'
-    },
-    {
-      text: 'Fee',
-      align: 'right',
-      value: 'fee'
-    },
-    {
-      text: 'Timestamp',
-      align: 'center',
-      value: 'timestamp'
-    }
-  ]
-
-  txFilter = [
-    { text: 'Anchor', value: 15 },
-    { text: 'Genesis', value: 1 },
-    { text: 'Transfer', value: 4 },
-    { text: 'Lease', value: 8 },
-    { text: 'Cancel Lease', value: 9 },
-    { text: 'Mass Transfer', value: 11 },
-    { text: 'Script', value: 13 }
-  ]
-
-  txType = null
-
-  name (value: number): string {
-    if (value === 1) {
-      return 'Genesis'
-    } else if (value === 4) {
-      return 'Transfer'
-    } else if (value === 8) {
-      return 'Lease'
-    } else if (value === 9) {
-      return 'Cancel Lease'
-    } else if (value === 11) {
-      return 'Mass Transfer'
-    } else if (value === 13) {
-      return 'Script'
-    } else if (value === 15) {
-      return 'Anchor'
-    } else if (value === 16) {
-      return 'Invoke Association'
-    } else if (value === 17) {
-      return 'Revoke Association'
-    } else if (value === 18) {
-      return 'Sponsor'
-    } else if (value === 19) {
-      return 'Cancel Sponsor'
-    } else {
-      return 'Unknown'
-    }
-  }
-
-  color (value: string): string {
-    if (value === 'out') { return 'orange' } else if (value === 'in') { return 'green' } else { return '' }
-  }
-
-  icon (value: number): string {
-    // Genesis Transfer
-    if (value === 1) {
-      return 'mdi-power'
-    } else if (value === 4) {
-    // Transfer
-      return 'mdi-send'
-    } else if (value === 8) {
-    // Lease
-      return 'mdi-file-document-box-plus'
-    } else if (value === 9) {
-      // Cancel Lease
-      return 'mdi-file-document-box-remove'
-    } else if (value === 11) {
-      // Mass Transfer
-      return 'mdi-coins'
-    } else if (value === 13) {
-      // Set Script
-      return 'mdi-script-text'
-    } else if (value === 15) {
-      // Anchor
-      return 'mdi-anchor'
-    } else if (value === 16) {
-      // Invoke Association
-      return 'mdi-link-plus'
-    } else if (value === 17) {
-      // Revoke Association
-      return 'mdi-link-off'
-    } else if (value === 18) {
-      // Sponsor
-      return 'mdi-heart'
-    } else if (value === 19) {
-      // Cancel Sponsor
-      return 'mdi-heart-broken'
-    } else {
-      return 'Unknown'
-    }
-  }
-
-  copy (): void {
-    this.copied = true
-  }
-}
 
 </script>

@@ -180,242 +180,242 @@
 
 <script lang="ts">
 
-import Vue from 'vue'
-import { ChartData, ChartType, ChartTooltipItem } from 'chart.js'
+  import Vue from 'vue'
+  import { ChartData, ChartTooltipItem } from 'chart.js'
 
-import { mapGetters } from 'vuex'
-import { Component, Watch } from 'vue-property-decorator'
-import moment from 'moment'
-import Panel from '../components/Panel.vue'
-import LineChart from '../components/LineChart.vue'
-import { translate } from '../plugins/translate'
+  import { mapGetters } from 'vuex'
+  import { Component, Watch } from 'vue-property-decorator'
+  import moment from 'moment'
+  import Panel from '../components/Panel.vue'
+  import LineChart from '../components/LineChart.vue'
+  import { translate } from '../plugins/translate'
 
-interface DataSet {
-  backgroundColor: string;
-  borderColor: string;
-  borderWidth: string;
-  pointBorderWidth: string;
-  pointRotation: string;
-  spanGaps: boolean;
-  data: any;
-}
+  interface DataSet {
+    backgroundColor: string;
+    borderColor: string;
+    borderWidth: string;
+    pointBorderWidth: string;
+    pointRotation: string;
+    spanGaps: boolean;
+    data: any;
+  }
 
-interface ChartDataSet {
-  labels: any[];
-  datasets: DataSet[];
-}
+  interface ChartDataSet {
+    labels: any[];
+    datasets: DataSet[];
+  }
 
-@Component({
-  // name: 'Dashboard',
-  head () {
-    return {
-      title: translate('network.title')
-    }
-  },
-  components: {
-    Panel,
-    LineChart
-  },
-  computed: {
-    chartDataSet (): ChartData {
+  @Component({
+    // name: 'Dashboard',
+    head() {
       return {
-        labels: (this as any).chart.dataset.map((d: any) => (d as any).period),
-        datasets: [{
-          backgroundColor: 'rgba(249, 246, 252, .6)',
-          borderColor: '#804BC9',
-          data: (this as any).chart.dataset.map((d: any) => (d as any).count)
-        }]
+        title: translate('network.title')
       }
     },
-    ...mapGetters({
-      chart: 'dashboard/getChart',
-      blocks: 'dashboard/getBlocks',
-      unconfirmed: 'dashboard/getUnconfirmed'
-    })
-  }
-})
-
-class Dashboard extends Vue {
-  filters = {
-    type: 'week',
-    start: moment().subtract(1, 'week').utc().format('x'),
-    end: moment().utc().format('x')
-  }
-
-  selectedFilter: moment.unitOfTime.DurationConstructor = 'week'
-
-  chartData = {
-    labels: null,
-    datasets: [
-      {
-        backgroundColor: 'rgba(249, 246, 252, .6)',
-        borderColor: '#804BC9',
-        borderWidth: '3',
-        pointBorderWidth: '0',
-        pointRotation: '45',
-        spanGaps: true,
-        data: null
-      }
-    ]
-  }
-
-  chartOptions = {
-    maintainAspectRatio: false,
-    responsive: true,
-    ticks: {
-      source: 'auto'
+    components: {
+      Panel,
+      LineChart
     },
-    scales: {
-      xAxes: [{
-        id: 'x-axis',
-        type: 'time',
-        ticks: {
-          autoSkip: true,
-          maxRotation: 45,
-          offset: true
-        },
-        time: {
-          unit: 'day'
-        },
-        callback (value: any): string {
-          return value
-        },
-        distribution: 'linear',
-        gridLines: {
-          display: true
-        },
-        scaleLabel: {
-          fontFamily: 'IBM Plex Sans',
-          fontColor: '#75828F',
-          fontSize: 10
+    computed: {
+      chartDataSet(): ChartData {
+        return {
+          labels: (this as any).chart.dataset.map((d: any) => (d as any).period),
+          datasets: [{
+            backgroundColor: 'rgba(249, 246, 252, .6)',
+            borderColor: '#804BC9',
+            data: (this as any).chart.dataset.map((d: any) => (d as any).count)
+          }]
         }
-      }],
-      yAxes: [{
-        id: 'y-axis',
-        type: 'linear',
-        ticks: {
-          display: true,
-          beginAtZero: false,
-          callback (value: any): string {
-            return value.toLocaleString(undefined, {
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 2
-            })
-          }
-        },
-        gridLines: {
-          display: true,
-          drawBorder: false
-        }
-      }]
-    },
-    tooltips: {
-      titleFontColor: '#fff',
-      titleSpacing: 0,
-      titleFontSize: 12,
-      titleFontStyle: 'normal',
-      titleMarginBottom: 0,
-      xPadding: 15,
-      yPadding: 10,
-      intersect: false,
-      displayColors: false,
-      cornerRadius: 6,
-      backgroundColor: 'rgba(23, 5, 75, 1)',
-      mode: 'label',
-      callbacks: {
-        title (value: ChartTooltipItem[]): string {
-          return 'Transactions: ' + (value[0].yLabel as string | number).toLocaleString(undefined, {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2
-          })
-        },
-        label (value: ChartTooltipItem[]): string {
-          return ''
-        }
-      }
-    },
-    legend: {
-      display: false
-    },
-    animation: {
-      duration: 1000,
-      easing: 'easeOutQuint'
+      },
+      ...mapGetters({
+        chart: 'dashboard/getChart',
+        blocks: 'dashboard/getBlocks',
+        unconfirmed: 'dashboard/getUnconfirmed'
+      })
     }
-  }
+  })
 
-  chartFilters = [
-    'day', 'week', 'month'
-  ]
-
-  @Watch('selectedFilter')
-  filterChanged (): void {
-    this.filters = {
-      type: this.selectedFilter,
-      start: moment().subtract(1, this.selectedFilter).utc().format('x'),
+  class Dashboard extends Vue {
+    filters = {
+      type: 'week',
+      start: moment().subtract(1, 'week').utc().format('x'),
       end: moment().utc().format('x')
     }
 
-    this.$store.dispatch('dashboard/fetchChart', this.filters)
-  }
+    selectedFilter: moment.unitOfTime.DurationConstructor = 'week'
 
-  chartTimer: ReturnType<typeof setInterval> | undefined = undefined;
-  blocksTimer: ReturnType<typeof setInterval> | undefined = undefined;
-  unconfirmedTimer: ReturnType<typeof setInterval> | undefined = undefined;
-
-  created (): void {
-    this.pollChart()
-    this.pollBlocks()
-    this.pollUnconfirmed()
-  }
-
-  beforeDestroy (): void {
-    if (this.chartTimer) {
-      clearInterval(this.chartTimer)
+    chartData = {
+      labels: null,
+      datasets: [
+        {
+          backgroundColor: 'rgba(249, 246, 252, .6)',
+          borderColor: '#804BC9',
+          borderWidth: '3',
+          pointBorderWidth: '0',
+          pointRotation: '45',
+          spanGaps: true,
+          data: null
+        }
+      ]
     }
 
-    if (this.blocksTimer) {
-      clearInterval(this.blocksTimer)
+    chartOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+      ticks: {
+        source: 'auto'
+      },
+      scales: {
+        xAxes: [{
+          id: 'x-axis',
+          type: 'time',
+          ticks: {
+            autoSkip: true,
+            maxRotation: 45,
+            offset: true
+          },
+          time: {
+            unit: 'day'
+          },
+          callback(value: any): string {
+            return value
+          },
+          distribution: 'linear',
+          gridLines: {
+            display: true
+          },
+          scaleLabel: {
+            fontFamily: 'IBM Plex Sans',
+            fontColor: '#75828F',
+            fontSize: 10
+          }
+        }],
+        yAxes: [{
+          id: 'y-axis',
+          type: 'linear',
+          ticks: {
+            display: true,
+            beginAtZero: false,
+            callback(value: any): string {
+              return value.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+              })
+            }
+          },
+          gridLines: {
+            display: true,
+            drawBorder: false
+          }
+        }]
+      },
+      tooltips: {
+        titleFontColor: '#fff',
+        titleSpacing: 0,
+        titleFontSize: 12,
+        titleFontStyle: 'normal',
+        titleMarginBottom: 0,
+        xPadding: 15,
+        yPadding: 10,
+        intersect: false,
+        displayColors: false,
+        cornerRadius: 6,
+        backgroundColor: 'rgba(23, 5, 75, 1)',
+        mode: 'label',
+        callbacks: {
+          title(value: ChartTooltipItem[]): string {
+            return 'Transactions: ' + (value[0].yLabel as string | number).toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2
+            })
+          },
+          label(value: ChartTooltipItem[]): string {
+            return ''
+          }
+        }
+      },
+      legend: {
+        display: false
+      },
+      animation: {
+        duration: 1000,
+        easing: 'easeOutQuint'
+      }
     }
 
-    if (this.unconfirmedTimer) {
-      clearInterval(this.unconfirmedTimer)
-    }
-  }
+    chartFilters = [
+      'day', 'week', 'month'
+    ]
 
-  pollChart (): void {
-    // Fetch on render
-    this.$store.dispatch('dashboard/fetchChart', this.filters)
+    @Watch('selectedFilter')
+    filterChanged(): void {
+      this.filters = {
+        type: this.selectedFilter,
+        start: moment().subtract(1, this.selectedFilter).utc().format('x'),
+        end: moment().utc().format('x')
+      }
 
-    // Refresh every minute
-    this.chartTimer = setInterval(() => {
       this.$store.dispatch('dashboard/fetchChart', this.filters)
-    }, 3600000)
-  }
+    }
 
-  pollBlocks (): void {
-    // Fetch on render
-    this.$store.dispatch('dashboard/fetchBlocks')
+    chartTimer: ReturnType<typeof setInterval> | undefined = undefined;
+    blocksTimer: ReturnType<typeof setInterval> | undefined = undefined;
+    unconfirmedTimer: ReturnType<typeof setInterval> | undefined = undefined;
 
-    // Refresh every minute
-    this.blocksTimer = setInterval(() => {
+    created(): void {
+      this.pollChart()
+      this.pollBlocks()
+      this.pollUnconfirmed()
+    }
+
+    beforeDestroy(): void {
+      if (this.chartTimer) {
+        clearInterval(this.chartTimer)
+      }
+
+      if (this.blocksTimer) {
+        clearInterval(this.blocksTimer)
+      }
+
+      if (this.unconfirmedTimer) {
+        clearInterval(this.unconfirmedTimer)
+      }
+    }
+
+    pollChart(): void {
+      // Fetch on render
+      this.$store.dispatch('dashboard/fetchChart', this.filters)
+
+      // Refresh every minute
+      this.chartTimer = setInterval(() => {
+        this.$store.dispatch('dashboard/fetchChart', this.filters)
+      }, 3600000)
+    }
+
+    pollBlocks(): void {
+      // Fetch on render
       this.$store.dispatch('dashboard/fetchBlocks')
-    }, 10000)
-  }
 
-  pollUnconfirmed (): void {
-    // Fetch on render
-    this.$store.dispatch('dashboard/fetchUnconfirmed')
+      // Refresh every minute
+      this.blocksTimer = setInterval(() => {
+        this.$store.dispatch('dashboard/fetchBlocks')
+      }, 10000)
+    }
 
-    // Refresh every 10 seconds
-    this.unconfirmedTimer = setInterval(() => {
+    pollUnconfirmed(): void {
+      // Fetch on render
       this.$store.dispatch('dashboard/fetchUnconfirmed')
-    }, 5000)
+
+      // Refresh every 10 seconds
+      this.unconfirmedTimer = setInterval(() => {
+        this.$store.dispatch('dashboard/fetchUnconfirmed')
+      }, 5000)
+    }
+
+    filterChart(): void {
+      alert(this.selectedFilter)
+    }
   }
 
-  filterChart (): void {
-    alert(this.selectedFilter)
-  }
-}
-
-export default Dashboard
+  export default Dashboard
 </script>

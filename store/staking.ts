@@ -17,7 +17,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  async fetchGenerators (this: VueGlobalFunctions, { state, commit }: { state: StakingState; commit: any }) {
+  async fetchGenerators(this: VueGlobalFunctions, { state, commit }: { state: StakingState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
     const url: string = process.env.CACHE_API + '/generator/all/week'
@@ -28,7 +28,7 @@ export const actions = {
 }
 
 export const mutations = {
-  setGenerators (state: StakingState, payload: unknown[]) {
+  setGenerators(state: StakingState, payload: unknown[]) {
     payload.forEach((g: any) => {
       g.updated = moment(g.updated)
     })

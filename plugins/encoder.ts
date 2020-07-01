@@ -18,7 +18,8 @@ export class EncoderServiceImpl implements EncoderService {
       .reduce((map, char, index) => ({ ...map, [char]: index }), {});
   }
 
-  encode(str: string, encoding: Encoding) {}
+  encode(str: string, encoding: Encoding) {
+  }
 
   decode(hash: string, encoding: Encoding) {
     switch (encoding) {
@@ -135,11 +136,18 @@ export class EncoderServiceImpl implements EncoderService {
 
 export abstract class EncoderService {
   abstract base64Encode(buffer: Uint8Array): string;
+
   abstract base64Decode(hash: string): Uint8Array;
+
   abstract base58Encode(buffer: Uint8Array): string;
+
   abstract base58Decode(hash: string): Uint8Array;
+
   abstract hexEncode(buffer: Uint8Array): string;
+
   abstract hexDecode(hash: string): Uint8Array;
+
   abstract decode(hash: string, encoding: Encoding): Uint8Array;
+
   abstract validateSHA256(hash: string, encoding: Encoding): boolean;
 }
