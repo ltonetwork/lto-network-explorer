@@ -14,6 +14,7 @@ export default {
     price: 'Price',
     height: 'Height',
     staking: 'LTO Staked',
+    burned: 'LTO Burned',
     nodes: 'Active Nodes'
 
   },
