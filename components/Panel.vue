@@ -174,7 +174,7 @@
       </v-card>
     </v-col>
 
-     <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="3">
+    <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="3">
       <v-card :loading="!burn.updated" height="100%">
         <v-card-text class="pt-4 pb-3 pl-7 pr-7">
           <v-row>

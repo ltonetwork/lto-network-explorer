@@ -49,7 +49,7 @@ interface PanelState {
       updated: null | moment.Moment | string;
     };
 
-    burn: {
+    burned: {
       total: number;
       updated: null | moment.Moment | string;
     };
