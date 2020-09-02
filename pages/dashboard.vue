@@ -221,10 +221,17 @@
         return {
           labels: (this as any).chart.dataset.map((d: any) => (d as any).period),
           datasets: [{
-            backgroundColor: 'rgba(249, 246, 252, .6)',
+            backgroundColor: 'rgba(249, 246, 252, 0)',
             borderColor: '#804BC9',
             data: (this as any).chart.dataset.map((d: any) => (d as any).count)
-          }]
+          },
+          {
+            backgroundColor: 'rgba(76, 52, 235, 0)',
+            borderColor: '#271ab0',
+            data: (this as any).chart.dataset.map((d: any) => (+(d as any).count * 0.1))
+          }
+
+          ]
         }
       },
       ...mapGetters({
@@ -248,8 +255,8 @@
       labels: null,
       datasets: [
         {
-          backgroundColor: 'rgba(249, 246, 252, .6)',
-          borderColor: '#804BC9',
+          backgroundColor: '',
+          borderColor: '',
           borderWidth: '3',
           pointBorderWidth: '0',
           pointRotation: '45',
@@ -310,27 +317,36 @@
         }]
       },
       tooltips: {
-        titleFontColor: '#fff',
-        titleSpacing: 0,
-        titleFontSize: 12,
-        titleFontStyle: 'normal',
-        titleMarginBottom: 0,
+        bodyFontColor: '#fff',
+        bodySpacing: 8,
+        bodyFontSize: 13,
+        bodyFontStyle: 'normal',
+        bodyMarginBottom: 0,
         xPadding: 15,
-        yPadding: 10,
+        yPadding: 15,
         intersect: false,
         displayColors: false,
         cornerRadius: 6,
         backgroundColor: 'rgba(23, 5, 75, 1)',
         mode: 'label',
         callbacks: {
-          title(value: ChartTooltipItem[]): string {
-            return 'Transactions: ' + (value[0].yLabel as string | number).toLocaleString(undefined, {
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 2
-            })
-          },
-          label(value: ChartTooltipItem[]): string {
+          title(items: any, value: ChartTooltipItem[]): string {
             return ''
+          },
+          label(items: any, value: ChartTooltipItem[]): string {
+            if (items.datasetIndex === 0) {
+              return 'Transactions: ' + (items.yLabel as string | number).toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+              })
+            } else if (items.datasetIndex === 1) {
+              return 'Burned LTO:  ' + (items.yLabel as string | number).toLocaleString(undefined, {
+                minimumFractionDigits: 3,
+                maximumFractionDigits: 3
+              })
+            } else {
+              return ''
+            }
           }
         }
       },
