@@ -144,7 +144,7 @@
               :lg="6"
               class="pt-0 pb-2 pl-0 pr-0 text-right"
             >
-              <span class="caption grey--text ma-0">(7d)</span>
+              <span class="caption grey--text ma-0">(1w)</span>
             </v-col>
           </v-row>
 
@@ -194,7 +194,7 @@
               :lg="6"
               class="pt-0 pb-2 pl-0 pr-0 text-right"
             >
-              <span class="caption grey--text ma-0">(7d)</span>
+              <span class="caption grey--text ma-0">(1w)</span>
             </v-col>
           </v-row>
 
