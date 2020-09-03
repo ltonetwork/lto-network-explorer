@@ -268,6 +268,7 @@
   import Vue from 'vue'
   import { Component } from 'vue-property-decorator'
   import '@nuxtjs/axios'
+  import * as _ from 'lodash'
   import { Transaction, Transfer } from '../types'
   import { EncoderServiceImpl } from '../../plugins/encoder'
 
@@ -284,6 +285,10 @@
 
       if (transaction.type === 9 || transaction.type === 1 || transaction.type === 15) {
         transaction.amount = 0
+      } else if (transaction.type === 11) {
+        transaction.amount = _.sumBy(transaction.transfers, function(tx: any) {
+          return tx.amount
+        })
       }
 
       return {
