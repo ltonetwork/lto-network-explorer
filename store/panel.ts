@@ -180,7 +180,7 @@ export const actions = {
 
     commit("updateNodes", payload);
   },
-  async fetchGenerators(
+  async fetchStaking(
     this: VueGlobalFunctions,
     { state, commit }: { state: PanelState; commit: any }
   ) {
@@ -191,7 +191,20 @@ export const actions = {
     const url: string = process.env.CACHE_API + "/generator/staking/weekly";
     const payload = await this.$axios.$get(url);
 
-    commit("updateGenerators", payload);
+    commit("updateStaking", payload);
+  },
+  async fetchBurned(
+    this: VueGlobalFunctions,
+    { state, commit }: { state: PanelState; commit: any }
+  ) {
+    // Doc: https://github.com/bbjansen/lto-cache-api
+
+    // state.state.panel.staking.updated = null
+
+    const url: string = process.env.CACHE_API + "/stats/burned/total";
+    const payload = await this.$axios.$get(url);
+
+    commit("updateBurned", payload);
   },
   async fetchNetwork(
     this: VueGlobalFunctions,
@@ -269,18 +282,16 @@ export const mutations = {
     state.panel.nodes.active = payload.length;
     state.panel.nodes.updated = moment();
   },
-  updateGenerators(state: PanelState, payload: unknown[]) {
+  updateStaking(state: PanelState, payload: unknown[]) {
     state.panel.staking.total = _.sumBy(payload, function(o: any) {
       return o.balance;
     });
     state.panel.staking.updated = moment();
-
-    state.panel.burned.total = _.sumBy(payload, function(o: any) {
-      return o.burned;
-    });
+  },
+  updateBurned(state: PanelState, payload: number) {
+    state.panel.burned.total = payload
     state.panel.burned.updated = moment();
   },
-
   updateNetwork(state: PanelState, payload: unknown) {
     state.panel.network.height = (payload as any).blockchainHeight;
     state.panel.network.updated = moment();

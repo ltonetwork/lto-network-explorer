@@ -193,9 +193,7 @@
               :md="6"
               :lg="6"
               class="pt-0 pb-2 pl-0 pr-0 text-right"
-            >
-              <span class="caption grey--text ma-0">(1w)</span>
-            </v-col>
+            />
           </v-row>
 
           <v-row>
@@ -244,13 +242,15 @@
   export default class Panel extends Vue {
   marketTimer: ReturnType<typeof setInterval> | undefined = undefined;
   nodesCountTimer: ReturnType<typeof setInterval> | undefined = undefined;
-  generatorsTiming: ReturnType<typeof setInterval> | undefined = undefined;
+  stakingTimer: ReturnType<typeof setInterval> | undefined = undefined;
+  burnedTimer: ReturnType<typeof setInterval> | undefined = undefined;
   networkTimer: ReturnType<typeof setInterval> | undefined = undefined;
 
   created(): void {
     this.pollMarket()
     this.pollNodes()
-    this.pollGenerators()
+    this.pollStaking()
+    this.pollBurned()
     this.pollNetwork()
   }
 
@@ -263,8 +263,12 @@
       clearInterval(this.nodesCountTimer)
     }
 
-    if (this.generatorsTiming) {
-      clearInterval(this.generatorsTiming)
+    if (this.stakingTimer) {
+      clearInterval(this.stakingTimer)
+    }
+
+    if (this.burnedTimer) {
+      clearInterval(this.burnedTimer)
     }
 
     if (this.networkTimer) {
@@ -292,13 +296,23 @@
     }, 60000)
   }
 
-  pollGenerators(): void {
+  pollStaking(): void {
     // Fetch on render
-    this.$store.dispatch('panel/fetchGenerators')
+    this.$store.dispatch('panel/fetchStaking')
 
     // Refresh every minute
-    this.generatorsTiming = setInterval(() => {
-      this.$store.dispatch('panel/fetchGenerators')
+    this.stakingTimer = setInterval(() => {
+      this.$store.dispatch('panel/fetchStaking')
+    }, 60000)
+  }
+
+  pollBurned(): void {
+    // Fetch on render
+    this.$store.dispatch('panel/fetchBurned')
+
+    // Refresh every minute
+    this.burnedTimer = setInterval(() => {
+      this.$store.dispatch('panel/fetchBurned')
     }, 60000)
   }
 
