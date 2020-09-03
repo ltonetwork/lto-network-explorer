@@ -9,7 +9,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - LTO Network',
+    titleTemplate: '%s',
     title: 'LTO Network Explorer',
     meta: [
       { charset: 'utf-8' },
