@@ -199,23 +199,5 @@ export default {
   router: {
     base: '',
     middleware: 'redirect'
-  },
-  proxy: {
-    '/cache/': {
-      target: 'https://api.lto.cloud/v1',
-      pathRewrite: { '^/cache/': '' }
-    },
-    '/network/': {
-      target: 'https://network.lto.cloud/v1',
-      pathRewrite: { '^/network/': '' }
-    },
-    '/node/': {
-      target: 'https://nodes.lto.network',
-      pathRewrite: { '^/node/': '' }
-    },
-    '/bridge/': {
-      target: 'https://bridge.lto.network',
-      pathRewrite: { '^/node/': '' }
-    }
   }
 }
