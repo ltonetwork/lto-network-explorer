@@ -85,14 +85,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    // Doc: https://www.npmjs.com/package/@nuxtjs/proxy
-    '@nuxtjs/proxy',
-    // Doc: https://nuxtjs.org/faq/cached-components/
-    ['@nuxtjs/component-cache', {
-      max: 10000,
-      maxAge: 1000 * 60 * 60
-    }],
+    '@nuxtjs/pwa',,
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     // Doc: https://github.com/Developmint/nuxt-webfontloader

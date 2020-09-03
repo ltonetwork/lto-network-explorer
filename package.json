@@ -27,7 +27,6 @@
     },
     "dependencies": {
         "@nuxtjs/axios": "^5.3.6",
-        "@nuxtjs/component-cache": "^1.1.5",
         "@nuxtjs/dotenv": "^1.4.0",
         "@nuxtjs/localforage": "^1.0.2",
         "@nuxtjs/pwa": "^3.0.0-0",
