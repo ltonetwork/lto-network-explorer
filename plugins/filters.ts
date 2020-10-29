@@ -20,15 +20,15 @@ Vue.filter('parseNumber', function (amount: number): string {
 })
 
 Vue.filter('parseTimeHour', function (timestamp: number): string {
-  return moment(timestamp).format('HH:MM:ss')
+  return moment(timestamp, 'x').format('hh:mm:ss')
 })
 
 Vue.filter('parseTime', function (timestamp: number): string {
-  return moment(timestamp).format('DD-MM-YY HH:MM:ss')
+  return moment(timestamp, 'x').format('DD-MM-YY hh:mm:ss')
 })
 
 Vue.filter('fromNow', function (timestamp: number): string {
-  return moment(timestamp).fromNow()
+  return moment(timestamp, 'x').fromNow()
 })
 
 Vue.filter('truncateString', function (str: string): string {
