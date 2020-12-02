@@ -220,7 +220,7 @@
 
       if (this.query !== null) {
         // Block
-        if (Number.isInteger(+this.query) && this.query.length <= 6) {
+        if (Number.isInteger(+this.query) && this.query.length <= 7) {
           this.valid = true
           this.url = '/block/' + this.query
           // Address
