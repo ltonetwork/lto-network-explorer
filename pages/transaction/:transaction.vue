@@ -115,7 +115,7 @@
         <v-card>
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-transactions" />
-            {{ $t('transaction.title') }}(s)
+            {{ $t('explorer.tx') }}
           </v-card-title>
           <v-card-text class="pa-0">
             <v-simple-table>
