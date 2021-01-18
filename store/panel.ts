@@ -171,11 +171,10 @@ export const actions = {
     this: VueGlobalFunctions,
     { state, commit }: { state: PanelState; commit: any }
   ) {
-    // Doc: https://github.com/bbjansen/lto-network-monitor
-
+    
     // state.state.panel.nodes.updated = null
 
-    const url = "https://network.lto.cloud/v1/nodes/all";
+    const url = process.env.CACHE_API + '/stats/nodes'
     const payload = await this.$axios.$get(url);
 
     commit("updateNodes", payload);

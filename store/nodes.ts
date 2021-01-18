@@ -38,7 +38,7 @@ export const actions = {
   async fetchNodes(this: VueGlobalFunctions, { state, commit }: { state: NodeState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-network-monitor
 
-    const url: string = process.env.NETWORK_API + '/nodes/all'
+    const url: string = process.env.CACHE_API + '/stats/nodes'
     const payload = await this.$axios.$get(url)
 
     commit('setNodes', payload)
