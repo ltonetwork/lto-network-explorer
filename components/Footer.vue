@@ -227,7 +227,7 @@
         socials: [
           {
             name: 'Twitter',
-            href: 'https://twitter.com/ltonetwork'
+            href: 'https://twitter.com/theltonetwork'
           },
           {
             name: 'Blog',
