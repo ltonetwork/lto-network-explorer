@@ -59,16 +59,16 @@
                 <template v-slot:item.payout="{ item }">
                   <v-tooltip right>
                     <template v-slot:activator="{ on }">
-                      <v-icon :color="setColor(item.payout)" v-on="on">
+                      <v-icon v-if="item.payout" color="green" v-on="on">
                         mdi-check
                       </v-icon>
                     </template>
-                    <span>payout: 3%</span>
+                    <span>payout: {{ item.payout }}</span>
                   </v-tooltip>
                 </template>
 
                 <template v-slot:item.label="{ item }">
-                  {{ item.label || 'N/A' }}
+                  {{ item.label }}
                 </template>
 
                 <template v-slot:item.generator="{ item }">
@@ -230,21 +230,10 @@
         align: 'left',
         value: 'generator'
       },
-
-      {
-        text: 'Pool',
-        align: 'center',
-        value: 'pool'
-      },
       {
         text: 'Forged Blocks',
         align: 'center',
         value: 'blocks'
-      },
-      {
-        text: 'Earnings',
-        align: 'center',
-        value: 'earnings'
       },
       {
         text: 'Share',

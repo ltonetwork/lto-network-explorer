@@ -20,7 +20,7 @@ export const actions = {
   async fetchGenerators(this: VueGlobalFunctions, { state, commit }: { state: StakingState; commit: any }) {
     // Doc: https://github.com/bbjansen/lto-cache-api
 
-    const url: string = process.env.CACHE_API + '/generator/all/week'
+    const url: string = process.env.CACHE_API + '/generator/staking/weekly'
     const payload = await this.$axios.$get(url)
 
     commit('setGenerators', payload)
