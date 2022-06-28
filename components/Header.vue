@@ -182,22 +182,24 @@
         title: translate('menu.overview'),
         icon: 'mdi-cube-outline',
         to: '/dashboard'
+      },
+      {
+        title: translate('menu.nodes'),
+        icon: 'mdi-hexagon-slice-6',
+        to: '/nodes'
+      },
+      {
+        title: translate('menu.staking'),
+        icon: 'mdi-layers',
+        to: '/staking'
       }
-      // {
-      //   title: translate('menu.nodes'),
-      //   icon: 'mdi-hexagon-slice-6',
-      //   to: '/nodes'
-      // },
-      // {
-      //   title: translate('menu.staking'),
-      //   icon: 'mdi-layers',
-      //   to: '/staking'
-      // },
-      // {
-      //   title: translate('menu.distribution'),
-      //   icon: 'mdi-chart-donut',
-      //   to: '/distribution'
-      // }
+      /*
+      {
+        title: translate('menu.distribution'),
+        icon: 'mdi-chart-donut',
+        to: '/distribution'
+      }
+      */
     ]
 
     wallet = {

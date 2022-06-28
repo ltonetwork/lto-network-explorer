@@ -48,9 +48,11 @@ export const actions = {
 export const mutations = {
   setNodes(state: NodeState, payload: Node[]) {
     payload.forEach((n: Node) => {
+      /*
       n.updated = moment(n.updated)
       n.created = moment(n.created)
       n.uptime = n.uptime.toString().split('').map(Number)
+      */
     })
 
     state.nodes.active = payload

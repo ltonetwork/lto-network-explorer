@@ -19,11 +19,8 @@
                 :items="nodes.active"
                 :sort-by="['height']"
                 :sort-desc="[true]"
-                :expanded.sync="expanded"
-                :items-per-page="10"
+                :items-per-page="-1"
                 :footer-props="{'items-per-page-options': [10, 50, 100, -1]}"
-                single-expand
-                show-expand
                 item-key="address"
                 class="secondary--text"
               >
@@ -109,7 +106,11 @@
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.height="{ header }">
+                <template v-slot:header.country="{ header }">
+                  <span class="overline grey--text">{{ header.text }}</span>
+                </template>
+
+                <template v-slot:header.network="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
@@ -136,7 +137,11 @@
                 </template>
 
                 <template v-slot:item.address="{ item }">
-                  {{ item.address }}
+                  {{ item.ip }}
+                </template>
+
+                <template v-slot:item.network="{ item }">
+                  {{ item.network }} <em v-if="item.netDescription !== ''">({{ item.netDescription }})</em>
                 </template>
 
                 <template v-slot:item.height="{ item }">
@@ -154,10 +159,10 @@
                 </template>
 
                 <template v-slot:item.p2p="{ item }">
-                  <v-icon v-if="item.p2p" :color="setColor(item.p2p)">
+                  <v-icon v-if="item.port6868 === 'open'" color="green">
                     mdi-check
                   </v-icon>
-                  <v-icon v-if="!item.p2p" :color="setColor(item.p2p)">
+                  <v-icon v-if="item.port6868 !== 'open'" color="red">
                     mdi-close
                   </v-icon>
                 </template>
@@ -226,14 +231,19 @@
         value: 'name'
       },
       {
-        text: 'Host:Port',
+        text: 'IP address',
         align: 'left',
         value: 'address'
       },
       {
-        text: 'Height',
+        text: 'Country',
         align: 'center',
-        value: 'height'
+        value: 'country'
+      },
+      {
+        text: 'Network',
+        align: 'left',
+        value: 'network'
       },
       {
         text: 'Version',
@@ -244,16 +254,6 @@
         text: 'Public P2P',
         align: 'center',
         value: 'p2p'
-      },
-      {
-        text: 'Public API',
-        align: 'center',
-        value: 'api'
-      },
-      {
-        text: 'API Uptime',
-        align: 'center',
-        value: 'uptime'
       }
     ]
 
