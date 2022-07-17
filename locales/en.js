@@ -33,7 +33,7 @@ export default {
   network: {
     title: 'Explorer',
     latest_blocks: 'Latest Blocks',
-    tx_stats: 'Transactions Statistics',
+    tx_stats: 'Activity',
     unconfirmed_tx: 'Unconfirmed Transactions',
     generators: 'Block Forgers'
   },
