@@ -48,11 +48,10 @@ export const state = () => ({
 
 export const actions = {
   async fetchChart(this: VueGlobalFunctions, { state, commit }: { state: DashboardState; commit: any }, filters: any) {
-    // Doc: https://github.com/bbjansen/lto-chain-api
-
+    // Doc: https://github.com/ltonetwork/indexer
     commit('resetUpdated')
 
-    const url: string = process.env.CACHE_API + '/stats/transaction/all/' + filters.start + '/' + filters.end
+    const url: string = process.env.LB_API + '/index/stats/operations/' + filters.start + '/' + filters.end
     const payload = await this.$axios.$get(url)
 
     commit('setFilter', filters.type)
