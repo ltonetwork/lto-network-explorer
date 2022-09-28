@@ -225,11 +225,11 @@
             borderColor: '#804BC9',
             data: (this as any).chart.dataset.map((d: any) => (d as any).count)
           },
-          {
+          /*{
             backgroundColor: 'rgba(76, 52, 235, 0.1)',
             borderColor: '#271ab0',
             data: (this as any).chart.dataset.map((d: any) => (+(d as any).count * 0.1))
-          }
+          }*/
 
           ]
         }
