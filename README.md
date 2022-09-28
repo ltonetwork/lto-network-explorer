@@ -8,7 +8,7 @@ https://explorer.lto.network
 
 ``` bash
 # install dependencies
-$ npm run install
+$ npm install
 
 # serve with hot reload at localhost:3000
 $ npm run dev
@@ -33,5 +33,4 @@ BRIDGE_API=https://bridge.lto.network
 LATEST_BLOCKS=10
 AXIOS_TIMEOUT=20000
 ATOMIC=100000000
-
 ```
