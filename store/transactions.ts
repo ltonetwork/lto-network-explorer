@@ -2,7 +2,8 @@ import moment from 'moment'
 import { VueGlobalFunctions } from '../pages/types'
 
 interface Transaction {
-
+  type: number;
+  [_: string]: any;
 }
 
 interface Pagination {
@@ -51,7 +52,7 @@ export const actions = {
         }
 
         commit('setTransactions', data)
-        resolve()
+        resolve(data)
       }, 1000)
     })
   }

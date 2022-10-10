@@ -171,6 +171,7 @@
   import '@nuxtjs/axios'
   import * as _ from 'lodash'
   import { Block } from '../types'
+  import { txTypes as typeMap } from '../../data/map'
   import { translate } from '~/plugins/translate'
 
   @Component({
@@ -185,7 +186,7 @@
     computed: {
       filteredItems(): string {
         return (this as any).block.transactions.filter((i: any) => {
-          return !(this as any).txType || _.includes((this as any).txType, i.type) || ((this as any).txType! as any).length === 0
+          return (this as any).txTypeFilter(i.type)
         })
       }
     },
@@ -234,82 +235,32 @@
     ]
 
     txFilter = [
-      { text: 'Anchor', value: 15 },
-      { text: 'Genesis', value: 1 },
+      { text: 'Anchor', value: [15, 22] },
+      { text: 'Association', value: [16, 17] },
+      { text: 'Statement', value: 23 },
       { text: 'Transfer', value: 4 },
-      { text: 'Lease', value: 8 },
-      { text: 'Cancel Lease', value: 9 },
-      { text: 'Mass Transfer', value: 11 },
-      { text: 'Script', value: 13 }
+      { text: 'Mass transfer', value: 11 },
+      { text: 'Burn', value: 21 },
+      { text: 'Lease', value: [8, 9] },
+      { text: 'Sponsorship', value: [17, 18] },
+      { text: 'Register', value: 20 },
+      { text: 'Script', value: 13 },
+      { text: 'Genesis', value: 1 }
     ]
 
-    txType = null
+    txType: Array<number> = []
+
+    txTypeFilter(type: number): boolean {
+      const types = this.txType.flat()
+      return types.length === 0 || _.includes(types, type)
+    }
 
     name(value: number): string {
-      if (value === 1) {
-        return 'Genesis'
-      } else if (value === 4) {
-        return 'Transfer'
-      } else if (value === 8) {
-        return 'Lease'
-      } else if (value === 9) {
-        return 'Cancel Lease'
-      } else if (value === 11) {
-        return 'Mass Transfer'
-      } else if (value === 13) {
-        return 'Script'
-      } else if (value === 15) {
-        return 'Anchor'
-      } else if (value === 16) {
-        return 'Invoke Association'
-      } else if (value === 17) {
-        return 'Revoke Association'
-      } else if (value === 18) {
-        return 'Sponsor'
-      } else if (value === 19) {
-        return 'Cancel Sponsor'
-      } else {
-        return 'Unknown'
-      }
+      return typeMap[value]?.name || 'Unknown'
     }
 
     icon(value: number): string {
-      // Genesis Transfer
-      if (value === 1) {
-        return 'mdi-power'
-      } else if (value === 4) {
-        // Transfer
-        return 'mdi-send'
-      } else if (value === 8) {
-        // Lease
-        return 'mdi-file-document-box-plus'
-      } else if (value === 9) {
-        // Cancel Lease
-        return 'mdi-file-document-box-remove'
-      } else if (value === 11) {
-        // Mass Transfer
-        return 'mdi-coins'
-      } else if (value === 13) {
-        // Set Script
-        return 'mdi-script-text'
-      } else if (value === 15) {
-        // Anchor
-        return 'mdi-anchor'
-      } else if (value === 16) {
-        // Invoke Association
-        return 'mdi-link-plus'
-      } else if (value === 17) {
-        // Revoke Association
-        return 'mdi-link-off'
-      } else if (value === 18) {
-        // Sponsor
-        return 'mdi-heart'
-      } else if (value === 19) {
-        // Cancel Sponsor
-        return 'mdi-heart-broken'
-      } else {
-        return 'Unknown'
-      }
+      return typeMap[value]?.name || 'mdi-help-circle-outline'
     }
   }
 

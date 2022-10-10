@@ -24,7 +24,7 @@
                 :key="filter"
                 :value="filter"
                 label
-                class="white--text transparent font-weight-thin overline"
+                class="transparent font-weight-thin overline"
               >
                 {{ filter }}
               </v-chip>
@@ -224,13 +224,7 @@
             backgroundColor: 'rgba(249, 246, 252, 0.6)',
             borderColor: '#804BC9',
             data: (this as any).chart.dataset.map((d: any) => (d as any).count)
-          },
-          /*{
-            backgroundColor: 'rgba(76, 52, 235, 0.1)',
-            borderColor: '#271ab0',
-            data: (this as any).chart.dataset.map((d: any) => (+(d as any).count * 0.1))
-          }*/
-
+          }
           ]
         }
       },
@@ -360,7 +354,7 @@
     }
 
     chartFilters = [
-      'day', 'week', 'month'
+      'week', 'month'
     ]
 
     @Watch('selectedFilter')
