@@ -284,6 +284,7 @@
   import Vue from 'vue'
   import { Component, Watch } from 'vue-property-decorator'
   import '@nuxtjs/axios'
+  import { txTypes as typeMap } from '../../data/map'
 
   @Component({
     components: {},
@@ -352,15 +353,11 @@
     }
 
     get queryParameters() {
-      return `offset=${this.offset}&limit=${this.options.itemsPerPage}&type=${this.filterType}`
+      return `offset=${this.offset}&limit=${this.options.itemsPerPage}&type=${this.txType}`
     }
 
     get offset() {
       return (this.limit * this.options.page) - this.limit
-    }
-
-    get filterType() {
-      return this.typeMap[this.txType]
     }
 
     onFilterChange() {
@@ -416,55 +413,30 @@
     ]
 
     txFilter = [
-      { text: 'Anchor', value: 15 },
-      { text: 'Transfer', value: 4 },
-      { text: 'Start Lease', value: 8 },
-      { text: 'Cancel Lease', value: 9 },
-      { text: 'Mass Transfer', value: 11 }
+      { text: 'All', value: 'all' },
+      { text: 'Anchor', value: 'anchor' },
+      { text: 'Association', value: 'association' },
+      { text: 'Data', value: 'data' },
+      { text: 'Statement', value: 'statement' },
+      { text: 'Transfer', value: 'transfer' },
+      { text: 'Mass transfer', value: 'mass_transfer' },
+      { text: 'Burn', value: 'burn' },
+      { text: 'All transfers', value: 'all_transfers' },
+      { text: 'Lease', value: 'lease' },
+      { text: 'Sponsorship', value: 'sponsor' },
+      { text: 'Register', value: 'register' },
+      { text: 'Script', value: 'script' },
+      { text: 'Genesis', value: 'genesis' }
     ]
 
-    txType = 4
-
-    typeMap: any = {
-      1: 'genesis',
-      4: 'transfer',
-      8: 'start_lease',
-      9: 'cancel_lease',
-      11: 'mass_transfer',
-      13: 'script',
-      15: 'anchor',
-      16: 'invoke_association',
-      17: 'revoke_association',
-      18: 'sponsor',
-      19: 'cancel_sponsor'
-    }
+    txType = 'all'
 
     name(value: number): string {
-      if (value === 1) {
-        return 'Genesis'
-      } else if (value === 4) {
-        return 'Transfer'
-      } else if (value === 8) {
-        return 'Lease'
-      } else if (value === 9) {
-        return 'Cancel Lease'
-      } else if (value === 11) {
-        return 'Mass Transfer'
-      } else if (value === 13) {
-        return 'Script'
-      } else if (value === 15) {
-        return 'Anchor'
-      } else if (value === 16) {
-        return 'Invoke Association'
-      } else if (value === 17) {
-        return 'Revoke Association'
-      } else if (value === 18) {
-        return 'Sponsor'
-      } else if (value === 19) {
-        return 'Cancel Sponsor'
-      } else {
-        return 'Unknown'
-      }
+      return typeMap[value]?.name || 'Unknown'
+    }
+
+    icon(value: number): string {
+      return typeMap[value]?.name || 'mdi-help-circle-outline'
     }
 
     color(value: string): string {
@@ -474,45 +446,6 @@
         return 'green'
       } else {
         return ''
-      }
-    }
-
-    icon(value: number): string {
-      // Genesis Transfer
-      if (value === 1) {
-        return 'mdi-power'
-      } else if (value === 4) {
-        // Transfer
-        return 'mdi-send'
-      } else if (value === 8) {
-        // Lease
-        return 'mdi-file-document-box-plus'
-      } else if (value === 9) {
-        // Cancel Lease
-        return 'mdi-file-document-box-remove'
-      } else if (value === 11) {
-        // Mass Transfer
-        return 'mdi-coins'
-      } else if (value === 13) {
-        // Set Script
-        return 'mdi-script-text'
-      } else if (value === 15) {
-        // Anchor
-        return 'mdi-anchor'
-      } else if (value === 16) {
-        // Invoke Association
-        return 'mdi-link-plus'
-      } else if (value === 17) {
-        // Revoke Association
-        return 'mdi-link-off'
-      } else if (value === 18) {
-        // Sponsor
-        return 'mdi-heart'
-      } else if (value === 19) {
-        // Cancel Sponsor
-        return 'mdi-heart-broken'
-      } else {
-        return 'Unknown'
       }
     }
 

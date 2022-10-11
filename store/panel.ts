@@ -1,9 +1,9 @@
-import moment from "moment";
+import moment from 'moment'
 /* TODO: Typescript does not like this import. Can't find the types file. */
 // import math from 'lodash/math'
-import * as _ from "lodash";
+import * as _ from 'lodash'
 
-import { VueGlobalFunctions } from "../pages/types";
+import { VueGlobalFunctions } from '../pages/types'
 
 interface Currency {
   btc: number;
@@ -150,7 +150,7 @@ export const state = () => ({
       updated: null
     }
   }
-});
+})
 
 export const actions = {
   async fetchMarket(
@@ -162,22 +162,21 @@ export const actions = {
     // state.state.panel.market.updated = null
 
     const url =
-      "https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true";
-    const payload = await this.$axios.$get(url);
+      'https://api.coingecko.com/api/v3/coins/lto-network?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=true'
+    const payload = await this.$axios.$get(url)
 
-    commit("updateMarket", payload);
+    commit('updateMarket', payload)
   },
   async fetch(
     this: VueGlobalFunctions,
     { state, commit }: { state: PanelState; commit: any }
   ) {
-    
     // state.state.panel.nodes.updated = null
 
     const url = process.env.CACHE_API + '/stats/nodes'
-    const payload = await this.$axios.$get(url);
+    const payload = await this.$axios.$get(url)
 
-    commit("updateNodes", payload);
+    commit('updateNodes', payload)
   },
   async fetchStaking(
     this: VueGlobalFunctions,
@@ -187,10 +186,10 @@ export const actions = {
 
     // state.state.panel.staking.updated = null
 
-    const url: string = process.env.CACHE_API + "/generator/staking/weekly";
-    const payload = await this.$axios.$get(url);
+    const url: string = process.env.CACHE_API + '/generator/staking/weekly'
+    const payload = await this.$axios.$get(url)
 
-    commit("updateStaking", payload);
+    commit('updateStaking', payload)
   },
   async fetchBurned(
     this: VueGlobalFunctions,
@@ -200,10 +199,10 @@ export const actions = {
 
     // state.state.panel.staking.updated = null
 
-    const url: string = process.env.CACHE_API + "/stats/burned/total";
-    const payload = await this.$axios.$get(url);
+    const url: string = process.env.CACHE_API + '/stats/burned/total'
+    const payload = await this.$axios.$get(url)
 
-    commit("updateBurned", payload);
+    commit('updateBurned', payload)
   },
   async fetchNetwork(
     this: VueGlobalFunctions,
@@ -213,12 +212,12 @@ export const actions = {
 
     // state.state.panel.network.updated = null
 
-    const url: string = process.env.LB_API + "/node/status";
-    const payload = await this.$axios.$get(url);
+    const url: string = process.env.LB_API + '/node/status'
+    const payload = await this.$axios.$get(url)
 
-    commit("updateNetwork", payload);
+    commit('updateNetwork', payload)
   }
-};
+}
 
 export const mutations = {
   updateMarket(state: PanelState, payload: MarketPayload) {
@@ -273,44 +272,44 @@ export const mutations = {
       },
       sparkline: payload.market_data.sparkline_7d.price,
       updated: moment().fromNow()
-    };
+    }
 
-    state.panel.market = data;
+    state.panel.market = data
   },
   updateNodes(state: PanelState, payload: unknown[]) {
-    state.panel.nodes.active = payload.length;
-    state.panel.nodes.updated = moment();
+    state.panel.nodes.active = payload.length
+    state.panel.nodes.updated = moment()
   },
   updateStaking(state: PanelState, payload: unknown[]) {
     state.panel.staking.total = _.sumBy(payload, function(o: any) {
-      return o.balance;
-    });
-    state.panel.staking.updated = moment();
+      return o.balance
+    })
+    state.panel.staking.updated = moment()
   },
   updateBurned(state: PanelState, payload: number) {
     state.panel.burned.total = payload
-    state.panel.burned.updated = moment();
+    state.panel.burned.updated = moment()
   },
   updateNetwork(state: PanelState, payload: unknown) {
-    state.panel.network.height = (payload as any).blockchainHeight;
-    state.panel.network.updated = moment();
+    state.panel.network.height = (payload as any).blockchainHeight
+    state.panel.network.updated = moment()
   }
-};
+}
 
 export const getters = {
   getMarket: (state: PanelState) => {
-    return state.panel.market;
+    return state.panel.market
   },
   getNodes: (state: PanelState) => {
-    return state.panel.nodes;
+    return state.panel.nodes
   },
   getStaking: (state: PanelState) => {
-    return state.panel.staking;
+    return state.panel.staking
   },
   getBurn: (state: PanelState) => {
-    return state.panel.burned;
+    return state.panel.burned
   },
   getNetwork: (state: PanelState) => {
-    return state.panel.network;
+    return state.panel.network
   }
-};
+}
