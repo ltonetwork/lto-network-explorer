@@ -271,7 +271,7 @@
               </template>
 
               <template v-slot:item.fee="{ item }">
-                <span v-if="item.type !== 11 || item.sender === address">{{ item.fee | parseAtomic | parseNumber }}</span>
+                {{ item.fee | parseAtomic | parseNumber }}
               </template>
 
               <template v-slot:item.timestamp="{ item }">
@@ -402,11 +402,6 @@
         text: 'Amount',
         align: 'right',
         value: 'amount'
-      },
-      {
-        text: 'Fee',
-        align: 'right',
-        value: 'fee'
       },
       {
         text: 'Timestamp',

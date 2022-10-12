@@ -64,11 +64,12 @@
                       {{ $t('explorer.recipient') }}
                     </td>
                     <td>
-                      <nuxt-link :to="{ path: '/address/' + transaction.recipient }">
+                      <nuxt-link v-if="transaction.recipient" :to="{ path: '/address/' + transaction.recipient }">
                         {{ transaction.recipient }}
                       </nuxt-link>
 
-                      <span v-if="!transaction.recipient">N/A</span>
+                      <span v-if="transaction.type === 11">[ {{ transaction.transfers.length }} addresses ]</span>
+                      <span v-if="transaction.type !== 11 && !transaction.recipient">N/A</span>
                     </td>
                   </tr>
 
