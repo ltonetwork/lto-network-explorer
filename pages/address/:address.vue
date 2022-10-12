@@ -79,16 +79,16 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span class="pa-0 overline" v-text="$t('address.balance.generating')" />
+                <span class="pa-0 overline" v-text="$t('address.balance.unbonding')" />
                 <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
-              {{ $t('address.tooltips.generating') }}
+              {{ $t('address.tooltips.unbonding') }}
             </v-tooltip>
 
             <p class="title font-weight-bold secondary--text mt-2 mb-0">
-              {{ balance.generating | parseAtomic | parseNumber }}
+              {{ balance.unbonding | parseAtomic | parseNumber }}
             </p>
           </v-card-text>
         </v-card>
@@ -103,16 +103,16 @@
           <v-card-text>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span class="pa-0 overline" v-text="$t('address.balance.available')" />
+                <span class="pa-0 overline" v-text="$t('address.balance.leasing')" />
                 <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
                 </v-icon>
               </template>
-              {{ $t('address.tooltips.available') }}
+              {{ $t('address.tooltips.leasing') }}
             </v-tooltip>
 
             <p class="title font-weight-bold secondary--text mt-2 mb-0">
-              {{ balance.available | parseAtomic | parseNumber }}
+              {{ Math.max(balance.regular - balance.available - balance.unbonding, 0) | parseAtomic | parseNumber }}
             </p>
           </v-card-text>
         </v-card>
@@ -245,28 +245,33 @@
               </template>
 
               <template v-slot:item.sender="{ item }">
-                <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text">
+                <nuxt-link v-if="item.sender !== address" :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text">
                   {{ item.sender | truncateString }}
                 </nuxt-link>
+                <span v-if="item.sender === address">{{ item.sender | truncateString }}</span>
               </template>
 
               <template v-slot:item.recipient="{ item }">
                 <nuxt-link
-                  v-if="item.recipient"
+                  v-if="item.recipient && item.recipient !== address"
                   :to="{ path: '/address/' + item.recipient }"
                   class="d-inline-block primary--text"
                 >
                   {{ item.recipient | truncateString }}
                 </nuxt-link>
-                <span v-if="!item.recipient">N/A</span>
+                <span v-if="item.recipient === address">{{ item.recipient | truncateString }}</span>
+                <span v-if="item.type === 11 && item.sender === address">[ {{ item.transfers.length }} addresses ]</span>
+                <span v-if="item.type === 11 && item.sender !== address">{{ address | truncateString }}</span>
               </template>
 
               <template v-slot:item.amount="{ item }">
-                {{ item.amount | parseAtomic | parseNumber }}
+                <span v-if="'amount' in item">{{ item.amount | parseAtomic | parseNumber }}</span>
+                <span v-if="item.type === 11 && item.sender === address">{{ item.transfers.reduce((a, t) => a + parseInt(t.amount), 0) | parseAtomic | parseNumber }}</span>
+                <span v-if="item.type === 11 && item.sender !== address">{{ item.transfers.find(t => t.recipient === address)?.amount | parseAtomic | parseNumber }}</span>
               </template>
 
               <template v-slot:item.fee="{ item }">
-                {{ item.fee | parseAtomic | parseNumber }}
+                <span v-if="item.type !== 11 || item.sender === address">{{ item.fee | parseAtomic | parseNumber }}</span>
               </template>
 
               <template v-slot:item.timestamp="{ item }">
@@ -338,10 +343,8 @@
           this.transactions.forEach((tx: any) => {
             if (tx.sender === this.address) {
               tx.label = 'out'
-            } else if (tx.recipient === this.address) {
-              tx.label = 'in'
             } else {
-              tx.label = 'out'
+              tx.label = 'in'
             }
           })
         }
@@ -432,11 +435,11 @@
     txType = 'all'
 
     name(value: number): string {
-      return typeMap[value]?.name || 'Unknown'
+      return typeMap[value]?.description || 'Unknown'
     }
 
     icon(value: number): string {
-      return typeMap[value]?.name || 'mdi-help-circle-outline'
+      return typeMap[value]?.icon || 'mdi-help-circle-outline'
     }
 
     color(value: string): string {

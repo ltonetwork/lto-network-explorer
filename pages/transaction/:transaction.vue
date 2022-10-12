@@ -94,8 +94,7 @@
                       {{ $t('explorer.signature') }}
                     </td>
                     <td>
-                      <span v-if="transaction.signature">{{ transaction.signature }}</span>
-                      <span v-if="!transaction.signature">N/A</span>
+                      <div v-for="proof in transaction.proofs" v-bind:key="proof">{{ proof }}</div>
                     </td>
                   </tr>
                 </tbody>
@@ -115,7 +114,7 @@
         <v-card>
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-transactions" />
-            {{ $t('explorer.tx') }}
+            {{ $t('explorer.transfers') }}
           </v-card-title>
           <v-card-text class="pa-0">
             <v-simple-table>
@@ -271,6 +270,7 @@
   import * as _ from 'lodash'
   import { Transaction, Transfer } from '../types'
   import { EncoderServiceImpl } from '../../plugins/encoder'
+  import { txTypes } from '~/data/map'
 
   @Component({
 
@@ -349,31 +349,7 @@
     }
 
     name(value: number): string {
-      if (value === 1) {
-        return 'Genesis'
-      } else if (value === 4) {
-        return 'Transfer'
-      } else if (value === 8) {
-        return 'Lease'
-      } else if (value === 9) {
-        return 'Cancel Lease'
-      } else if (value === 11) {
-        return 'Mass Transfer'
-      } else if (value === 13) {
-        return 'Script'
-      } else if (value === 15) {
-        return 'Anchor'
-      } else if (value === 16) {
-        return 'Invoke Association'
-      } else if (value === 17) {
-        return 'Revoke Association'
-      } else if (value === 18) {
-        return 'Sponsor'
-      } else if (value === 19) {
-        return 'Cancel Sponsor'
-      } else {
-        return 'Unknown'
-      }
+      return txTypes[value]?.description || 'Unknown'
     }
   }
 

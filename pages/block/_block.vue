@@ -256,11 +256,11 @@
     }
 
     name(value: number): string {
-      return typeMap[value]?.name || 'Unknown'
+      return typeMap[value]?.description || 'Unknown'
     }
 
     icon(value: number): string {
-      return typeMap[value]?.name || 'mdi-help-circle-outline'
+      return typeMap[value]?.icon || 'mdi-help-circle-outline'
     }
   }
 

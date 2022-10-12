@@ -49,14 +49,18 @@ export default {
       title: 'Balance',
       regular: 'Regular',
       generating: 'Generating',
+      unbonding: 'Unbonding',
+      leasing: 'Leasing',
       available: 'Available',
       effective: 'Effective'
     },
     tooltips: {
       regular: 'The total amount of owned LTO.',
       generating: 'Minimum amount of effective LTO for the past 1000 blocks.',
-      available: 'The total amount spendable that can be spend. ',
-      effective: 'The total amount of owned LTO plus the amount leased towards it.'
+      unbonding: 'Amount of LTO temporarily locked after leasing.',
+      leasing: 'Amount of LTO leasing to a node.',
+      available: 'Amount of LTO that\'s not leased or locked by unbonding.',
+      effective: 'Owned LTO + the amount leased towards it.'
     }
   },
   transaction: {
@@ -76,6 +80,7 @@ export default {
     signature: 'Signature',
     size: 'Size',
     tx: 'Transaction(s)',
+    transfers: 'Transfers',
     amount: 'Amount',
     fee: 'Fee',
     version: 'Version',
