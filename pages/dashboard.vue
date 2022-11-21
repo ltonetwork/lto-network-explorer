@@ -329,7 +329,7 @@
           },
           label(items: any, value: ChartTooltipItem[]): string {
             if (items.datasetIndex === 0) {
-              return 'Actions: ' + (items.yLabel as string | number).toLocaleString(undefined, {
+              return 'Operations: ' + (items.yLabel as string | number).toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2
               })

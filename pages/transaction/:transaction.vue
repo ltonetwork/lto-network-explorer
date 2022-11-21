@@ -87,7 +87,17 @@
                       {{ $t('explorer.fee') }}
                     </td>
                     <td>
-                      {{ transaction.fee | parseAtomic | parseNumber }}
+                      {{ transaction.effectiveFee | parseAtomic | parseNumber }}
+                    </td>
+                  </tr>
+                  <tr v-if="transaction.effectiveSponsor">
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.sponsor') }}
+                    </td>
+                    <td>
+                      <nuxt-link v-if="transaction.effectiveSponsor" :to="{ path: '/address/' + transaction.effectiveSponsor }">
+                        {{ transaction.effectiveSponsor }}
+                      </nuxt-link>
                     </td>
                   </tr>
                   <tr v-if="transaction.type === 11">
