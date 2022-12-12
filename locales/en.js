@@ -83,6 +83,7 @@ export default {
     transfers: 'Transfers',
     amount: 'Amount',
     fee: 'Fee',
+    sponsor: 'Fee Sponsor',
     version: 'Version',
     timestamp: 'Timestamp',
     confirmed: 'Confirmed',

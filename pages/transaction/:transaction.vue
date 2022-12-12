@@ -87,7 +87,17 @@
                       {{ $t('explorer.fee') }}
                     </td>
                     <td>
-                      {{ transaction.fee | parseAtomic | parseNumber }}
+                      {{ transaction.effectiveFee | parseAtomic | parseNumber }}
+                    </td>
+                  </tr>
+                  <tr v-if="transaction.effectiveSponsor">
+                    <td class="font-weight-bold secondary--text">
+                      {{ $t('explorer.sponsor') }}
+                    </td>
+                    <td>
+                      <nuxt-link v-if="transaction.effectiveSponsor" :to="{ path: '/address/' + transaction.effectiveSponsor }">
+                        {{ transaction.effectiveSponsor }}
+                      </nuxt-link>
                     </td>
                   </tr>
                   <tr v-if="transaction.type === 11">
@@ -95,7 +105,9 @@
                       {{ $t('explorer.signature') }}
                     </td>
                     <td>
-                      <div v-for="proof in transaction.proofs" v-bind:key="proof">{{ proof }}</div>
+                      <div v-for="proof in transaction.proofs" v-bind:key="proof">
+                        {{ proof }}
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -234,21 +246,9 @@
         <v-card>
           <v-card-title class="secondary--text">
             <span class="mr-2 lto-anchor" />
-            {{ $t('transaction.anchors') }}
+            {{ $t('transaction.anchors') }} ( {{ anchors.length }} )
           </v-card-title>
           <v-card-text>
-            <!--
-              // Blockchain structure shows there can be multiple anchors,
-              // to an transaction, but have not discovered any tx supporting
-              // that. For now, to make the code simpler, only take the first.
-
-              <div v-for="(anchor, i) in transaction.anchors " :key="i" class="secondary--text">
-                {{ anchor }}
-              </div>
-            -->
-
-            <v-text-field v-model="anchor" readonly />
-
             <div style="width:300px">
               <v-select
                 cache-items
@@ -256,6 +256,9 @@
                 value="hex"
                 @change="encodeAnchor"
               />
+            </div>
+            <div v-for="(anchor, i) in anchors " :key="i" class="secondary--text">
+              <v-text-field v-text="anchor" readonly />
             </div>
           </v-card-text>
         </v-card>
@@ -302,35 +305,35 @@
     hash = (this as any).$nuxt.$route.query.hash
     valid = false
     invalid = false
-    anchor = ''
+    anchors: string[] = []
 
-    decodedAnchor: Uint8Array = new Uint8Array()
-    hexAnchor = '';
-    base58Anchor = '';
-    base64Anchor = '';
+    decodedAnchors: Uint8Array[] = []
+    hexAnchors: string[] = []
+    base58Anchors: string[] = []
+    base64Anchors: string[] = []
     encoder = new EncoderServiceImpl()
 
     created(): void {
-      /* If we have any anchors, setup the decoded anchor so we don't need to
+      /* If we have any anchors, set up the decoded anchor, so we don't need to
        * repeatedly decode/encode. It is base58 format on the transaction. */
       if ((this as any).transaction.anchors) {
-        this.decodedAnchor = this.encoder.base58Decode((this as any).transaction.anchors[0])
+        this.decodedAnchors = (this as any).transaction.anchors.map((a: string) => this.encoder.base58Decode(a))
 
         /* Might as well precompute the different forms, rather than requiring
          * an encode on every different selection. */
-        this.hexAnchor = this.encoder.hexEncode(this.decodedAnchor)
-        this.base58Anchor = this.encoder.base58Encode(this.decodedAnchor)
-        this.base64Anchor = this.encoder.base64Encode(this.decodedAnchor)
+        this.hexAnchors = this.decodedAnchors.map(a => this.encoder.hexEncode(a))
+        this.base58Anchors = this.decodedAnchors.map(a => this.encoder.base58Encode(a))
+        this.base64Anchors = this.decodedAnchors.map(a => this.encoder.base64Encode(a))
 
         /* Default format is hex. */
-        this.anchor = this.hexAnchor
+        this.anchors = this.hexAnchors
 
         /* If a hash is given in the query string, we verify that the anchor encoded
          * in one of the three forms matches the hash. */
         if (this.hash) {
-          const valid = this.hash === this.hexAnchor ||
-            this.hash === this.base58Anchor ||
-            this.hash === this.base64Anchor
+          const valid = this.hexAnchors.includes(this.hash) ||
+            this.base58Anchors.includes(this.hash) ||
+            this.base64Anchors.includes(this.hash)
 
           this.valid = valid
           this.invalid = !valid
@@ -341,11 +344,11 @@
     /* Encode the anchor into the specified format */
     encodeAnchor(value: string): void {
       if (value === 'hex') {
-        this.anchor = this.hexAnchor
+        this.anchors = this.hexAnchors
       } else if (value === 'base58') {
-        this.anchor = this.base58Anchor
+        this.anchors = this.base58Anchors
       } else if (value === 'base64') {
-        this.anchor = this.base64Anchor
+        this.anchors = this.base64Anchors
       }
     }
 
