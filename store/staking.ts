@@ -1,6 +1,9 @@
 import moment from 'moment'
 
 import { VueGlobalFunctions } from '../pages/types'
+import communityNodes from '../data/communityNodes.json'
+import otherNodes from '../data/otherNodes.json'
+import testnetNodes from '../data/testnetNodes.json'
 
 interface StakingState {
   staking: {
@@ -16,14 +19,25 @@ export const state = () => ({
   }
 })
 
+const labelMap = new Map(
+  (process.env.NETWORK_ID === 'T' ? testnetNodes.nodes : [...communityNodes.nodes, ...otherNodes.nodes])
+    .map((node: {address: string; name: string; sharing?: string; payoutSchedule?: string}) => [
+      node.address,
+      { label: node.name, payout: node.sharing ? `${node.sharing} | ${node.payoutSchedule}}` : undefined }
+    ])
+)
+
+const injectLabels = (generators: { generator: string }[]) => generators.map(entry => ({
+  ...entry,
+  ...(labelMap.get(entry.generator) || {})
+}))
+
 export const actions = {
   async fetchGenerators(this: VueGlobalFunctions, { state, commit }: { state: StakingState; commit: any }) {
-    // Doc: https://github.com/bbjansen/lto-cache-api
+    const url: string = process.env.TOOLS_API + '/generators-weekly/json'
+    const payload = await this.$axios.$get(url) as any
 
-    const url: string = process.env.CACHE_API + '/generator/staking/weekly'
-    const payload = await this.$axios.$get(url)
-
-    commit('setGenerators', payload)
+    commit('setGenerators', injectLabels(payload))
   }
 }
 

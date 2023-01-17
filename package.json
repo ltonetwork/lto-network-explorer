@@ -1,29 +1,17 @@
 {
     "name": "lto-network-explorer",
-    "version": "1.0.7",
+    "version": "0.0.0",
     "description": "Network explorer to interact with the LTO Network.",
     "author": "LTO Network",
-    "contributors": [
-        {
-            "name": "BB. Jansen",
-            "email": "bobjansen@pm.me",
-            "url": "https://github.com/bbjansen"
-        },
-        {
-            "name": "Renato Cardoso",
-            "email": "re2005@gmail.com",
-            "url": "https://renato.amsterdam"
-        }
-    ],
     "scripts": {
         "dev": "nuxt",
         "dev-debug": "node --inspect node_modules/nuxt/bin/nuxt",
         "build": "nuxt build",
         "start": "nuxt start",
         "generate": "nuxt generate",
-        "deploy": "npm run build && gh-pages -d dist --dotfiles=true --cleanup",
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
-        "test": "jest"
+        "test": "jest",
+        "update-node-info": "curl https://raw.githubusercontent.com/ltonetwork/lto-wallet/master/src/communityNodes.json -o data/communityNodes.json"
     },
     "dependencies": {
         "@nuxt/types": "^2.15.8",

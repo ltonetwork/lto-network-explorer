@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {
+      "address": "3N6mZMgGqYn9EVAR2Vbf637iej4fFipECq8",
+      "name": "Testnet Boostrap 1"
+    },
+    {
+      "address": "3N51gbw5W3xvSkcAXtLnXc3SQh2m9e6TBcy",
+      "name": "Testnet Boostrap 2"
+    },
+    {
+      "address": "3Mv7ajrPLKewkBNqfxwRZoRwW6fziehp7dQ",
+      "name": "Testnet Boostrap 3"
+    },
+    {
+      "address": "3N2kNjWiCMuTgdGcLzx8uHiwBKY2J7Sd3t4",
+      "name": "lto.tools testnet"
+    },
+    {
+      "address": "3NAyyWATrJki3FRf1M12rMeHzcUspJsn1Da",
+      "name": "BlackTurtleNode"
+    },
+    {
+      "address": "3NCCqjZvtvx6ymbYzfEy7xrh7TEbPYGwxWN",
+      "name": "testnet-node.ltonod.es"
+    },
+    {
+      "address": "3MpiQbErdZxybNtiwn6qC1uEboSarKLoVsg",
+      "name": "zoltest"
+    }
+  ]
+}

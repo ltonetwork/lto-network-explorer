@@ -162,7 +162,9 @@
       chartDataSet(): ChartData & { type: ChartType } {
         return {
           type: 'doughnut',
-          labels: (this as any).staking.generators.map((g: unknown) => (g as any).generator),
+          labels: (this as any).staking.generators.map(
+            (g: any) => g.label ? `${g.generator} | ${g.label}` : g.generator
+          ),
           datasets: [{
             backgroundColor: 'rgba(128, 75, 201, 0.6)',
             label: '',

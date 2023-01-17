@@ -203,7 +203,7 @@
               </span>
 
               <p class="overline grey--text ma-0 mt-2">
-                (LTO Tools)
+                &nbsp;
               </p>
             </v-col>
             <v-col

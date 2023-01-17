@@ -173,7 +173,7 @@ export const actions = {
   ) {
     // state.state.panel.nodes.updated = null
 
-    const url = process.env.CACHE_API + '/stats/nodes'
+    const url = process.env.TOOLS_API + '/nodes/json'
     const payload = await this.$axios.$get(url)
 
     commit('updateNodes', payload)
@@ -182,11 +182,9 @@ export const actions = {
     this: VueGlobalFunctions,
     { state, commit }: { state: PanelState; commit: any }
   ) {
-    // Doc: https://github.com/bbjansen/lto-cache-api
-
     // state.state.panel.staking.updated = null
 
-    const url: string = process.env.CACHE_API + '/generator/staking/weekly'
+    const url: string = process.env.TOOLS_API + '/generators-weekly/json'
     const payload = await this.$axios.$get(url)
 
     commit('updateStaking', payload)
@@ -195,14 +193,12 @@ export const actions = {
     this: VueGlobalFunctions,
     { state, commit }: { state: PanelState; commit: any }
   ) {
-    // Doc: https://github.com/bbjansen/lto-cache-api
-
     // state.state.panel.staking.updated = null
 
-    const url: string = process.env.CACHE_API + '/stats/burned/total'
-    const payload = await this.$axios.$get(url)
+    const supply = (await this.$axios.$get(process.env.LB_API + '/supply')) as any
+    const bridgeStats = (await this.$axios.$get(process.env.BRIDGE_API + '/stats')) as any
 
-    commit('updateBurned', payload)
+    commit('updateBurned', (supply.burned / 100000000) + bridgeStats.volume.lto20.burned)
   },
   async fetchNetwork(
     this: VueGlobalFunctions,

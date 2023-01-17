@@ -32,6 +32,7 @@ BASE_ROUTE=/explorer/
 LB_API=https://nodes.lto.network
 CACHE_API=https://stats.ltonetwork.com/v1
 BRIDGE_API=https://bridge.lto.network
+TOOLS_API=https://explorer.lto.network/tools
 LATEST_BLOCKS=10
 AXIOS_TIMEOUT=20000
 ATOMIC=100000000
