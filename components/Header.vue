@@ -208,7 +208,7 @@
     wallet = {
       title: translate('menu.wallet'),
       icon: 'mdi-coins',
-      href: 'https://wallet.lto.network/'
+      href: process.env.WALLET_LINK!
     }
 
     montly_roi = 0

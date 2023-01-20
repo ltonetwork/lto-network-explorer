@@ -195,7 +195,7 @@
         links: [
           {
             name: translate('links.wallet'),
-            href: 'https://wallet.lto.network/start'
+            href: process.env.WALLET_LINK!
           },
           {
             name: translate('links.home'),

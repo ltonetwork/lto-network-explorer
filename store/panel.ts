@@ -184,7 +184,7 @@ export const actions = {
   ) {
     // state.state.panel.staking.updated = null
 
-    const url: string = process.env.TOOLS_API + '/generators-weekly/json'
+    const url: string = process.env.TOOLS_API + '/' + process.env.GENERATORS + '/json'
     const payload = await this.$axios.$get(url)
 
     commit('updateStaking', payload)
@@ -196,9 +196,14 @@ export const actions = {
     // state.state.panel.staking.updated = null
 
     const supply = (await this.$axios.$get(process.env.LB_API + '/supply')) as any
-    const bridgeStats = (await this.$axios.$get(process.env.BRIDGE_API + '/stats')) as any
+    let burned = supply.burned / 100000000
 
-    commit('updateBurned', (supply.burned / 100000000) + bridgeStats.volume.lto20.burned)
+    if (process.env.BRIDGE_API) {
+      const bridgeStats = (await this.$axios.$get(process.env.BRIDGE_API + '/stats')) as any
+      burned += bridgeStats.volume.lto20.burned
+    }
+
+    commit('updateBurned', burned)
   },
   async fetchNetwork(
     this: VueGlobalFunctions,

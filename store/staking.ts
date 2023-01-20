@@ -34,7 +34,7 @@ const injectLabels = (generators: { generator: string }[]) => generators.map(ent
 
 export const actions = {
   async fetchGenerators(this: VueGlobalFunctions, { state, commit }: { state: StakingState; commit: any }) {
-    const url: string = process.env.TOOLS_API + '/generators-weekly/json'
+    const url: string = process.env.TOOLS_API + '/' + process.env.GENERATORS + '/json'
     const payload = await this.$axios.$get(url) as any
 
     commit('setGenerators', injectLabels(payload))

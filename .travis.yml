@@ -1,0 +1,73 @@
+language: node_js
+
+node_js:
+  - "14.17.0"
+
+branches:
+  only:
+    - main
+    - /^v\d+\.\d+\.\d+$/
+
+stages:
+  - name: test
+    if: tag IS blank
+  - name: release
+    if: branch = master AND type = push
+  - name: deploy
+    if: tag IS present OR (branch = staging AND type = push)
+
+jobs:
+  include:
+    - stage: release
+      before_script:
+        - CURRENT_VERSION=$(git describe --tags --abbrev=0)
+        - |
+          if (git log $CURRENT_VERSION..HEAD | grep -q -i "\[bump:major\]"); then
+            NEXT_VERSION=$(awk -F. -v OFS=. '{$1++;$2=0;$3=0;print}' <<< "$CURRENT_VERSION")
+          elif (git log $CURRENT_VERSION..HEAD | grep -q -i "\[bump:minor\]"); then
+            NEXT_VERSION=$(awk -F. -v OFS=. '{$2++;$3=0;print}' <<< "$CURRENT_VERSION")
+          else
+            NEXT_VERSION=$(awk -F. -v OFS=. '{$3++;print}' <<< "$CURRENT_VERSION")
+          fi
+      script:
+        - git tag "$NEXT_VERSION"
+      deploy:
+        provider: releases
+        token:
+          secure: "FyUaLhTA40KLaYLswKFqhPxniV/jpu+EFqHRPysB5KSJqm7v8Eupemr8f+I9Q1qb1ZEDFz+1q2rKni0zur5axYDur4HjtqA/xx1Tc1gdMLPgritiKNzYo9QooFcGBKNBR81lRY4+YSSGc9SR4ZBgAw73buPW+7Kkbxc6+QAiqSxz4vhDqhjMdEA82uLWgK3aBg2DOi9Scmbq5JYIAa6vfUHxqNCR6ENyWNC0h1EYN4nBgS74o38mnAev1mgnh0LvOD/B/y0VHaiSN7znTUI4Cq+3PDZGAyxQREsdcoaonIMGetc2H8c7aR8u/y1dwxZmCyIflBa1AUaCDD3ExOC3AoZXbOqoW0aVUF/HmgAtg7STOT5IlQ/9u8ShXSgqBSKISY1CZaZDSbiWOLGw9KvL5d6FOqmAYzk5D3IegDR6Xtt4gAusEAk64N6jmsyUk/WBYXimTmUHtm0Cs4WpHl1i+hpbRjQGNX9nl8EZx6QK7j0EqWplE3Azpzc8GdEE0Te4/3VATOnI/5fetzNC2OMpGNr9NRo67iF1k+RRPNJoGgNI7o4adKdaTSRTZYdwSDokWDPQpo8ZuAgi+JjaC4VwCbYhlunfXKCeKtKgz4Vo9eDLFo5+9DJxWBItMAb3+HPoM0iuacBUjaWEWeZEDqLeIMlx5iYzJgYqVQJNbUM+5So="
+
+    - name: "Testnet"
+      stage: deploy
+      install:
+        - npm install
+      before_script:
+        - cp .env.testnet .env
+      script:
+        - npm run generate
+      deploy:
+        provider: s3
+        access_key_id: "AKIA5RMFNFEWJOX5Y2AX"
+        secret_access_key:
+          secure: "W1ihrzwuNFLNVbO2BBja/crEnVBKzE8b8ckLglGc/RGU+zOQ8Eo3So6grxdJroNVks8HUFhqx9t7oKBdJtpBIq0cxggrF+FY7+fsk77HaaBcXKiaEPu45lY7KzLt0J5wWNDnbIzz7nrySilKcqWCKdYAgewFUcA7uF8eEfDIvnR3bseJ+F8HpI5IXric+6jVHJzv9vpZpQeMgYwdepHwEzzLmub30zeip/LlRungbikRVoQtTWPzrc4RFUaoWAskadMjBouhBZVk7ggQtrVYGcx76lLEnYqEhhsbpvispvWbXeEfeE5OjveNDfgnmQxiT60zT+cS6v/+U2zsOzZURY7o6b6qjFAhgsAP7L0vkhx+I6GtgFIQnhyAnVHmblpOg2VXgZdD6RwONFKKrS3cKFlojgcNGlFvUIq3KW9O+N5qxowQGTr/DjlSGgpx+mXzs5b+IShxcicmPizDP7uTbsTIyotRYD2E48AkwRFNcJ5OjjVLjeLxgzH+z8589q8v6kh+YG3tZoWQp7MZBM0RcVWcTnRhJcyfubOpSThLCVZ2p1gGfOspq2X1Dmu1wNNA4WhZ0gsibU+ItbSFnAGjQhHclo7J36zWnnAlWIq7OGNPuJckl085cWIXi04ZXzsYVyU796/Qxl/h2GkHT3gwctl2zGHXzVaeUk8jnsCkm6s="
+        bucket: "lto-explorer-testnet"
+        skip_cleanup: true
+        detect_encoding: true
+        local_dir: dist
+
+    - name: "Mainnet"
+      stage: deploy
+      install:
+        - npm install
+      before_script:
+        - cp .env.mainnet .env
+      script:
+        - npm run generate
+      deploy:
+        provider: s3
+        access_key_id: "AKIAQUQNQW2MPO46CH4R"
+        secret_access_key:
+          secure: "Rp9zxIoUdKyb75rCLLp7AEwhOhMinqtsCKCdljs3SjgA0G4vuLA+C93biXodnWNpzabz7wDn/4bLftfoGZkCBzmHbg0ohwaSdLxcyRr4ZIbYwuHIKzXnStzsRTnlaTOvleNvkJzUxtinbRORyl4Jy2kuFR3QO+njn4C7bX9I+J/rFCgm7jSrlZTGY1HdFM7pfrWYVV3wfX3nRWsSeDjl0pSXExuwvG6d/tINzvblY0WWD3uccbnU5St1JWZUUH233ebu0xsJup4hk2tjYTVn+JhYGWGe2X1dB5i88eP0wo9rZxIX27ZYAOm1EgHpgHcQ1DGm2RKyNNitZeUQrebfrbUz2VWk7Ih6oIUJBWrlw2iRNxC4MBwnmYNk1B4qxDsie/Ecr3pa2rZ3Qn8O77zMk/M4yR+TkyBrY5qe8nCnLMQBqzKh+xs/FVlK44Scsajsi4tKFiAJnDXij3ki+LEeQGb+rt8UfDR9AMiBTRwKvfh3UpCFqD+Q2gITtyPx7U3uUXYeBoeiDcqlz3brX+nlr6Jn/nWBnmOm9EEiyWTDgEqEb3hxPGH4DigHAjztnkYd3OoJTkOyxd6MVvHnBBU6kwpt+FJTgoHfiTi6kGU6RRNwdtptGCgimLQqFcpGULGh+y0NTnzVBzQHtMWxq0IU+kW6ObQ9npA/Ml81+p66EuI="
+        bucket: "lto-explorer-v2"
+        skip_cleanup: true
+        detect_encoding: true
+        local_dir: dist
