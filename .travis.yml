@@ -1,7 +1,6 @@
 language: node_js
 
-node_js:
-  - "14.17.0"
+node_js: 16
 
 branches:
   only:
@@ -35,9 +34,11 @@ jobs:
         provider: releases
         token:
           secure: "ekKbA1LGADd9Fvjil4dG31g8K1m7tAlIB1OeKIwMJMzXwzKUxaXnJ5gcvDX9+ipVlhwwQ5C4YSHql1DDAA/soUuBTxobDyZiw+z9SzUPsXn9I7Ghilphy8DAxpCkn6rAmzvYj8xmlvukhLb1BA3CnRXunsCjDJCsuwD+BnGq/krOgUjR3NFj+I+PGZgAP+KeF7sw9PkSBAoYwb5n+EwYsad8H6SSv80iZd/ZsKjIRdFAWqaFxF/ydM8bmQSCxqP8WiGgzzNeJjK47y1LDgKe7tfHA5Ql3gEde0oQ7Vzoqm9v5aDSPaA8Toa1/etDB81GB29biJ0b/51cv6/ALaQy+N35KJXHTDNfwKmkN1DI6/SmlYC8AwRn5FykC7AgwagW+dhnU0N1kV7+m9QLD4sUWFj2C9KeV3uziZ+jj9pLUCbmeThe06WsE4RuUy267KmfbZUXJUUWCCgjxh3DaZx/dvWw05b6h6Ulm7TaK1Ns/FyBKgoCCI+fnF0+IVyNs+VpeOjbmyPTlQqz7DAEXyBuZCieIPTnuDkCXJpMXi2v5TWKBnYFu3wDpNFdf5QF0qzodljGhMp6oZHLAQUZRb7tVuou/UcP+JmYFGAN+K9dthAwDAN9nIEgiyOnu0Wp9UjTytcpFCLxq0pj+GKrWwvLSlOWOzMUhNSfPrhnh7FACnc="
-          
+
     - name: "Testnet"
       stage: deploy
+      before_install:
+        - npm version $TRAVIS_TAG --no-git-tag-version
       install:
         - npm install
       before_script:
@@ -48,7 +49,7 @@ jobs:
         provider: s3
         access_key_id: "AKIA5RMFNFEWJOX5Y2AX"
         secret_access_key:
-          secure: "W1ihrzwuNFLNVbO2BBja/crEnVBKzE8b8ckLglGc/RGU+zOQ8Eo3So6grxdJroNVks8HUFhqx9t7oKBdJtpBIq0cxggrF+FY7+fsk77HaaBcXKiaEPu45lY7KzLt0J5wWNDnbIzz7nrySilKcqWCKdYAgewFUcA7uF8eEfDIvnR3bseJ+F8HpI5IXric+6jVHJzv9vpZpQeMgYwdepHwEzzLmub30zeip/LlRungbikRVoQtTWPzrc4RFUaoWAskadMjBouhBZVk7ggQtrVYGcx76lLEnYqEhhsbpvispvWbXeEfeE5OjveNDfgnmQxiT60zT+cS6v/+U2zsOzZURY7o6b6qjFAhgsAP7L0vkhx+I6GtgFIQnhyAnVHmblpOg2VXgZdD6RwONFKKrS3cKFlojgcNGlFvUIq3KW9O+N5qxowQGTr/DjlSGgpx+mXzs5b+IShxcicmPizDP7uTbsTIyotRYD2E48AkwRFNcJ5OjjVLjeLxgzH+z8589q8v6kh+YG3tZoWQp7MZBM0RcVWcTnRhJcyfubOpSThLCVZ2p1gGfOspq2X1Dmu1wNNA4WhZ0gsibU+ItbSFnAGjQhHclo7J36zWnnAlWIq7OGNPuJckl085cWIXi04ZXzsYVyU796/Qxl/h2GkHT3gwctl2zGHXzVaeUk8jnsCkm6s="
+          secure: "vr7rI0fdxyHuiAmd/B52vBnpfBOHDatjKi3nQ8iFg5/yvlYgfduCdR0Qvd/fLvh0sKGuJbxAsO6Or3nZI+PpH15laIc5gQmUSu38VyKkfnZLt3cUxvjlowIKHAR2Ie0qc2Flddx8FmWTnmvnWCL3/Avsmf1MmDCiHG3Hq1QIPMJbp8gBtrVtKbk6qSakzx0cVGG49rcy8AutLo8g9eucOT/3+kSU42XNop11JxEevGjvn6S+Yi9HjIRRsZ6M/8ooyruI9CLwFmtsF+lBvJD854K9f20tLux5ZijBJN25/5T4D+CA3jYwk5Lr6UnT+GA3eDsoJH4CWsIArwqBr0kWFKxA47F048jMsstuGpC7GjJlTjh1sAeOwYLTRjiMlZImUF4ugWOsaOoa+s8ZzuGOu+PCaRVlILEx6hzov8hYUQMbb4/fAWFqdlema6eu128//GiiKewX3xR+cTva42ttkoVE7S2fgwjDdcjOGT62ysXtI04sOht5xeK2mm/tvcBK5LiRfDF6Q/z0c7ktHtF9p/F0XLvEcuftaiEObnY7pjzLo36RCBICYK1Yq8UHkpdiDX1tOHw4UUTLPwZtLU5rU/rKHOOwTmYU8gpY9yBpCHDh0BcpAq/q1mkRnJlZDSv55gn/7VtGx027RaKBDViomaqYLovQmWbzlk1hyjRVOaY="
         bucket: "lto-explorer-testnet"
         skip_cleanup: true
         detect_encoding: true
@@ -58,6 +59,8 @@ jobs:
 
     - name: "Mainnet"
       stage: deploy
+      before_install:
+        - npm version $TRAVIS_TAG --no-git-tag-version
       install:
         - npm install
       before_script:
@@ -68,7 +71,7 @@ jobs:
         provider: s3
         access_key_id: "AKIAQUQNQW2MPO46CH4R"
         secret_access_key:
-          secure: "Rp9zxIoUdKyb75rCLLp7AEwhOhMinqtsCKCdljs3SjgA0G4vuLA+C93biXodnWNpzabz7wDn/4bLftfoGZkCBzmHbg0ohwaSdLxcyRr4ZIbYwuHIKzXnStzsRTnlaTOvleNvkJzUxtinbRORyl4Jy2kuFR3QO+njn4C7bX9I+J/rFCgm7jSrlZTGY1HdFM7pfrWYVV3wfX3nRWsSeDjl0pSXExuwvG6d/tINzvblY0WWD3uccbnU5St1JWZUUH233ebu0xsJup4hk2tjYTVn+JhYGWGe2X1dB5i88eP0wo9rZxIX27ZYAOm1EgHpgHcQ1DGm2RKyNNitZeUQrebfrbUz2VWk7Ih6oIUJBWrlw2iRNxC4MBwnmYNk1B4qxDsie/Ecr3pa2rZ3Qn8O77zMk/M4yR+TkyBrY5qe8nCnLMQBqzKh+xs/FVlK44Scsajsi4tKFiAJnDXij3ki+LEeQGb+rt8UfDR9AMiBTRwKvfh3UpCFqD+Q2gITtyPx7U3uUXYeBoeiDcqlz3brX+nlr6Jn/nWBnmOm9EEiyWTDgEqEb3hxPGH4DigHAjztnkYd3OoJTkOyxd6MVvHnBBU6kwpt+FJTgoHfiTi6kGU6RRNwdtptGCgimLQqFcpGULGh+y0NTnzVBzQHtMWxq0IU+kW6ObQ9npA/Ml81+p66EuI="
+          secure: "gbsKBoIfsHSu0BKs14AFNN/rT3WbZ6DmLjwQrePUd6SEfVaiVvVlmDd9n5fpzf8rKGpUsmShxwpo68nPVg72RZGqkt4iyChIPqhh9SmKB7KFzUDL9Eb7ITBZC5u4yDtQZyooBD+nQEc3pOyW2i+DFny9RdtXl+AGh2m47kOLXB2xdqPpBAyZQRGn3etn6y4KE8B4uJt4J4XptTPBqW5pdYYNZjExO7NeJiPNsqNcacZ34YWwWKc9UQOPt8r66wcSh8DPbVBxFvZk3HHsZsTjSdQuYT9/iwWZMJHRInbjVR/g8UZv0CRUkEArTmXRrVQBIUfvAqm/b3RwmkoP5FIbL08CEQawnpoeclQyodHTq3/UaVurbDqhWyk4kJSyamg0drZxZ5KslZCVwB70IbYeXUcWgGW+dTK1BvyiytPhjPuJ8S9zjGW+Qv/XZcHumgfrexM2EjJQMPjakwZaINmdR6I6IZGO7fyxtpIoc4lfzHnP86d3jAm6jvYHbWVn41aR+x86PUfcXH84NUKH/KwMopeK0iCLJLfyqqlRYKqm2ftMJTHXlsjrGoNzUivvgFjbprACG+h64fn7IfCl9pUoWv5Lly3wr7S7uF+5gY3mKCjgXMfDaCb4PQpnV1pYn8qKKGC3BaVioUqSXe6qS1QOGrV+mZMAOdh0BaPsJ+HwQ1A="
         bucket: "lto-explorer-v2"
         skip_cleanup: true
         detect_encoding: true
