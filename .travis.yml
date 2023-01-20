@@ -58,6 +58,7 @@ jobs:
         secret_access_key:
           secure: "vr7rI0fdxyHuiAmd/B52vBnpfBOHDatjKi3nQ8iFg5/yvlYgfduCdR0Qvd/fLvh0sKGuJbxAsO6Or3nZI+PpH15laIc5gQmUSu38VyKkfnZLt3cUxvjlowIKHAR2Ie0qc2Flddx8FmWTnmvnWCL3/Avsmf1MmDCiHG3Hq1QIPMJbp8gBtrVtKbk6qSakzx0cVGG49rcy8AutLo8g9eucOT/3+kSU42XNop11JxEevGjvn6S+Yi9HjIRRsZ6M/8ooyruI9CLwFmtsF+lBvJD854K9f20tLux5ZijBJN25/5T4D+CA3jYwk5Lr6UnT+GA3eDsoJH4CWsIArwqBr0kWFKxA47F048jMsstuGpC7GjJlTjh1sAeOwYLTRjiMlZImUF4ugWOsaOoa+s8ZzuGOu+PCaRVlILEx6hzov8hYUQMbb4/fAWFqdlema6eu128//GiiKewX3xR+cTva42ttkoVE7S2fgwjDdcjOGT62ysXtI04sOht5xeK2mm/tvcBK5LiRfDF6Q/z0c7ktHtF9p/F0XLvEcuftaiEObnY7pjzLo36RCBICYK1Yq8UHkpdiDX1tOHw4UUTLPwZtLU5rU/rKHOOwTmYU8gpY9yBpCHDh0BcpAq/q1mkRnJlZDSv55gn/7VtGx027RaKBDViomaqYLovQmWbzlk1hyjRVOaY="
         bucket: "lto-explorer-testnet"
+        region: eu-west-1
         skip_cleanup: true
         detect_encoding: true
         local_dir: dist
@@ -80,6 +81,7 @@ jobs:
         secret_access_key:
           secure: "gbsKBoIfsHSu0BKs14AFNN/rT3WbZ6DmLjwQrePUd6SEfVaiVvVlmDd9n5fpzf8rKGpUsmShxwpo68nPVg72RZGqkt4iyChIPqhh9SmKB7KFzUDL9Eb7ITBZC5u4yDtQZyooBD+nQEc3pOyW2i+DFny9RdtXl+AGh2m47kOLXB2xdqPpBAyZQRGn3etn6y4KE8B4uJt4J4XptTPBqW5pdYYNZjExO7NeJiPNsqNcacZ34YWwWKc9UQOPt8r66wcSh8DPbVBxFvZk3HHsZsTjSdQuYT9/iwWZMJHRInbjVR/g8UZv0CRUkEArTmXRrVQBIUfvAqm/b3RwmkoP5FIbL08CEQawnpoeclQyodHTq3/UaVurbDqhWyk4kJSyamg0drZxZ5KslZCVwB70IbYeXUcWgGW+dTK1BvyiytPhjPuJ8S9zjGW+Qv/XZcHumgfrexM2EjJQMPjakwZaINmdR6I6IZGO7fyxtpIoc4lfzHnP86d3jAm6jvYHbWVn41aR+x86PUfcXH84NUKH/KwMopeK0iCLJLfyqqlRYKqm2ftMJTHXlsjrGoNzUivvgFjbprACG+h64fn7IfCl9pUoWv5Lly3wr7S7uF+5gY3mKCjgXMfDaCb4PQpnV1pYn8qKKGC3BaVioUqSXe6qS1QOGrV+mZMAOdh0BaPsJ+HwQ1A="
         bucket: "lto-explorer-v2"
+        region: eu-west-1
         skip_cleanup: true
         detect_encoding: true
         local_dir: dist
