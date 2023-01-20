@@ -4,7 +4,8 @@ export default {
   env: {
     BASE_ROUTE: process.env.BASE_ROUTE || ''
   },
-  mode: 'spa',
+  ssr: false,
+  target: 'static',
   /*
   ** Headers of the page
   */

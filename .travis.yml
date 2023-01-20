@@ -34,8 +34,8 @@ jobs:
       deploy:
         provider: releases
         token:
-          secure: "FyUaLhTA40KLaYLswKFqhPxniV/jpu+EFqHRPysB5KSJqm7v8Eupemr8f+I9Q1qb1ZEDFz+1q2rKni0zur5axYDur4HjtqA/xx1Tc1gdMLPgritiKNzYo9QooFcGBKNBR81lRY4+YSSGc9SR4ZBgAw73buPW+7Kkbxc6+QAiqSxz4vhDqhjMdEA82uLWgK3aBg2DOi9Scmbq5JYIAa6vfUHxqNCR6ENyWNC0h1EYN4nBgS74o38mnAev1mgnh0LvOD/B/y0VHaiSN7znTUI4Cq+3PDZGAyxQREsdcoaonIMGetc2H8c7aR8u/y1dwxZmCyIflBa1AUaCDD3ExOC3AoZXbOqoW0aVUF/HmgAtg7STOT5IlQ/9u8ShXSgqBSKISY1CZaZDSbiWOLGw9KvL5d6FOqmAYzk5D3IegDR6Xtt4gAusEAk64N6jmsyUk/WBYXimTmUHtm0Cs4WpHl1i+hpbRjQGNX9nl8EZx6QK7j0EqWplE3Azpzc8GdEE0Te4/3VATOnI/5fetzNC2OMpGNr9NRo67iF1k+RRPNJoGgNI7o4adKdaTSRTZYdwSDokWDPQpo8ZuAgi+JjaC4VwCbYhlunfXKCeKtKgz4Vo9eDLFo5+9DJxWBItMAb3+HPoM0iuacBUjaWEWeZEDqLeIMlx5iYzJgYqVQJNbUM+5So="
-
+          secure: "ekKbA1LGADd9Fvjil4dG31g8K1m7tAlIB1OeKIwMJMzXwzKUxaXnJ5gcvDX9+ipVlhwwQ5C4YSHql1DDAA/soUuBTxobDyZiw+z9SzUPsXn9I7Ghilphy8DAxpCkn6rAmzvYj8xmlvukhLb1BA3CnRXunsCjDJCsuwD+BnGq/krOgUjR3NFj+I+PGZgAP+KeF7sw9PkSBAoYwb5n+EwYsad8H6SSv80iZd/ZsKjIRdFAWqaFxF/ydM8bmQSCxqP8WiGgzzNeJjK47y1LDgKe7tfHA5Ql3gEde0oQ7Vzoqm9v5aDSPaA8Toa1/etDB81GB29biJ0b/51cv6/ALaQy+N35KJXHTDNfwKmkN1DI6/SmlYC8AwRn5FykC7AgwagW+dhnU0N1kV7+m9QLD4sUWFj2C9KeV3uziZ+jj9pLUCbmeThe06WsE4RuUy267KmfbZUXJUUWCCgjxh3DaZx/dvWw05b6h6Ulm7TaK1Ns/FyBKgoCCI+fnF0+IVyNs+VpeOjbmyPTlQqz7DAEXyBuZCieIPTnuDkCXJpMXi2v5TWKBnYFu3wDpNFdf5QF0qzodljGhMp6oZHLAQUZRb7tVuou/UcP+JmYFGAN+K9dthAwDAN9nIEgiyOnu0Wp9UjTytcpFCLxq0pj+GKrWwvLSlOWOzMUhNSfPrhnh7FACnc="
+          
     - name: "Testnet"
       stage: deploy
       install:
@@ -53,6 +53,8 @@ jobs:
         skip_cleanup: true
         detect_encoding: true
         local_dir: dist
+        on:
+          tags: true
 
     - name: "Mainnet"
       stage: deploy
@@ -71,3 +73,5 @@ jobs:
         skip_cleanup: true
         detect_encoding: true
         local_dir: dist
+        on:
+          tags: true
