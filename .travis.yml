@@ -2,6 +2,13 @@ language: node_js
 
 node_js: 16
 
+addons:
+  apt:
+    packages:
+      - python3
+      - g++
+      - build-essential
+
 branches:
   only:
     - master
