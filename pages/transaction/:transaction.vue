@@ -43,7 +43,7 @@
                     </td>
                     <td>
                       <nuxt-link :to="{ path: '/block/' + transaction.height }">
-                        {{ transaction.height | parseString }}
+                        {{ transaction.height }}
                       </nuxt-link>
                     </td>
                   </tr>
@@ -237,7 +237,7 @@
       </v-col>
 
       <v-col
-        v-if="transaction.type === 15 "
+        v-if="transaction.type === 15"
         :cols="12"
         :sm="12"
         :md="12"
@@ -258,8 +258,47 @@
               />
             </div>
             <div v-for="(anchor, i) in anchors " :key="i" class="secondary--text">
-              <v-text-field v-text="anchor" readonly />
+              <v-text-field readonly v-text="anchor" />
             </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col
+        v-if="transaction.type === 22"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
+      >
+        <v-card>
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-anchor" />
+            {{ $t('transaction.anchors') }} ( {{ mappedAnchors.length }} )
+          </v-card-title>
+          <v-card-text>
+            <div style="width:300px">
+              <v-select
+                cache-items
+                :items="['hex', 'base58','base64']"
+                value="hex"
+                @change="encodeAnchor"
+              />
+            </div>
+            <v-simple-table>
+              <template v-slot:default>
+                <tbody>
+                  <tr v-for="(pair, i) in mappedAnchors " :key="i" class="secondary--text">
+                    <td style="padding-left: 0; width: 1%; white-space: nowrap;">
+                      {{ pair.key }}
+                    </td>
+                    <td style="padding-left: 0">
+                      {{ pair.value }}
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
           </v-card-text>
         </v-card>
       </v-col>
@@ -272,7 +311,7 @@
   import { Component } from 'vue-property-decorator'
   import '@nuxtjs/axios'
   import * as _ from 'lodash'
-  import { Transaction, Transfer } from '../types'
+  import { Transaction } from '../types'
   import { EncoderServiceImpl } from '../../plugins/encoder'
   import { txTypes } from '~/data/map'
 
@@ -302,53 +341,87 @@
   })
 
   class Transactions extends Vue {
+    transaction!: Transaction
     hash = (this as any).$nuxt.$route.query.hash
     valid = false
     invalid = false
-    anchors: string[] = []
 
+    anchors: string[] = []
     decodedAnchors: Uint8Array[] = []
     hexAnchors: string[] = []
     base58Anchors: string[] = []
     base64Anchors: string[] = []
+
+    mappedAnchors: { key: string; value: string }[] = []
+    decodedMappedAnchors: { key: Uint8Array; value: Uint8Array }[] = []
+    hexMappedAnchors: { key: string; value: string }[] = []
+    base58MappedAnchors: { key: string; value: string }[] = []
+    base64MappedAnchors: { key: string; value: string }[] = []
+
     encoder = new EncoderServiceImpl()
 
     created(): void {
-      /* If we have any anchors, set up the decoded anchor, so we don't need to
-       * repeatedly decode/encode. It is base58 format on the transaction. */
-      if ((this as any).transaction.anchors) {
-        this.decodedAnchors = (this as any).transaction.anchors.map((a: string) => this.encoder.base58Decode(a))
-
-        /* Might as well precompute the different forms, rather than requiring
-         * an encode on every different selection. */
-        this.hexAnchors = this.decodedAnchors.map(a => this.encoder.hexEncode(a))
-        this.base58Anchors = this.decodedAnchors.map(a => this.encoder.base58Encode(a))
-        this.base64Anchors = this.decodedAnchors.map(a => this.encoder.base64Encode(a))
-
-        /* Default format is hex. */
-        this.anchors = this.hexAnchors
-
-        /* If a hash is given in the query string, we verify that the anchor encoded
-         * in one of the three forms matches the hash. */
-        if (this.hash) {
-          const valid = this.hexAnchors.includes(this.hash) ||
-            this.base58Anchors.includes(this.hash) ||
-            this.base64Anchors.includes(this.hash)
-
-          this.valid = valid
-          this.invalid = !valid
-        }
+      if (this.transaction.type === 15) {
+        this.formatAnchors()
       }
+      if (this.transaction.type === 22) {
+        this.formatMappedAnchors()
+      }
+    }
+
+    /* If we have any anchors, set up the decoded anchor, so we don't need to
+     * repeatedly decode/encode. It is base58 format on the transaction. */
+    formatAnchors() {
+      this.decodedAnchors = (this.transaction as any).anchors.map((a: string) => this.encoder.base58Decode(a))
+
+      /* Might as well precompute the different forms, rather than requiring
+       * an encode on every different selection. */
+      this.hexAnchors = this.decodedAnchors.map(a => this.encoder.hexEncode(a))
+      this.base58Anchors = this.decodedAnchors.map(a => this.encoder.base58Encode(a))
+      this.base64Anchors = this.decodedAnchors.map(a => this.encoder.base64Encode(a))
+
+      /* Default format is hex. */
+      this.anchors = this.hexAnchors
+
+      /* If a hash is given in the query string, we verify that the anchor encoded
+       * in one of the three forms matches the hash. */
+      if (this.hash) {
+        const valid = this.hexAnchors.includes(this.hash) ||
+          this.base58Anchors.includes(this.hash) ||
+          this.base64Anchors.includes(this.hash)
+
+        this.valid = valid
+        this.invalid = !valid
+      }
+    }
+
+    /* If we have any anchors, set up the decoded anchor, so we don't need to
+     * repeatedly decode/encode. It is base58 format on the transaction. */
+    formatMappedAnchors() {
+      this.decodedMappedAnchors = Object.entries((this.transaction as any).anchors)
+        .map(([k, v]) => ({ key: this.encoder.base58Decode(k), value: this.encoder.base58Decode(v as string) }))
+
+      /* Might as well precompute the different forms, rather than requiring
+       * an encode on every different selection. */
+      this.hexMappedAnchors = this.decodedMappedAnchors.map(p => ({ key: this.encoder.hexEncode(p.key), value: this.encoder.hexEncode(p.value) }))
+      this.base58MappedAnchors = this.decodedMappedAnchors.map(p => ({ key: this.encoder.base58Encode(p.key), value: this.encoder.base58Encode(p.value) }))
+      this.base64MappedAnchors = this.decodedMappedAnchors.map(p => ({ key: this.encoder.base64Encode(p.key), value: this.encoder.base64Encode(p.value) }))
+
+      /* Default format is hex. */
+      this.mappedAnchors = this.hexMappedAnchors
     }
 
     /* Encode the anchor into the specified format */
     encodeAnchor(value: string): void {
       if (value === 'hex') {
         this.anchors = this.hexAnchors
+        this.mappedAnchors = this.hexMappedAnchors
       } else if (value === 'base58') {
         this.anchors = this.base58Anchors
+        this.mappedAnchors = this.base58MappedAnchors
       } else if (value === 'base64') {
         this.anchors = this.base64Anchors
+        this.mappedAnchors = this.base64MappedAnchors
       }
     }
 

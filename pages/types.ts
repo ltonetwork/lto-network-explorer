@@ -6,16 +6,24 @@ export interface Block {
 }
 
 export interface Transaction {
-  timestamp: string;
+  id: string;
+  timestamp: number;
   fee: number | string;
   type: number;
   transfers: Transfer[];
   amount: number;
   totalAmount: number;
+  height: number;
+  sender: string;
+  recipient?: string;
+  effectiveFee: number;
+  effectiveSponsor?: string;
+  proofs: string[];
 }
 
 export interface Transfer {
   amount: number;
+  recipient: string;
 }
 
 export interface VueGlobalFunctions {
