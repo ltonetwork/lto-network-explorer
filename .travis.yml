@@ -1,5 +1,5 @@
 language: node_js
-node_js: 16
+node_js: 18
 dist: focal
 
 addons:
@@ -45,13 +45,13 @@ jobs:
     - name: "Testnet"
       stage: deploy
       before_install:
-        - npm version $TRAVIS_TAG --no-git-tag-version
+        - yarn version $TRAVIS_TAG --no-git-tag-version
       install:
-        - npm install
+        - yarn install
       before_script:
         - cp .env.testnet .env
       script:
-        - npm run generate
+        - yarn generate
       deploy:
         provider: s3
         access_key_id: "AKIA5RMFNFEWJOX5Y2AX"
@@ -68,13 +68,13 @@ jobs:
     - name: "Mainnet"
       stage: deploy
       before_install:
-        - npm version $TRAVIS_TAG --no-git-tag-version
+        - yarn version $TRAVIS_TAG --no-git-tag-version
       install:
-        - npm install
+        - yarn install
       before_script:
         - cp .env.mainnet .env
       script:
-        - npm run generate
+        - yarn generate
       deploy:
         provider: s3
         access_key_id: "AKIAQUQNQW2MPO46CH4R"
