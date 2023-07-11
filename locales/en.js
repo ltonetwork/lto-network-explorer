@@ -45,6 +45,7 @@ export default {
     copied: 'Address copied to clipboard.',
     wallet: 'Wallet Overview',
     transactions: 'Transactions',
+    data: 'Data',
     balance: {
       title: 'Balance',
       regular: 'Regular',

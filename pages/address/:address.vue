@@ -143,6 +143,41 @@
       </v-col>
     </v-row>
 
+    <v-row v-if="data.length > 0">
+      <v-col
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
+      >
+        <v-card>
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-data" />
+            {{ $t('address.data') }}
+          </v-card-title>
+          <v-card-text>
+            <v-simple-table>
+              <template v-slot:default>
+                <tbody>
+                  <tr v-for="(entry, i) in data" :key="i">
+                    <td>
+                      {{ entry.key }}
+                    </td>
+                    <td>
+                      {{ entry.value }}
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                      ( {{ entry.type }} )
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col
         :cols="12"
@@ -294,27 +329,20 @@
   @Component({
     components: {},
     computed: {},
-    validate({ params }) {
+    validate(/* { params } */) {
       // return !isNaN(params.address)
       return true
     },
     async asyncData({ $axios, params }) {
-      // Pagination still needs to be implemented possible that a store
-      // may be required due to many transactions linked to active
-      // addresses
-
-      // eg: https://codepen.io/paulpv/pen/zWPKao
-
-      // required: method to get total sum of transactions linked to the
-      // an address in order to determine the `limit` parameter.
-
       const balance = await $axios.$get(process.env.LB_API + '/addresses/balance/details/' + params.address, {
         timeout: Number(process.env.AXIOS_TIMEOUT)
       })
 
-      return {
-        balance
-      }
+      const data = await $axios.$get(process.env.LB_API + '/addresses/data/' + params.address, {
+        timeout: Number(process.env.AXIOS_TIMEOUT)
+      })
+
+      return { balance, data }
     }
   })
 
@@ -322,6 +350,7 @@
     address = (this as any).$nuxt.$route.params.address
     copied = false
     balance = null
+    data: { key: string; type: string; value: string | boolean | number }[] = []
     transactions = []
     isLoading = false
     total = 0
