@@ -11,6 +11,7 @@ export interface Transaction {
   fee: number | string;
   type: number;
   transfers: Transfer[];
+  data?: { key: string; type: string; value: string | number | boolean }[];
   amount: number;
   totalAmount: number;
   height: number;

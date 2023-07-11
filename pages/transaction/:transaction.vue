@@ -302,6 +302,40 @@
           </v-card-text>
         </v-card>
       </v-col>
+
+      <v-col
+        v-if="transaction.data && transaction.data.length > 0"
+        :cols="12"
+        :sm="12"
+        :md="12"
+        :lg="12"
+      >
+        <v-card>
+          <v-card-title class="secondary--text">
+            <span class="mr-2 lto-data" />
+            {{ $t('explorer.data') }}
+          </v-card-title>
+          <v-card-text class="pa-0">
+            <v-simple-table>
+              <template v-slot:default>
+                <tbody>
+                  <tr v-for="(entry, i) in transaction.data" :key="i">
+                    <td>
+                      {{ entry.key }}
+                    </td>
+                    <td>
+                      {{ entry.value }}
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                      ( {{ entry.type }} )
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </v-card-text>
+        </v-card>
+      </v-col>
     </v-row>
   </div>
 </template>

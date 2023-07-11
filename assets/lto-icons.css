@@ -115,6 +115,11 @@
     color: #17054b;
 }
 
+.lto-data:before {
+  content: "\e910";
+  color: #17054b;
+}
+
 .lto-node:before {
     content: "\e915";
     color: #17054b;

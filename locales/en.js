@@ -88,7 +88,8 @@ export default {
     timestamp: 'Timestamp',
     confirmed: 'Confirmed',
     target: 'Target',
-    type: 'Type'
+    type: 'Type',
+    data: 'Data'
   },
   nodes: {
     title: 'Nodes Monitor'
