@@ -22,6 +22,9 @@ stages:
   - name: deploy
     if: tag IS present OR (branch = staging AND type = push)
 
+install:
+  - yarn install --no-immutable
+
 jobs:
   include:
     - stage: release
