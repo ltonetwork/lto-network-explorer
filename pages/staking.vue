@@ -28,37 +28,37 @@
                 item-key="generator"
                 class="secondary--text"
               >
-                <template v-slot:header.payout="{ header }">
+                <template #header.payout="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.label="{ header }">
+                <template #header.label="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.generator="{ header }">
+                <template #header.generator="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.pool="{ header }">
+                <template #header.pool="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.blocks="{ header }">
+                <template #header.blocks="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.earnings="{ header }">
+                <template #header.earnings="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.share="{ header }">
+                <template #header.share="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:item.payout="{ item }">
+                <template #item.payout="{ item }">
                   <v-tooltip right>
-                    <template v-slot:activator="{ on }">
+                    <template #activator="{ on }">
                       <v-icon v-if="item.payout" color="green" v-on="on">
                         mdi-check
                       </v-icon>
@@ -67,29 +67,29 @@
                   </v-tooltip>
                 </template>
 
-                <template v-slot:item.label="{ item }">
+                <template #item.label="{ item }">
                   {{ item.label }}
                 </template>
 
-                <template v-slot:item.generator="{ item }">
+                <template #item.generator="{ item }">
                   <nuxt-link :to="{ path: '/address/' + item.generator }" class="d-inline-block primary--text">
                     {{ item.generator | truncateString }}
                   </nuxt-link>
                 </template>
 
-                <template v-slot:item.pool="{ item }">
+                <template #item.pool="{ item }">
                   {{ item.pool | parseNumber }}
                 </template>
 
-                <template v-slot:item.blocks="{ item }">
+                <template #item.blocks="{ item }">
                   {{ item.blocks | parseString }}
                 </template>
 
-                <template v-slot:item.earnings="{ item }">
+                <template #item.earnings="{ item }">
                   {{ item.earnings | parseNumber }}
                 </template>
 
-                <template v-slot:item.share="{ item }">
+                <template #item.share="{ item }">
                   {{ item.share | parseNumber }}%
                 </template>
               </v-data-table>

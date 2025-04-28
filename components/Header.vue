@@ -57,7 +57,7 @@
             bottom
             min-width="30vw"
           >
-            <template v-slot:activator="{ on }">
+            <template #activator="{ on }">
               <v-btn
                 icon
                 class="white--text hidden-md-and-up"
@@ -123,17 +123,17 @@
               clearable
               @keydown.enter="executeQuery"
             >
-              <template v-slot:default="t">
+              <template #default="t">
                 <span style="color:rgba(255,255,255, 0.4)">{{ t }}</span>
               </template>
 
-              <template v-slot:prepend-inner>
+              <template #prepend-inner>
                 <v-icon style="color:rgba(255,255,255, 0.4)">
                   mdi-magnify
                 </v-icon>
               </template>
 
-              <template v-slot:label>
+              <template #label>
                 <span style="color:rgba(255,255,255, 0.4)">{{ $t('search.label') }}</span>
               </template>
             </v-text-field>

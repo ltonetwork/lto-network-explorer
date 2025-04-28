@@ -14,7 +14,7 @@
           </v-card-title>
           <v-card-text class="pa-0">
             <v-simple-table>
-              <template v-slot:default>
+              <template #default>
                 <tbody>
                   <tr>
                     <td class="font-weight-bold secondary--text">
@@ -114,47 +114,47 @@
               :footer-props="{'items-per-page-options': [10, 50, 100, -1]}"
               no-data-text="this block does not contain any transactions"
             >
-              <template v-slot:header.type="{ header }">
+              <template #header.type="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.id="{ header }">
+              <template #header.id="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.sender="{ header }">
+              <template #header.sender="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.fee="{ header }">
+              <template #header.fee="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.timestamp="{ header }">
+              <template #header.timestamp="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:item.type="{ item }">
+              <template #item.type="{ item }">
                 {{ name(item.type) }}
               </template>
 
-              <template v-slot:item.id="{ item }">
+              <template #item.id="{ item }">
                 <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text">
                   {{ item.id | truncateString }}
                 </nuxt-link>
               </template>
 
-              <template v-slot:item.sender="{ item }">
+              <template #item.sender="{ item }">
                 <nuxt-link :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text">
                   {{ item.sender | truncateString }}
                 </nuxt-link>
               </template>
 
-              <template v-slot:item.fee="{ item }">
+              <template #item.fee="{ item }">
                 {{ item.fee | parseAtomic | parseNumber }}
               </template>
 
-              <template v-slot:item.timestamp="{ item }">
+              <template #item.timestamp="{ item }">
                 {{ item.timestamp | parseTime }}
               </template>
             </v-data-table>

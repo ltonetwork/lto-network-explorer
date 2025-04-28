@@ -195,15 +195,9 @@ export const actions = {
   ) {
     // state.state.panel.staking.updated = null
 
-    const supply = (await this.$axios.$get(process.env.LB_API + '/supply')) as any
-    let burned = supply.burned / 100000000
+    const stats = (await this.$axios.$get(process.env.BRIDGE_API + '/stats')) as any
 
-    if (process.env.BRIDGE_API) {
-      const bridgeStats = (await this.$axios.$get(process.env.BRIDGE_API + '/stats')) as any
-      burned += bridgeStats.volume.lto20.burned
-    }
-
-    commit('updateBurned', burned)
+    commit('updateBurned', stats.burned)
   },
   async fetchNetwork(
     this: VueGlobalFunctions,

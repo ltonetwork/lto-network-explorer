@@ -30,45 +30,45 @@
                 item-key="address"
                 class="secondary--text"
               >
-                <template v-slot:header.address="{ header }">
+                <template #header.address="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.regular="{ header }">
+                <template #header.regular="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.generating="{ header }">
+                <template #header.generating="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.available="{ header }">
+                <template #header.available="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.effective="{ header }">
+                <template #header.effective="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:item.address="{ item }">
+                <template #item.address="{ item }">
                   <nuxt-link :to="{ path: '/address/' + item.address }" class="d-inline-block primary--text">
                     {{ item.address | truncateString }}
                   </nuxt-link>
                 </template>
 
-                <template v-slot:item.regular="{ item }">
+                <template #item.regular="{ item }">
                   {{ item.regular | parseNumber }}
                 </template>
 
-                <template v-slot:item.generating="{ item }">
+                <template #item.generating="{ item }">
                   {{ item.generating | parseNumber }}
                 </template>
 
-                <template v-slot:item.available="{ item }">
+                <template #item.available="{ item }">
                   {{ item.available | parseNumber }}
                 </template>
 
-                <template v-slot:item.effective="{ item }">
+                <template #item.effective="{ item }">
                   {{ item.effective | parseNumber }}
                 </template>
               </v-data-table>

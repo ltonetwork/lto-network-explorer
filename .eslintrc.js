@@ -20,6 +20,9 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-unused-vars': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
+    'vue/multi-word-component-names': 0,
+    'vue/no-v-text-v-html-on-component': 0,
+    'vue/valid-v-slot': 0,
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     indent: 'off',
     'vue/script-indent': ['warn', 2, {

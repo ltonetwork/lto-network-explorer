@@ -14,7 +14,7 @@
           </v-card-title>
           <v-card-text class="pa-0">
             <v-simple-table>
-              <template v-slot:default>
+              <template #default>
                 <tbody>
                   <tr>
                     <td class="font-weight-bold secondary--text">
@@ -105,7 +105,7 @@
                       {{ $t('explorer.signature') }}
                     </td>
                     <td>
-                      <div v-for="proof in transaction.proofs" v-bind:key="proof">
+                      <div v-for="proof in transaction.proofs" :key="proof">
                         {{ proof }}
                       </div>
                     </td>
@@ -131,7 +131,7 @@
           </v-card-title>
           <v-card-text class="pa-0">
             <v-simple-table>
-              <template v-slot:default>
+              <template #default>
                 <thead>
                   <tr>
                     <th class="overline grey--text text-left">
@@ -286,7 +286,7 @@
               />
             </div>
             <v-simple-table>
-              <template v-slot:default>
+              <template #default>
                 <tbody>
                   <tr v-for="(pair, i) in mappedAnchors " :key="i" class="secondary--text">
                     <td style="padding-left: 0; width: 1%; white-space: nowrap;">
@@ -317,7 +317,7 @@
           </v-card-title>
           <v-card-text class="pa-0">
             <v-simple-table>
-              <template v-slot:default>
+              <template #default>
                 <tbody>
                   <tr v-for="(entry, i) in transaction.data" :key="i">
                     <td>

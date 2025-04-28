@@ -53,7 +53,7 @@
         <v-card>
           <v-card-text>
             <v-tooltip top>
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <span class="pa-0 overline" v-text="$t('address.balance.regular')" />
                 <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
@@ -78,7 +78,7 @@
         <v-card>
           <v-card-text>
             <v-tooltip top>
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <span class="pa-0 overline" v-text="$t('address.balance.unbonding')" />
                 <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
@@ -102,7 +102,7 @@
         <v-card>
           <v-card-text>
             <v-tooltip top>
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <span class="pa-0 overline" v-text="$t('address.balance.leasing')" />
                 <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
@@ -126,7 +126,7 @@
         <v-card>
           <v-card-text>
             <v-tooltip top>
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <span class="pa-0 overline" v-text="$t('address.balance.effective')" />
                 <v-icon small class="ml-1 grey--text" v-on="on">
                   mdi-help-circle
@@ -157,7 +157,7 @@
           </v-card-title>
           <v-card-text>
             <v-simple-table>
-              <template v-slot:default>
+              <template #default>
                 <tbody>
                   <tr v-for="(entry, i) in data" :key="i">
                     <td>
@@ -224,39 +224,39 @@
               :server-items-length="total"
               :options.sync="options"
             >
-              <template v-slot:header.label="{ header }">
+              <template #header.label="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.type="{ header }">
+              <template #header.type="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.id="{ header }">
+              <template #header.id="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.sender="{ header }">
+              <template #header.sender="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.recipient="{ header }">
+              <template #header.recipient="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.amount="{ header }">
+              <template #header.amount="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.fee="{ header }">
+              <template #header.fee="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:header.timestamp="{ header }">
+              <template #header.timestamp="{ header }">
                 <span class="overline grey--text">{{ header.text }}</span>
               </template>
 
-              <template v-slot:item.label="{ item }">
+              <template #item.label="{ item }">
                 <v-btn
                   :color="color(item.label)"
                   outlined
@@ -269,24 +269,24 @@
                 </v-btn>
               </template>
 
-              <template v-slot:item.type="{ item }">
+              <template #item.type="{ item }">
                 {{ name(item.type) }}
               </template>
 
-              <template v-slot:item.id="{ item }">
+              <template #item.id="{ item }">
                 <nuxt-link :to="{ path: '/transaction/' + item.id }" class="d-inline-block primary--text">
                   {{ item.id | truncateString }}
                 </nuxt-link>
               </template>
 
-              <template v-slot:item.sender="{ item }">
+              <template #item.sender="{ item }">
                 <nuxt-link v-if="item.sender !== address" :to="{ path: '/address/' + item.sender }" class="d-inline-block primary--text">
                   {{ item.sender | truncateString }}
                 </nuxt-link>
                 <span v-if="item.sender === address">{{ item.sender | truncateString }}</span>
               </template>
 
-              <template v-slot:item.recipient="{ item }">
+              <template #item.recipient="{ item }">
                 <nuxt-link
                   v-if="item.recipient && item.recipient !== address"
                   :to="{ path: '/address/' + item.recipient }"
@@ -299,17 +299,17 @@
                 <span v-if="item.type === 11 && item.sender !== address">{{ address | truncateString }}</span>
               </template>
 
-              <template v-slot:item.amount="{ item }">
+              <template #item.amount="{ item }">
                 <span v-if="'amount' in item">{{ item.amount | parseAtomic | parseNumber }}</span>
                 <span v-if="item.type === 11 && item.sender === address">{{ item.transfers.reduce((a, t) => a + parseInt(t.amount), 0) | parseAtomic | parseNumber }}</span>
                 <span v-if="item.type === 11 && item.sender !== address">{{ item.transfers.find(t => t.recipient === address)?.amount | parseAtomic | parseNumber }}</span>
               </template>
 
-              <template v-slot:item.fee="{ item }">
+              <template #item.fee="{ item }">
                 {{ item.fee | parseAtomic | parseNumber }}
               </template>
 
-              <template v-slot:item.timestamp="{ item }">
+              <template #item.timestamp="{ item }">
                 {{ item.timestamp | parseTime }}
               </template>
             </v-data-table>

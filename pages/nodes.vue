@@ -25,7 +25,7 @@
                 class="secondary--text"
               >
                 >
-                <template v-slot:expanded-item="{ headers, item }">
+                <template #expanded-item="{ headers, item }">
                   <td :colspan="headers.length" style="background-setColor:#F4F7FB;">
                     <v-simple-table style="background-setColor:#F4F7FB;">
                       <tbody>
@@ -98,53 +98,53 @@
                   </td>
                 </template>
 
-                <template v-slot:header.name="{ header }">
+                <template #header.name="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.address="{ header }">
+                <template #header.address="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.country="{ header }">
+                <template #header.country="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.network="{ header }">
+                <template #header.network="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.version="{ header }">
+                <template #header.version="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.p2p="{ header }">
+                <template #header.p2p="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.api="{ header }">
+                <template #header.api="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:header.uptime="{ header }">
+                <template #header.uptime="{ header }">
                   <span class="overline grey--text">{{ header.text }}</span>
                 </template>
 
-                <template v-slot:item.name="{ item }">
+                <template #item.name="{ item }">
                   <span class="font-weight-bold d-inline-block">
                     {{ item.name | truncateString }}
                   </span>
                 </template>
 
-                <template v-slot:item.address="{ item }">
+                <template #item.address="{ item }">
                   {{ item.ip }}
                 </template>
 
-                <template v-slot:item.network="{ item }">
+                <template #item.network="{ item }">
                   {{ item.network }} <em v-if="item.netDescription !== ''">({{ item.netDescription }})</em>
                 </template>
 
-                <template v-slot:item.height="{ item }">
+                <template #item.height="{ item }">
                   <span v-if="item.height">
                     {{ item.height | parseString }}
                   </span>
@@ -154,11 +154,11 @@
                   </span>
                 </template>
 
-                <template v-slot:item.version="{ item }">
+                <template #item.version="{ item }">
                   {{ item.version }}
                 </template>
 
-                <template v-slot:item.p2p="{ item }">
+                <template #item.p2p="{ item }">
                   <v-icon v-if="item.port6868 === 'open'" color="green">
                     mdi-check
                   </v-icon>
@@ -167,7 +167,7 @@
                   </v-icon>
                 </template>
 
-                <template v-slot:item.api="{ item }">
+                <template #item.api="{ item }">
                   <v-icon v-if="item.api" :color="setColor(item.api)">
                     mdi-check
                   </v-icon>
@@ -176,7 +176,7 @@
                   </v-icon>
                 </template>
 
-                <template v-slot:item.uptime="{ item }">
+                <template #item.uptime="{ item }">
                   <div class="pb-5">
                     <span
                       v-for="(k, v) in item.uptime"
