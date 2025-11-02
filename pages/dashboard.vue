@@ -1,6 +1,7 @@
 <template>
   <div>
     <Panel />
+    <MigrationModal v-model="showMigrationModal" />
     <v-row>
       <v-col>
         <v-card
@@ -188,6 +189,7 @@
   import moment from 'moment'
   import Panel from '../components/Panel.vue'
   import LineChart from '../components/LineChart.vue'
+  import MigrationModal from '../components/MigrationModal.vue'
   import { translate } from '../plugins/translate'
 
   interface DataSet {
@@ -214,7 +216,8 @@
     },
     components: {
       Panel,
-      LineChart
+      LineChart,
+      MigrationModal
     },
     computed: {
       chartDataSet(): ChartData {
@@ -237,6 +240,8 @@
   })
 
   class Dashboard extends Vue {
+    showMigrationModal = true
+
     filters = {
       type: 'week',
       start: moment().subtract(1, 'week').utc().format('x'),
