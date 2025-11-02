@@ -12,7 +12,7 @@
           LTO Network is shutting down
         </h1>
         <h2 class="mb-6 subheading">
-          The store continues on Base network as EQTY
+          The story continues on Base network as EQTY
         </h2>
         <div class="mb-6">
           <a
