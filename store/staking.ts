@@ -23,7 +23,7 @@ const labelMap = new Map(
   (process.env.NETWORK_ID === 'T' ? testnetNodes.nodes : [...communityNodes.nodes, ...otherNodes.nodes])
     .map((node: {address: string; name: string; sharing?: string; payoutSchedule?: string}) => [
       node.address,
-      { label: node.name, payout: node.sharing ? `${node.sharing} | ${node.payoutSchedule}}` : undefined }
+      { label: node.name, payout: node.sharing ? `${node.sharing} | ${node.payoutSchedule}` : undefined }
     ])
 )
 
